@@ -1,0 +1,795 @@
+<title>Medlemmernes Indgang</title>
+<meta name="description" content="Hvem ringer til Dansk Psykolog Forening, hvad ringer de om, og hvornår — samlet fra CRM, telefoni og Valeur." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" />
+
+<style>
+  /* ── Dansk Psykolog Forenings designmanual (juni 2024) ──────────────────── */
+  :root {
+    --masthead:#16233a;
+    --navy-900:#16233a; --navy-700:#2a4368; --navy:#3a557d; --navy-400:#8299bb;
+    --navy-200:#d4dbe1; --navy-100:#e7ebef;
+    --paper:#faf9f7; --card:#ffffff; --sunk:#f3f5f7;
+    --ink:#16233a; --muted:#5a6b82; --faint:#8a97a8;
+    --rule:#e4e7ec;
+    --shadow:0 1px 2px rgba(22,35,58,.04), 0 10px 30px -18px rgba(22,35,58,.30);
+
+    /* Kategoriske serier — valideret for farveblindhed mod lys flade */
+    --c1:#3f6fb5; --c2:#df790d; --c3:#179fa0; --c4:#d24e46; --c5:#6a5cc4; --c6:#d8a90c;
+    /* Status — holdt adskilt fra serierne */
+    --god:#1f7a5c; --advarsel:#b06d05; --kritisk:#b8342c;
+    --seq:#3a557d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --masthead:#0b1421;
+      --paper:#101a2b; --card:#17233a; --sunk:#1c2a42;
+      --ink:#eef2f7; --muted:#a9b8cc; --faint:#7d8da0;
+      --rule:#26364f; --navy-100:#26364f; --navy-200:#3a4f6e;
+      --navy-400:#8299bb; --navy:#8fa8cc; --navy-700:#c3d2e6; --navy-900:#eef2f7;
+      --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 34px -18px rgba(0,0,0,.7);
+      --c1:#5286cc; --c2:#c9701f; --c3:#25a6a6; --c4:#d55f57; --c5:#8375dd; --c6:#a98a1c;
+      --god:#4cae86; --advarsel:#d79a3a; --kritisk:#e57b73;
+      --seq:#8fa8cc;
+    }
+  }
+  :root[data-theme="dark"] {
+    --masthead:#0b1421;
+    --paper:#101a2b; --card:#17233a; --sunk:#1c2a42;
+    --ink:#eef2f7; --muted:#a9b8cc; --faint:#7d8da0;
+    --rule:#26364f; --navy-100:#26364f; --navy-200:#3a4f6e;
+    --navy-400:#8299bb; --navy:#8fa8cc; --navy-700:#c3d2e6; --navy-900:#eef2f7;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 12px 34px -18px rgba(0,0,0,.7);
+    --c1:#5286cc; --c2:#c9701f; --c3:#25a6a6; --c4:#d55f57; --c5:#8375dd; --c6:#a98a1c;
+    --god:#4cae86; --advarsel:#d79a3a; --kritisk:#e57b73;
+    --seq:#8fa8cc;
+  }
+
+  * { box-sizing:border-box; }
+  body {
+    background:var(--paper); color:var(--ink); margin:0;
+    font-family:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size:15.5px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4 { font-family:"IBM Plex Serif", Charter, Cambria, Georgia, serif;
+                text-wrap:balance; margin:0; }
+  p { margin:0; }
+  .wrap { max-width:74rem; margin:0 auto; padding:0 1.5rem; }
+  .num { font-variant-numeric:tabular-nums; }
+  .mono { font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+  :focus-visible { outline:2px solid var(--c2); outline-offset:2px; border-radius:3px; }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; animation:none !important; } }
+
+  /* ── Hoved ──────────────────────────────────────────────────────────────── */
+  .masthead { background:var(--masthead); color:#fff; padding:3.25rem 0 0; }
+  .eyebrow { font-size:.6875rem; font-weight:600; letter-spacing:.16em;
+             text-transform:uppercase; color:var(--c2);
+             display:flex; align-items:center; gap:.7rem; }
+  .eyebrow::before { content:""; width:1.75rem; height:3px; border-radius:99px; background:currentColor; }
+  .masthead h1 { font-size:clamp(2rem,4.4vw,3rem); line-height:1.05;
+                 letter-spacing:-.02em; margin:.9rem 0 0; color:#fff; }
+  .masthead .lead { max-width:52ch; margin-top:.9rem; color:#aebdd4; font-size:1.0625rem; }
+
+  .scale { display:grid; grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr));
+           gap:1.25rem 2rem; margin-top:2.25rem;
+           border-top:1px solid rgba(255,255,255,.12); padding:1.6rem 0 2.75rem; }
+  .scale dt { font-size:.625rem; font-weight:600; letter-spacing:.14em;
+              text-transform:uppercase; color:#8299bb; }
+  .scale dd { margin:.35rem 0 0; font-family:"IBM Plex Serif",Georgia,serif;
+              font-size:1.75rem; font-weight:600; line-height:1; color:#fff;
+              font-variant-numeric:tabular-nums; }
+  .scale .sub { display:block; font-family:"IBM Plex Sans",sans-serif; font-size:.75rem;
+                font-weight:400; color:#8299bb; margin-top:.3rem; }
+
+  /* ── Kildebjælke ────────────────────────────────────────────────────────── */
+  .kilder { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));
+            gap:1px; background:var(--rule); border-block:1px solid var(--rule);
+            margin-bottom:3rem; }
+  .kilde { background:var(--card); padding:1rem 1.15rem; display:grid; gap:.3rem; }
+  .kilde .top { display:flex; align-items:center; gap:.5rem; }
+  .kilde h3 { font-size:.9375rem; }
+  .kilde .status { margin-left:auto; font-family:"IBM Plex Mono",monospace;
+                   font-size:.625rem; font-weight:500; letter-spacing:.06em;
+                   text-transform:uppercase; padding:.15rem .45rem; border-radius:99px;
+                   border:1px solid currentColor; white-space:nowrap; }
+  .kilde .status.aktiv { color:var(--god); }
+  .kilde .status.venter { color:var(--advarsel); }
+  .kilde p { font-size:.8125rem; color:var(--muted); }
+  .kilde .dot { width:.55rem; height:.55rem; border-radius:2px; flex:none; }
+
+  /* ── Sektioner ──────────────────────────────────────────────────────────── */
+  section { margin-bottom:3.25rem; scroll-margin-top:1rem; }
+  .sec-head { display:flex; align-items:baseline; gap:1rem; flex-wrap:wrap;
+              border-bottom:2px solid var(--ink); padding-bottom:.55rem; margin-bottom:.85rem; }
+  .sec-head h2 { font-size:1.4rem; letter-spacing:-.01em; }
+  .sec-head .src { margin-left:auto; font-family:"IBM Plex Mono",monospace;
+                   font-size:.6875rem; color:var(--faint); white-space:nowrap; }
+  .sec-note { color:var(--muted); font-size:.9375rem; max-width:64ch; margin-bottom:1.5rem; }
+  .sec-note b { color:var(--ink); font-weight:600; }
+
+  .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(20rem,1fr)); gap:1.25rem; }
+  .panel { background:var(--card); border:1px solid var(--rule); border-radius:14px;
+           box-shadow:var(--shadow); padding:1.25rem 1.35rem 1.4rem; }
+  .panel > header { display:flex; align-items:baseline; gap:.75rem; margin-bottom:1.1rem; }
+  .panel h3 { font-size:1.0625rem; }
+  .panel .hint { margin-left:auto; font-family:"IBM Plex Mono",monospace;
+                 font-size:.6875rem; color:var(--faint); }
+
+  /* ── Vandrette søjler ───────────────────────────────────────────────────── */
+  .bars { display:grid; gap:.5rem; }
+  .bar-row { display:grid; grid-template-columns:minmax(6rem,11rem) 1fr auto;
+             align-items:center; gap:.85rem; }
+  .bar-row .lab { font-size:.8125rem; color:var(--ink); line-height:1.3;
+                  overflow-wrap:anywhere; }
+  .bar-row .lab small { display:block; color:var(--faint); font-size:.6875rem; }
+  .bar-track { background:var(--sunk); border-radius:4px; height:1.4rem;
+               position:relative; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:0 4px 4px 0; min-width:2px;
+              transition:filter .12s ease; }
+  .bar-row:hover .bar-fill { filter:brightness(1.08); }
+  .bar-row .val { font-family:"IBM Plex Mono",monospace; font-size:.8125rem;
+                  font-variant-numeric:tabular-nums; color:var(--ink);
+                  min-width:5.2rem; text-align:right; }
+  .bar-row .val i { font-style:normal; color:var(--faint); }
+
+  /* ── Stablede måneder ───────────────────────────────────────────────────── */
+  .months { display:grid; grid-auto-flow:column; grid-auto-columns:1fr;
+            gap:3px; align-items:end; height:16rem; margin-bottom:.5rem; }
+  .m-col { display:flex; flex-direction:column; justify-content:flex-end;
+           height:100%; gap:2px; cursor:default; position:relative; }
+  .m-col .seg { border-radius:2px; min-height:2px; transition:filter .12s ease; }
+  .m-col:hover .seg { filter:brightness(1.12); }
+  .m-col.tynd { opacity:.5; }
+  .m-axis { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:3px;
+            border-top:1px solid var(--rule); padding-top:.4rem; }
+  .m-axis span { font-family:"IBM Plex Mono",monospace; font-size:.625rem;
+                 color:var(--faint); text-align:center; overflow:hidden;
+                 white-space:nowrap; }
+
+  /* ── Legende ────────────────────────────────────────────────────────────── */
+  .legend { display:flex; flex-wrap:wrap; gap:.4rem .9rem; margin-top:.9rem;
+            padding-top:.85rem; border-top:1px solid var(--rule); }
+  .legend span { display:inline-flex; align-items:center; gap:.4rem;
+                 font-size:.75rem; color:var(--muted); }
+  .legend i { width:.7rem; height:.7rem; border-radius:2px; flex:none; }
+
+  /* ── Varmekort ──────────────────────────────────────────────────────────── */
+  .heat-scroll { overflow-x:auto; }
+  .heat { border-collapse:separate; border-spacing:2px; width:100%; min-width:40rem; }
+  .heat th { font-size:.6875rem; font-weight:600; color:var(--muted);
+             text-align:left; vertical-align:bottom; padding:0 .3rem .35rem; line-height:1.25; }
+  .heat th.rowh { text-align:left; font-size:.8125rem; color:var(--ink);
+                  font-weight:500; white-space:nowrap; padding-right:.6rem; }
+  .heat td { text-align:center; border-radius:4px; padding:.5rem .3rem;
+             font-family:"IBM Plex Mono",monospace; font-size:.75rem;
+             font-variant-numeric:tabular-nums; }
+  .heat td.tom { color:var(--faint); background:var(--sunk); }
+
+  /* ── Lodrette søjler (ugedag, klokkeslæt, gengangere) ───────────────────── */
+  .vbars { display:grid; grid-auto-flow:column; grid-auto-columns:1fr;
+           gap:.4rem; align-items:end; height:9rem; }
+  .vbar { display:flex; flex-direction:column; justify-content:flex-end; height:100%; }
+  .vbar .fill { border-radius:4px 4px 0 0; min-height:3px; transition:filter .12s ease; }
+  .vbar:hover .fill { filter:brightness(1.1); }
+  .vaxis { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:.4rem;
+           border-top:1px solid var(--rule); padding-top:.4rem; }
+  .vaxis span { font-family:"IBM Plex Mono",monospace; font-size:.6875rem;
+                color:var(--faint); text-align:center; }
+
+  /* ── Fund ───────────────────────────────────────────────────────────────── */
+  .finds { display:grid; gap:.7rem; grid-template-columns:repeat(auto-fit,minmax(19rem,1fr)); }
+  .find { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+          padding:1rem 1.15rem; border-left:3px solid var(--accent,var(--navy));
+          display:grid; gap:.4rem; align-content:start; }
+  .find .k { font-family:"IBM Plex Mono",monospace; font-size:.625rem; font-weight:600;
+             letter-spacing:.1em; text-transform:uppercase; color:var(--accent,var(--navy)); }
+  .find h4 { font-size:1rem; line-height:1.3; }
+  .find p { font-size:.875rem; color:var(--muted); }
+  .find b { color:var(--ink); font-weight:600; }
+
+  /* ── Ventende moduler ───────────────────────────────────────────────────── */
+  .venter { display:grid; gap:.7rem; grid-template-columns:repeat(auto-fit,minmax(17rem,1fr)); }
+  .vent { border:1px dashed var(--navy-200); border-radius:12px; padding:.95rem 1.1rem;
+          background:color-mix(in srgb, var(--card) 55%, transparent); display:grid; gap:.35rem; }
+  .vent h4 { font-size:.9375rem; }
+  .vent p { font-size:.8125rem; color:var(--muted); }
+  .vent .fra { font-family:"IBM Plex Mono",monospace; font-size:.625rem;
+               letter-spacing:.06em; text-transform:uppercase; color:var(--faint); }
+
+  /* ── Regler ─────────────────────────────────────────────────────────────── */
+  .rules { display:grid; gap:.7rem; }
+  .rule { display:grid; grid-template-columns:auto 1fr; gap:.9rem; align-items:start;
+          padding:.9rem 1.1rem; border-radius:12px; background:var(--card);
+          border:1px solid var(--rule); }
+  .rule .n { font-family:"IBM Plex Mono",monospace; font-size:.75rem; font-weight:600;
+             color:var(--c2); padding-top:.15rem; white-space:nowrap; }
+  .rule p { font-size:.875rem; color:var(--muted); }
+  .rule b { color:var(--ink); font-weight:600; }
+
+  /* ── Tabelknap + tabel ──────────────────────────────────────────────────── */
+  .tbtn { font-family:"IBM Plex Mono",monospace; font-size:.6875rem; color:var(--muted);
+          background:none; border:1px solid var(--rule); border-radius:99px;
+          padding:.2rem .6rem; cursor:pointer; }
+  .tbtn:hover { color:var(--ink); border-color:var(--navy-400); }
+  table.data { width:100%; border-collapse:collapse; margin-top:.9rem; font-size:.8125rem; }
+  table.data th, table.data td { text-align:left; padding:.35rem .5rem;
+                                 border-bottom:1px solid var(--rule); }
+  table.data td.n { text-align:right; font-family:"IBM Plex Mono",monospace;
+                    font-variant-numeric:tabular-nums; }
+  table.data th { font-size:.6875rem; text-transform:uppercase; letter-spacing:.08em;
+                  color:var(--faint); font-weight:600; }
+
+  /* ── Værktøjstip ────────────────────────────────────────────────────────── */
+  #tip { position:fixed; z-index:50; pointer-events:none; opacity:0;
+         transition:opacity .1s ease; background:var(--masthead); color:#fff;
+         border-radius:8px; padding:.55rem .7rem; font-size:.8125rem; line-height:1.45;
+         box-shadow:0 8px 24px -8px rgba(0,0,0,.5); max-width:17rem; }
+  #tip .t { font-weight:600; margin-bottom:.2rem; }
+  #tip .r { display:flex; gap:.7rem; justify-content:space-between; color:#c1cde9; }
+  #tip .r b { color:#fff; font-weight:500; font-variant-numeric:tabular-nums; }
+
+  .colophon { border-top:1px solid var(--rule); padding:1.25rem 0 4rem;
+              font-size:.8125rem; color:var(--faint); max-width:72ch; }
+</style>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="eyebrow">Dansk Psykolog Forening · Valeursamarbejdet</div>
+    <h1>Medlemmernes indgang</h1>
+    <p class="lead">
+      Hvem ringer til foreningen, hvad ringer de om, og hvornår — samlet fra
+      registreringerne i Membercare, telefonstatistikken og Valeurs egen håndtering.
+    </p>
+    <dl class="scale" id="scale"></dl>
+  </div>
+</div>
+
+<div class="kilder" id="kilder"></div>
+
+<div class="wrap">
+
+  <section id="hvad">
+    <div class="sec-head"><h2>Hvad ringer medlemmerne om?</h2><span class="src">CRM · Membercare</span></div>
+    <p class="sec-note" id="note-hvad"></p>
+    <div class="grid2">
+      <div class="panel">
+        <header><h3>De seks hovedemner</h3><span class="hint">andel af registreringer</span></header>
+        <div class="bars" id="bars-grupper"></div>
+        <button class="tbtn" data-table="tbl-grupper" style="margin-top:1rem">Vis som tabel</button>
+        <div id="tbl-grupper" hidden></div>
+      </div>
+      <div class="panel">
+        <header><h3>De emner der fylder mest</h3><span class="hint">top 14 af <span id="n-typer"></span></span></header>
+        <div class="bars" id="bars-typer"></div>
+        <div class="legend" id="leg-typer"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tid">
+    <div class="sec-head"><h2>Udviklingen måned for måned</h2><span class="src">CRM · Membercare</span></div>
+    <p class="sec-note" id="note-tid"></p>
+    <div class="panel">
+      <header><h3>Registreringer pr. måned, fordelt på emne</h3><span class="hint">hold musen over en søjle</span></header>
+      <div class="months" id="months"></div>
+      <div class="m-axis" id="months-axis"></div>
+      <div class="legend" id="leg-months"></div>
+    </div>
+  </section>
+
+  <section id="hvem">
+    <div class="sec-head"><h2>Hvem ringer?</h2><span class="src">CRM · Membercare</span></div>
+    <p class="sec-note" id="note-hvem"></p>
+    <div class="grid2">
+      <div class="panel">
+        <header><h3>Medlemstype</h3><span class="hint">andel af registreringer</span></header>
+        <div class="bars" id="bars-mtype"></div>
+      </div>
+      <div class="panel">
+        <header><h3>Kreds</h3><span class="hint">geografisk fordeling</span></header>
+        <div class="bars" id="bars-kreds"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kryds">
+    <div class="sec-head"><h2>Hver medlemstype ringer om sit</h2><span class="src">CRM · Membercare</span></div>
+    <p class="sec-note" id="note-kryds"></p>
+    <div class="panel">
+      <header><h3>Medlemstype mod emne</h3><span class="hint">andel af typens egne opkald</span></header>
+      <div class="heat-scroll"><table class="heat" id="heat"></table></div>
+      <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem">
+        Tomme felter rummer under 25 registreringer og vises ikke.
+      </p>
+    </div>
+  </section>
+
+  <section id="igen">
+    <div class="sec-head"><h2>Ringer de samme igen?</h2><span class="src">CRM · Membercare</span></div>
+    <p class="sec-note" id="note-igen"></p>
+    <div class="grid2">
+      <div class="panel">
+        <header><h3>Henvendelser pr. medlem</h3><span class="hint">antal medlemmer</span></header>
+        <div class="vbars" id="vb-gengangere"></div>
+        <div class="vaxis" id="vx-gengangere"></div>
+      </div>
+      <div class="panel">
+        <header><h3>Hvor gengangerne sidder</h3><span class="hint">andel fra flergangsringere</span></header>
+        <div class="bars" id="bars-genemne"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hvornaar">
+    <div class="sec-head"><h2>Hvornår ringer de?</h2><span class="src">CRM · Membercare</span></div>
+    <p class="sec-note" id="note-hvornaar"></p>
+    <div class="grid2">
+      <div class="panel">
+        <header><h3>Ugedag</h3><span class="hint">registreringer</span></header>
+        <div class="vbars" id="vb-ugedag"></div>
+        <div class="vaxis" id="vx-ugedag"></div>
+      </div>
+      <div class="panel">
+        <header><h3>Klokkeslæt</h3><span class="hint">da registreringen blev oprettet</span></header>
+        <div class="vbars" id="vb-time"></div>
+        <div class="vaxis" id="vx-time"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fund">
+    <div class="sec-head"><h2>Hvad tallene siger</h2><span class="src">udledt af CRM-data</span></div>
+    <p class="sec-note">
+      Hvert fund herunder er regnet ud af de <span id="f-n"></span> registreringer og kan
+      efterprøves i modulerne ovenfor.
+    </p>
+    <div class="finds" id="finds"></div>
+  </section>
+
+  <section id="mangler">
+    <div class="sec-head"><h2>Moduler der venter på data</h2><span class="src">IP Nordic · Valeur Insights</span></div>
+    <p class="sec-note">
+      CRM-registreringerne fortæller <b>hvem der ringer og om hvad</b> — men ikke hvor mange
+      der ringer forgæves, hvor længe de venter, eller hvor meget Valeur selv klarer.
+      De tal ligger i de to andre kilder. Herunder står de moduler, der bygges når
+      eksporterne foreligger — hver med det spørgsmål fra medarbejderbriefingen, det svarer på.
+    </p>
+    <div class="venter" id="venter"></div>
+  </section>
+
+  <section id="metode">
+    <div class="sec-head"><h2>De regler tallene er underlagt</h2><span class="src">så intet siger mere end det kan bære</span></div>
+    <div class="rules" id="rules"></div>
+  </section>
+
+  <p class="colophon" id="colophon"></p>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script id="dp-data" type="application/json">/*__DATA__*/</script>
+<script>
+(function () {
+  "use strict";
+  const D = JSON.parse(document.getElementById("dp-data").textContent);
+  const crm = D.crm;
+  const SERIE = ["--c1","--c2","--c3","--c4","--c5","--c6"];
+  const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+  const nf = new Intl.NumberFormat("da-DK");
+  const n0 = v => nf.format(v);
+  const p1 = v => v.toFixed(1).replace(".", ",") + " %";
+  const MAAN = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
+
+  const el = (t, cls, html) => {
+    const e = document.createElement(t);
+    if (cls) e.className = cls;
+    if (html != null) e.innerHTML = html;
+    return e;
+  };
+
+  /* ── Værktøjstip ───────────────────────────────────────────────────────── */
+  const tip = document.getElementById("tip");
+  function bindTip(node, build) {
+    const show = ev => {
+      tip.innerHTML = build();
+      tip.style.opacity = "1";
+      const r = tip.getBoundingClientRect();
+      let x = ev.clientX + 14, y = ev.clientY + 16;
+      if (x + r.width > innerWidth - 8) x = ev.clientX - r.width - 14;
+      if (y + r.height > innerHeight - 8) y = ev.clientY - r.height - 16;
+      tip.style.left = Math.max(8, x) + "px";
+      tip.style.top = Math.max(8, y) + "px";
+    };
+    node.addEventListener("mouseenter", show);
+    node.addEventListener("mousemove", show);
+    node.addEventListener("mouseleave", () => { tip.style.opacity = "0"; });
+  }
+  const tipRows = (title, rows) =>
+    `<div class="t">${title}</div>` +
+    rows.map(([k, v]) => `<div class="r"><span>${k}</span><b>${v}</b></div>`).join("");
+
+  /* ── Nøgletal ──────────────────────────────────────────────────────────── */
+  const k = crm.kpi, meta = crm.meta;
+  const dk = s => { const [y,m,d] = s.split("-"); return `${+d}. ${MAAN[+m-1]}. ${y}`; };
+  const scale = [
+    ["Registreringer", n0(k.registreringer), `${dk(meta.periode_fra)} – ${dk(meta.periode_til)}`],
+    ["Medlemmer bag", n0(k.medlemmer), "unikke stamkort"],
+    ["Pr. åbningsdag", String(k.pr_dag).replace(".", ","), `${n0(meta.registreringsdage)} dage med registreringer`],
+    ["Fra gengangere", p1(k.andel_gengangere), "af alle registreringer"],
+    ["Emner", `${k.servicegrupper} / ${k.servicetyper}`, "grupper / typer"],
+    ["Kredse", String(k.kredse), "geografisk spredning"],
+  ];
+  const sc = document.getElementById("scale");
+  scale.forEach(([t, v, s]) => {
+    const w = el("div");
+    w.append(el("dt", null, t), el("dd", null, `${v}<span class="sub">${s}</span>`));
+    sc.append(w);
+  });
+
+  /* ── Kilder ────────────────────────────────────────────────────────────── */
+  const kilder = [
+    { navn: "Membercare (CRM)", farve: "--c1", status: "aktiv", txt:
+      `${n0(k.registreringer)} serviceregistreringer. Fortæller hvem der ringer, om hvad, og hvornår.` },
+    { navn: "IP Nordic", farve: "--c3", status: "venter", txt:
+      "Telefonstatistik: opkald, svarprocent, ventetid og samtaletid pr. kø. Afventer eksport." },
+    { navn: "Valeur Insights", farve: "--c2", status: "venter", txt:
+      "Valeurs egen håndtering: straksbesvarelser mod viderestillinger. Afventer eksport." },
+  ];
+  const kb = document.getElementById("kilder");
+  kilder.forEach(s => {
+    const d = el("div", "kilde");
+    const top = el("div", "top");
+    const dot = el("span", "dot"); dot.style.background = `var(${s.farve})`;
+    top.append(dot, el("h3", null, s.navn),
+      el("span", `status ${s.status}`, s.status === "aktiv" ? "i drift" : "afventer data"));
+    d.append(top, el("p", null, s.txt));
+    kb.append(d);
+  });
+
+  /* ── Vandrette søjler ──────────────────────────────────────────────────── */
+  function bars(mount, rows, opts) {
+    const o = Object.assign({ total: null, farve: () => "--seq", sub: null, enhed: "" }, opts);
+    const box = document.getElementById(mount);
+    box.innerHTML = "";
+    const max = Math.max(...rows.map(r => r.antal));
+    const sum = o.total != null ? o.total : rows.reduce((a, r) => a + r.antal, 0);
+    rows.forEach((r, i) => {
+      const row = el("div", "bar-row");
+      const lab = el("div", "lab", r.navn + (o.sub && o.sub(r) ? `<small>${o.sub(r)}</small>` : ""));
+      const tr = el("div", "bar-track");
+      const fill = el("div", "bar-fill");
+      fill.style.width = (r.antal / max * 100).toFixed(2) + "%";
+      fill.style.background = `var(${o.farve(r, i)})`;
+      tr.append(fill);
+      const pct = sum ? r.antal / sum * 100 : 0;
+      row.append(lab, tr, el("div", "val", `${n0(r.antal)} <i>${pct.toFixed(1).replace(".", ",")}%</i>`));
+      bindTip(row, () => tipRows(r.navn, [
+        ["Registreringer", n0(r.antal)],
+        ["Andel", p1(pct)],
+      ].concat(o.extra ? o.extra(r) : [])));
+      box.append(row);
+    });
+  }
+
+  const grupper = crm.grupper;
+  const gIdx = {}; grupper.forEach((g, i) => gIdx[g.navn] = i);
+  const gFarve = navn => SERIE[(gIdx[navn] ?? 0) % SERIE.length];
+
+  bars("bars-grupper", grupper, { farve: r => gFarve(r.navn) });
+
+  const typer = crm.typer.slice(0, 14);
+  document.getElementById("n-typer").textContent = crm.typer.length;
+  bars("bars-typer", typer, {
+    total: crm.kpi.registreringer,
+    farve: r => gFarve(r.gruppe),
+    sub: r => r.gruppe,
+  });
+
+  const legT = document.getElementById("leg-typer");
+  grupper.forEach(g => {
+    const s = el("span");
+    const i = el("i"); i.style.background = `var(${gFarve(g.navn)})`;
+    s.append(i, document.createTextNode(g.navn));
+    legT.append(s);
+  });
+
+  bars("bars-mtype", crm.medlemstyper.slice(0, 9), { farve: () => "--seq" });
+  bars("bars-kreds", crm.kredse.slice(0, 10), { farve: () => "--c1" });
+
+  /* ── Tabelvisning ──────────────────────────────────────────────────────── */
+  document.querySelectorAll("[data-table]").forEach(btn => {
+    const host = document.getElementById(btn.dataset.table);
+    btn.addEventListener("click", () => {
+      const vis = host.hasAttribute("hidden");
+      if (vis && !host.dataset.bygget) {
+        const t = el("table", "data");
+        t.innerHTML = "<thead><tr><th>Emne</th><th style='text-align:right'>Antal</th>" +
+          "<th style='text-align:right'>Andel</th></tr></thead>";
+        const tb = el("tbody");
+        const sum = grupper.reduce((a, r) => a + r.antal, 0);
+        grupper.forEach(r => {
+          tb.append(el("tr", null,
+            `<td>${r.navn}</td><td class="n">${n0(r.antal)}</td>` +
+            `<td class="n">${p1(r.antal / sum * 100)}</td>`));
+        });
+        t.append(tb); host.append(t); host.dataset.bygget = "1";
+      }
+      host.toggleAttribute("hidden");
+      btn.textContent = host.hasAttribute("hidden") ? "Vis som tabel" : "Skjul tabel";
+    });
+  });
+
+  /* ── Måneder ───────────────────────────────────────────────────────────── */
+  const mm = crm.maanedlig;
+  const maxM = Math.max(...mm.map(m => m.antal));
+  const mBox = document.getElementById("months");
+  const mAx = document.getElementById("months-axis");
+  mm.forEach(m => {
+    const col = el("div", "m-col" + (m.tynd ? " tynd" : ""));
+    col.style.height = "100%";
+    const inner = el("div");
+    inner.style.cssText = `height:${(m.antal / maxM * 100).toFixed(2)}%;display:flex;` +
+      "flex-direction:column;justify-content:flex-end;gap:2px";
+    grupper.forEach(g => {
+      const v = m.grupper[g.navn] || 0;
+      if (!v) return;
+      const seg = el("div", "seg");
+      seg.style.flex = String(v);
+      seg.style.background = `var(${gFarve(g.navn)})`;
+      inner.append(seg);
+    });
+    col.append(inner);
+    const [y, mo] = m.maaned.split("-");
+    const navn = `${MAAN[+mo - 1]}. ${y}`;
+    bindTip(col, () => tipRows(navn,
+      [["I alt", n0(m.antal)], ["Medlemmer", n0(m.medlemmer)]].concat(
+        grupper.filter(g => m.grupper[g.navn])
+          .sort((a, b) => (m.grupper[b.navn] || 0) - (m.grupper[a.navn] || 0))
+          .map(g => [g.navn, n0(m.grupper[g.navn])]))
+      .concat(m.tynd ? [["⚠", "delvis måned"]] : [])));
+    mBox.append(col);
+    mAx.append(el("span", null, +mo === 1 ? `<b>${y.slice(2)}</b>` : MAAN[+mo - 1]));
+  });
+  const legM = document.getElementById("leg-months");
+  grupper.forEach(g => {
+    const s = el("span"); const i = el("i");
+    i.style.background = `var(${gFarve(g.navn)})`;
+    s.append(i, document.createTextNode(g.navn));
+    legM.append(s);
+  });
+
+  /* ── Varmekort ─────────────────────────────────────────────────────────── */
+  const hx = crm.kryds;
+  const heat = document.getElementById("heat");
+  const maxAndel = Math.max(...hx.raekker.flatMap(r => r.celler.map(c => c.andel || 0)));
+  let head = "<thead><tr><th class='rowh'>Medlemstype</th>";
+  hx.grupper.forEach(g => head += `<th>${g}</th>`);
+  head += "<th style='text-align:right'>Opkald</th></tr></thead>";
+  heat.innerHTML = head;
+  const tb = el("tbody");
+  hx.raekker.forEach(r => {
+    const tr = el("tr");
+    tr.append(el("th", "rowh", r.medlemstype));
+    r.celler.forEach(c => {
+      const td = el("td");
+      if (c.andel == null) { td.className = "tom"; td.textContent = "·"; }
+      else {
+        const t = c.andel / maxAndel;
+        td.style.background = `color-mix(in srgb, var(--seq) ${(8 + t * 62).toFixed(0)}%, var(--card))`;
+        td.style.color = t > .45 ? "#fff" : "var(--ink)";
+        td.textContent = c.andel.toFixed(0) + "%";
+        bindTip(td, () => tipRows(`${r.medlemstype} · ${c.gruppe}`, [
+          ["Registreringer", n0(c.antal)],
+          ["Andel af typens opkald", p1(c.andel)],
+        ]));
+      }
+      tr.append(td);
+    });
+    const tot = el("td"); tot.className = "n";
+    tot.style.cssText = "font-family:'IBM Plex Mono',monospace;text-align:right;color:var(--muted)";
+    tot.textContent = n0(r.antal);
+    tr.append(tot);
+    tb.append(tr);
+  });
+  heat.append(tb);
+
+  /* ── Lodrette søjler ───────────────────────────────────────────────────── */
+  function vbars(mountBars, mountAxis, rows, opts) {
+    const o = Object.assign({ farve: () => "--seq" }, opts);
+    const b = document.getElementById(mountBars), a = document.getElementById(mountAxis);
+    b.innerHTML = ""; a.innerHTML = "";
+    const max = Math.max(...rows.map(r => r.v));
+    rows.forEach((r, i) => {
+      const c = el("div", "vbar");
+      const f = el("div", "fill");
+      f.style.height = (r.v / max * 100).toFixed(2) + "%";
+      f.style.background = `var(${o.farve(r, i)})`;
+      c.append(f);
+      bindTip(c, () => tipRows(r.tip || r.k, [[o.enhed || "Antal", n0(r.v)]]
+        .concat(o.extra ? o.extra(r) : [])));
+      b.append(c);
+      a.append(el("span", null, o.visTal
+        ? `${r.k}<b style="display:block;font-weight:500;color:var(--muted)">${n0(r.v)}</b>`
+        : r.k));
+    });
+  }
+
+  const gg = crm.gengangere;
+  vbars("vb-gengangere", "vx-gengangere",
+    gg.fordeling.map(r => ({
+      k: r.antal_henvendelser, v: r.medlemmer,
+      tip: r.antal_henvendelser === "10+" ? "10 eller flere henvendelser"
+        : `${r.antal_henvendelser} henvendelse${r.antal_henvendelser === "1" ? "" : "r"}`,
+    })),
+    { farve: r => r.k === "1" ? "--navy-400" : "--c1", enhed: "Medlemmer" });
+
+  bars("bars-genemne", gg.pr_emne.map(r => ({ navn: r.navn, antal: r.antal })), {
+    farve: r => gFarve(r.navn),
+    sub: r => {
+      const d = gg.pr_emne.find(x => x.navn === r.navn);
+      return `${n0(d.antal)} registreringer${d.tynd ? " · tyndt grundlag" : ""}`;
+    },
+  });
+  document.querySelectorAll("#bars-genemne .bar-row").forEach((row, i) => {
+    const r = gg.pr_emne[i];
+    row.querySelector(".val").innerHTML = p1(r.andel_gengangere);
+    const f = row.querySelector(".bar-fill");
+    f.style.width = r.andel_gengangere.toFixed(2) + "%";
+    if (r.tynd) { f.style.opacity = ".45"; row.querySelector(".val").style.color = "var(--faint)"; }
+    row.replaceWith(row.cloneNode(true));
+  });
+  document.querySelectorAll("#bars-genemne .bar-row").forEach((row, i) => {
+    const r = gg.pr_emne[i];
+    bindTip(row, () => tipRows(r.navn, [
+      ["Registreringer", n0(r.antal)],
+      ["Heraf fra gengangere", p1(r.andel_gengangere)],
+    ].concat(r.tynd ? [["⚠", `under ${n0(500)} — ikke sammenlignelig`]] : [])));
+  });
+
+  const UD = { Mandag: "man", Tirsdag: "tir", Onsdag: "ons", Torsdag: "tor",
+               Fredag: "fre", Lørdag: "lør", Søndag: "søn" };
+  vbars("vb-ugedag", "vx-ugedag",
+    crm.ugedag.map(r => ({ k: UD[r.navn] || r.navn, v: r.antal, tip: r.navn })),
+    { farve: r => r.k === "ons" ? "--c4" : "--c1", enhed: "Registreringer", visTal: true });
+
+  vbars("vb-time", "vx-time",
+    crm.klokkeslaet.map(r => ({ k: r.time, v: r.antal, tip: `Kl. ${r.time}–${r.time + 1}` })),
+    { farve: r => (r.k >= 10 && r.k < 13) ? "--c1" : "--navy-400", enhed: "Registreringer" });
+
+  /* ── Beregnede fund ────────────────────────────────────────────────────── */
+  document.getElementById("f-n").textContent = n0(k.registreringer);
+  const top = grupper[0], top2 = grupper[1];
+  const sumG = grupper.reduce((a, r) => a + r.antal, 0);
+  const selvR = hx.raekker.find(r => /Selvstændig/i.test(r.medlemstype));
+  const selvC = selvR && selvR.celler.find(c => /Selvstændige/i.test(c.gruppe));
+  const pensR = hx.raekker.find(r => /Pensionist/i.test(r.medlemstype));
+  const pensC = pensR && pensR.celler.find(c => /Generelle/i.test(c.gruppe));
+  const ons = crm.ugedag.find(d => d.navn === "Onsdag");
+  const onsN = ons ? ons.antal : 0;
+  const enGang = gg.fordeling.find(r => r.antal_henvendelser === "1");
+  const flest = crm.klokkeslaet.reduce((a, b) => b.antal > a.antal ? b : a);
+  const kbh = crm.kredse[0];
+  const sumK = crm.kredse.reduce((a, r) => a + r.antal, 0);
+  const genTop = gg.pr_emne[0];
+
+  const finds = [
+    { k: "Emne", a: "--c1", h: `${top.navn.replace(/\/.*/, "")} fylder mest`,
+      p: `<b>${p1(top.antal / sumG * 100)}</b> af alle registreringer handler om ${top.navn.toLowerCase()},
+          mere end dobbelt så meget som ${top2.navn.toLowerCase()} på ${p1(top2.antal / sumG * 100)}.` },
+    selvC ? { k: "Profil", a: "--c2", h: "De selvstændige ringer om deres eget",
+      p: `<b>${p1(selvC.andel)}</b> af de selvstændiges henvendelser handler om selvstændige-emner.
+          De er den eneste medlemstype med sit eget tyngdepunkt.` } : null,
+    pensC ? { k: "Profil", a: "--c5", h: "Pensionisterne ringer om medlemskabet",
+      p: `<b>${p1(pensC.andel)}</b> af pensionisternes opkald er generelle fagforeningsspørgsmål —
+          typisk kontingent. De trækker næsten ikke på rådgivningen.` } : null,
+    { k: "Belastning", a: "--c3", h: "Tre ud af fire opkald er gengangere",
+      p: `<b>${p1(gg.andel_registreringer)}</b> af registreringerne kommer fra medlemmer, der
+          henvender sig mere end én gang. Kun ${n0(enGang ? enGang.medlemmer : 0)} af
+          ${n0(gg.unikke_medlemmer)} medlemmer nøjes med én.` },
+    { k: "Belastning", a: "--c4", h: `${genTop.navn.replace(/\/.*/, "")} er tungest i gentagelser`,
+      p: `<b>${p1(genTop.andel_gengangere)}</b> af henvendelserne i denne gruppe kommer fra medlemmer,
+          der ringer flere gange — den højeste andel af alle seks emner.` },
+    { k: "Åbningstid", a: "--c6", h: "Onsdagen er reelt lukket",
+      p: `Kun <b>${onsN}</b> af ${n0(k.registreringer)} registreringer er oprettet på en onsdag.
+          Om medlemmerne <em>forsøger</em> at ringe, kan CRM ikke svare på — det kræver IP Nordic.` },
+    { k: "Tryk", a: "--c1", h: `Trykket ligger kl. ${flest.time}`,
+      p: `<b>${n0(flest.antal)}</b> registreringer er oprettet mellem kl. ${flest.time} og
+          ${flest.time + 1} — ${p1(flest.antal / k.registreringer * 100)} af alle. Registreringen
+          sker under eller lige efter samtalen, så det følger opkaldstrykket tæt.` },
+    { k: "Geografi", a: "--c5", h: `${kbh.navn} står for ${p1(kbh.antal / sumK * 100)}`,
+      p: `Den største kreds alene. Om det matcher medlemstallet i kredsen kan afgøres, når
+          bestandstallene fra Membercare lægges ved.` },
+  ].filter(Boolean);
+
+  const fb = document.getElementById("finds");
+  finds.forEach(f => {
+    const d = el("div", "find");
+    d.style.setProperty("--accent", `var(${f.a})`);
+    d.append(el("div", "k", f.k), el("h4", null, f.h), el("p", null, f.p));
+    fb.append(d);
+  });
+
+  /* ── Noter ─────────────────────────────────────────────────────────────── */
+  const setNote = (id, html) => { document.getElementById(id).innerHTML = html; };
+  setNote("note-hvad",
+    `Hver registrering er én henvendelse, som Valeur har noteret i Membercares servicefane.
+     De ${crm.kpi.servicetyper} servicetyper ruller op i ${crm.kpi.servicegrupper} hovedemner.`);
+  setNote("note-tid",
+    `Bemærk at ${dk(meta.periode_fra)} og ${dk(meta.periode_til)} er delvise måneder — de er
+     tonet ned, så de ikke læses som et fald. Registreringspraksis blev indført med
+     samarbejdet, så de tidligste måneder er også de tyndeste.`);
+  setNote("note-hvem",
+    `Medlemskabet står i CRM som type og kreds i ét felt — her delt op. Registreringer uden
+     medlemskab er udeladt af opgørelsen.`);
+  setNote("note-kryds",
+    `Andelen læses vandret: hvor stor en del af <em>den type medlemmers egne</em> henvendelser,
+     der falder i hvert emne. Det er her profilerne adskiller sig tydeligst.`);
+  setNote("note-igen",
+    `Bygget på stamkortnummeret, ikke på navn. Et medlem, der ringer om den samme sag tre gange,
+     tæller som tre henvendelser fra ét medlem.`);
+  setNote("note-hvornaar",
+    `Klokkeslættet er, hvornår registreringen blev <em>oprettet</em> — ikke hvornår telefonen
+     ringede. De to følges tæt, men det præcise opkaldstidspunkt ligger i IP Nordic.`);
+
+  /* ── Ventende moduler ──────────────────────────────────────────────────── */
+  const vent = [
+    { h: "Svarprocent over tid", fra: "IP Nordic",
+      p: "Hvor mange opkald bliver besvaret, og hvordan flytter det sig? Briefingen målte 90 % mod 86–87 % før." },
+    { h: "Ventetid før og efter", fra: "IP Nordic",
+      p: "Gennemsnitlig ventetid pr. uge. Briefingen viste et fald fra 1:11 til 0:24." },
+    { h: "Køen når telefonerne åbner", fra: "IP Nordic",
+      p: "Valeur melder 5–18 i kø kl. 10. Det er her flest opkald mistes — men kun telefonidata kan vise hvor mange." },
+    { h: "Opkald uden for åbningstid", fra: "IP Nordic",
+      p: "75 % af opkaldene lå inden for 10–13. Resten er reelle forsøg, CRM aldrig ser." },
+    { h: "Onsdagsforsøg", fra: "IP Nordic",
+      p: "CRM viser at onsdagen er lukket. Kun telefonidata viser, hvor mange der stadig prøver." },
+    { h: "Straksbesvarelser mod viderestillinger", fra: "Valeur Insights",
+      p: "Kerne-KPI'en: 63 % straksbesvaret, mål 70 %. Kan ikke udledes pålideligt af CRM-feltet." },
+    { h: "Aflastning af sekretariatet", fra: "Valeur Insights + IP Nordic",
+      p: "Opkald viderestillet pr. afdeling, mod niveauet før samarbejdet." },
+    { h: "Samtaletid pr. emne", fra: "IP Nordic",
+      p: "Hvilke emner koster mest tid? Sammenholdt med emnerne her giver det en pris pr. henvendelsestype." },
+    { h: "Stamdatarettelser", fra: "Valeur Insights",
+      p: "Briefingen anslog 15–20 % af de medlemmer, der ringer ind. Ligger ikke i servicefanen." },
+    { h: "Medlemmer mod ikke-medlemmer", fra: "Valeur Insights",
+      p: "87 % var medlemmer. CRM rummer kun dem, der blev fundet i Membercare." },
+  ];
+  const vb = document.getElementById("venter");
+  vent.forEach(v => {
+    const d = el("div", "vent");
+    d.append(el("div", "fra", v.fra), el("h4", null, v.h), el("p", null, v.p));
+    vb.append(d);
+  });
+
+  /* ── Regler ────────────────────────────────────────────────────────────── */
+  const regler = [
+    ["0", `<b>Ingen personoplysninger forlader kørslen.</b> Navne, stamkortnumre og fritekst
+           læses for at kunne tælle, men reduceres til optællinger, inden noget skrives.
+           Kørslen afbrydes automatisk, hvis resultatet alligevel matcher et navn,
+           et telefonnummer, en e-mail eller et cpr-lignende nummer.`],
+    ["25", `<b>Ingen krydstabelcelle under 25 registreringer.</b> Et medlem beskrevet af
+            type, kreds og emne på én gang er ikke længere anonymt.`],
+    ["5", `<b>Grupper under fem lægges sammen.</b> Gælder hver eneste opdeling i filen.`],
+    ["fritekst ud", `<b>Bemærkningsfeltet bruges ikke.</b> Godt hver fjerde bemærkning rummer
+            telefonnumre, navne eller mailadresser skrevet i fri tekst. Feltet kunne have
+            afsløret viderestillinger, men prisen er for høj — det tal hentes i Valeur Insights.`],
+    ["delvis", `<b>Første og sidste måned er delvise.</b> De er tonet ned i kurven, så et
+            fald der kun skyldes en halv måned, ikke læses som en udvikling.`],
+  ];
+  const rb = document.getElementById("rules");
+  regler.forEach(([n, t]) => {
+    const d = el("div", "rule");
+    d.append(el("span", "n", n), el("p", null, t));
+    rb.append(d);
+  });
+
+  document.getElementById("colophon").innerHTML =
+    `Bygget på ${n0(k.registreringer)} serviceregistreringer fra Membercare,
+     ${dk(meta.periode_fra)} til ${dk(meta.periode_til)}. Genereret ${dk(D.genereret)}.
+     Telefonstatistik fra IP Nordic og håndteringsdata fra Valeur Insights er ikke koblet på endnu —
+     modulerne, der venter på dem, står ovenfor. Tallene her dækker kun de henvendelser,
+     der <em>blev</em> registreret: et opkald, der aldrig blev besvaret, findes ikke i CRM.`;
+})();
+</script>

@@ -1,0 +1,9 @@
+# Rå kildefiler indeholder personoplysninger (navne, stamkort-id, telefonnumre,
+# e-mails og fritekst) og må ikke i versionsstyring.
+data/raw/
+*.xlsx
+!docs/**/*.xlsx
+
+__pycache__/
+.venv/
+.DS_Store
