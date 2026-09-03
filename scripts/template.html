@@ -409,19 +409,27 @@
   </section>
 
   <section id="aflast">
-    <div class="sec-head"><h2>Bliver sekretariatet aflastet?</h2><span class="src">IP Nordic · DP's egen opgørelse</span></div>
+    <div class="sec-head"><h2>Bliver sekretariatet aflastet?</h2><span class="src">IP Nordic · kø-rapporter 2024–2026</span></div>
     <p class="sec-note" id="note-aflast"></p>
-    <div class="grid2">
-      <div class="panel" id="p-foer">
-        <header><h3>Før mod med Valeur</h3><span class="hint" id="h-foer"></span></header>
-        <div class="bars" id="bars-foer"></div>
-        <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-foer"></p>
+    <dl class="modsat" id="fe-tal" style="margin-top:0"></dl>
+    <div class="panel" style="margin-top:1.25rem">
+      <header><h3>Opkald pr. åbningsdag, kø for kø</h3><span class="hint" id="h-fe"></span></header>
+      <div class="bars" id="bars-fe"></div>
+      <div class="legend">
+        <span><i style="background:var(--navy-400)"></i>før Valeur</span>
+        <span><i style="background:var(--god)"></i>efter</span>
       </div>
-      <div class="panel" id="p-aar">
-        <header><h3>Første sæson mod anden</h3><span class="hint" id="h-aar"></span></header>
-        <div class="bars" id="bars-aar"></div>
-        <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-aar"></p>
-      </div>
+      <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-fe"></p>
+    </div>
+    <div class="panel" style="margin-top:1.25rem">
+      <header><h3>Men svarprocenten er faldet</h3><span class="hint">i de køer der findes i begge perioder</span></header>
+      <div class="bars" id="bars-svar-fe"></div>
+      <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-svar-fe"></p>
+    </div>
+    <div class="panel" id="p-foer" style="margin-top:1.25rem">
+      <header><h3>DP's egen opgørelse siger det samme</h3><span class="hint" id="h-foer"></span></header>
+      <div class="bars" id="bars-foer"></div>
+      <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-foer"></p>
     </div>
   </section>
 
@@ -666,13 +674,14 @@
   const _sumLag = T ? T.cdr.lag.reduce((a,l)=>a+l.opkald,0) : 0;
   const _sv = T ? (T.cdr.lag.find(l=>l.noegle==="svarer")||{opkald:0}).opkald : 0;
   const _koe = T && T.koeer ? T.koeer.ialt : null;
+  const _fe0 = T && T.koeer ? T.koeer.foer_efter : null;
   const scale = [
     T ? ["Opkald fra medlemmer", n0(_sumLag), `${dk(T.cdr.periode_fra)} – ${dk(T.cdr.periode_til)}`] : null,
     V ? ["Taget af Valeur", p1(V.svarprocent), `${n0(V.besvarede)} af ${n0(V.opkald)} kald`] : null,
     T ? ["På telefonsvarer", n0(_sv), `${p1(_sv/_sumLag*100)} af alle opkald`] : null,
     _koe ? ["Videre til sekretariatet", n0(_koe.opkald), `${p1(_koe.svarprocent)} blev taget`] : null,
+    _fe0 ? ["Ventetid i køen", `${_fe0.foer.vente} → ${_fe0.efter.vente}`, "før og efter Valeur"] : null,
     ["Registreret i CRM", n0(k.registreringer), `${n0(k.medlemmer)} medlemmer`],
-    ["Fra gengangere", p1(k.andel_gengangere), "af registreringerne"],
   ].filter(Boolean);
   const sc = document.getElementById("scale");
   scale.forEach(([t, v, s]) => {
@@ -1106,6 +1115,101 @@
   }
 
 
+
+  /* ── Før og efter Valeur: den egentlige måling ─────────────────────────── */
+  const FE = T && T.koeer && T.koeer.foer_efter;
+  if (FE) {
+    const f = FE.foer, e = FE.efter;
+    const udg = FE.udgaaede_koeer || [];
+    const udgPrDag = udg.reduce((a, u) => a + u.pr_dag, 0);
+    const samletFoer = f.pr_dag + udgPrDag;
+
+    [["--god", "Opkald pr. dag", `${String(f.pr_dag).replace(".", ",")} → ${String(e.pr_dag).replace(".", ",")}`,
+      `${p1(Math.abs(FE.aendring_pr_dag))} færre i de samme køer`],
+     ["--god", "Ventetid", `${f.vente} → ${e.vente}`, "gennemsnit, vejet efter opkald"],
+     ["--c2", "Svarprocent", `${p1(f.svarprocent)} → ${p1(e.svarprocent)}`, "gik den forkerte vej"],
+     ["--c1", "Samtaletid", `${f.samtale} → ${e.samtale}`, "de opkald der når frem er tungere"],
+    ].forEach(([c, t, v, s]) => {
+      const d = el("div"); d.style.setProperty("--accent", `var(${c})`);
+      const dd = el("dd", null, `${v}<small>${s}</small>`);
+      dd.style.fontSize = "1.25rem";
+      d.append(el("dt", null, t), dd);
+      document.getElementById("fe-tal").append(d);
+    });
+
+    document.getElementById("h-fe").textContent =
+      `${f.fra} – ${f.til} mod ${e.fra} – ${e.til}`;
+
+    const maxD = Math.max(...FE.pr_koe.flatMap(k => [k.foer.pr_dag, k.efter.pr_dag]));
+    const box = document.getElementById("bars-fe");
+    FE.pr_koe.forEach(k => {
+      const row = el("div", "bar-row");
+      row.append(el("div", "lab",
+        `${k.navn.replace(/\s*[-–].*/, "")}<small>${String(k.foer.pr_dag).replace(".", ",")} → ${String(k.efter.pr_dag).replace(".", ",")} pr. dag</small>`));
+      const tr = el("div", "bar-track");
+      tr.style.cssText = "height:1.4rem;display:flex;flex-direction:column;gap:2px;background:none";
+      [["foer", "--navy-400"], ["efter", "--god"]].forEach(([n, c]) => {
+        const b = el("div");
+        b.style.cssText = `height:calc(50% - 1px);width:${(k[n].pr_dag/maxD*100).toFixed(1)}%;` +
+          `background:var(${c});border-radius:0 3px 3px 0;min-width:2px`;
+        tr.append(b);
+      });
+      const v = el("div", "val", "▼ " + Math.abs(k.aendring_pr_dag).toFixed(1).replace(".", ",") + " %");
+      v.style.color = "var(--god)";
+      row.append(tr, v);
+      bindTip(row, () => tipRows(k.navn, [
+        ["Før · pr. dag", String(k.foer.pr_dag).replace(".", ",")],
+        ["Efter · pr. dag", String(k.efter.pr_dag).replace(".", ",")],
+        ["Ændring", p1(k.aendring_pr_dag)],
+        ["Svarprocent før", p1(k.foer.svarprocent)],
+        ["Svarprocent efter", p1(k.efter.svarprocent)],
+      ]));
+      box.append(row);
+    });
+    document.getElementById("n-fe").innerHTML = udg.length
+      ? `Hertil kommer <b>${udg.map(u => u.navn.replace(/\s*\/.*/, "")).join(", ")}</b>, som blev nedlagt,
+         da Valeur overtog rollen. Den kø alene tog <b>${String(udgPrDag).replace(".", ",")}</b> opkald
+         om dagen. Regnes den med, faldt sekretariatets samlede opkaldsmængde fra omkring
+         <b>${String(Math.round(samletFoer)).replace(".", ",")}</b> til
+         <b>${String(e.pr_dag).replace(".", ",")}</b> om dagen — et fald på
+         <b>${p1((samletFoer - e.pr_dag) / samletFoer * 100)}</b>.`
+      : "";
+
+    // Svarprocent pr. kø, før mod efter
+    const sbox = document.getElementById("bars-svar-fe");
+    FE.pr_koe.forEach(k => {
+      const row = el("div", "bar-row");
+      const d = k.efter.svarprocent - k.foer.svarprocent;
+      row.append(el("div", "lab",
+        `${k.navn.replace(/\s*[-–].*/, "")}<small>${p1(k.foer.svarprocent)} → ${p1(k.efter.svarprocent)}</small>`));
+      const tr = el("div", "bar-track");
+      tr.style.cssText = "height:1.4rem;display:flex;flex-direction:column;gap:2px;background:none";
+      [["foer", "--navy-400"], ["efter", d < 0 ? "--c4" : "--god"]].forEach(([n, c]) => {
+        const b = el("div");
+        b.style.cssText = `height:calc(50% - 1px);width:${k[n].svarprocent}%;` +
+          `background:var(${c});border-radius:0 3px 3px 0;min-width:2px`;
+        tr.append(b);
+      });
+      const v = el("div", "val", (d < 0 ? "▼ " : "▲ ") + Math.abs(d).toFixed(1).replace(".", ",") + " pt.");
+      v.style.color = d < 0 ? "var(--c4)" : "var(--god)";
+      row.append(tr, v);
+      box.append;
+      sbox.append(row);
+    });
+    document.getElementById("n-svar-fe").innerHTML =
+      `Faldet ligger i <b>Ansættelse</b> og <b>Selvstændig</b> — netop de køer, hvor Valeur er
+       instrueret i at stille videre frem for at svare. De lette opkald bliver filtreret fra,
+       så det der nu når frem, er de tunge sager: samtaletiden er samtidig steget fra
+       <b>${f.samtale}</b> til <b>${e.samtale}</b>. Færre opkald, men hårdere.`;
+
+    setNote("note-aflast",
+      `Ja, målt på volumen. De køer, der findes i både før- og efterperioden, får
+       <b>${p1(Math.abs(FE.aendring_pr_dag))}</b> færre opkald om dagen, og ventetiden er faldet
+       fra <b>${f.vente}</b> til <b>${e.vente}</b>. Men sekretariatet tager en mindre andel af
+       dem, der når frem — svarprocenten er gået fra <b>${p1(f.svarprocent)}</b> til
+       <b>${p1(e.svarprocent)}</b>.`);
+  }
+
   /* ── Aflastning: to sammenligninger, to kilder ─────────────────────────── */
   const E = D.egne;
   function sammenlign(mount, raekker, ialt) {
@@ -1143,31 +1247,18 @@
       `${E.maaneder.join(", ").toLowerCase()} · ${E.foer_aar} mod ${E.efter_aar}`;
     sammenlign("bars-foer", E.raekker, E.i_alt);
     document.getElementById("n-foer").innerHTML =
-      `Den eneste egentlige før-måling: ${E.maaneder[0].toLowerCase()}–${E.maaneder.slice(-1)[0].toLowerCase()}
-       ${E.foer_aar} ligger før Valeur gik i luften 5. maj ${E.foer_aar}.
-       DP's egen opgørelse, sammenstillet fra IP Nordic — ikke efterregnet her.`;
+      `En uafhængig bekræftelse: DP's egen opgørelse for
+       ${E.maaneder[0].toLowerCase()}–${E.maaneder.slice(-1)[0].toLowerCase()}, hvor
+       ${E.foer_aar} ligger før Valeur og ${E.efter_aar} efter. Den er sammenstillet i hånden
+       fra IP Nordic og ikke efterregnet her — men den peger samme vej som målingen ovenfor.`;
   } else { document.getElementById("p-foer").hidden = true; }
 
-  const AA = T && T.koeer && T.koeer.aar_til_aar;
-  if (AA) {
-    const dm = s => { const [m,d] = s.split("-"); return `${+d}. ${MAAN[+m-1]}.`; };
-    document.getElementById("h-aar").textContent =
-      `${dm(AA.fra)} – ${dm(AA.til)} · ${AA.foer_aar} mod ${AA.efter_aar}`;
-    sammenlign("bars-aar", AA.raekker, AA.i_alt);
-    document.getElementById("n-aar").innerHTML =
-      `Begge år er klippet til samme vindue, så en hel måned ikke sammenlignes med
-       en halv. Bemærk at ${AA.foer_aar} her <em>også</em> er en Valeur-periode —
-       det måler samarbejdets andet år mod dets første, ikke mod tiden før.`;
-  } else { document.getElementById("p-aar").hidden = true; }
 
-  if (E && AA) {
+
+  if (E && !FE) {
     setNote("note-aflast",
-      `Ja — men aflastningen skete ved indførelsen og er ikke fortsat siden.
-       Sammenholdt med tiden før Valeur faldt opkaldene til sekretariatet med
-       <b>${p1(Math.abs(E.i_alt.aendring))}</b>. Holder man derimod samarbejdets andet år
-       op mod dets første, er antallet ${AA.i_alt.aendring >= 0 ? "steget" : "faldet"} igen med
-       <b>${p1(Math.abs(AA.i_alt.aendring))}</b>. Gevinsten blev hentet med det samme;
-       den vokser ikke af sig selv.`);
+      `Sammenholdt med tiden før Valeur faldt opkaldene til sekretariatet med
+       <b>${p1(Math.abs(E.i_alt.aendring))}</b>.`);
   }
 
   /* ── Valeur Insights ───────────────────────────────────────────────────── */
@@ -1393,7 +1484,20 @@
   const _uf  = T ? T.cdr.lag.reduce((a,l)=>a+l.uden_for_aabningstid,0) : 0;
   const _q   = T && T.koeer ? T.koeer : null;
 
+  const _fe = T && T.koeer && T.koeer.foer_efter;
+  const _udgPrDag = _fe ? (_fe.udgaaede_koeer || []).reduce((a,u)=>a+u.pr_dag,0) : 0;
+
   const finds = [
+    _fe ? { k: "Aflastning", a: "--god", h: `Sekretariatet får ${p1((( _fe.foer.pr_dag + _udgPrDag) - _fe.efter.pr_dag) / (_fe.foer.pr_dag + _udgPrDag) * 100)} færre opkald`,
+      p: `Fra omkring <b>${Math.round(_fe.foer.pr_dag + _udgPrDag)}</b> opkald om dagen til
+          <b>${String(_fe.efter.pr_dag).replace(".", ",")}</b>. Ventetiden faldt samtidig fra
+          <b>${_fe.foer.vente}</b> til <b>${_fe.efter.vente}</b>. Det er samarbejdets tydeligste
+          gevinst, og den er målt på de samme køer i begge perioder.` } : null,
+    _fe ? { k: "Bagsiden", a: "--c4", h: `Svarprocenten faldt ${(_fe.foer.svarprocent - _fe.efter.svarprocent).toFixed(1).replace(".", ",")} point`,
+      p: `Fra <b>${p1(_fe.foer.svarprocent)}</b> til <b>${p1(_fe.efter.svarprocent)}</b> i de køer,
+          der findes i begge perioder — værst i Ansættelse og Selvstændig. Samtidig steg
+          samtaletiden fra <b>${_fe.foer.samtale}</b> til <b>${_fe.efter.samtale}</b>:
+          de lette opkald bliver filtreret fra, så det der når frem, er tungere.` } : null,
     T ? { k: "Tilgængelighed", a: "--c2", h: "Hver tredje ringer forgæves",
       p: `<b>${n0(_lag.svarer ? _lag.svarer.opkald : 0)}</b> opkald endte på telefonsvareren og
           <b>${n0(_lag.velkomst ? _lag.velkomst.opkald : 0)}</b> på en velkomstbesked.

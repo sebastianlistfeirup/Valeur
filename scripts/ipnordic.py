@@ -44,6 +44,7 @@ LAG = {
 }
 
 UGEDAGE = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
+VALEUR_START = "2025-05-05"      # dagen samarbejdet gik i luften
 AABEN_FRA, AABEN_TIL = 10, 13          # DP's telefonåbningstid
 LUKKEDAG = 2                            # onsdag
 
@@ -210,10 +211,13 @@ def build_koeer(df):
     df = df.copy()
     df["aar"] = df["dato"].dt.year
     df["mnr"] = df["dato"].dt.month
+    # De to seneste år. Rapporterne rækker længere tilbage end samarbejdet,
+    # men her er spørgsmålet, om gevinsten voksede fra første til andet år —
+    # ikke hvordan der så ud før Valeur. Det svarer foer_efter på.
     aar = sorted(df["aar"].unique())
     aar_til_aar = None
     if len(aar) >= 2:
-        tidl, sen = aar[0], aar[-1]
+        tidl, sen = aar[-2], aar[-1]
         # Klip begge år til det kalendervindue, de har til fælles. Uden det
         # ville en hel september 2025 blive holdt op mod tre dage af 2026 —
         # og januar 2026 mod et 2025, hvor målingen slet ikke var begyndt.
@@ -246,12 +250,15 @@ def build_koeer(df):
                 },
             }
 
+    foer_efter = _foer_efter(df)
+
     opkald = int(df["opkald"].sum())
     besvarede = int(df["besvarede"].sum())
     return {
         "koeer": koeer,
         "maanedlig": pr_maaned,
         "aar_til_aar": aar_til_aar,
+        "foer_efter": foer_efter,
         "ialt": {
             "opkald": opkald,
             "besvarede": besvarede,
@@ -261,6 +268,67 @@ def build_koeer(df):
             "periode_fra": df["dato"].min().strftime("%Y-%m-%d"),
             "periode_til": df["dato"].max().strftime("%Y-%m-%d"),
         },
+    }
+
+
+def _foer_efter(df):
+    """Sekretariatets køer før og efter Valeur.
+
+    Kun de køer, der findes i begge perioder, tælles med. Hovednummerkøen
+    1500 blev nedlagt, da Valeur overtog den rolle, og ville ellers alene
+    gøre "før" dobbelt så stor. Perioderne er heller ikke lige lange, så alt
+    opgøres pr. åbningsdag frem for i alt.
+    """
+    skel = pd.Timestamp(VALEUR_START)
+    er_foer = df["dato"] < skel
+    i_begge = [nr for nr, s in df.groupby("Kønummer")
+               if (s["dato"] < skel).any() and (s["dato"] >= skel).any()]
+    udgaaet = [
+        {"nummer": str(nr), "navn": str(s["Kønavn"].iloc[0]).strip(),
+         "opkald": int(s["opkald"].sum()), "dage": int(s["dato"].nunique()),
+         "pr_dag": round(s["opkald"].sum() / s["dato"].nunique(), 1)}
+        for nr, s in df.groupby("Kønummer") if nr not in i_begge
+    ]
+
+    def maal(s):
+        dage = int(s["dato"].nunique())
+        opkald, besv = int(s["opkald"].sum()), int(s["besvarede"].sum())
+        return {
+            "dage": dage, "opkald": opkald, "besvarede": besv,
+            "pr_dag": round(opkald / dage, 1) if dage else None,
+            "svarprocent": round(besv / opkald * 100, 1) if opkald else None,
+            "vente_sek": round(_vejet(s, "vente", "besvarede") or 0, 1),
+            "vente": _mmss(_vejet(s, "vente", "besvarede")),
+            "samtale": _mmss(_vejet(s, "samtale", "besvarede")),
+            "fra": s["dato"].min().strftime("%Y-%m-%d"),
+            "til": s["dato"].max().strftime("%Y-%m-%d"),
+        }
+
+    d = df[df["Kønummer"].isin(i_begge)]
+    foer, efter = maal(d[d["dato"] < skel]), maal(d[d["dato"] >= skel])
+
+    pr_koe = []
+    for nr, s in d.groupby("Kønummer"):
+        f, e = s[s["dato"] < skel], s[s["dato"] >= skel]
+        if f["dato"].nunique() < 20 or e["dato"].nunique() < 20:
+            continue                      # for tyndt til en sammenligning
+        mf, me = maal(f), maal(e)
+        pr_koe.append({
+            "nummer": str(nr), "navn": str(s["Kønavn"].iloc[0]).strip(),
+            "foer": mf, "efter": me,
+            "aendring_pr_dag": round((me["pr_dag"] - mf["pr_dag"]) / mf["pr_dag"] * 100, 1)
+            if mf["pr_dag"] else None,
+        })
+    pr_koe.sort(key=lambda r: -(r["foer"]["opkald"] + r["efter"]["opkald"]))
+
+    return {
+        "start": VALEUR_START,
+        "foer": foer, "efter": efter,
+        "pr_koe": pr_koe,
+        "udgaaede_koeer": udgaaet,
+        "aendring_pr_dag": round(
+            (efter["pr_dag"] - foer["pr_dag"]) / foer["pr_dag"] * 100, 1)
+        if foer["pr_dag"] else None,
     }
 
 

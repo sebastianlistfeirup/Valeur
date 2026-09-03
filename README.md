@@ -12,9 +12,11 @@ kommer fra ét API, men fra tre kilder, der skal lægges oven på hinanden.
 | Kilde | Hvad den ved | Omfang |
 |---|---|---|
 | **Membercare (CRM)** — servicefanen | Hvem der ringer, hvad de ringer om, hvornår | 9.548 registreringer |
-| **IP Nordic** — CDR og kø-rapporter | Hvert opkaldsforsøg: hvor det landede, ventetid, svarprocent | 66.910 poster, 6 køer |
+| **IP Nordic** — CDR og kø-rapporter | Hvert opkaldsforsøg: hvor det landede, ventetid, svarprocent | 66.910 poster, 7 køer, 2023–2026 |
 | **Valeur Insights** | Hvor mange kald Valeur selv når at tage | 15.080 kald, 257 dage |
-| **DP's egen opgørelse** | Opkald til sekretariatet januar–marts, 2025 mod 2026 | Den eneste før-måling |
+| **Valeurs ugerapporter** | Medlemsstatus, samtaletid og efterbehandling pr. emne | 20 rapporter, 5.491 registreringer |
+| **Medlemslisten** | Bestanden, så hver gruppes andel af opkaldene kan holdes op mod dens andel af medlemmerne | Maj 2025 og september 2026 |
+| **DP's egen opgørelse** | Opkald til sekretariatet januar–marts, 2025 mod 2026 | Uafhængig bekræftelse |
 
 De tre første tæller ikke det samme og må ikke lægges sammen. CRM ser kun de
 henvendelser, nogen talte med et medlem om; telefonidataene ser hvert forsøg,
@@ -34,7 +36,16 @@ mønstrene og **bør bekræftes af DP**:
 
 Kan Valeur ikke svare, sendes opkaldet til en kø hos sekretariatet — 1510
 Ansættelse, 1515 Selvstændig, 15122 Kursus, 15123 Øvrige, 1520 Zexpense,
-1525 Debitor.
+1525 Debitor. Kø 1500 (Velkommen/Øvrige) blev nedlagt, da Valeur overtog
+rollen.
+
+### Før og efter
+
+Kø-rapporterne rækker tilbage til 2023, så samarbejdet kan måles mod tiden
+før. To regler holder sammenligningen ærlig: kun køer der findes i **begge**
+perioder tælles med (ellers ville den nedlagte kø 1500 alene gøre "før"
+dobbelt så stor), og alt opgøres **pr. åbningsdag**, fordi perioderne ikke er
+lige lange.
 
 ## Kør det
 
@@ -73,6 +84,8 @@ og undtagelsen er navngivet i `assert_clean()`.
 scripts/build_data.py   samler kilderne → data.json → siden
 scripts/ipnordic.py     CDR og kø-rapporter
 scripts/valeur.py       Valeur Insights
+scripts/valeur_rapporter.py  ugerapporter, benchmark og agentopgørelse
+scripts/medlemmer.py    medlemslisterne, koblet til CRM på stamkort
 scripts/egne.py         DP's egen 2025/2026-opgørelse
 scripts/template.html   dashboardet: markup, stil og tegnekode
 docs/                   det, GitHub Pages udstiller
