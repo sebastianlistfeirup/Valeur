@@ -177,6 +177,66 @@
   .vaxis span { font-family:"IBM Plex Mono",monospace; font-size:.6875rem;
                 color:var(--faint); text-align:center; }
 
+  /* ── Opkaldsrejsen ──────────────────────────────────────────────────────── */
+  .rejse { display:grid; gap:.55rem; }
+  .flow { display:flex; gap:2px; height:3.4rem; border-radius:8px; overflow:hidden; }
+  .flow > div { display:flex; flex-direction:column; justify-content:center;
+                padding:0 .8rem; color:#fff; min-width:0; transition:filter .12s ease; }
+  .flow > div:hover { filter:brightness(1.08); }
+  .flow .fn { font-size:.8125rem; font-weight:600; white-space:nowrap;
+              overflow:hidden; text-overflow:ellipsis; }
+  .flow .fv { font-family:"IBM Plex Mono",monospace; font-size:.75rem; opacity:.85;
+              font-variant-numeric:tabular-nums; }
+  .trin { display:grid; grid-template-columns:auto 1fr; gap:.9rem; align-items:center;
+          padding-left:1.4rem; position:relative; }
+  .trin::before { content:""; position:absolute; left:.55rem; top:-.55rem; bottom:50%;
+                  width:2px; background:var(--rule); }
+  .trin::after { content:""; position:absolute; left:.25rem; top:calc(50% - .3rem);
+                 width:.6rem; height:.6rem; border-radius:50%; background:var(--rule); }
+  .trin .txt { font-size:.875rem; color:var(--muted); }
+  .trin .txt b { color:var(--ink); font-weight:600; }
+
+  /* ── Sammenligningstal ──────────────────────────────────────────────────── */
+  .modsat { display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));
+            gap:1px; background:var(--rule); border:1px solid var(--rule);
+            border-radius:12px; overflow:hidden; margin-top:1.1rem; }
+  .modsat > div { background:var(--card); padding:.9rem 1rem; }
+  .modsat dt { font-size:.6875rem; font-weight:600; letter-spacing:.1em;
+               text-transform:uppercase; color:var(--faint); }
+  .modsat dd { margin:.3rem 0 0; font-family:"IBM Plex Serif",Georgia,serif;
+               font-size:1.5rem; font-weight:600; line-height:1;
+               font-variant-numeric:tabular-nums; color:var(--accent,var(--ink)); }
+  .modsat small { display:block; font-family:"IBM Plex Sans",sans-serif;
+                  font-size:.75rem; font-weight:400; color:var(--muted); margin-top:.3rem; }
+
+  /* ── Kø-tabel ───────────────────────────────────────────────────────────── */
+  .koe-scroll { overflow-x:auto; }
+  table.koe { width:100%; border-collapse:collapse; min-width:38rem; }
+  table.koe th { font-size:.6875rem; text-transform:uppercase; letter-spacing:.08em;
+                 color:var(--faint); font-weight:600; text-align:right;
+                 padding:0 .5rem .5rem; white-space:nowrap; }
+  table.koe th:first-child { text-align:left; }
+  table.koe td { padding:.55rem .5rem; border-top:1px solid var(--rule);
+                 text-align:right; font-family:"IBM Plex Mono",monospace;
+                 font-size:.8125rem; font-variant-numeric:tabular-nums; }
+  table.koe td:first-child { text-align:left; font-family:"IBM Plex Sans",sans-serif;
+                             font-size:.875rem; }
+  table.koe .kn { display:flex; align-items:center; gap:.5rem; }
+  table.koe .kn i { width:.55rem; height:.55rem; border-radius:2px; flex:none; }
+  table.koe .kn small { color:var(--faint); font-family:"IBM Plex Mono",monospace;
+                        font-size:.6875rem; }
+  .svar { display:inline-block; padding:.1rem .45rem; border-radius:99px;
+          font-size:.75rem; font-weight:500; }
+  .svar.god { background:color-mix(in srgb,var(--god) 15%,transparent); color:var(--god); }
+  .svar.mid { background:color-mix(in srgb,var(--advarsel) 15%,transparent); color:var(--advarsel); }
+  .svar.lav { background:color-mix(in srgb,var(--kritisk) 15%,transparent); color:var(--kritisk); }
+
+  /* ── Dobbeltkurve (svarprocent + ventetid, hver sin figur) ──────────────── */
+  .spark { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; gap:2px;
+           align-items:end; height:7rem; }
+  .spark .b { border-radius:3px 3px 0 0; min-height:2px; transition:filter .12s ease; }
+  .spark .b:hover { filter:brightness(1.12); }
+
   /* ── Fund ───────────────────────────────────────────────────────────────── */
   .finds { display:grid; gap:.7rem; grid-template-columns:repeat(auto-fit,minmax(19rem,1fr)); }
   .find { background:var(--card); border:1px solid var(--rule); border-radius:12px;
@@ -248,6 +308,110 @@
 <div class="kilder" id="kilder"></div>
 
 <div class="wrap">
+
+  <section id="rejse">
+    <div class="sec-head"><h2>Hvad sker der, når et medlem ringer?</h2><span class="src">IP Nordic · CDR</span></div>
+    <p class="sec-note" id="note-rejse"></p>
+    <div class="panel">
+      <header><h3>Hvor opkaldene lander</h3><span class="hint" id="rejse-hint"></span></header>
+      <div class="rejse">
+        <div class="flow" id="flow"></div>
+        <div class="trin">
+          <div class="txt" id="trin-koe"></div>
+        </div>
+      </div>
+      <div class="legend" id="leg-rejse"></div>
+      <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="rejse-note"></p>
+    </div>
+  </section>
+
+  <section id="lukket">
+    <div class="sec-head"><h2>Onsdagen, som medlemmerne ikke kender</h2><span class="src">IP Nordic · CDR</span></div>
+    <p class="sec-note" id="note-lukket"></p>
+    <dl class="modsat" id="onsdag-tal"></dl>
+    <div class="grid2" style="margin-top:1.25rem">
+      <div class="panel">
+        <header><h3>Opkald pr. ugedag</h3><span class="hint">fordelt på hvor de landede</span></header>
+        <div class="months" id="ugedag-lag" style="height:11rem"></div>
+        <div class="m-axis" id="ugedag-lag-axis"></div>
+        <div class="legend" id="leg-ugedag"></div>
+      </div>
+      <div class="panel">
+        <header><h3>Opkald pr. klokkeslæt</h3><span class="hint">åbningstid 10–13 markeret</span></header>
+        <div class="months" id="time-lag" style="height:11rem"></div>
+        <div class="m-axis" id="time-lag-axis"></div>
+        <p style="font-size:.75rem;color:var(--faint);margin-top:.7rem" id="time-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="koeer">
+    <div class="sec-head"><h2>Det Valeur sender videre</h2><span class="src">IP Nordic · kø-rapporter</span></div>
+    <p class="sec-note" id="note-koeer"></p>
+    <div class="panel">
+      <header><h3>De seks køer hos sekretariatet</h3><span class="hint" id="koe-hint"></span></header>
+      <div class="koe-scroll"><table class="koe" id="koe-tabel"></table></div>
+    </div>
+    <div class="grid2" style="margin-top:1.25rem">
+      <div class="panel">
+        <header><h3>Svarprocent pr. måned</h3><span class="hint">i køerne</span></header>
+        <div class="spark" id="sp-svar"></div>
+        <div class="m-axis" id="sp-svar-axis"></div>
+        <div class="legend">
+          <span><i style="background:var(--god)"></i>80 % og over</span>
+          <span><i style="background:var(--c1)"></i>70–80 %</span>
+          <span><i style="background:var(--c4)"></i>under 70 %</span>
+        </div>
+      </div>
+      <div class="panel">
+        <header><h3>Gennemsnitlig ventetid pr. måned</h3><span class="hint">sekunder, vejet efter opkald</span></header>
+        <div class="spark" id="sp-vent"></div>
+        <div class="m-axis" id="sp-vent-axis"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="aflast">
+    <div class="sec-head"><h2>Bliver sekretariatet aflastet?</h2><span class="src">IP Nordic · DP's egen opgørelse</span></div>
+    <p class="sec-note" id="note-aflast"></p>
+    <div class="grid2">
+      <div class="panel" id="p-foer">
+        <header><h3>Før mod med Valeur</h3><span class="hint" id="h-foer"></span></header>
+        <div class="bars" id="bars-foer"></div>
+        <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-foer"></p>
+      </div>
+      <div class="panel" id="p-aar">
+        <header><h3>Første sæson mod anden</h3><span class="hint" id="h-aar"></span></header>
+        <div class="bars" id="bars-aar"></div>
+        <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-aar"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="valeur">
+    <div class="sec-head"><h2>Hvor meget Valeur selv klarer</h2><span class="src">Valeur Insights</span></div>
+    <p class="sec-note" id="note-valeur"></p>
+    <dl class="modsat" id="v-tal" style="margin-top:0"></dl>
+    <div class="grid2" style="margin-top:1.25rem">
+      <div class="panel">
+        <header><h3>Svarprocent pr. måned</h3><span class="hint" id="v-hint"></span></header>
+        <div class="spark" id="v-svar"></div>
+        <div class="m-axis" id="v-svar-axis"></div>
+        <p style="font-size:.75rem;color:var(--faint);margin-top:.7rem" id="v-svar-note"></p>
+      </div>
+      <div class="panel">
+        <header><h3>Hvornår opkaldene mistes</h3><span class="hint">andel af de afbrudte</span></header>
+        <div class="bars" id="v-afbrudt"></div>
+        <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem">
+          Næsten alle tabte opkald falder i åbningstidens tre timer — det er dér, køen står.
+        </p>
+      </div>
+    </div>
+    <div class="rule" id="skoen" style="margin-top:1.25rem" hidden>
+      <span class="n">skøn</span>
+      <p id="skoen-txt"></p>
+    </div>
+  </section>
 
   <section id="hvad">
     <div class="sec-head"><h2>Hvad ringer medlemmerne om?</h2><span class="src">CRM · Membercare</span></div>
@@ -368,12 +532,13 @@
 
 <div id="tip" role="status" aria-live="polite"></div>
 
-<script id="dp-data" type="application/json">{"genereret":"2026-09-03","crm":{"meta":{"kilde":"Membercare (CRM) — servicefanen","raekker":9548,"periode_fra":"2025-05-05","periode_til":"2026-09-03","registreringsdage":257},"kpi":{"registreringer":9548,"medlemmer":4412,"pr_dag":37.2,"andel_gengangere":76.1,"servicegrupper":6,"servicetyper":38,"kredse":17},"maanedlig":[{"maaned":"2025-05","antal":392,"medlemmer":328,"tynd":false,"grupper":{"Rådgivning/forhandling":146,"Generelle fagforenings henvendelser":103,"Selvstændige":61,"Psykologfaglige henvendelser":59,"Autorisation og Tilsyn":18,"Studerende/dimittender/ledige":5}},{"maaned":"2025-06","antal":521,"medlemmer":406,"tynd":false,"grupper":{"Rådgivning/forhandling":188,"Psykologfaglige henvendelser":111,"Selvstændige":102,"Generelle fagforenings henvendelser":83,"Autorisation og Tilsyn":35,"Studerende/dimittender/ledige":2}},{"maaned":"2025-07","antal":355,"medlemmer":297,"tynd":false,"grupper":{"Rådgivning/forhandling":134,"Generelle fagforenings henvendelser":69,"Psykologfaglige henvendelser":69,"Selvstændige":68,"Autorisation og Tilsyn":12,"Studerende/dimittender/ledige":3}},{"maaned":"2025-08","antal":565,"medlemmer":446,"tynd":false,"grupper":{"Rådgivning/forhandling":232,"Generelle fagforenings henvendelser":115,"Psykologfaglige henvendelser":101,"Selvstændige":95,"Autorisation og Tilsyn":20,"Studerende/dimittender/ledige":2}},{"maaned":"2025-09","antal":685,"medlemmer":546,"tynd":false,"grupper":{"Rådgivning/forhandling":248,"Generelle fagforenings henvendelser":172,"Psykologfaglige henvendelser":159,"Selvstændige":89,"Autorisation og Tilsyn":17}},{"maaned":"2025-10","antal":579,"medlemmer":464,"tynd":false,"grupper":{"Rådgivning/forhandling":242,"Generelle fagforenings henvendelser":147,"Psykologfaglige henvendelser":105,"Selvstændige":71,"Autorisation og Tilsyn":14}},{"maaned":"2025-11","antal":661,"medlemmer":529,"tynd":false,"grupper":{"Rådgivning/forhandling":245,"Generelle fagforenings henvendelser":166,"Psykologfaglige henvendelser":108,"Selvstændige":94,"Autorisation og Tilsyn":44,"Studerende/dimittender/ledige":4}},{"maaned":"2025-12","antal":509,"medlemmer":419,"tynd":false,"grupper":{"Rådgivning/forhandling":197,"Generelle fagforenings henvendelser":120,"Psykologfaglige henvendelser":80,"Selvstændige":67,"Autorisation og Tilsyn":44,"Studerende/dimittender/ledige":1}},{"maaned":"2026-01","antal":772,"medlemmer":606,"tynd":false,"grupper":{"Rådgivning/forhandling":245,"Generelle fagforenings henvendelser":215,"Psykologfaglige henvendelser":159,"Selvstændige":95,"Autorisation og Tilsyn":52,"Studerende/dimittender/ledige":6}},{"maaned":"2026-02","antal":760,"medlemmer":627,"tynd":false,"grupper":{"Generelle fagforenings henvendelser":257,"Rådgivning/forhandling":237,"Selvstændige":115,"Psykologfaglige henvendelser":113,"Autorisation og Tilsyn":37,"Studerende/dimittender/ledige":1}},{"maaned":"2026-03","antal":773,"medlemmer":582,"tynd":false,"grupper":{"Rådgivning/forhandling":295,"Generelle fagforenings henvendelser":194,"Psykologfaglige henvendelser":128,"Selvstændige":127,"Autorisation og Tilsyn":28,"Studerende/dimittender/ledige":1}},{"maaned":"2026-04","antal":509,"medlemmer":420,"tynd":false,"grupper":{"Rådgivning/forhandling":226,"Generelle fagforenings henvendelser":120,"Psykologfaglige henvendelser":78,"Selvstændige":58,"Autorisation og Tilsyn":26,"Studerende/dimittender/ledige":1}},{"maaned":"2026-05","antal":466,"medlemmer":392,"tynd":false,"grupper":{"Rådgivning/forhandling":197,"Generelle fagforenings henvendelser":106,"Psykologfaglige henvendelser":77,"Selvstændige":67,"Autorisation og Tilsyn":19}},{"maaned":"2026-06","antal":801,"medlemmer":619,"tynd":false,"grupper":{"Rådgivning/forhandling":410,"Generelle fagforenings henvendelser":147,"Psykologfaglige henvendelser":115,"Selvstændige":104,"Autorisation og Tilsyn":25}},{"maaned":"2026-07","antal":272,"medlemmer":230,"tynd":false,"grupper":{"Rådgivning/forhandling":107,"Generelle fagforenings henvendelser":64,"Selvstændige":55,"Psykologfaglige henvendelser":37,"Autorisation og Tilsyn":9}},{"maaned":"2026-08","antal":836,"medlemmer":639,"tynd":false,"grupper":{"Rådgivning/forhandling":334,"Generelle fagforenings henvendelser":195,"Selvstændige":173,"Psykologfaglige henvendelser":115,"Autorisation og Tilsyn":19}},{"maaned":"2026-09","antal":92,"medlemmer":85,"tynd":false,"grupper":{"Rådgivning/forhandling":40,"Generelle fagforenings henvendelser":28,"Selvstændige":15,"Psykologfaglige henvendelser":6,"Autorisation og Tilsyn":3}}],"grupper":[{"navn":"Rådgivning/forhandling","antal":3723},{"navn":"Generelle fagforenings henvendelser","antal":2301},{"navn":"Psykologfaglige henvendelser","antal":1620},{"navn":"Selvstændige","antal":1456},{"navn":"Autorisation og Tilsyn","antal":422},{"navn":"Studerende/dimittender/ledige","antal":26}],"typer":[{"navn":"Medlemskab og kontingent","gruppe":"Generelle fagforenings henvendelser","antal":1369},{"navn":"Løn/lønforhandling","gruppe":"Rådgivning/forhandling","antal":1100},{"navn":"Ansættelse og ansættelseskontrakter","gruppe":"Rådgivning/forhandling","antal":972},{"navn":"Professionsjura","gruppe":"Psykologfaglige henvendelser","antal":947},{"navn":"Kurser og arrangementer","gruppe":"Generelle fagforenings henvendelser","antal":683},{"navn":"Praksisoverenskomst/ydernummer","gruppe":"Selvstændige","antal":584},{"navn":"Drift og opstart uden ydernummer","gruppe":"Selvstændige","antal":457},{"navn":"Sygdom/sygemelding","gruppe":"Rådgivning/forhandling","antal":435},{"navn":"Tilsyn og autorisation","gruppe":"Autorisation og Tilsyn","antal":422},{"navn":"Barsel","gruppe":"Rådgivning/forhandling","antal":352},{"navn":"Opsigelse og afskedigelse","gruppe":"Rådgivning/forhandling","antal":349},{"navn":"Specialistuddannelserne","gruppe":"Psykologfaglige henvendelser","antal":336},{"navn":"Arbejdsmiljø","gruppe":"Rådgivning/forhandling","antal":238},{"navn":"Samarbejdsaftaler, selvstændige","gruppe":"Selvstændige","antal":162},{"navn":"Autorisation/tilsyn (udgået)","gruppe":"Psykologfaglige henvendelser","antal":142},{"navn":"Overenskomstspørgsmål","gruppe":"Rådgivning/forhandling","antal":123},{"navn":"Forsikring og healthcare","gruppe":"Selvstændige","antal":105},{"navn":"Ferieregler","gruppe":"Rådgivning/forhandling","antal":78},{"navn":"Karriere og karrierevejledning","gruppe":"Psykologfaglige henvendelser","antal":77},{"navn":"Psykologer i Danmark","gruppe":"Selvstændige","antal":77},{"navn":"Medlemsfordele","gruppe":"Generelle fagforenings henvendelser","antal":76},{"navn":"Tilsynssager og klager","gruppe":"Psykologfaglige henvendelser","antal":76},{"navn":"Arbejdstid","gruppe":"Rådgivning/forhandling","antal":64},{"navn":"Sektioner, kredse og netværk","gruppe":"Generelle fagforenings henvendelser","antal":59},{"navn":"Betalinger til og fra foreningen (leverandører)","gruppe":"Generelle fagforenings henvendelser","antal":58},{"navn":"Etik","gruppe":"Psykologfaglige henvendelser","antal":42},{"navn":"GDPR","gruppe":"Selvstændige","antal":39},{"navn":"Presse og fagblad","gruppe":"Generelle fagforenings henvendelser","antal":34},{"navn":"Honoraraftale med KL","gruppe":"Selvstændige","antal":25},{"navn":"Medlemskab som studerende","gruppe":"Studerende/dimittender/ledige","antal":17},{"navn":"Seniorordning/seniorregler","gruppe":"Rådgivning/forhandling","antal":12},{"navn":"Henvendelser fra ikke medlemmer","gruppe":"Generelle fagforenings henvendelser","antal":11},{"navn":"Feedback til DP","gruppe":"Generelle fagforenings henvendelser","antal":9},{"navn":"Sundhed.dk","gruppe":"Selvstændige","antal":7}],"medlemstyper":[{"navn":"Normalansat over 19 timer","antal":4272},{"navn":"Selvstændig","antal":2700},{"navn":"1. og 2. års kandidater","antal":694},{"navn":"Ledig DP","antal":397},{"navn":"Pensionist DP","antal":344},{"navn":"Studerende DP","antal":325},{"navn":"Orlov uden løn DP","antal":97},{"navn":"Ledig uden dagpengeret","antal":82},{"navn":"Normalansat under 20 timer","antal":72},{"navn":"DLF og DLF ret","antal":56},{"navn":"Ph.d.-studerende","antal":24},{"navn":"Med løntilskud","antal":16},{"navn":"DLF og DP ret","antal":16},{"navn":"Udland DP","antal":11},{"navn":"Anden forhandlingsret","antal":7},{"navn":"Æresmedlem","antal":5},{"navn":"Øvrige","antal":5,"samlet":true}],"kredse":[{"navn":"København / Frederiksberg","antal":2249},{"navn":"Østjylland","antal":1648},{"navn":"Københavns Omegn","antal":1218},{"navn":"Fyn","antal":695},{"navn":"Nordjylland","antal":648},{"navn":"Nordsjælland","antal":459},{"navn":"Roskilde","antal":409},{"navn":"Landsdækkende","antal":333},{"navn":"Kreds Trekantsområdet","antal":262},{"navn":"Vestsjælland","antal":245},{"navn":"MIDTVESTjylland","antal":239},{"navn":"Storstrøm","antal":197},{"navn":"Ribe","antal":166},{"navn":"Viborg \"Limfjord\"","antal":155},{"navn":"Sønderjylland","antal":135},{"navn":"Grønland","antal":35},{"navn":"Bornholm","antal":30}],"kryds":{"grupper":["Rådgivning/forhandling","Generelle fagforenings henvendelser","Psykologfaglige henvendelser","Selvstændige","Autorisation og Tilsyn","Studerende/dimittender/ledige"],"raekker":[{"medlemstype":"Normalansat over 19 timer","antal":4272,"celler":[{"gruppe":"Rådgivning/forhandling","antal":2489,"andel":58.3},{"gruppe":"Generelle fagforenings henvendelser","antal":749,"andel":17.5},{"gruppe":"Psykologfaglige henvendelser","antal":666,"andel":15.6},{"gruppe":"Selvstændige","antal":141,"andel":3.3},{"gruppe":"Autorisation og Tilsyn","antal":226,"andel":5.3},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Selvstændig","antal":2700,"celler":[{"gruppe":"Rådgivning/forhandling","antal":238,"andel":8.8},{"gruppe":"Generelle fagforenings henvendelser","antal":503,"andel":18.6},{"gruppe":"Psykologfaglige henvendelser","antal":726,"andel":26.9},{"gruppe":"Selvstændige","antal":1152,"andel":42.7},{"gruppe":"Autorisation og Tilsyn","antal":81,"andel":3.0},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"1. og 2. års kandidater","antal":694,"celler":[{"gruppe":"Rådgivning/forhandling","antal":407,"andel":58.6},{"gruppe":"Generelle fagforenings henvendelser","antal":144,"andel":20.7},{"gruppe":"Psykologfaglige henvendelser","antal":62,"andel":8.9},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":54,"andel":7.8},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Ledig DP","antal":397,"celler":[{"gruppe":"Rådgivning/forhandling","antal":195,"andel":49.1},{"gruppe":"Generelle fagforenings henvendelser","antal":110,"andel":27.7},{"gruppe":"Psykologfaglige henvendelser","antal":39,"andel":9.8},{"gruppe":"Selvstændige","antal":38,"andel":9.6},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Pensionist DP","antal":344,"celler":[{"gruppe":"Rådgivning/forhandling","antal":null,"andel":null},{"gruppe":"Generelle fagforenings henvendelser","antal":257,"andel":74.7},{"gruppe":"Psykologfaglige henvendelser","antal":25,"andel":7.3},{"gruppe":"Selvstændige","antal":35,"andel":10.2},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Studerende DP","antal":325,"celler":[{"gruppe":"Rådgivning/forhandling","antal":120,"andel":36.9},{"gruppe":"Generelle fagforenings henvendelser","antal":170,"andel":52.3},{"gruppe":"Psykologfaglige henvendelser","antal":null,"andel":null},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Orlov uden løn DP","antal":97,"celler":[{"gruppe":"Rådgivning/forhandling","antal":56,"andel":57.7},{"gruppe":"Generelle fagforenings henvendelser","antal":null,"andel":null},{"gruppe":"Psykologfaglige henvendelser","antal":null,"andel":null},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Ledig uden dagpengeret","antal":82,"celler":[{"gruppe":"Rådgivning/forhandling","antal":36,"andel":43.9},{"gruppe":"Generelle fagforenings henvendelser","antal":34,"andel":41.5},{"gruppe":"Psykologfaglige henvendelser","antal":null,"andel":null},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]}]},"gengangere":{"fordeling":[{"antal_henvendelser":"1","medlemmer":2285},{"antal_henvendelser":"2","medlemmer":998},{"antal_henvendelser":"3","medlemmer":498},{"antal_henvendelser":"4","medlemmer":247},{"antal_henvendelser":"5","medlemmer":143},{"antal_henvendelser":"6","medlemmer":73},{"antal_henvendelser":"7","medlemmer":57},{"antal_henvendelser":"8","medlemmer":24},{"antal_henvendelser":"9","medlemmer":24},{"antal_henvendelser":"10+","medlemmer":63}],"unikke_medlemmer":4412,"andel_registreringer":76.1,"pr_emne":[{"navn":"Selvstændige","antal":1456,"andel_gengangere":83.2,"tynd":false},{"navn":"Rådgivning/forhandling","antal":3723,"andel_gengangere":78.0,"tynd":false},{"navn":"Psykologfaglige henvendelser","antal":1620,"andel_gengangere":76.4,"tynd":false},{"navn":"Autorisation og Tilsyn","antal":422,"andel_gengangere":76.1,"tynd":true},{"navn":"Generelle fagforenings henvendelser","antal":2301,"andel_gengangere":68.5,"tynd":false},{"navn":"Studerende/dimittender/ledige","antal":26,"andel_gengangere":42.3,"tynd":true}]},"ugedag":[{"navn":"Mandag","antal":2415},{"navn":"Tirsdag","antal":2409},{"navn":"Onsdag","antal":2},{"navn":"Torsdag","antal":2525},{"navn":"Fredag","antal":2196},{"navn":"Lørdag","antal":1}],"klokkeslaet":[{"time":9,"antal":402},{"time":10,"antal":3518},{"time":11,"antal":2527},{"time":12,"antal":2356},{"time":13,"antal":495},{"time":14,"antal":214},{"time":15,"antal":24}],"registranter":[{"navn":"Else Gammelgaard Madsen","antal":2176},{"navn":"Mai Damgaard Rasmussen","antal":1980},{"navn":"Bettina Vestergaard","antal":1502},{"navn":"Kamilla Rohde Schøler","antal":1292},{"navn":"Louise Meyer Nielsen","antal":741},{"navn":"Jannicke Kongsted","antal":710},{"navn":"Morten Theis Arnkjær","antal":588},{"navn":"Victoria Van Wersch","antal":553},{"navn":"Toke Toftman Christensen","antal":6}]},"telefoni":null,"valeur":null}</script>
+<script id="dp-data" type="application/json">{"genereret":"2026-09-03","crm":{"meta":{"kilde":"Membercare (CRM) — servicefanen","raekker":9548,"periode_fra":"2025-05-05","periode_til":"2026-09-03","registreringsdage":257},"kpi":{"registreringer":9548,"medlemmer":4412,"pr_dag":37.2,"andel_gengangere":76.1,"servicegrupper":6,"servicetyper":38,"kredse":17},"maanedlig":[{"maaned":"2025-05","antal":392,"medlemmer":328,"tynd":false,"grupper":{"Rådgivning/forhandling":146,"Generelle fagforenings henvendelser":103,"Selvstændige":61,"Psykologfaglige henvendelser":59,"Autorisation og Tilsyn":18,"Studerende/dimittender/ledige":5}},{"maaned":"2025-06","antal":521,"medlemmer":406,"tynd":false,"grupper":{"Rådgivning/forhandling":188,"Psykologfaglige henvendelser":111,"Selvstændige":102,"Generelle fagforenings henvendelser":83,"Autorisation og Tilsyn":35,"Studerende/dimittender/ledige":2}},{"maaned":"2025-07","antal":355,"medlemmer":297,"tynd":false,"grupper":{"Rådgivning/forhandling":134,"Generelle fagforenings henvendelser":69,"Psykologfaglige henvendelser":69,"Selvstændige":68,"Autorisation og Tilsyn":12,"Studerende/dimittender/ledige":3}},{"maaned":"2025-08","antal":565,"medlemmer":446,"tynd":false,"grupper":{"Rådgivning/forhandling":232,"Generelle fagforenings henvendelser":115,"Psykologfaglige henvendelser":101,"Selvstændige":95,"Autorisation og Tilsyn":20,"Studerende/dimittender/ledige":2}},{"maaned":"2025-09","antal":685,"medlemmer":546,"tynd":false,"grupper":{"Rådgivning/forhandling":248,"Generelle fagforenings henvendelser":172,"Psykologfaglige henvendelser":159,"Selvstændige":89,"Autorisation og Tilsyn":17}},{"maaned":"2025-10","antal":579,"medlemmer":464,"tynd":false,"grupper":{"Rådgivning/forhandling":242,"Generelle fagforenings henvendelser":147,"Psykologfaglige henvendelser":105,"Selvstændige":71,"Autorisation og Tilsyn":14}},{"maaned":"2025-11","antal":661,"medlemmer":529,"tynd":false,"grupper":{"Rådgivning/forhandling":245,"Generelle fagforenings henvendelser":166,"Psykologfaglige henvendelser":108,"Selvstændige":94,"Autorisation og Tilsyn":44,"Studerende/dimittender/ledige":4}},{"maaned":"2025-12","antal":509,"medlemmer":419,"tynd":false,"grupper":{"Rådgivning/forhandling":197,"Generelle fagforenings henvendelser":120,"Psykologfaglige henvendelser":80,"Selvstændige":67,"Autorisation og Tilsyn":44,"Studerende/dimittender/ledige":1}},{"maaned":"2026-01","antal":772,"medlemmer":606,"tynd":false,"grupper":{"Rådgivning/forhandling":245,"Generelle fagforenings henvendelser":215,"Psykologfaglige henvendelser":159,"Selvstændige":95,"Autorisation og Tilsyn":52,"Studerende/dimittender/ledige":6}},{"maaned":"2026-02","antal":760,"medlemmer":627,"tynd":false,"grupper":{"Generelle fagforenings henvendelser":257,"Rådgivning/forhandling":237,"Selvstændige":115,"Psykologfaglige henvendelser":113,"Autorisation og Tilsyn":37,"Studerende/dimittender/ledige":1}},{"maaned":"2026-03","antal":773,"medlemmer":582,"tynd":false,"grupper":{"Rådgivning/forhandling":295,"Generelle fagforenings henvendelser":194,"Psykologfaglige henvendelser":128,"Selvstændige":127,"Autorisation og Tilsyn":28,"Studerende/dimittender/ledige":1}},{"maaned":"2026-04","antal":509,"medlemmer":420,"tynd":false,"grupper":{"Rådgivning/forhandling":226,"Generelle fagforenings henvendelser":120,"Psykologfaglige henvendelser":78,"Selvstændige":58,"Autorisation og Tilsyn":26,"Studerende/dimittender/ledige":1}},{"maaned":"2026-05","antal":466,"medlemmer":392,"tynd":false,"grupper":{"Rådgivning/forhandling":197,"Generelle fagforenings henvendelser":106,"Psykologfaglige henvendelser":77,"Selvstændige":67,"Autorisation og Tilsyn":19}},{"maaned":"2026-06","antal":801,"medlemmer":619,"tynd":false,"grupper":{"Rådgivning/forhandling":410,"Generelle fagforenings henvendelser":147,"Psykologfaglige henvendelser":115,"Selvstændige":104,"Autorisation og Tilsyn":25}},{"maaned":"2026-07","antal":272,"medlemmer":230,"tynd":false,"grupper":{"Rådgivning/forhandling":107,"Generelle fagforenings henvendelser":64,"Selvstændige":55,"Psykologfaglige henvendelser":37,"Autorisation og Tilsyn":9}},{"maaned":"2026-08","antal":836,"medlemmer":639,"tynd":false,"grupper":{"Rådgivning/forhandling":334,"Generelle fagforenings henvendelser":195,"Selvstændige":173,"Psykologfaglige henvendelser":115,"Autorisation og Tilsyn":19}},{"maaned":"2026-09","antal":92,"medlemmer":85,"tynd":false,"grupper":{"Rådgivning/forhandling":40,"Generelle fagforenings henvendelser":28,"Selvstændige":15,"Psykologfaglige henvendelser":6,"Autorisation og Tilsyn":3}}],"grupper":[{"navn":"Rådgivning/forhandling","antal":3723},{"navn":"Generelle fagforenings henvendelser","antal":2301},{"navn":"Psykologfaglige henvendelser","antal":1620},{"navn":"Selvstændige","antal":1456},{"navn":"Autorisation og Tilsyn","antal":422},{"navn":"Studerende/dimittender/ledige","antal":26}],"typer":[{"navn":"Medlemskab og kontingent","gruppe":"Generelle fagforenings henvendelser","antal":1369},{"navn":"Løn/lønforhandling","gruppe":"Rådgivning/forhandling","antal":1100},{"navn":"Ansættelse og ansættelseskontrakter","gruppe":"Rådgivning/forhandling","antal":972},{"navn":"Professionsjura","gruppe":"Psykologfaglige henvendelser","antal":947},{"navn":"Kurser og arrangementer","gruppe":"Generelle fagforenings henvendelser","antal":683},{"navn":"Praksisoverenskomst/ydernummer","gruppe":"Selvstændige","antal":584},{"navn":"Drift og opstart uden ydernummer","gruppe":"Selvstændige","antal":457},{"navn":"Sygdom/sygemelding","gruppe":"Rådgivning/forhandling","antal":435},{"navn":"Tilsyn og autorisation","gruppe":"Autorisation og Tilsyn","antal":422},{"navn":"Barsel","gruppe":"Rådgivning/forhandling","antal":352},{"navn":"Opsigelse og afskedigelse","gruppe":"Rådgivning/forhandling","antal":349},{"navn":"Specialistuddannelserne","gruppe":"Psykologfaglige henvendelser","antal":336},{"navn":"Arbejdsmiljø","gruppe":"Rådgivning/forhandling","antal":238},{"navn":"Samarbejdsaftaler, selvstændige","gruppe":"Selvstændige","antal":162},{"navn":"Autorisation/tilsyn (udgået)","gruppe":"Psykologfaglige henvendelser","antal":142},{"navn":"Overenskomstspørgsmål","gruppe":"Rådgivning/forhandling","antal":123},{"navn":"Forsikring og healthcare","gruppe":"Selvstændige","antal":105},{"navn":"Ferieregler","gruppe":"Rådgivning/forhandling","antal":78},{"navn":"Karriere og karrierevejledning","gruppe":"Psykologfaglige henvendelser","antal":77},{"navn":"Psykologer i Danmark","gruppe":"Selvstændige","antal":77},{"navn":"Medlemsfordele","gruppe":"Generelle fagforenings henvendelser","antal":76},{"navn":"Tilsynssager og klager","gruppe":"Psykologfaglige henvendelser","antal":76},{"navn":"Arbejdstid","gruppe":"Rådgivning/forhandling","antal":64},{"navn":"Sektioner, kredse og netværk","gruppe":"Generelle fagforenings henvendelser","antal":59},{"navn":"Betalinger til og fra foreningen (leverandører)","gruppe":"Generelle fagforenings henvendelser","antal":58},{"navn":"Etik","gruppe":"Psykologfaglige henvendelser","antal":42},{"navn":"GDPR","gruppe":"Selvstændige","antal":39},{"navn":"Presse og fagblad","gruppe":"Generelle fagforenings henvendelser","antal":34},{"navn":"Honoraraftale med KL","gruppe":"Selvstændige","antal":25},{"navn":"Medlemskab som studerende","gruppe":"Studerende/dimittender/ledige","antal":17},{"navn":"Seniorordning/seniorregler","gruppe":"Rådgivning/forhandling","antal":12},{"navn":"Henvendelser fra ikke medlemmer","gruppe":"Generelle fagforenings henvendelser","antal":11},{"navn":"Feedback til DP","gruppe":"Generelle fagforenings henvendelser","antal":9},{"navn":"Sundhed.dk","gruppe":"Selvstændige","antal":7}],"medlemstyper":[{"navn":"Normalansat over 19 timer","antal":4272},{"navn":"Selvstændig","antal":2700},{"navn":"1. og 2. års kandidater","antal":694},{"navn":"Ledig DP","antal":397},{"navn":"Pensionist DP","antal":344},{"navn":"Studerende DP","antal":325},{"navn":"Orlov uden løn DP","antal":97},{"navn":"Ledig uden dagpengeret","antal":82},{"navn":"Normalansat under 20 timer","antal":72},{"navn":"DLF og DLF ret","antal":56},{"navn":"Ph.d.-studerende","antal":24},{"navn":"Med løntilskud","antal":16},{"navn":"DLF og DP ret","antal":16},{"navn":"Udland DP","antal":11},{"navn":"Anden forhandlingsret","antal":7},{"navn":"Æresmedlem","antal":5},{"navn":"Øvrige","antal":5,"samlet":true}],"kredse":[{"navn":"København / Frederiksberg","antal":2249},{"navn":"Østjylland","antal":1648},{"navn":"Københavns Omegn","antal":1218},{"navn":"Fyn","antal":695},{"navn":"Nordjylland","antal":648},{"navn":"Nordsjælland","antal":459},{"navn":"Roskilde","antal":409},{"navn":"Landsdækkende","antal":333},{"navn":"Kreds Trekantsområdet","antal":262},{"navn":"Vestsjælland","antal":245},{"navn":"MIDTVESTjylland","antal":239},{"navn":"Storstrøm","antal":197},{"navn":"Ribe","antal":166},{"navn":"Viborg \"Limfjord\"","antal":155},{"navn":"Sønderjylland","antal":135},{"navn":"Grønland","antal":35},{"navn":"Bornholm","antal":30}],"kryds":{"grupper":["Rådgivning/forhandling","Generelle fagforenings henvendelser","Psykologfaglige henvendelser","Selvstændige","Autorisation og Tilsyn","Studerende/dimittender/ledige"],"raekker":[{"medlemstype":"Normalansat over 19 timer","antal":4272,"celler":[{"gruppe":"Rådgivning/forhandling","antal":2489,"andel":58.3},{"gruppe":"Generelle fagforenings henvendelser","antal":749,"andel":17.5},{"gruppe":"Psykologfaglige henvendelser","antal":666,"andel":15.6},{"gruppe":"Selvstændige","antal":141,"andel":3.3},{"gruppe":"Autorisation og Tilsyn","antal":226,"andel":5.3},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Selvstændig","antal":2700,"celler":[{"gruppe":"Rådgivning/forhandling","antal":238,"andel":8.8},{"gruppe":"Generelle fagforenings henvendelser","antal":503,"andel":18.6},{"gruppe":"Psykologfaglige henvendelser","antal":726,"andel":26.9},{"gruppe":"Selvstændige","antal":1152,"andel":42.7},{"gruppe":"Autorisation og Tilsyn","antal":81,"andel":3.0},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"1. og 2. års kandidater","antal":694,"celler":[{"gruppe":"Rådgivning/forhandling","antal":407,"andel":58.6},{"gruppe":"Generelle fagforenings henvendelser","antal":144,"andel":20.7},{"gruppe":"Psykologfaglige henvendelser","antal":62,"andel":8.9},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":54,"andel":7.8},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Ledig DP","antal":397,"celler":[{"gruppe":"Rådgivning/forhandling","antal":195,"andel":49.1},{"gruppe":"Generelle fagforenings henvendelser","antal":110,"andel":27.7},{"gruppe":"Psykologfaglige henvendelser","antal":39,"andel":9.8},{"gruppe":"Selvstændige","antal":38,"andel":9.6},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Pensionist DP","antal":344,"celler":[{"gruppe":"Rådgivning/forhandling","antal":null,"andel":null},{"gruppe":"Generelle fagforenings henvendelser","antal":257,"andel":74.7},{"gruppe":"Psykologfaglige henvendelser","antal":25,"andel":7.3},{"gruppe":"Selvstændige","antal":35,"andel":10.2},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Studerende DP","antal":325,"celler":[{"gruppe":"Rådgivning/forhandling","antal":120,"andel":36.9},{"gruppe":"Generelle fagforenings henvendelser","antal":170,"andel":52.3},{"gruppe":"Psykologfaglige henvendelser","antal":null,"andel":null},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Orlov uden løn DP","antal":97,"celler":[{"gruppe":"Rådgivning/forhandling","antal":56,"andel":57.7},{"gruppe":"Generelle fagforenings henvendelser","antal":null,"andel":null},{"gruppe":"Psykologfaglige henvendelser","antal":null,"andel":null},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]},{"medlemstype":"Ledig uden dagpengeret","antal":82,"celler":[{"gruppe":"Rådgivning/forhandling","antal":36,"andel":43.9},{"gruppe":"Generelle fagforenings henvendelser","antal":34,"andel":41.5},{"gruppe":"Psykologfaglige henvendelser","antal":null,"andel":null},{"gruppe":"Selvstændige","antal":null,"andel":null},{"gruppe":"Autorisation og Tilsyn","antal":null,"andel":null},{"gruppe":"Studerende/dimittender/ledige","antal":null,"andel":null}]}]},"gengangere":{"fordeling":[{"antal_henvendelser":"1","medlemmer":2285},{"antal_henvendelser":"2","medlemmer":998},{"antal_henvendelser":"3","medlemmer":498},{"antal_henvendelser":"4","medlemmer":247},{"antal_henvendelser":"5","medlemmer":143},{"antal_henvendelser":"6","medlemmer":73},{"antal_henvendelser":"7","medlemmer":57},{"antal_henvendelser":"8","medlemmer":24},{"antal_henvendelser":"9","medlemmer":24},{"antal_henvendelser":"10+","medlemmer":63}],"unikke_medlemmer":4412,"andel_registreringer":76.1,"pr_emne":[{"navn":"Selvstændige","antal":1456,"andel_gengangere":83.2,"tynd":false},{"navn":"Rådgivning/forhandling","antal":3723,"andel_gengangere":78.0,"tynd":false},{"navn":"Psykologfaglige henvendelser","antal":1620,"andel_gengangere":76.4,"tynd":false},{"navn":"Autorisation og Tilsyn","antal":422,"andel_gengangere":76.1,"tynd":true},{"navn":"Generelle fagforenings henvendelser","antal":2301,"andel_gengangere":68.5,"tynd":false},{"navn":"Studerende/dimittender/ledige","antal":26,"andel_gengangere":42.3,"tynd":true}]},"ugedag":[{"navn":"Mandag","antal":2415},{"navn":"Tirsdag","antal":2409},{"navn":"Onsdag","antal":2},{"navn":"Torsdag","antal":2525},{"navn":"Fredag","antal":2196},{"navn":"Lørdag","antal":1}],"klokkeslaet":[{"time":9,"antal":402},{"time":10,"antal":3518},{"time":11,"antal":2527},{"time":12,"antal":2356},{"time":13,"antal":495},{"time":14,"antal":214},{"time":15,"antal":24}],"registranter":[{"navn":"Else Gammelgaard Madsen","antal":2176},{"navn":"Mai Damgaard Rasmussen","antal":1980},{"navn":"Bettina Vestergaard","antal":1502},{"navn":"Kamilla Rohde Schøler","antal":1292},{"navn":"Louise Meyer Nielsen","antal":741},{"navn":"Jannicke Kongsted","antal":710},{"navn":"Morten Theis Arnkjær","antal":588},{"navn":"Victoria Van Wersch","antal":553},{"navn":"Toke Toftman Christensen","antal":6}]},"telefoni":{"kilde":"IP Nordic — CDR og daglige kø-rapporter","cdr":{"raekker":66910,"periode_fra":"2025-05-01","periode_til":"2026-09-03","lag":[{"noegle":"velkomst","navn":"Velkomstbesked","nummer":"3824","opkald":5971,"median_sek":13.0,"onsdag":2169,"uden_for_aabningstid":4652,"foerste":"2025-05-02"},{"noegle":"valeur","navn":"Valeur","nummer":"773345xx","opkald":15529,"median_sek":325.0,"onsdag":0,"uden_for_aabningstid":1311,"foerste":"2025-05-05"},{"noegle":"svarer","navn":"Telefonsvarer","nummer":"309060xx","opkald":12382,"median_sek":24.0,"onsdag":2260,"uden_for_aabningstid":8573,"foerste":"2025-05-01"}],"ugedage":["Mandag","Tirsdag","Onsdag","Torsdag","Fredag","Lørdag","Søndag"],"ugedag_lag":{"velkomst":[998,1063,2169,987,718,23,13],"valeur":[3881,4016,0,4070,3562,0,0],"svarer":[2060,2227,2260,2246,2140,749,700]},"time_lag":{"velkomst":{"9":1257,"13":1236,"14":925,"10":553,"15":534,"8":443,"11":413,"12":353,"16":120,"17":44,"7":34,"18":20,"20":10,"21":8,"22":5,"6":5,"19":5,"5":4,"3":2},"valeur":{"10":6158,"11":4150,"12":3910,"9":567,"13":419,"14":321,"15":4},"svarer":{"13":1409,"14":1396,"10":1351,"11":1246,"12":1212,"15":1153,"9":1015,"16":779,"8":681,"17":582,"18":374,"19":350,"20":303,"21":173,"7":146,"22":96,"23":45,"0":39,"1":13,"6":9,"3":6,"5":2,"4":1,"2":1}},"maaneder":["2025-05","2025-06","2025-07","2025-08","2025-09","2025-10","2025-11","2025-12","2026-01","2026-02","2026-03","2026-04","2026-05","2026-06","2026-07","2026-08","2026-09"],"maaned_lag":{"velkomst":{"2025-05":493,"2025-06":425,"2025-07":235,"2025-08":463,"2025-09":541,"2025-10":491,"2025-11":440,"2025-12":387,"2026-01":509,"2026-02":484,"2026-03":563,"2026-04":405,"2026-05":402,"2026-06":65,"2026-07":11,"2026-08":50,"2026-09":7},"valeur":{"2025-05":863,"2025-06":1052,"2025-07":624,"2025-08":1025,"2025-09":1178,"2025-10":1040,"2025-11":1157,"2025-12":810,"2026-01":1132,"2026-02":1213,"2026-03":1093,"2026-04":745,"2026-05":708,"2026-06":1164,"2026-07":370,"2026-08":1206,"2026-09":149},"svarer":{"2025-05":700,"2025-06":646,"2025-07":452,"2025-08":681,"2025-09":847,"2025-10":808,"2025-11":805,"2025-12":765,"2026-01":766,"2026-02":771,"2026-03":959,"2026-04":965,"2026-05":867,"2026-06":964,"2026-07":462,"2026-08":826,"2026-09":98}},"gentagne":{"numre":8980,"opkald":32541,"fordeling":[{"opkald":"1","numre":4188},{"opkald":"2","numre":1847},{"opkald":"3","numre":925},{"opkald":"4","numre":565},{"opkald":"5","numre":340},{"opkald":"6","numre":252},{"opkald":"7","numre":155},{"opkald":"8","numre":134},{"opkald":"9","numre":83},{"opkald":"10+","numre":491}]}},"koeer":{"koeer":[{"nummer":"1510","navn":"Ansættelse","opkald":4201,"besvarede":2953,"svarprocent":70.3,"dage":262,"gns_samtale":"8:59","gns_vente":"0:41","maks_vente":"25:43"},{"nummer":"1515","navn":"Selvstændig","opkald":1814,"besvarede":1121,"svarprocent":61.8,"dage":214,"gns_samtale":"8:13","gns_vente":"0:51","maks_vente":"23:28"},{"nummer":"15123","navn":"Øvrige henvendelse","opkald":693,"besvarede":593,"svarprocent":85.6,"dage":202,"gns_samtale":"3:38","gns_vente":"0:17","maks_vente":"18:32"},{"nummer":"15122","navn":"Kursus- eller Arrangementtilmelding","opkald":401,"besvarede":341,"svarprocent":85.0,"dage":177,"gns_samtale":"4:26","gns_vente":"0:19","maks_vente":"18:02"},{"nummer":"1525","navn":"Debitor spørgsmål","opkald":306,"besvarede":228,"svarprocent":74.5,"dage":138,"gns_samtale":"3:02","gns_vente":"0:13","maks_vente":"2:34"},{"nummer":"1520","navn":"Zexpense","opkald":69,"besvarede":56,"svarprocent":81.2,"dage":52,"gns_samtale":"3:34","gns_vente":"0:30","maks_vente":"12:50"}],"maanedlig":[{"maaned":"2025-05","opkald":502,"besvarede":374,"svarprocent":74.5,"gns_vente_sek":34.6,"gns_samtale_sek":403.5,"pr_koe":{"Ansættelse":230,"Debitor spørgsmål":37,"Kursus- eller Arrangementtilmelding":21,"Selvstændig":152,"Zexpense":10,"Øvrige henvendelse":52}},{"maaned":"2025-06","opkald":559,"besvarede":357,"svarprocent":63.9,"gns_vente_sek":35.8,"gns_samtale_sek":455.9,"pr_koe":{"Ansættelse":295,"Debitor spørgsmål":15,"Kursus- eller Arrangementtilmelding":14,"Selvstændig":192,"Zexpense":9,"Øvrige henvendelse":34}},{"maaned":"2025-07","opkald":281,"besvarede":153,"svarprocent":54.4,"gns_vente_sek":42.9,"gns_samtale_sek":535.0,"pr_koe":{"Ansættelse":125,"Debitor spørgsmål":3,"Kursus- eller Arrangementtilmelding":9,"Selvstændig":128,"Zexpense":2,"Øvrige henvendelse":14}},{"maaned":"2025-08","opkald":579,"besvarede":376,"svarprocent":64.9,"gns_vente_sek":24.7,"gns_samtale_sek":454.8,"pr_koe":{"Ansættelse":314,"Debitor spørgsmål":13,"Kursus- eller Arrangementtilmelding":18,"Selvstændig":188,"Zexpense":3,"Øvrige henvendelse":43}},{"maaned":"2025-09","opkald":571,"besvarede":372,"svarprocent":65.1,"gns_vente_sek":31.3,"gns_samtale_sek":425.0,"pr_koe":{"Ansættelse":323,"Debitor spørgsmål":16,"Kursus- eller Arrangementtilmelding":47,"Selvstændig":140,"Zexpense":6,"Øvrige henvendelse":39}},{"maaned":"2025-10","opkald":459,"besvarede":288,"svarprocent":62.7,"gns_vente_sek":31.5,"gns_samtale_sek":475.2,"pr_koe":{"Ansættelse":262,"Debitor spørgsmål":19,"Kursus- eller Arrangementtilmelding":28,"Selvstændig":107,"Zexpense":6,"Øvrige henvendelse":37}},{"maaned":"2025-11","opkald":371,"besvarede":273,"svarprocent":73.6,"gns_vente_sek":26.9,"gns_samtale_sek":458.5,"pr_koe":{"Ansættelse":239,"Debitor spørgsmål":54,"Kursus- eller Arrangementtilmelding":21,"Selvstændig":19,"Zexpense":5,"Øvrige henvendelse":33}},{"maaned":"2025-12","opkald":270,"besvarede":215,"svarprocent":79.6,"gns_vente_sek":29.1,"gns_samtale_sek":408.5,"pr_koe":{"Ansættelse":203,"Debitor spørgsmål":18,"Kursus- eller Arrangementtilmelding":14,"Selvstændig":8,"Zexpense":7,"Øvrige henvendelse":20}},{"maaned":"2026-01","opkald":399,"besvarede":289,"svarprocent":72.4,"gns_vente_sek":49.1,"gns_samtale_sek":495.7,"pr_koe":{"Ansættelse":281,"Debitor spørgsmål":26,"Kursus- eller Arrangementtilmelding":37,"Selvstændig":1,"Zexpense":7,"Øvrige henvendelse":47}},{"maaned":"2026-02","opkald":442,"besvarede":326,"svarprocent":73.8,"gns_vente_sek":40.7,"gns_samtale_sek":478.6,"pr_koe":{"Ansættelse":251,"Debitor spørgsmål":26,"Kursus- eller Arrangementtilmelding":23,"Selvstændig":107,"Zexpense":1,"Øvrige henvendelse":34}},{"maaned":"2026-03","opkald":577,"besvarede":437,"svarprocent":75.7,"gns_vente_sek":44.6,"gns_samtale_sek":436.3,"pr_koe":{"Ansættelse":303,"Debitor spørgsmål":23,"Kursus- eller Arrangementtilmelding":35,"Selvstændig":161,"Zexpense":1,"Øvrige henvendelse":54}},{"maaned":"2026-04","opkald":393,"besvarede":287,"svarprocent":73.0,"gns_vente_sek":30.2,"gns_samtale_sek":496.5,"pr_koe":{"Ansættelse":218,"Debitor spørgsmål":12,"Kursus- eller Arrangementtilmelding":26,"Selvstændig":91,"Øvrige henvendelse":46}},{"maaned":"2026-05","opkald":363,"besvarede":250,"svarprocent":68.9,"gns_vente_sek":52.2,"gns_samtale_sek":502.4,"pr_koe":{"Ansættelse":179,"Debitor spørgsmål":9,"Kursus- eller Arrangementtilmelding":18,"Selvstændig":112,"Zexpense":3,"Øvrige henvendelse":42}},{"maaned":"2026-06","opkald":689,"besvarede":529,"svarprocent":76.8,"gns_vente_sek":48.7,"gns_samtale_sek":440.2,"pr_koe":{"Ansættelse":448,"Debitor spørgsmål":8,"Kursus- eller Arrangementtilmelding":27,"Selvstændig":132,"Zexpense":6,"Øvrige henvendelse":68}},{"maaned":"2026-07","opkald":233,"besvarede":193,"svarprocent":82.8,"gns_vente_sek":28.3,"gns_samtale_sek":424.4,"pr_koe":{"Ansættelse":119,"Debitor spørgsmål":10,"Kursus- eller Arrangementtilmelding":7,"Selvstændig":64,"Øvrige henvendelse":33}},{"maaned":"2026-08","opkald":710,"besvarede":512,"svarprocent":72.1,"gns_vente_sek":43.5,"gns_samtale_sek":472.0,"pr_koe":{"Ansættelse":364,"Debitor spørgsmål":15,"Kursus- eller Arrangementtilmelding":44,"Selvstændig":193,"Zexpense":2,"Øvrige henvendelse":92}},{"maaned":"2026-09","opkald":86,"besvarede":61,"svarprocent":70.9,"gns_vente_sek":18.6,"gns_samtale_sek":450.5,"pr_koe":{"Ansættelse":47,"Debitor spørgsmål":2,"Kursus- eller Arrangementtilmelding":12,"Selvstændig":19,"Zexpense":1,"Øvrige henvendelse":5}}],"aar_til_aar":{"foer_aar":2025,"efter_aar":2026,"maaneder":[5,6,7,8,9],"fra":"05-02","til":"09-03","raekker":[{"navn":"Ansættelse","foer":1007,"efter":1157,"aendring":14.9},{"navn":"Selvstændig","foer":680,"efter":520,"aendring":-23.5},{"navn":"Øvrige henvendelse","foer":143,"efter":240,"aendring":67.8},{"navn":"Kursus- eller Arrangementtilmelding","foer":64,"efter":108,"aendring":68.8},{"navn":"Debitor spørgsmål","foer":70,"efter":44,"aendring":-37.1},{"navn":"Zexpense","foer":24,"efter":12,"aendring":-50.0}],"i_alt":{"foer":1988,"efter":2081,"aendring":4.7}},"ialt":{"opkald":7484,"besvarede":5292,"svarprocent":70.7,"gns_vente":"0:38","gns_samtale":"7:37","periode_fra":"2025-05-02","periode_til":"2026-09-03"}},"roller_udledt":{"velkomst":"3824","valeur":"773345xx","svarer":"309060xx"}},"valeur":{"kilde":"Valeur Insights","periode_fra":"2025-03-21","periode_til":"2026-09-03","dage":257,"opkald":15080,"besvarede":12809,"svarprocent":84.9,"maanedlig":[{"maaned":"2025-03","opkald":1,"besvarede":0,"svarprocent":0.0,"tynd":true},{"maaned":"2025-04","opkald":9,"besvarede":7,"svarprocent":77.8,"tynd":true},{"maaned":"2025-05","opkald":852,"besvarede":719,"svarprocent":84.4,"tynd":false},{"maaned":"2025-06","opkald":1007,"besvarede":846,"svarprocent":84.0,"tynd":false},{"maaned":"2025-07","opkald":606,"besvarede":500,"svarprocent":82.5,"tynd":false},{"maaned":"2025-08","opkald":1007,"besvarede":847,"svarprocent":84.1,"tynd":false},{"maaned":"2025-09","opkald":1158,"besvarede":995,"svarprocent":85.9,"tynd":false},{"maaned":"2025-10","opkald":1028,"besvarede":830,"svarprocent":80.7,"tynd":false},{"maaned":"2025-11","opkald":989,"besvarede":832,"svarprocent":84.1,"tynd":false},{"maaned":"2025-12","opkald":761,"besvarede":637,"svarprocent":83.7,"tynd":false},{"maaned":"2026-01","opkald":1054,"besvarede":913,"svarprocent":86.6,"tynd":false},{"maaned":"2026-02","opkald":1202,"besvarede":974,"svarprocent":81.0,"tynd":false},{"maaned":"2026-03","opkald":1087,"besvarede":942,"svarprocent":86.7,"tynd":false},{"maaned":"2026-04","opkald":747,"besvarede":653,"svarprocent":87.4,"tynd":false},{"maaned":"2026-05","opkald":701,"besvarede":615,"svarprocent":87.7,"tynd":false},{"maaned":"2026-06","opkald":1163,"besvarede":1020,"svarprocent":87.7,"tynd":false},{"maaned":"2026-07","opkald":368,"besvarede":335,"svarprocent":91.0,"tynd":false},{"maaned":"2026-08","opkald":1205,"besvarede":1027,"svarprocent":85.2,"tynd":false},{"maaned":"2026-09","opkald":135,"besvarede":117,"svarprocent":86.7,"tynd":false}],"ugedag":[{"navn":"Mandag","opkald":3760,"besvarede":3225},{"navn":"Tirsdag","opkald":3901,"besvarede":3296},{"navn":"Torsdag","opkald":3952,"besvarede":3368},{"navn":"Fredag","opkald":3467,"besvarede":2920}],"timefordeling":[{"time":9,"andel":3.7},{"time":10,"andel":39.7},{"time":11,"andel":26.5},{"time":12,"andel":25.1},{"time":13,"andel":2.8},{"time":14,"andel":2.1},{"time":15,"andel":0.0}],"afbrudt_pr_time":[{"time":9,"andel":2.6},{"time":10,"andel":31.6},{"time":11,"andel":28.0},{"time":12,"andel":31.5},{"time":13,"andel":3.3},{"time":14,"andel":3.1}],"haandtering":{"besvarede":12809,"videre":7484,"selv":5325,"andel":41.6,"maal":70}},"egne":{"kilde":"DP's egen opgørelse, sammenstillet fra IP Nordic","foer_aar":2025,"efter_aar":2026,"maaneder":["Januar","Februar","Marts"],"raekker":[{"navn":"Rådgivning","foer":1081,"efter":835,"aendring":-22.8,"i_alt_raekke":false},{"navn":"Selvstændig","foer":338,"efter":268,"aendring":-20.7,"i_alt_raekke":false},{"navn":"Medlemsservice/øvrige","foer":402,"efter":135,"aendring":-66.4,"i_alt_raekke":false},{"navn":"Kursus","foer":122,"efter":95,"aendring":-22.1,"i_alt_raekke":false},{"navn":"Debitor","foer":107,"efter":75,"aendring":-29.9,"i_alt_raekke":false},{"navn":"zExpense","foer":71,"efter":9,"aendring":-87.3,"i_alt_raekke":false}],"i_alt":{"navn":"I alt","foer":2309,"efter":1417,"aendring":-38.6,"i_alt_raekke":true}}}</script>
 <script>
 (function () {
   "use strict";
   const D = JSON.parse(document.getElementById("dp-data").textContent);
   const crm = D.crm;
+  const T = D.telefoni, V = D.valeur;
   const SERIE = ["--c1","--c2","--c3","--c4","--c5","--c6"];
   const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
@@ -382,6 +547,10 @@
   const p1 = v => v.toFixed(1).replace(".", ",") + " %";
   const MAAN = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
 
+  const setNote = (id, html) => {
+    const n = document.getElementById(id);
+    if (n) n.innerHTML = html;
+  };
   const el = (t, cls, html) => {
     const e = document.createElement(t);
     if (cls) e.className = cls;
@@ -413,14 +582,17 @@
   /* ── Nøgletal ──────────────────────────────────────────────────────────── */
   const k = crm.kpi, meta = crm.meta;
   const dk = s => { const [y,m,d] = s.split("-"); return `${+d}. ${MAAN[+m-1]}. ${y}`; };
+  const _sumLag = T ? T.cdr.lag.reduce((a,l)=>a+l.opkald,0) : 0;
+  const _sv = T ? (T.cdr.lag.find(l=>l.noegle==="svarer")||{opkald:0}).opkald : 0;
+  const _koe = T && T.koeer ? T.koeer.ialt : null;
   const scale = [
-    ["Registreringer", n0(k.registreringer), `${dk(meta.periode_fra)} – ${dk(meta.periode_til)}`],
-    ["Medlemmer bag", n0(k.medlemmer), "unikke stamkort"],
-    ["Pr. åbningsdag", String(k.pr_dag).replace(".", ","), `${n0(meta.registreringsdage)} dage med registreringer`],
-    ["Fra gengangere", p1(k.andel_gengangere), "af alle registreringer"],
-    ["Emner", `${k.servicegrupper} / ${k.servicetyper}`, "grupper / typer"],
-    ["Kredse", String(k.kredse), "geografisk spredning"],
-  ];
+    T ? ["Opkald fra medlemmer", n0(_sumLag), `${dk(T.cdr.periode_fra)} – ${dk(T.cdr.periode_til)}`] : null,
+    V ? ["Taget af Valeur", p1(V.svarprocent), `${n0(V.besvarede)} af ${n0(V.opkald)} kald`] : null,
+    T ? ["På telefonsvarer", n0(_sv), `${p1(_sv/_sumLag*100)} af alle opkald`] : null,
+    _koe ? ["Videre til sekretariatet", n0(_koe.opkald), `${p1(_koe.svarprocent)} blev taget`] : null,
+    ["Registreret i CRM", n0(k.registreringer), `${n0(k.medlemmer)} medlemmer`],
+    ["Fra gengangere", p1(k.andel_gengangere), "af registreringerne"],
+  ].filter(Boolean);
   const sc = document.getElementById("scale");
   scale.forEach(([t, v, s]) => {
     const w = el("div");
@@ -432,10 +604,12 @@
   const kilder = [
     { navn: "Membercare (CRM)", farve: "--c1", status: "aktiv", txt:
       `${n0(k.registreringer)} serviceregistreringer. Fortæller hvem der ringer, om hvad, og hvornår.` },
-    { navn: "IP Nordic", farve: "--c3", status: "venter", txt:
-      "Telefonstatistik: opkald, svarprocent, ventetid og samtaletid pr. kø. Afventer eksport." },
-    { navn: "Valeur Insights", farve: "--c2", status: "venter", txt:
-      "Valeurs egen håndtering: straksbesvarelser mod viderestillinger. Afventer eksport." },
+    { navn: "IP Nordic", farve: "--c3", status: "aktiv", txt: T
+        ? `${n0(T.cdr.raekker)} opkaldsposter og ${n0(T.koeer ? T.koeer.ialt.opkald : 0)} køopkald. Viser hvad der sker med opkaldet.`
+        : "Afventer eksport." },
+    { navn: "Valeur Insights", farve: "--c2", status: "aktiv", txt: V
+        ? `${n0(V.opkald)} kald over ${V.dage} åbningsdage. Viser hvor mange Valeur selv når at tage.`
+        : "Afventer eksport." },
   ];
   const kb = document.getElementById("kilder");
   kilder.forEach(s => {
@@ -658,6 +832,318 @@
     crm.klokkeslaet.map(r => ({ k: r.time, v: r.antal, tip: `Kl. ${r.time}–${r.time + 1}` })),
     { farve: r => (r.k >= 10 && r.k < 13) ? "--c1" : "--navy-400", enhed: "Registreringer" });
 
+
+  /* ── Telefoni: opkaldsrejsen ───────────────────────────────────────────── */
+  const LAGFARVE = { valeur:"--c3", svarer:"--c2", velkomst:"--c6" };
+
+  if (T) {
+    const lag = T.cdr.lag, sumLag = lag.reduce((a,l)=>a+l.opkald,0);
+    const byKey = Object.fromEntries(lag.map(l=>[l.noegle,l]));
+    const orden = ["valeur","svarer","velkomst"].filter(k=>byKey[k]);
+
+    const flow = document.getElementById("flow");
+    orden.forEach(k => {
+      const l = byKey[k], pct = l.opkald/sumLag*100;
+      const d = el("div");
+      d.style.cssText = `flex:${l.opkald};background:var(${LAGFARVE[k]})`;
+      d.innerHTML = `<span class="fn">${l.navn}</span>` +
+        `<span class="fv">${n0(l.opkald)} · ${pct.toFixed(0)} %</span>`;
+      bindTip(d, () => tipRows(l.navn, [
+        ["Opkald", n0(l.opkald)],
+        ["Andel", p1(pct)],
+        ["Median varighed", `${Math.floor(l.median_sek/60)}:${String(Math.round(l.median_sek%60)).padStart(2,"0")}`],
+        ["Heraf onsdag", n0(l.onsdag)],
+        ["Uden for 10–13", n0(l.uden_for_aabningstid)],
+      ]));
+      flow.append(d);
+    });
+
+    const legR = document.getElementById("leg-rejse");
+    orden.forEach(k => {
+      const s = el("span"), i = el("i");
+      i.style.background = `var(${LAGFARVE[k]})`;
+      s.append(i, document.createTextNode(`${byKey[k].navn} · median ${Math.floor(byKey[k].median_sek/60)}:${String(Math.round(byKey[k].median_sek%60)).padStart(2,"0")}`));
+      legR.append(s);
+    });
+
+    document.getElementById("rejse-hint").textContent = `${n0(sumLag)} opkald fra medlemmer`;
+    const koe = T.koeer && T.koeer.ialt;
+    if (koe) {
+      document.getElementById("trin-koe").innerHTML =
+        `Kan Valeur ikke svare, sendes opkaldet videre til en kø hos sekretariatet.
+         Det skete <b>${n0(koe.opkald)}</b> gange, og <b>${p1(koe.svarprocent)}</b> af dem
+         blev taget — efter <b>${koe.gns_vente}</b> i kø og med en samtale på <b>${koe.gns_samtale}</b>.`;
+    }
+    document.getElementById("rejse-note").innerHTML =
+      `Numrene er ikke navngivet i eksporten. Rollerne er udledt af mønstrene:
+       Valeur-nummeret går i luften <b>5. maj 2025</b>, dagen samarbejdet startede, rammes
+       aldrig om onsdagen og har en median samtale på 5½ minut. Telefonsvareren kører
+       døgnet rundt med en median på 24 sekunder, og velkomstbeskeden på 13 sekunder er
+       tungest netop når der er lukket. Bør bekræftes af DP.`;
+
+    setNote("note-rejse",
+      `Hvert opkald til hovednummeret lander ét af tre steder. Kun det ene er et menneske.
+       <b>${p1((byKey.svarer ? byKey.svarer.opkald : 0)/sumLag*100)}</b> af opkaldene endte
+       på telefonsvareren.`);
+
+    /* ── Onsdagen ────────────────────────────────────────────────────────── */
+    const onsLag = lag.reduce((a,l)=>a+l.onsdag,0);
+    const onsCRM = (crm.ugedag.find(d=>d.navn==="Onsdag")||{antal:0}).antal;
+    const onsTal = [
+      ["--c2", "Opkald om onsdagen", n0(onsLag), "medlemmer der ringer på lukkedagen"],
+      ["--c3", "Taget af Valeur", "0", "telefonen er lukket hele dagen"],
+      ["--navy", "Registreret i CRM", n0(onsCRM), `af ${n0(k.registreringer)} registreringer`],
+      ["--c4", "Andel af alle opkald", p1(onsLag/sumLag*100), "onsdag er 1 af 5 hverdage"],
+    ];
+    const ot = document.getElementById("onsdag-tal");
+    onsTal.forEach(([c,t,v,s]) => {
+      const d = el("div"); d.style.setProperty("--accent",`var(${c})`);
+      d.append(el("dt",null,t), el("dd",null,`${v}<small>${s}</small>`));
+      ot.append(d);
+    });
+    setNote("note-lukket",
+      `Briefingen spurgte, om medlemmerne har forstået at onsdagen er lukkedag.
+       Telefonidataene svarer klart nej: <b>${n0(onsLag)}</b> opkald er landet på en onsdag,
+       hvor de bliver mødt af en besked eller en telefonsvarer. CRM kunne ikke se dem —
+       der bliver ikke registreret noget, når ingen tager telefonen.`);
+
+    /* stablede søjler pr. ugedag og klokkeslæt */
+    function stabel(mountId, axisId, nøgler, kategorier, hent, label, fremhæv) {
+      const box = document.getElementById(mountId), ax = document.getElementById(axisId);
+      const totaler = kategorier.map(c => nøgler.reduce((a,k)=>a+hent(k,c),0));
+      const max = Math.max(...totaler, 1);
+      kategorier.forEach((c, ci) => {
+        const col = el("div","m-col");
+        const inner = el("div");
+        inner.style.cssText = `height:${(totaler[ci]/max*100).toFixed(2)}%;display:flex;` +
+          "flex-direction:column;justify-content:flex-end;gap:2px";
+        nøgler.forEach(k => {
+          const v = hent(k,c); if (!v) return;
+          const seg = el("div","seg");
+          seg.style.flex = String(v);
+          seg.style.background = `var(${LAGFARVE[k]})`;
+          inner.append(seg);
+        });
+        col.append(inner);
+        bindTip(col, () => tipRows(label(c),
+          [["I alt", n0(totaler[ci])]].concat(
+            nøgler.filter(k=>hent(k,c)).map(k=>[byKey[k].navn, n0(hent(k,c))]))));
+        box.append(col);
+        const t = el("span", null, label(c, true));
+        if (fremhæv && fremhæv(c)) t.style.cssText =
+          "color:var(--ink);font-weight:600;border-bottom:2px solid var(--c1)";
+        ax.append(t);
+      });
+    }
+
+    const UDK = ["man","tir","ons","tor","fre","lør","søn"];
+    stabel("ugedag-lag","ugedag-lag-axis", orden, [0,1,2,3,4,5,6],
+      (k,i) => (T.cdr.ugedag_lag[k]||[])[i] || 0,
+      (i,kort) => kort ? UDK[i] : T.cdr.ugedage[i],
+      i => i===2);
+    const legU = document.getElementById("leg-ugedag");
+    orden.forEach(k => {
+      const s = el("span"), i = el("i");
+      i.style.background = `var(${LAGFARVE[k]})`;
+      s.append(i, document.createTextNode(byKey[k].navn));
+      legU.append(s);
+    });
+
+    const timer = [...new Set(orden.flatMap(k=>Object.keys(T.cdr.time_lag[k]||{}).map(Number)))]
+      .filter(t=>t>=7&&t<=18).sort((a,b)=>a-b);
+    stabel("time-lag","time-lag-axis", orden, timer,
+      (k,t) => (T.cdr.time_lag[k]||{})[t] || 0,
+      (t,kort) => kort ? String(t) : `Kl. ${t}–${t+1}`,
+      t => t>=10 && t<13);
+    const udenfor = lag.reduce((a,l)=>a+l.uden_for_aabningstid,0);
+    document.getElementById("time-note").innerHTML =
+      `<b>${n0(udenfor)}</b> opkald — ${p1(udenfor/sumLag*100)} — falder uden for
+       åbningstiden 10–13, understreget på aksen. De rammer en besked eller en telefonsvarer.`;
+
+    /* ── Køerne ──────────────────────────────────────────────────────────── */
+    if (T.koeer) {
+      const kk = T.koeer.koeer;
+      document.getElementById("koe-hint").textContent =
+        `${n0(koe.opkald)} opkald · ${koe.periode_fra.slice(0,7)} – ${koe.periode_til.slice(0,7)}`;
+      const tab = document.getElementById("koe-tabel");
+      tab.innerHTML = "<thead><tr><th>Kø</th><th>Opkald</th><th>Besvaret</th>" +
+        "<th>Svarprocent</th><th>Gns. ventetid</th><th>Gns. samtale</th><th>Længste vent</th></tr></thead>";
+      const tb = el("tbody");
+      kk.forEach((q,i) => {
+        const kl = q.svarprocent>=80 ? "god" : q.svarprocent>=70 ? "mid" : "lav";
+        const tr = el("tr");
+        tr.innerHTML =
+          `<td><span class="kn"><i style="background:var(${SERIE[i%SERIE.length]})"></i>` +
+          `${q.navn}<small>${q.nummer}</small></span></td>` +
+          `<td>${n0(q.opkald)}</td><td>${n0(q.besvarede)}</td>` +
+          `<td><span class="svar ${kl}">${p1(q.svarprocent)}</span></td>` +
+          `<td>${q.gns_vente||"–"}</td><td>${q.gns_samtale||"–"}</td><td>${q.maks_vente||"–"}</td>`;
+        tb.append(tr);
+      });
+      const sum = el("tr");
+      sum.style.cssText = "border-top:2px solid var(--ink);font-weight:600";
+      sum.innerHTML = `<td><b>I alt</b></td><td><b>${n0(koe.opkald)}</b></td>` +
+        `<td><b>${n0(koe.besvarede)}</b></td><td><b>${p1(koe.svarprocent)}</b></td>` +
+        `<td><b>${koe.gns_vente}</b></td><td><b>${koe.gns_samtale}</b></td><td>–</td>`;
+      tb.append(sum);
+      tab.append(tb);
+
+      setNote("note-koeer",
+        `Når Valeur ikke selv kan svare, ryger opkaldet i en kø hos sekretariatet.
+         De to store — Ansættelse og Selvstændig — tager <b>${p1((kk[0].opkald+kk[1].opkald)/koe.opkald*100)}</b>
+         af alle viderestillinger og har samtidig de laveste svarprocenter og de længste samtaler.`);
+
+      /* sparklines pr. måned */
+      const mm2 = T.koeer.maanedlig.filter(m=>m.opkald>=20);
+      function spark(mount, axis, felt, farve, fmt) {
+        const b = document.getElementById(mount), a = document.getElementById(axis);
+        const vals = mm2.map(m=>m[felt]||0), max = Math.max(...vals,1);
+        mm2.forEach((m,i) => {
+          const d = el("div","b");
+          d.style.height = (vals[i]/max*100).toFixed(1)+"%";
+          d.style.background = `var(${typeof farve==="function"?farve(m):farve})`;
+          bindTip(d, () => tipRows(m.maaned, [
+            ["Opkald", n0(m.opkald)], ["Besvaret", n0(m.besvarede)],
+            ["Svarprocent", p1(m.svarprocent)],
+            ["Gns. ventetid", `${Math.floor(m.gns_vente_sek/60)}:${String(Math.round(m.gns_vente_sek%60)).padStart(2,"0")}`],
+          ]));
+          b.append(d);
+          const [y,mo]=m.maaned.split("-");
+          a.append(el("span",null, +mo===1?`<b>${y.slice(2)}</b>`:MAAN[+mo-1]));
+        });
+      }
+      spark("sp-svar","sp-svar-axis","svarprocent",
+        m => m.svarprocent>=80?"--god":m.svarprocent>=70?"--c1":"--c4");
+      spark("sp-vent","sp-vent-axis","gns_vente_sek","--c1");
+    }
+  }
+
+
+  /* ── Aflastning: to sammenligninger, to kilder ─────────────────────────── */
+  const E = D.egne;
+  function sammenlign(mount, raekker, ialt) {
+    const box = document.getElementById(mount);
+    const max = Math.max(...raekker.map(r => Math.max(r.foer, r.efter)));
+    raekker.concat([Object.assign({navn:"I alt", total:true}, ialt)]).forEach(r => {
+      const row = el("div","bar-row");
+      row.append(el("div","lab", (r.total?`<b>${r.navn}</b>`:r.navn) +
+        `<small>${n0(r.foer)} → ${n0(r.efter)}</small>`));
+      const tr = el("div","bar-track");
+      tr.style.cssText = "height:1.4rem;display:flex;flex-direction:column;gap:2px;background:none";
+      [["foer","--navy-400"],["efter", r.aendring < 0 ? "--god" : "--c2"]].forEach(([k,c]) => {
+        const f = el("div");
+        f.style.cssText = `height:calc(50% - 1px);width:${(r[k]/max*100).toFixed(1)}%;` +
+          `background:var(${c});border-radius:0 3px 3px 0;min-width:2px`;
+        tr.append(f);
+      });
+      const pil = r.aendring == null ? "–"
+        : (r.aendring < 0 ? "▼ " : "▲ ") + Math.abs(r.aendring).toFixed(1).replace(".",",") + " %";
+      const v = el("div","val", pil);
+      v.style.color = r.aendring == null ? "var(--faint)"
+        : r.aendring < 0 ? "var(--god)" : "var(--c2)";
+      if (r.total) v.style.fontWeight = "600";
+      row.append(tr, v);
+      bindTip(row, () => tipRows(r.navn, [
+        ["Før", n0(r.foer)], ["Efter", n0(r.efter)],
+        ["Ændring", r.aendring == null ? "–" : p1(r.aendring)],
+      ]));
+      box.append(row);
+    });
+  }
+
+  if (E) {
+    document.getElementById("h-foer").textContent =
+      `${E.maaneder.join(", ").toLowerCase()} · ${E.foer_aar} mod ${E.efter_aar}`;
+    sammenlign("bars-foer", E.raekker, E.i_alt);
+    document.getElementById("n-foer").innerHTML =
+      `Den eneste egentlige før-måling: ${E.maaneder[0].toLowerCase()}–${E.maaneder.slice(-1)[0].toLowerCase()}
+       ${E.foer_aar} ligger før Valeur gik i luften 5. maj ${E.foer_aar}.
+       DP's egen opgørelse, sammenstillet fra IP Nordic — ikke efterregnet her.`;
+  } else { document.getElementById("p-foer").hidden = true; }
+
+  const AA = T && T.koeer && T.koeer.aar_til_aar;
+  if (AA) {
+    const dm = s => { const [m,d] = s.split("-"); return `${+d}. ${MAAN[+m-1]}.`; };
+    document.getElementById("h-aar").textContent =
+      `${dm(AA.fra)} – ${dm(AA.til)} · ${AA.foer_aar} mod ${AA.efter_aar}`;
+    sammenlign("bars-aar", AA.raekker, AA.i_alt);
+    document.getElementById("n-aar").innerHTML =
+      `Begge år er klippet til samme vindue, så en hel måned ikke sammenlignes med
+       en halv. Bemærk at ${AA.foer_aar} her <em>også</em> er en Valeur-periode —
+       det måler samarbejdets andet år mod dets første, ikke mod tiden før.`;
+  } else { document.getElementById("p-aar").hidden = true; }
+
+  if (E && AA) {
+    setNote("note-aflast",
+      `Ja — men aflastningen skete ved indførelsen og er ikke fortsat siden.
+       Sammenholdt med tiden før Valeur faldt opkaldene til sekretariatet med
+       <b>${p1(Math.abs(E.i_alt.aendring))}</b>. Holder man derimod samarbejdets andet år
+       op mod dets første, er antallet ${AA.i_alt.aendring >= 0 ? "steget" : "faldet"} igen med
+       <b>${p1(Math.abs(AA.i_alt.aendring))}</b>. Gevinsten blev hentet med det samme;
+       den vokser ikke af sig selv.`);
+  }
+
+  /* ── Valeur Insights ───────────────────────────────────────────────────── */
+  if (V) {
+    document.getElementById("v-hint").textContent =
+      `${n0(V.opkald)} kald · ${V.dage} åbningsdage`;
+    const vt = document.getElementById("v-tal");
+    const h = V.haandtering;
+    [["--c3","Kald til Valeur",n0(V.opkald),`${V.periode_fra.slice(0,7)} – ${V.periode_til.slice(0,7)}`],
+     ["--god","Besvaret",p1(V.svarprocent),`${n0(V.besvarede)} kald`],
+     ["--c4","Nåede ikke igennem",n0(V.opkald-V.besvarede),"lagde på inden nogen svarede"],
+     ["--c1","Kald pr. åbningsdag",String(Math.round(V.opkald/V.dage)),`over ${V.dage} dage`],
+    ].filter(Boolean).forEach(([c,t,v,s]) => {
+      const d = el("div"); d.style.setProperty("--accent",`var(${c})`);
+      d.append(el("dt",null,t), el("dd",null,`${v}<small>${s}</small>`));
+      vt.append(d);
+    });
+
+    const vm = V.maanedlig.filter(m=>!m.tynd);
+    const b = document.getElementById("v-svar"), a = document.getElementById("v-svar-axis");
+    const lo = Math.min(...vm.map(m=>m.svarprocent)) - 3;
+    vm.forEach(m => {
+      const d = el("div","b");
+      d.style.height = ((m.svarprocent-lo)/(100-lo)*100).toFixed(1)+"%";
+      d.style.background = `var(${m.svarprocent>=85?"--god":"--c3"})`;
+      bindTip(d, () => tipRows(m.maaned, [
+        ["Kald", n0(m.opkald)], ["Besvaret", n0(m.besvarede)],
+        ["Svarprocent", p1(m.svarprocent)],
+      ]));
+      b.append(d);
+      const [y,mo]=m.maaned.split("-");
+      a.append(el("span",null, +mo===1?`<b>${y.slice(2)}</b>`:MAAN[+mo-1]));
+    });
+    document.getElementById("v-svar-note").innerHTML =
+      `Aksen starter ved ${Math.round(lo)} % for at gøre bevægelsen synlig.
+       Første og sidste måned er delvise og udeladt.`;
+
+    if (V.afbrudt_pr_time) {
+      bars("v-afbrudt", V.afbrudt_pr_time.map(r=>({navn:`Kl. ${r.time}–${r.time+1}`, antal:r.andel})), {
+        total: 100, farve: r => /1[012]/.test(r.navn) ? "--c4" : "--navy-400",
+      });
+      document.querySelectorAll("#v-afbrudt .bar-row .val").forEach((v,i) => {
+        v.innerHTML = p1(V.afbrudt_pr_time[i].andel);
+      });
+    }
+    if (h) {
+      const s = document.getElementById("skoen");
+      s.hidden = false;
+      document.getElementById("skoen-txt").innerHTML =
+        `<b>Hvor meget klarer Valeur helt selv?</b> Trækker man de ${n0(h.videre)} opkald,
+         sekretariatets køer modtog, fra de ${n0(h.besvarede)} Valeur besvarede, bliver der
+         ${n0(h.selv)} tilbage — <b>${p1(h.andel)}</b> mod et mål på ${h.maal} %.
+         Regnestykket er skrøbeligt og skal ikke bruges som facit: de to tal kommer fra hver
+         sin kilde og dækker ikke helt samme periode, og en kø kan modtage opkald, der aldrig
+         gik gennem Valeur. Medarbejderbriefingen målte 63 % på fire måneder i 2025.
+         Et rigtigt tal kræver, at Valeur Insights kan udskille de viderestillede kald.`;
+    }
+    setNote("note-valeur",
+      `Valeur tager <b>${p1(V.svarprocent)}</b> af de kald, der når frem — og andelen er
+       steget gennem samarbejdet. De <b>${n0(V.opkald-V.besvarede)}</b> der ikke nåede igennem,
+       lagde på mens de ventede. Næsten alle i åbningstidens tre timer.`);
+  }
+
   /* ── Beregnede fund ────────────────────────────────────────────────────── */
   document.getElementById("f-n").textContent = n0(k.registreringer);
   const top = grupper[0], top2 = grupper[1];
@@ -674,7 +1160,33 @@
   const sumK = crm.kredse.reduce((a, r) => a + r.antal, 0);
   const genTop = gg.pr_emne[0];
 
+  const _lag = T ? Object.fromEntries(T.cdr.lag.map(l=>[l.noegle,l])) : {};
+  const _sum = T ? T.cdr.lag.reduce((a,l)=>a+l.opkald,0) : 0;
+  const _ons = T ? T.cdr.lag.reduce((a,l)=>a+l.onsdag,0) : 0;
+  const _uf  = T ? T.cdr.lag.reduce((a,l)=>a+l.uden_for_aabningstid,0) : 0;
+  const _q   = T && T.koeer ? T.koeer : null;
+
   const finds = [
+    T ? { k: "Tilgængelighed", a: "--c2", h: "Hver tredje ringer forgæves",
+      p: `<b>${n0(_lag.svarer ? _lag.svarer.opkald : 0)}</b> opkald endte på telefonsvareren og
+          <b>${n0(_lag.velkomst ? _lag.velkomst.opkald : 0)}</b> på en velkomstbesked.
+          Tilsammen <b>${p1(((_lag.svarer?.opkald||0)+(_lag.velkomst?.opkald||0))/_sum*100)}</b>
+          af alle opkald, hvor medlemmet ikke fik fat i et menneske.` } : null,
+    T ? { k: "Åbningstid", a: "--c4", h: "Onsdagen er ikke gået ind",
+      p: `<b>${n0(_ons)}</b> opkald er landet på en onsdag, hvor telefonen er lukket hele dagen.
+          Det er ${p1(_ons/_sum*100)} af alle opkald — næsten en femtedel, altså omtrent hvad
+          en almindelig hverdag ville give.` } : null,
+    T ? { k: "Åbningstid", a: "--c6", h: `${p1(_uf/_sum*100)} ringer uden for 10–13`,
+      p: `<b>${n0(_uf)}</b> opkald falder uden for åbningstiden. Trykket begynder allerede
+          kl. 8 og fortsætter til langt over kl. 14 — timer hvor ingen tager telefonen.` } : null,
+    V ? { k: "Valeur", a: "--god", h: `Valeur tager ${p1(V.svarprocent)} af kaldene`,
+      p: `<b>${n0(V.besvarede)}</b> af <b>${n0(V.opkald)}</b> kald bliver besvaret, og andelen er
+          steget gennem samarbejdet. De <b>${n0(V.opkald-V.besvarede)}</b> der ikke nåede igennem,
+          lagde på — næsten alle i de tre åbne timer, hvor køen står.` } : null,
+    _q ? { k: "Sekretariatet", a: "--c4", h: `Selvstændig-køen tager kun ${p1(_q.koeer.find(q=>/Selvstændig/.test(q.navn)).svarprocent)}`,
+      p: `Af de ${n0(_q.ialt.opkald)} opkald Valeur sender videre, bliver
+          <b>${p1(_q.ialt.svarprocent)}</b> taget. Ansættelse og Selvstændig er de to største
+          køer — og de to med de laveste svarprocenter og længste samtaler.` } : null,
     { k: "Emne", a: "--c1", h: `${top.navn.replace(/\/.*/, "")} fylder mest`,
       p: `<b>${p1(top.antal / sumG * 100)}</b> af alle registreringer handler om ${top.navn.toLowerCase()},
           mere end dobbelt så meget som ${top2.navn.toLowerCase()} på ${p1(top2.antal / sumG * 100)}.` },
@@ -701,6 +1213,10 @@
     { k: "Geografi", a: "--c5", h: `${kbh.navn} står for ${p1(kbh.antal / sumK * 100)}`,
       p: `Den største kreds alene. Om det matcher medlemstallet i kredsen kan afgøres, når
           bestandstallene fra Membercare lægges ved.` },
+    T ? { k: "Dækning", a: "--navy", h: "CRM ser under en tredjedel",
+      p: `<b>${n0(k.registreringer)}</b> registreringer mod <b>${n0(_sum)}</b> opkald.
+          Forskellen er ikke sjusk: der registreres kun, når nogen taler med medlemmet.
+          Alt hvad der rammer en telefonsvarer, er usynligt i CRM.` } : null,
   ].filter(Boolean);
 
   const fb = document.getElementById("finds");
@@ -712,7 +1228,6 @@
   });
 
   /* ── Noter ─────────────────────────────────────────────────────────────── */
-  const setNote = (id, html) => { document.getElementById(id).innerHTML = html; };
   setNote("note-hvad",
     `Hver registrering er én henvendelse, som Valeur har noteret i Membercares servicefane.
      De ${crm.kpi.servicetyper} servicetyper ruller op i ${crm.kpi.servicegrupper} hovedemner.`);
@@ -735,26 +1250,18 @@
 
   /* ── Ventende moduler ──────────────────────────────────────────────────── */
   const vent = [
-    { h: "Svarprocent over tid", fra: "IP Nordic",
-      p: "Hvor mange opkald bliver besvaret, og hvordan flytter det sig? Briefingen målte 90 % mod 86–87 % før." },
-    { h: "Ventetid før og efter", fra: "IP Nordic",
-      p: "Gennemsnitlig ventetid pr. uge. Briefingen viste et fald fra 1:11 til 0:24." },
-    { h: "Køen når telefonerne åbner", fra: "IP Nordic",
-      p: "Valeur melder 5–18 i kø kl. 10. Det er her flest opkald mistes — men kun telefonidata kan vise hvor mange." },
-    { h: "Opkald uden for åbningstid", fra: "IP Nordic",
-      p: "75 % af opkaldene lå inden for 10–13. Resten er reelle forsøg, CRM aldrig ser." },
-    { h: "Onsdagsforsøg", fra: "IP Nordic",
-      p: "CRM viser at onsdagen er lukket. Kun telefonidata viser, hvor mange der stadig prøver." },
-    { h: "Straksbesvarelser mod viderestillinger", fra: "Valeur Insights",
-      p: "Kerne-KPI'en: 63 % straksbesvaret, mål 70 %. Kan ikke udledes pålideligt af CRM-feltet." },
-    { h: "Aflastning af sekretariatet", fra: "Valeur Insights + IP Nordic",
-      p: "Opkald viderestillet pr. afdeling, mod niveauet før samarbejdet." },
-    { h: "Samtaletid pr. emne", fra: "IP Nordic",
-      p: "Hvilke emner koster mest tid? Sammenholdt med emnerne her giver det en pris pr. henvendelsestype." },
+    { h: "Straksbesvarelser, målt", fra: "Valeur Insights",
+      p: "Kerne-KPI'en. Dashboardet kan i dag kun anslå den ved at trække køtallet fra. Et rigtigt tal kræver, at Insights kan udskille de kald, der blev viderestillet." },
     { h: "Stamdatarettelser", fra: "Valeur Insights",
-      p: "Briefingen anslog 15–20 % af de medlemmer, der ringer ind. Ligger ikke i servicefanen." },
+      p: "Briefingen anslog 15–20 % af de medlemmer, der ringer ind. Findes hverken i servicefanen eller i de eksporter, der foreligger." },
     { h: "Medlemmer mod ikke-medlemmer", fra: "Valeur Insights",
-      p: "87 % var medlemmer. CRM rummer kun dem, der blev fundet i Membercare." },
+      p: "Briefingen målte 87 % medlemmer. CRM rummer kun dem, der blev fundet i Membercare — de øvrige efterlader intet spor." },
+    { h: "Over- og underrepræsentation", fra: "Membercare — bestandstal",
+      p: "Et udtræk med antal medlemmer pr. type, kreds og alder. Så kan det afgøres, om de selvstændige stadig fylder 30 % af opkaldene mod 19 % af bestanden." },
+    { h: "Samtaletid pr. emne", fra: "IP Nordic + CRM",
+      p: "Hvad koster en henvendelsestype i minutter? Kræver, at et opkald kan kobles til sin registrering — i dag findes der ingen fælles nøgle." },
+    { h: "Ventetid før Valeur", fra: "IP Nordic — 2024/25",
+      p: "CDR-udtrækket starter 1. maj 2025, fire dage før opstarten. En egentlig før-måling af ventetid kræver et udtræk længere tilbage." },
   ];
   const vb = document.getElementById("venter");
   vent.forEach(v => {
@@ -775,6 +1282,12 @@
     ["fritekst ud", `<b>Bemærkningsfeltet bruges ikke.</b> Godt hver fjerde bemærkning rummer
             telefonnumre, navne eller mailadresser skrevet i fri tekst. Feltet kunne have
             afsløret viderestillinger, men prisen er for høj — det tal hentes i Valeur Insights.`],
+    ["numre ud", `<b>Telefonnumrene i CDR-udtrækket forlader ikke kørslen.</b> Numrene på
+            dem, der ringer ind, står i klartekst, og nummeroplysningen giver navn og fuld
+            adresse på en del af dem. Numrene bruges kun til at tælle gentagne opkald og
+            kasseres derefter; navnefeltet læses aldrig.`],
+    ["samme vindue", `<b>To år sammenlignes kun på samme kalendervindue.</b> Ellers ville
+            en hel september 2025 blive holdt op mod tre dage af september 2026.`],
     ["delvis", `<b>Første og sidste måned er delvise.</b> De er tonet ned i kurven, så et
             fald der kun skyldes en halv måned, ikke læses som en udvikling.`],
   ];
@@ -786,10 +1299,13 @@
   });
 
   document.getElementById("colophon").innerHTML =
-    `Bygget på ${n0(k.registreringer)} serviceregistreringer fra Membercare,
-     ${dk(meta.periode_fra)} til ${dk(meta.periode_til)}. Genereret ${dk(D.genereret)}.
-     Telefonstatistik fra IP Nordic og håndteringsdata fra Valeur Insights er ikke koblet på endnu —
-     modulerne, der venter på dem, står ovenfor. Tallene her dækker kun de henvendelser,
-     der <em>blev</em> registreret: et opkald, der aldrig blev besvaret, findes ikke i CRM.`;
+    `Bygget på tre kilder: ${n0(k.registreringer)} serviceregistreringer fra Membercare,
+     ${T ? n0(T.cdr.raekker) : 0} opkaldsposter og ${T && T.koeer ? n0(T.koeer.ialt.opkald) : 0}
+     køopkald fra IP Nordic, og ${V ? n0(V.opkald) : 0} kald fra Valeur Insights.
+     Perioden er ${dk(meta.periode_fra)} til ${dk(meta.periode_til)}. Genereret ${dk(D.genereret)}.
+     De tre kilder tæller ikke det samme og skal ikke lægges sammen: CRM ser kun de
+     henvendelser, nogen talte med et medlem om; telefonidataene ser hvert forsøg, også
+     dem der ramte en telefonsvarer. Rollerne bag numrene i CDR-udtrækket er udledt af
+     mønstrene og bør bekræftes af DP.`;
 })();
 </script>

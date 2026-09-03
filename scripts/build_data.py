@@ -18,12 +18,15 @@ telefonnummer, en e-mail eller et stamkort-id.
 import json
 import re
 import sys
-import unicodedata
 from collections import Counter
 from datetime import date
 from pathlib import Path
 
 import pandas as pd
+
+import ipnordic
+import valeur
+import egne
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -292,13 +295,24 @@ def render(data):
 
 def main():
     crm = build_crm()
+    telefoni = ipnordic.build()
+    koe_opkald = (telefoni or {}).get("koeer", {}).get("ialt", {}).get("opkald")
+    insights = valeur.build(koe_opkald)
     data = {
         "genereret": date.today().isoformat(),
         "crm": crm,
-        # Pladsholdere: udfyldes når eksporterne foreligger.
-        "telefoni": None,   # IP Nordic
-        "valeur": None,     # Valeur Insights
+        "telefoni": telefoni,
+        "valeur": insights,
+        "egne": egne.build(),
     }
+    if telefoni:
+        c = telefoni["cdr"]
+        print(f"  IP Nordic: {c['raekker']} CDR-rækker, "
+              f"{sum(l['opkald'] for l in c['lag'])} medlemsopkald, "
+              f"{telefoni['koeer']['ialt']['opkald']} køopkald")
+    if insights:
+        print(f"  Valeur Insights: {insights['opkald']} kald, "
+              f"{insights['svarprocent']}% besvaret")
 
     navne = set(
         clean(pd.read_excel(RAW / "Serviceregistreringer.xlsx", dtype=str)["Medlem"]).unique()

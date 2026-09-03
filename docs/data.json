@@ -1068,6 +1068,966 @@
    }
   ]
  },
- "telefoni": null,
- "valeur": null
+ "telefoni": {
+  "kilde": "IP Nordic — CDR og daglige kø-rapporter",
+  "cdr": {
+   "raekker": 66910,
+   "periode_fra": "2025-05-01",
+   "periode_til": "2026-09-03",
+   "lag": [
+    {
+     "noegle": "velkomst",
+     "navn": "Velkomstbesked",
+     "nummer": "3824",
+     "opkald": 5971,
+     "median_sek": 13.0,
+     "onsdag": 2169,
+     "uden_for_aabningstid": 4652,
+     "foerste": "2025-05-02"
+    },
+    {
+     "noegle": "valeur",
+     "navn": "Valeur",
+     "nummer": "773345xx",
+     "opkald": 15529,
+     "median_sek": 325.0,
+     "onsdag": 0,
+     "uden_for_aabningstid": 1311,
+     "foerste": "2025-05-05"
+    },
+    {
+     "noegle": "svarer",
+     "navn": "Telefonsvarer",
+     "nummer": "309060xx",
+     "opkald": 12382,
+     "median_sek": 24.0,
+     "onsdag": 2260,
+     "uden_for_aabningstid": 8573,
+     "foerste": "2025-05-01"
+    }
+   ],
+   "ugedage": [
+    "Mandag",
+    "Tirsdag",
+    "Onsdag",
+    "Torsdag",
+    "Fredag",
+    "Lørdag",
+    "Søndag"
+   ],
+   "ugedag_lag": {
+    "velkomst": [
+     998,
+     1063,
+     2169,
+     987,
+     718,
+     23,
+     13
+    ],
+    "valeur": [
+     3881,
+     4016,
+     0,
+     4070,
+     3562,
+     0,
+     0
+    ],
+    "svarer": [
+     2060,
+     2227,
+     2260,
+     2246,
+     2140,
+     749,
+     700
+    ]
+   },
+   "time_lag": {
+    "velkomst": {
+     "9": 1257,
+     "13": 1236,
+     "14": 925,
+     "10": 553,
+     "15": 534,
+     "8": 443,
+     "11": 413,
+     "12": 353,
+     "16": 120,
+     "17": 44,
+     "7": 34,
+     "18": 20,
+     "20": 10,
+     "21": 8,
+     "22": 5,
+     "6": 5,
+     "19": 5,
+     "5": 4,
+     "3": 2
+    },
+    "valeur": {
+     "10": 6158,
+     "11": 4150,
+     "12": 3910,
+     "9": 567,
+     "13": 419,
+     "14": 321,
+     "15": 4
+    },
+    "svarer": {
+     "13": 1409,
+     "14": 1396,
+     "10": 1351,
+     "11": 1246,
+     "12": 1212,
+     "15": 1153,
+     "9": 1015,
+     "16": 779,
+     "8": 681,
+     "17": 582,
+     "18": 374,
+     "19": 350,
+     "20": 303,
+     "21": 173,
+     "7": 146,
+     "22": 96,
+     "23": 45,
+     "0": 39,
+     "1": 13,
+     "6": 9,
+     "3": 6,
+     "5": 2,
+     "4": 1,
+     "2": 1
+    }
+   },
+   "maaneder": [
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09"
+   ],
+   "maaned_lag": {
+    "velkomst": {
+     "2025-05": 493,
+     "2025-06": 425,
+     "2025-07": 235,
+     "2025-08": 463,
+     "2025-09": 541,
+     "2025-10": 491,
+     "2025-11": 440,
+     "2025-12": 387,
+     "2026-01": 509,
+     "2026-02": 484,
+     "2026-03": 563,
+     "2026-04": 405,
+     "2026-05": 402,
+     "2026-06": 65,
+     "2026-07": 11,
+     "2026-08": 50,
+     "2026-09": 7
+    },
+    "valeur": {
+     "2025-05": 863,
+     "2025-06": 1052,
+     "2025-07": 624,
+     "2025-08": 1025,
+     "2025-09": 1178,
+     "2025-10": 1040,
+     "2025-11": 1157,
+     "2025-12": 810,
+     "2026-01": 1132,
+     "2026-02": 1213,
+     "2026-03": 1093,
+     "2026-04": 745,
+     "2026-05": 708,
+     "2026-06": 1164,
+     "2026-07": 370,
+     "2026-08": 1206,
+     "2026-09": 149
+    },
+    "svarer": {
+     "2025-05": 700,
+     "2025-06": 646,
+     "2025-07": 452,
+     "2025-08": 681,
+     "2025-09": 847,
+     "2025-10": 808,
+     "2025-11": 805,
+     "2025-12": 765,
+     "2026-01": 766,
+     "2026-02": 771,
+     "2026-03": 959,
+     "2026-04": 965,
+     "2026-05": 867,
+     "2026-06": 964,
+     "2026-07": 462,
+     "2026-08": 826,
+     "2026-09": 98
+    }
+   },
+   "gentagne": {
+    "numre": 8980,
+    "opkald": 32541,
+    "fordeling": [
+     {
+      "opkald": "1",
+      "numre": 4188
+     },
+     {
+      "opkald": "2",
+      "numre": 1847
+     },
+     {
+      "opkald": "3",
+      "numre": 925
+     },
+     {
+      "opkald": "4",
+      "numre": 565
+     },
+     {
+      "opkald": "5",
+      "numre": 340
+     },
+     {
+      "opkald": "6",
+      "numre": 252
+     },
+     {
+      "opkald": "7",
+      "numre": 155
+     },
+     {
+      "opkald": "8",
+      "numre": 134
+     },
+     {
+      "opkald": "9",
+      "numre": 83
+     },
+     {
+      "opkald": "10+",
+      "numre": 491
+     }
+    ]
+   }
+  },
+  "koeer": {
+   "koeer": [
+    {
+     "nummer": "1510",
+     "navn": "Ansættelse",
+     "opkald": 4201,
+     "besvarede": 2953,
+     "svarprocent": 70.3,
+     "dage": 262,
+     "gns_samtale": "8:59",
+     "gns_vente": "0:41",
+     "maks_vente": "25:43"
+    },
+    {
+     "nummer": "1515",
+     "navn": "Selvstændig",
+     "opkald": 1814,
+     "besvarede": 1121,
+     "svarprocent": 61.8,
+     "dage": 214,
+     "gns_samtale": "8:13",
+     "gns_vente": "0:51",
+     "maks_vente": "23:28"
+    },
+    {
+     "nummer": "15123",
+     "navn": "Øvrige henvendelse",
+     "opkald": 693,
+     "besvarede": 593,
+     "svarprocent": 85.6,
+     "dage": 202,
+     "gns_samtale": "3:38",
+     "gns_vente": "0:17",
+     "maks_vente": "18:32"
+    },
+    {
+     "nummer": "15122",
+     "navn": "Kursus- eller Arrangementtilmelding",
+     "opkald": 401,
+     "besvarede": 341,
+     "svarprocent": 85.0,
+     "dage": 177,
+     "gns_samtale": "4:26",
+     "gns_vente": "0:19",
+     "maks_vente": "18:02"
+    },
+    {
+     "nummer": "1525",
+     "navn": "Debitor spørgsmål",
+     "opkald": 306,
+     "besvarede": 228,
+     "svarprocent": 74.5,
+     "dage": 138,
+     "gns_samtale": "3:02",
+     "gns_vente": "0:13",
+     "maks_vente": "2:34"
+    },
+    {
+     "nummer": "1520",
+     "navn": "Zexpense",
+     "opkald": 69,
+     "besvarede": 56,
+     "svarprocent": 81.2,
+     "dage": 52,
+     "gns_samtale": "3:34",
+     "gns_vente": "0:30",
+     "maks_vente": "12:50"
+    }
+   ],
+   "maanedlig": [
+    {
+     "maaned": "2025-05",
+     "opkald": 502,
+     "besvarede": 374,
+     "svarprocent": 74.5,
+     "gns_vente_sek": 34.6,
+     "gns_samtale_sek": 403.5,
+     "pr_koe": {
+      "Ansættelse": 230,
+      "Debitor spørgsmål": 37,
+      "Kursus- eller Arrangementtilmelding": 21,
+      "Selvstændig": 152,
+      "Zexpense": 10,
+      "Øvrige henvendelse": 52
+     }
+    },
+    {
+     "maaned": "2025-06",
+     "opkald": 559,
+     "besvarede": 357,
+     "svarprocent": 63.9,
+     "gns_vente_sek": 35.8,
+     "gns_samtale_sek": 455.9,
+     "pr_koe": {
+      "Ansættelse": 295,
+      "Debitor spørgsmål": 15,
+      "Kursus- eller Arrangementtilmelding": 14,
+      "Selvstændig": 192,
+      "Zexpense": 9,
+      "Øvrige henvendelse": 34
+     }
+    },
+    {
+     "maaned": "2025-07",
+     "opkald": 281,
+     "besvarede": 153,
+     "svarprocent": 54.4,
+     "gns_vente_sek": 42.9,
+     "gns_samtale_sek": 535.0,
+     "pr_koe": {
+      "Ansættelse": 125,
+      "Debitor spørgsmål": 3,
+      "Kursus- eller Arrangementtilmelding": 9,
+      "Selvstændig": 128,
+      "Zexpense": 2,
+      "Øvrige henvendelse": 14
+     }
+    },
+    {
+     "maaned": "2025-08",
+     "opkald": 579,
+     "besvarede": 376,
+     "svarprocent": 64.9,
+     "gns_vente_sek": 24.7,
+     "gns_samtale_sek": 454.8,
+     "pr_koe": {
+      "Ansættelse": 314,
+      "Debitor spørgsmål": 13,
+      "Kursus- eller Arrangementtilmelding": 18,
+      "Selvstændig": 188,
+      "Zexpense": 3,
+      "Øvrige henvendelse": 43
+     }
+    },
+    {
+     "maaned": "2025-09",
+     "opkald": 571,
+     "besvarede": 372,
+     "svarprocent": 65.1,
+     "gns_vente_sek": 31.3,
+     "gns_samtale_sek": 425.0,
+     "pr_koe": {
+      "Ansættelse": 323,
+      "Debitor spørgsmål": 16,
+      "Kursus- eller Arrangementtilmelding": 47,
+      "Selvstændig": 140,
+      "Zexpense": 6,
+      "Øvrige henvendelse": 39
+     }
+    },
+    {
+     "maaned": "2025-10",
+     "opkald": 459,
+     "besvarede": 288,
+     "svarprocent": 62.7,
+     "gns_vente_sek": 31.5,
+     "gns_samtale_sek": 475.2,
+     "pr_koe": {
+      "Ansættelse": 262,
+      "Debitor spørgsmål": 19,
+      "Kursus- eller Arrangementtilmelding": 28,
+      "Selvstændig": 107,
+      "Zexpense": 6,
+      "Øvrige henvendelse": 37
+     }
+    },
+    {
+     "maaned": "2025-11",
+     "opkald": 371,
+     "besvarede": 273,
+     "svarprocent": 73.6,
+     "gns_vente_sek": 26.9,
+     "gns_samtale_sek": 458.5,
+     "pr_koe": {
+      "Ansættelse": 239,
+      "Debitor spørgsmål": 54,
+      "Kursus- eller Arrangementtilmelding": 21,
+      "Selvstændig": 19,
+      "Zexpense": 5,
+      "Øvrige henvendelse": 33
+     }
+    },
+    {
+     "maaned": "2025-12",
+     "opkald": 270,
+     "besvarede": 215,
+     "svarprocent": 79.6,
+     "gns_vente_sek": 29.1,
+     "gns_samtale_sek": 408.5,
+     "pr_koe": {
+      "Ansættelse": 203,
+      "Debitor spørgsmål": 18,
+      "Kursus- eller Arrangementtilmelding": 14,
+      "Selvstændig": 8,
+      "Zexpense": 7,
+      "Øvrige henvendelse": 20
+     }
+    },
+    {
+     "maaned": "2026-01",
+     "opkald": 399,
+     "besvarede": 289,
+     "svarprocent": 72.4,
+     "gns_vente_sek": 49.1,
+     "gns_samtale_sek": 495.7,
+     "pr_koe": {
+      "Ansættelse": 281,
+      "Debitor spørgsmål": 26,
+      "Kursus- eller Arrangementtilmelding": 37,
+      "Selvstændig": 1,
+      "Zexpense": 7,
+      "Øvrige henvendelse": 47
+     }
+    },
+    {
+     "maaned": "2026-02",
+     "opkald": 442,
+     "besvarede": 326,
+     "svarprocent": 73.8,
+     "gns_vente_sek": 40.7,
+     "gns_samtale_sek": 478.6,
+     "pr_koe": {
+      "Ansættelse": 251,
+      "Debitor spørgsmål": 26,
+      "Kursus- eller Arrangementtilmelding": 23,
+      "Selvstændig": 107,
+      "Zexpense": 1,
+      "Øvrige henvendelse": 34
+     }
+    },
+    {
+     "maaned": "2026-03",
+     "opkald": 577,
+     "besvarede": 437,
+     "svarprocent": 75.7,
+     "gns_vente_sek": 44.6,
+     "gns_samtale_sek": 436.3,
+     "pr_koe": {
+      "Ansættelse": 303,
+      "Debitor spørgsmål": 23,
+      "Kursus- eller Arrangementtilmelding": 35,
+      "Selvstændig": 161,
+      "Zexpense": 1,
+      "Øvrige henvendelse": 54
+     }
+    },
+    {
+     "maaned": "2026-04",
+     "opkald": 393,
+     "besvarede": 287,
+     "svarprocent": 73.0,
+     "gns_vente_sek": 30.2,
+     "gns_samtale_sek": 496.5,
+     "pr_koe": {
+      "Ansættelse": 218,
+      "Debitor spørgsmål": 12,
+      "Kursus- eller Arrangementtilmelding": 26,
+      "Selvstændig": 91,
+      "Øvrige henvendelse": 46
+     }
+    },
+    {
+     "maaned": "2026-05",
+     "opkald": 363,
+     "besvarede": 250,
+     "svarprocent": 68.9,
+     "gns_vente_sek": 52.2,
+     "gns_samtale_sek": 502.4,
+     "pr_koe": {
+      "Ansættelse": 179,
+      "Debitor spørgsmål": 9,
+      "Kursus- eller Arrangementtilmelding": 18,
+      "Selvstændig": 112,
+      "Zexpense": 3,
+      "Øvrige henvendelse": 42
+     }
+    },
+    {
+     "maaned": "2026-06",
+     "opkald": 689,
+     "besvarede": 529,
+     "svarprocent": 76.8,
+     "gns_vente_sek": 48.7,
+     "gns_samtale_sek": 440.2,
+     "pr_koe": {
+      "Ansættelse": 448,
+      "Debitor spørgsmål": 8,
+      "Kursus- eller Arrangementtilmelding": 27,
+      "Selvstændig": 132,
+      "Zexpense": 6,
+      "Øvrige henvendelse": 68
+     }
+    },
+    {
+     "maaned": "2026-07",
+     "opkald": 233,
+     "besvarede": 193,
+     "svarprocent": 82.8,
+     "gns_vente_sek": 28.3,
+     "gns_samtale_sek": 424.4,
+     "pr_koe": {
+      "Ansættelse": 119,
+      "Debitor spørgsmål": 10,
+      "Kursus- eller Arrangementtilmelding": 7,
+      "Selvstændig": 64,
+      "Øvrige henvendelse": 33
+     }
+    },
+    {
+     "maaned": "2026-08",
+     "opkald": 710,
+     "besvarede": 512,
+     "svarprocent": 72.1,
+     "gns_vente_sek": 43.5,
+     "gns_samtale_sek": 472.0,
+     "pr_koe": {
+      "Ansættelse": 364,
+      "Debitor spørgsmål": 15,
+      "Kursus- eller Arrangementtilmelding": 44,
+      "Selvstændig": 193,
+      "Zexpense": 2,
+      "Øvrige henvendelse": 92
+     }
+    },
+    {
+     "maaned": "2026-09",
+     "opkald": 86,
+     "besvarede": 61,
+     "svarprocent": 70.9,
+     "gns_vente_sek": 18.6,
+     "gns_samtale_sek": 450.5,
+     "pr_koe": {
+      "Ansættelse": 47,
+      "Debitor spørgsmål": 2,
+      "Kursus- eller Arrangementtilmelding": 12,
+      "Selvstændig": 19,
+      "Zexpense": 1,
+      "Øvrige henvendelse": 5
+     }
+    }
+   ],
+   "aar_til_aar": {
+    "foer_aar": 2025,
+    "efter_aar": 2026,
+    "maaneder": [
+     5,
+     6,
+     7,
+     8,
+     9
+    ],
+    "fra": "05-02",
+    "til": "09-03",
+    "raekker": [
+     {
+      "navn": "Ansættelse",
+      "foer": 1007,
+      "efter": 1157,
+      "aendring": 14.9
+     },
+     {
+      "navn": "Selvstændig",
+      "foer": 680,
+      "efter": 520,
+      "aendring": -23.5
+     },
+     {
+      "navn": "Øvrige henvendelse",
+      "foer": 143,
+      "efter": 240,
+      "aendring": 67.8
+     },
+     {
+      "navn": "Kursus- eller Arrangementtilmelding",
+      "foer": 64,
+      "efter": 108,
+      "aendring": 68.8
+     },
+     {
+      "navn": "Debitor spørgsmål",
+      "foer": 70,
+      "efter": 44,
+      "aendring": -37.1
+     },
+     {
+      "navn": "Zexpense",
+      "foer": 24,
+      "efter": 12,
+      "aendring": -50.0
+     }
+    ],
+    "i_alt": {
+     "foer": 1988,
+     "efter": 2081,
+     "aendring": 4.7
+    }
+   },
+   "ialt": {
+    "opkald": 7484,
+    "besvarede": 5292,
+    "svarprocent": 70.7,
+    "gns_vente": "0:38",
+    "gns_samtale": "7:37",
+    "periode_fra": "2025-05-02",
+    "periode_til": "2026-09-03"
+   }
+  },
+  "roller_udledt": {
+   "velkomst": "3824",
+   "valeur": "773345xx",
+   "svarer": "309060xx"
+  }
+ },
+ "valeur": {
+  "kilde": "Valeur Insights",
+  "periode_fra": "2025-03-21",
+  "periode_til": "2026-09-03",
+  "dage": 257,
+  "opkald": 15080,
+  "besvarede": 12809,
+  "svarprocent": 84.9,
+  "maanedlig": [
+   {
+    "maaned": "2025-03",
+    "opkald": 1,
+    "besvarede": 0,
+    "svarprocent": 0.0,
+    "tynd": true
+   },
+   {
+    "maaned": "2025-04",
+    "opkald": 9,
+    "besvarede": 7,
+    "svarprocent": 77.8,
+    "tynd": true
+   },
+   {
+    "maaned": "2025-05",
+    "opkald": 852,
+    "besvarede": 719,
+    "svarprocent": 84.4,
+    "tynd": false
+   },
+   {
+    "maaned": "2025-06",
+    "opkald": 1007,
+    "besvarede": 846,
+    "svarprocent": 84.0,
+    "tynd": false
+   },
+   {
+    "maaned": "2025-07",
+    "opkald": 606,
+    "besvarede": 500,
+    "svarprocent": 82.5,
+    "tynd": false
+   },
+   {
+    "maaned": "2025-08",
+    "opkald": 1007,
+    "besvarede": 847,
+    "svarprocent": 84.1,
+    "tynd": false
+   },
+   {
+    "maaned": "2025-09",
+    "opkald": 1158,
+    "besvarede": 995,
+    "svarprocent": 85.9,
+    "tynd": false
+   },
+   {
+    "maaned": "2025-10",
+    "opkald": 1028,
+    "besvarede": 830,
+    "svarprocent": 80.7,
+    "tynd": false
+   },
+   {
+    "maaned": "2025-11",
+    "opkald": 989,
+    "besvarede": 832,
+    "svarprocent": 84.1,
+    "tynd": false
+   },
+   {
+    "maaned": "2025-12",
+    "opkald": 761,
+    "besvarede": 637,
+    "svarprocent": 83.7,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-01",
+    "opkald": 1054,
+    "besvarede": 913,
+    "svarprocent": 86.6,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-02",
+    "opkald": 1202,
+    "besvarede": 974,
+    "svarprocent": 81.0,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-03",
+    "opkald": 1087,
+    "besvarede": 942,
+    "svarprocent": 86.7,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-04",
+    "opkald": 747,
+    "besvarede": 653,
+    "svarprocent": 87.4,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-05",
+    "opkald": 701,
+    "besvarede": 615,
+    "svarprocent": 87.7,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-06",
+    "opkald": 1163,
+    "besvarede": 1020,
+    "svarprocent": 87.7,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-07",
+    "opkald": 368,
+    "besvarede": 335,
+    "svarprocent": 91.0,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-08",
+    "opkald": 1205,
+    "besvarede": 1027,
+    "svarprocent": 85.2,
+    "tynd": false
+   },
+   {
+    "maaned": "2026-09",
+    "opkald": 135,
+    "besvarede": 117,
+    "svarprocent": 86.7,
+    "tynd": false
+   }
+  ],
+  "ugedag": [
+   {
+    "navn": "Mandag",
+    "opkald": 3760,
+    "besvarede": 3225
+   },
+   {
+    "navn": "Tirsdag",
+    "opkald": 3901,
+    "besvarede": 3296
+   },
+   {
+    "navn": "Torsdag",
+    "opkald": 3952,
+    "besvarede": 3368
+   },
+   {
+    "navn": "Fredag",
+    "opkald": 3467,
+    "besvarede": 2920
+   }
+  ],
+  "timefordeling": [
+   {
+    "time": 9,
+    "andel": 3.7
+   },
+   {
+    "time": 10,
+    "andel": 39.7
+   },
+   {
+    "time": 11,
+    "andel": 26.5
+   },
+   {
+    "time": 12,
+    "andel": 25.1
+   },
+   {
+    "time": 13,
+    "andel": 2.8
+   },
+   {
+    "time": 14,
+    "andel": 2.1
+   },
+   {
+    "time": 15,
+    "andel": 0.0
+   }
+  ],
+  "afbrudt_pr_time": [
+   {
+    "time": 9,
+    "andel": 2.6
+   },
+   {
+    "time": 10,
+    "andel": 31.6
+   },
+   {
+    "time": 11,
+    "andel": 28.0
+   },
+   {
+    "time": 12,
+    "andel": 31.5
+   },
+   {
+    "time": 13,
+    "andel": 3.3
+   },
+   {
+    "time": 14,
+    "andel": 3.1
+   }
+  ],
+  "haandtering": {
+   "besvarede": 12809,
+   "videre": 7484,
+   "selv": 5325,
+   "andel": 41.6,
+   "maal": 70
+  }
+ },
+ "egne": {
+  "kilde": "DP's egen opgørelse, sammenstillet fra IP Nordic",
+  "foer_aar": 2025,
+  "efter_aar": 2026,
+  "maaneder": [
+   "Januar",
+   "Februar",
+   "Marts"
+  ],
+  "raekker": [
+   {
+    "navn": "Rådgivning",
+    "foer": 1081,
+    "efter": 835,
+    "aendring": -22.8,
+    "i_alt_raekke": false
+   },
+   {
+    "navn": "Selvstændig",
+    "foer": 338,
+    "efter": 268,
+    "aendring": -20.7,
+    "i_alt_raekke": false
+   },
+   {
+    "navn": "Medlemsservice/øvrige",
+    "foer": 402,
+    "efter": 135,
+    "aendring": -66.4,
+    "i_alt_raekke": false
+   },
+   {
+    "navn": "Kursus",
+    "foer": 122,
+    "efter": 95,
+    "aendring": -22.1,
+    "i_alt_raekke": false
+   },
+   {
+    "navn": "Debitor",
+    "foer": 107,
+    "efter": 75,
+    "aendring": -29.9,
+    "i_alt_raekke": false
+   },
+   {
+    "navn": "zExpense",
+    "foer": 71,
+    "efter": 9,
+    "aendring": -87.3,
+    "i_alt_raekke": false
+   }
+  ],
+  "i_alt": {
+   "navn": "I alt",
+   "foer": 2309,
+   "efter": 1417,
+   "aendring": -38.6,
+   "i_alt_raekke": true
+  }
+ }
 }
