@@ -1962,11 +1962,42 @@
    }
   ],
   "haandtering": {
-   "besvarede": 12809,
-   "videre": 7484,
-   "selv": 5325,
-   "andel": 41.6,
-   "maal": 70
+   "besvarede": 2612,
+   "videre": 1180,
+   "selv": 1432,
+   "andel": 54.8,
+   "maal": 70,
+   "maalt": true,
+   "maaneder": [
+    {
+     "maaned": "April",
+     "besvarede": 653,
+     "omstillet": 281,
+     "selv": 372,
+     "andel": 57.0
+    },
+    {
+     "maaned": "Maj",
+     "besvarede": 615,
+     "omstillet": 240,
+     "selv": 375,
+     "andel": 61.0
+    },
+    {
+     "maaned": "Juni",
+     "besvarede": 1013,
+     "omstillet": 484,
+     "selv": 529,
+     "andel": 52.2
+    },
+    {
+     "maaned": "Juli",
+     "besvarede": 331,
+     "omstillet": 175,
+     "selv": 156,
+     "andel": 47.1
+    }
+   ]
   }
  },
  "egne": {
@@ -2028,6 +2059,1010 @@
    "efter": 1417,
    "aendring": -38.6,
    "i_alt_raekke": true
+  }
+ },
+ "rapporter": {
+  "uger": {
+   "uger": 20,
+   "periode_fra": "2025-05-05",
+   "periode_til": "2026-01-09",
+   "emner": [],
+   "medlemsgrupper": [
+    {
+     "navn": "Fuldtidsansatte (Arbejder over 19 timer pr. uge)",
+     "antal": 1853,
+     "samtale_sek": 218,
+     "efter_sek": 161,
+     "samtale": "3:38",
+     "efterbehandling": "2:41"
+    },
+    {
+     "navn": "Selvstændigt erhvervsdrivende, uanset ugentligt timetal (selvstændige)",
+     "antal": 1141,
+     "samtale_sek": 247,
+     "efter_sek": 194,
+     "samtale": "4:07",
+     "efterbehandling": "3:14"
+    },
+    {
+     "navn": "1. og 2. års kandidater (dimittender)",
+     "antal": 259,
+     "samtale_sek": 272,
+     "efter_sek": 151,
+     "samtale": "4:32",
+     "efterbehandling": "2:31"
+    },
+    {
+     "navn": "Studerende",
+     "antal": 219,
+     "samtale_sek": 237,
+     "efter_sek": 157,
+     "samtale": "3:57",
+     "efterbehandling": "2:37"
+    },
+    {
+     "navn": "Ledige",
+     "antal": 183,
+     "samtale_sek": 264,
+     "efter_sek": 167,
+     "samtale": "4:24",
+     "efterbehandling": "2:47"
+    },
+    {
+     "navn": "Pensionister",
+     "antal": 129,
+     "samtale_sek": 250,
+     "efter_sek": 194,
+     "samtale": "4:10",
+     "efterbehandling": "3:14"
+    },
+    {
+     "navn": "Arbejder under 19 timer pr. uge",
+     "antal": 29,
+     "samtale_sek": 247,
+     "efter_sek": 159,
+     "samtale": "4:07",
+     "efterbehandling": "2:39"
+    },
+    {
+     "navn": "Ph.d.-studerende",
+     "antal": 19,
+     "samtale_sek": 201,
+     "efter_sek": 141,
+     "samtale": "3:21",
+     "efterbehandling": "2:21"
+    },
+    {
+     "navn": "Ansatte i stillinger, hvor anden organisation har forhandlingsretten",
+     "antal": 18,
+     "samtale_sek": 324,
+     "efter_sek": 243,
+     "samtale": "5:24",
+     "efterbehandling": "4:03"
+    },
+    {
+     "navn": "Udlandsmedlemmer",
+     "antal": 11,
+     "samtale_sek": 292,
+     "efter_sek": 153,
+     "samtale": "4:52",
+     "efterbehandling": "2:33"
+    }
+   ],
+   "medlemskab": [
+    {
+     "navn": "Medlem i Dansk Psykolog Forening",
+     "antal": 4798,
+     "samtale_sek": 223,
+     "efter_sek": 178,
+     "samtale": "3:43",
+     "efterbehandling": "2:58",
+     "type": "medlem"
+    },
+    {
+     "navn": "Ikke- medlem i Dansk Psykolog Forening (og ikke psykolog)",
+     "antal": 356,
+     "samtale_sek": 149,
+     "efter_sek": 115,
+     "samtale": "2:29",
+     "efterbehandling": "1:55",
+     "type": "ikke-medlem"
+    },
+    {
+     "navn": "Ikke- medlem i Dansk Psykolog Forening (og psykolog – potentielt medlem)",
+     "antal": 252,
+     "samtale_sek": 234,
+     "efter_sek": 107,
+     "samtale": "3:54",
+     "efterbehandling": "1:47",
+     "type": "ikke-medlem"
+    },
+    {
+     "navn": "Associeret medlem (ikke psykolog, medlem af netværk eller fagligt selskab)",
+     "antal": 85,
+     "samtale_sek": 158,
+     "efter_sek": 123,
+     "samtale": "2:38",
+     "efterbehandling": "2:03",
+     "type": "associeret"
+    }
+   ],
+   "roller": [
+    {
+     "navn": "Tillidsrepræsentant (TR)",
+     "antal": 120,
+     "samtale_sek": 233,
+     "efter_sek": 172,
+     "samtale": "3:53",
+     "efterbehandling": "2:52"
+    },
+    {
+     "navn": "Leder og chefer",
+     "antal": 96,
+     "samtale_sek": 217,
+     "efter_sek": 177,
+     "samtale": "3:37",
+     "efterbehandling": "2:57"
+    },
+    {
+     "navn": "Arbejdsmiljørepræsentant (AMR)",
+     "antal": 1,
+     "samtale_sek": 227,
+     "efter_sek": 57,
+     "samtale": "3:47",
+     "efterbehandling": "0:57"
+    }
+   ],
+   "medlemsandel": 87.4,
+   "registreringer": 5491
+  },
+  "agenter": {
+   "maaneder": [
+    {
+     "maaned": "April",
+     "besvarede": 653,
+     "omstillet": 281,
+     "selv": 372,
+     "andel": 57.0
+    },
+    {
+     "maaned": "Maj",
+     "besvarede": 615,
+     "omstillet": 240,
+     "selv": 375,
+     "andel": 61.0
+    },
+    {
+     "maaned": "Juni",
+     "besvarede": 1013,
+     "omstillet": 484,
+     "selv": 529,
+     "andel": 52.2
+    },
+    {
+     "maaned": "Juli",
+     "besvarede": 331,
+     "omstillet": 175,
+     "selv": 156,
+     "andel": 47.1
+    }
+   ],
+   "besvarede": 2612,
+   "omstillet": 1180,
+   "selv": 1432,
+   "andel": 54.8,
+   "maal": 70
+  },
+  "mails": {
+   "pr_aar": [
+    {
+     "aar": 2025,
+     "uger": 34,
+     "mails": 1887,
+     "pr_uge": 55.5
+    },
+    {
+     "aar": 2026,
+     "uger": 8,
+     "mails": 393,
+     "pr_uge": 49.1
+    }
+   ],
+   "i_alt": 2280,
+   "raekker": [
+    {
+     "aar": 2025,
+     "uge": 19,
+     "mails": 92
+    },
+    {
+     "aar": 2025,
+     "uge": 20,
+     "mails": 56
+    },
+    {
+     "aar": 2025,
+     "uge": 21,
+     "mails": 57
+    },
+    {
+     "aar": 2025,
+     "uge": 22,
+     "mails": 23
+    },
+    {
+     "aar": 2025,
+     "uge": 23,
+     "mails": 53
+    },
+    {
+     "aar": 2025,
+     "uge": 24,
+     "mails": 31
+    },
+    {
+     "aar": 2025,
+     "uge": 25,
+     "mails": 37
+    },
+    {
+     "aar": 2025,
+     "uge": 26,
+     "mails": 67
+    },
+    {
+     "aar": 2025,
+     "uge": 27,
+     "mails": 57
+    },
+    {
+     "aar": 2025,
+     "uge": 28,
+     "mails": 34
+    },
+    {
+     "aar": 2025,
+     "uge": 29,
+     "mails": 11
+    },
+    {
+     "aar": 2025,
+     "uge": 30,
+     "mails": 18
+    },
+    {
+     "aar": 2025,
+     "uge": 31,
+     "mails": 51
+    },
+    {
+     "aar": 2025,
+     "uge": 32,
+     "mails": 29
+    },
+    {
+     "aar": 2025,
+     "uge": 33,
+     "mails": 53
+    },
+    {
+     "aar": 2025,
+     "uge": 34,
+     "mails": 60
+    },
+    {
+     "aar": 2025,
+     "uge": 35,
+     "mails": 72
+    },
+    {
+     "aar": 2025,
+     "uge": 36,
+     "mails": 63
+    },
+    {
+     "aar": 2025,
+     "uge": 37,
+     "mails": 69
+    },
+    {
+     "aar": 2025,
+     "uge": 38,
+     "mails": 70
+    },
+    {
+     "aar": 2025,
+     "uge": 39,
+     "mails": 82
+    },
+    {
+     "aar": 2025,
+     "uge": 40,
+     "mails": 65
+    },
+    {
+     "aar": 2025,
+     "uge": 41,
+     "mails": 89
+    },
+    {
+     "aar": 2025,
+     "uge": 42,
+     "mails": 41
+    },
+    {
+     "aar": 2025,
+     "uge": 43,
+     "mails": 72
+    },
+    {
+     "aar": 2025,
+     "uge": 44,
+     "mails": 81
+    },
+    {
+     "aar": 2025,
+     "uge": 45,
+     "mails": 53
+    },
+    {
+     "aar": 2025,
+     "uge": 46,
+     "mails": 69
+    },
+    {
+     "aar": 2025,
+     "uge": 47,
+     "mails": 63
+    },
+    {
+     "aar": 2025,
+     "uge": 48,
+     "mails": 88
+    },
+    {
+     "aar": 2025,
+     "uge": 49,
+     "mails": 59
+    },
+    {
+     "aar": 2025,
+     "uge": 50,
+     "mails": 51
+    },
+    {
+     "aar": 2025,
+     "uge": 51,
+     "mails": 56
+    },
+    {
+     "aar": 2025,
+     "uge": 52,
+     "mails": 15
+    },
+    {
+     "aar": 2026,
+     "uge": 5,
+     "mails": 67
+    },
+    {
+     "aar": 2026,
+     "uge": 9,
+     "mails": 86
+    },
+    {
+     "aar": 2026,
+     "uge": 14,
+     "mails": 96
+    },
+    {
+     "aar": 2026,
+     "uge": 18,
+     "mails": 44
+    },
+    {
+     "aar": 2026,
+     "uge": 22,
+     "mails": 0
+    },
+    {
+     "aar": 2026,
+     "uge": 27,
+     "mails": 40
+    },
+    {
+     "aar": 2026,
+     "uge": 31,
+     "mails": 13
+    },
+    {
+     "aar": 2026,
+     "uge": 36,
+     "mails": 47
+    }
+   ]
+  },
+  "benchmark": [
+   {
+    "navn": "Svarrate",
+    "uger": 35,
+    "maal": 90.0,
+    "snit": 91.7,
+    "bedste": 97.0,
+    "vaerste": 76.0,
+    "opfyldt": true
+   },
+   {
+    "navn": "Løst ved første opkald",
+    "uger": 9,
+    "maal": 75.0,
+    "snit": 32.9,
+    "bedste": 39.4,
+    "vaerste": 20.0,
+    "opfyldt": false
+   }
+  ]
+ },
+ "medlemmer": {
+  "snapshots": [
+   {
+    "naar": "2025-05",
+    "medlemmer": 12638,
+    "aktive": 12633
+   },
+   {
+    "naar": "2026-09",
+    "medlemmer": 13495,
+    "aktive": 13495
+   }
+  ],
+  "bestand": {
+   "naar": "2026-09",
+   "medlemmer": 13495,
+   "medlemstyper": [
+    {
+     "navn": "Normalansat over 19 timer",
+     "antal": 6109,
+     "andel": 45.3
+    },
+    {
+     "navn": "Selvstændig",
+     "antal": 2605,
+     "andel": 19.3
+    },
+    {
+     "navn": "Studerende DP",
+     "antal": 2146,
+     "andel": 15.9
+    },
+    {
+     "navn": "Pensionist DP",
+     "antal": 1099,
+     "andel": 8.1
+    },
+    {
+     "navn": "1. og 2. års kandidater",
+     "antal": 662,
+     "andel": 4.9
+    },
+    {
+     "navn": "Ledig DP",
+     "antal": 359,
+     "andel": 2.7
+    },
+    {
+     "navn": "Normalansat under 20 timer",
+     "antal": 114,
+     "andel": 0.8
+    },
+    {
+     "navn": "DLF og DLF ret",
+     "antal": 95,
+     "andel": 0.7
+    },
+    {
+     "navn": "Ledig ikke ret til dagpenge",
+     "antal": 65,
+     "andel": 0.5
+    },
+    {
+     "navn": "Orlov uden løn DP",
+     "antal": 58,
+     "andel": 0.4
+    },
+    {
+     "navn": "Udland DP",
+     "antal": 46,
+     "andel": 0.3
+    },
+    {
+     "navn": "Ph.d. studerende",
+     "antal": 46,
+     "andel": 0.3
+    },
+    {
+     "navn": "DLF og DP ret",
+     "antal": 30,
+     "andel": 0.2
+    },
+    {
+     "navn": "Anden forhandlingsret",
+     "antal": 27,
+     "andel": 0.2
+    },
+    {
+     "navn": "Øvrige",
+     "antal": 34,
+     "andel": 0.3
+    }
+   ],
+   "kredse": [
+    {
+     "navn": "København / Frederiksberg",
+     "antal": 2708,
+     "andel": 20.1
+    },
+    {
+     "navn": "Østjylland",
+     "antal": 2193,
+     "andel": 16.3
+    },
+    {
+     "navn": "Dansk Psykolog Forening",
+     "antal": 2175,
+     "andel": 16.1
+    },
+    {
+     "navn": "Københavns Omegn",
+     "antal": 1399,
+     "andel": 10.4
+    },
+    {
+     "navn": "Nordjylland",
+     "antal": 971,
+     "andel": 7.2
+    },
+    {
+     "navn": "Fyn",
+     "antal": 854,
+     "andel": 6.3
+    },
+    {
+     "navn": "Nordsjælland",
+     "antal": 599,
+     "andel": 4.4
+    },
+    {
+     "navn": "Kreds Trekantsområdet",
+     "antal": 434,
+     "andel": 3.2
+    },
+    {
+     "navn": "Roskilde",
+     "antal": 434,
+     "andel": 3.2
+    },
+    {
+     "navn": "Vestsjælland",
+     "antal": 372,
+     "andel": 2.8
+    },
+    {
+     "navn": "MIDTVESTjylland",
+     "antal": 338,
+     "andel": 2.5
+    },
+    {
+     "navn": "Storstrøm",
+     "antal": 261,
+     "andel": 1.9
+    },
+    {
+     "navn": "Viborg \"Limfjord\"",
+     "antal": 261,
+     "andel": 1.9
+    },
+    {
+     "navn": "Sønderjylland",
+     "antal": 226,
+     "andel": 1.7
+    },
+    {
+     "navn": "Ribe",
+     "antal": 195,
+     "andel": 1.4
+    },
+    {
+     "navn": "Grønland",
+     "antal": 39,
+     "andel": 0.3
+    },
+    {
+     "navn": "Bornholm",
+     "antal": 36,
+     "andel": 0.3
+    }
+   ],
+   "alder": [
+    {
+     "navn": "under 26",
+     "antal": 1177,
+     "andel": 8.7
+    },
+    {
+     "navn": "26–30",
+     "antal": 2273,
+     "andel": 16.9
+    },
+    {
+     "navn": "31–35",
+     "antal": 2048,
+     "andel": 15.2
+    },
+    {
+     "navn": "36–40",
+     "antal": 1599,
+     "andel": 11.9
+    },
+    {
+     "navn": "41–45",
+     "antal": 1144,
+     "andel": 8.5
+    },
+    {
+     "navn": "46–50",
+     "antal": 1091,
+     "andel": 8.1
+    },
+    {
+     "navn": "51–55",
+     "antal": 1036,
+     "andel": 7.7
+    },
+    {
+     "navn": "56–60",
+     "antal": 764,
+     "andel": 5.7
+    },
+    {
+     "navn": "61–65",
+     "antal": 676,
+     "andel": 5.0
+    },
+    {
+     "navn": "66–70",
+     "antal": 564,
+     "andel": 4.2
+    },
+    {
+     "navn": "over 70",
+     "antal": 1117,
+     "andel": 8.3
+    }
+   ],
+   "koen": [
+    {
+     "navn": "Kvinde",
+     "antal": 10902,
+     "andel": 80.8
+    },
+    {
+     "navn": "Mand",
+     "antal": 2566,
+     "andel": 19.0
+    },
+    {
+     "navn": "Øvrige",
+     "antal": 27,
+     "andel": 0.2
+    }
+   ],
+   "median_alder": 39.0,
+   "ydernummer": 807
+  },
+  "vaekst": {
+   "fra": "2025-05",
+   "til": "2026-09",
+   "foer": 12633,
+   "efter": 13495
+  },
+  "kobling": {
+   "registreringer": 9548,
+   "fundet": 9020,
+   "andel": 94.5,
+   "skel": "2025-12-31",
+   "personer": 2804,
+   "median_alder_ringer": 40.0
+  },
+  "repraesentation": {
+   "medlemstype": [
+    {
+     "navn": "1. og 2. års kandidater",
+     "medlemmer": 662,
+     "bestand_andel": 4.9,
+     "henvendelser": 218,
+     "henv_andel": 7.8,
+     "faktor": 1.58
+    },
+    {
+     "navn": "Ledig DP",
+     "medlemmer": 359,
+     "bestand_andel": 2.7,
+     "henvendelser": 118,
+     "henv_andel": 4.2,
+     "faktor": 1.58
+    },
+    {
+     "navn": "Selvstændig",
+     "medlemmer": 2605,
+     "bestand_andel": 19.3,
+     "henvendelser": 709,
+     "henv_andel": 25.3,
+     "faktor": 1.31
+    },
+    {
+     "navn": "Normalansat under 20 timer",
+     "medlemmer": 114,
+     "bestand_andel": 0.8,
+     "henvendelser": 30,
+     "henv_andel": 1.1,
+     "faktor": 1.27
+    },
+    {
+     "navn": "Normalansat over 19 timer",
+     "medlemmer": 6109,
+     "bestand_andel": 45.3,
+     "henvendelser": 1328,
+     "henv_andel": 47.4,
+     "faktor": 1.05
+    },
+    {
+     "navn": "Pensionist DP",
+     "medlemmer": 1099,
+     "bestand_andel": 8.1,
+     "henvendelser": 155,
+     "henv_andel": 5.5,
+     "faktor": 0.68
+    },
+    {
+     "navn": "Studerende DP",
+     "medlemmer": 2146,
+     "bestand_andel": 15.9,
+     "henvendelser": 160,
+     "henv_andel": 5.7,
+     "faktor": 0.36
+    }
+   ],
+   "alder": [
+    {
+     "navn": "56–60",
+     "medlemmer": 764,
+     "bestand_andel": 5.7,
+     "henvendelser": 189,
+     "henv_andel": 6.7,
+     "faktor": 1.19
+    },
+    {
+     "navn": "31–35",
+     "medlemmer": 2048,
+     "bestand_andel": 15.2,
+     "henvendelser": 502,
+     "henv_andel": 17.9,
+     "faktor": 1.18
+    },
+    {
+     "navn": "36–40",
+     "medlemmer": 1599,
+     "bestand_andel": 11.9,
+     "henvendelser": 374,
+     "henv_andel": 13.3,
+     "faktor": 1.13
+    },
+    {
+     "navn": "41–45",
+     "medlemmer": 1144,
+     "bestand_andel": 8.5,
+     "henvendelser": 266,
+     "henv_andel": 9.5,
+     "faktor": 1.12
+    },
+    {
+     "navn": "26–30",
+     "medlemmer": 2273,
+     "bestand_andel": 16.9,
+     "henvendelser": 507,
+     "henv_andel": 18.1,
+     "faktor": 1.07
+    },
+    {
+     "navn": "61–65",
+     "medlemmer": 676,
+     "bestand_andel": 5.0,
+     "henvendelser": 149,
+     "henv_andel": 5.3,
+     "faktor": 1.06
+    },
+    {
+     "navn": "66–70",
+     "medlemmer": 564,
+     "bestand_andel": 4.2,
+     "henvendelser": 124,
+     "henv_andel": 4.4,
+     "faktor": 1.06
+    },
+    {
+     "navn": "46–50",
+     "medlemmer": 1091,
+     "bestand_andel": 8.1,
+     "henvendelser": 229,
+     "henv_andel": 8.2,
+     "faktor": 1.01
+    },
+    {
+     "navn": "51–55",
+     "medlemmer": 1036,
+     "bestand_andel": 7.7,
+     "henvendelser": 216,
+     "henv_andel": 7.7,
+     "faktor": 1.0
+    },
+    {
+     "navn": "over 70",
+     "medlemmer": 1117,
+     "bestand_andel": 8.3,
+     "henvendelser": 193,
+     "henv_andel": 6.9,
+     "faktor": 0.83
+    },
+    {
+     "navn": "under 26",
+     "medlemmer": 1177,
+     "bestand_andel": 8.7,
+     "henvendelser": 54,
+     "henv_andel": 1.9,
+     "faktor": 0.22
+    }
+   ],
+   "kreds": [
+    {
+     "navn": "Fyn",
+     "medlemmer": 854,
+     "bestand_andel": 6.3,
+     "henvendelser": 216,
+     "henv_andel": 7.7,
+     "faktor": 1.22
+    },
+    {
+     "navn": "Roskilde",
+     "medlemmer": 434,
+     "bestand_andel": 3.2,
+     "henvendelser": 110,
+     "henv_andel": 3.9,
+     "faktor": 1.22
+    },
+    {
+     "navn": "Vestsjælland",
+     "medlemmer": 372,
+     "bestand_andel": 2.8,
+     "henvendelser": 93,
+     "henv_andel": 3.3,
+     "faktor": 1.2
+    },
+    {
+     "navn": "København / Frederiksberg",
+     "medlemmer": 2708,
+     "bestand_andel": 20.1,
+     "henvendelser": 670,
+     "henv_andel": 23.9,
+     "faktor": 1.19
+    },
+    {
+     "navn": "Københavns Omegn",
+     "medlemmer": 1399,
+     "bestand_andel": 10.4,
+     "henvendelser": 347,
+     "henv_andel": 12.4,
+     "faktor": 1.19
+    },
+    {
+     "navn": "Storstrøm",
+     "medlemmer": 261,
+     "bestand_andel": 1.9,
+     "henvendelser": 61,
+     "henv_andel": 2.2,
+     "faktor": 1.12
+    },
+    {
+     "navn": "Østjylland",
+     "medlemmer": 2193,
+     "bestand_andel": 16.3,
+     "henvendelser": 501,
+     "henv_andel": 17.9,
+     "faktor": 1.1
+    },
+    {
+     "navn": "Nordsjælland",
+     "medlemmer": 599,
+     "bestand_andel": 4.4,
+     "henvendelser": 136,
+     "henv_andel": 4.9,
+     "faktor": 1.09
+    },
+    {
+     "navn": "Nordjylland",
+     "medlemmer": 971,
+     "bestand_andel": 7.2,
+     "henvendelser": 205,
+     "henv_andel": 7.3,
+     "faktor": 1.02
+    },
+    {
+     "navn": "MIDTVESTjylland",
+     "medlemmer": 338,
+     "bestand_andel": 2.5,
+     "henvendelser": 71,
+     "henv_andel": 2.5,
+     "faktor": 1.01
+    },
+    {
+     "navn": "Kreds Trekantsområdet",
+     "medlemmer": 434,
+     "bestand_andel": 3.2,
+     "henvendelser": 89,
+     "henv_andel": 3.2,
+     "faktor": 0.99
+    },
+    {
+     "navn": "Ribe",
+     "medlemmer": 195,
+     "bestand_andel": 1.4,
+     "henvendelser": 40,
+     "henv_andel": 1.4,
+     "faktor": 0.99
+    },
+    {
+     "navn": "Sønderjylland",
+     "medlemmer": 226,
+     "bestand_andel": 1.7,
+     "henvendelser": 43,
+     "henv_andel": 1.5,
+     "faktor": 0.92
+    },
+    {
+     "navn": "Viborg \"Limfjord\"",
+     "medlemmer": 261,
+     "bestand_andel": 1.9,
+     "henvendelser": 42,
+     "henv_andel": 1.5,
+     "faktor": 0.77
+    },
+    {
+     "navn": "Dansk Psykolog Forening",
+     "medlemmer": 2175,
+     "bestand_andel": 16.1,
+     "henvendelser": 161,
+     "henv_andel": 5.7,
+     "faktor": 0.36
+    }
+   ],
+   "koen": [
+    {
+     "navn": "Kvinde",
+     "medlemmer": 10902,
+     "bestand_andel": 80.8,
+     "henvendelser": 2324,
+     "henv_andel": 82.9,
+     "faktor": 1.03
+    },
+    {
+     "navn": "Mand",
+     "medlemmer": 2566,
+     "bestand_andel": 19.0,
+     "henvendelser": 478,
+     "henv_andel": 17.0,
+     "faktor": 0.9
+    }
+   ]
   }
  }
 }

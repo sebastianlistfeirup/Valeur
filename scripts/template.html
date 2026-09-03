@@ -237,6 +237,43 @@
   .spark .b { border-radius:3px 3px 0 0; min-height:2px; transition:filter .12s ease; }
   .spark .b:hover { filter:brightness(1.12); }
 
+
+  /* ── Divergerende søjler: over eller under sin andel af bestanden ──────── */
+  .div-rows { display:grid; gap:.45rem; }
+  .div-row { display:grid; grid-template-columns:minmax(7rem,12rem) 1fr auto;
+             align-items:center; gap:.85rem; }
+  .div-row .lab { font-size:.8125rem; line-height:1.3; }
+  .div-row .lab small { display:block; color:var(--faint); font-size:.6875rem;
+                        font-family:"IBM Plex Mono",monospace; }
+  .div-track { position:relative; height:1.5rem; background:var(--sunk);
+               border-radius:4px; overflow:hidden; }
+  .div-track::before { content:""; position:absolute; left:50%; top:0; bottom:0;
+                       width:1px; background:var(--navy-200); z-index:2; }
+  .div-fill { position:absolute; top:.2rem; bottom:.2rem; border-radius:3px;
+              transition:filter .12s ease; }
+  .div-row:hover .div-fill { filter:brightness(1.1); }
+  .div-row .fk { font-family:"IBM Plex Mono",monospace; font-size:.8125rem;
+                 font-variant-numeric:tabular-nums; min-width:3.4rem; text-align:right; }
+  .div-akse { display:flex; justify-content:space-between; margin-top:.5rem;
+              padding-left:calc(min(12rem,7rem) + .85rem);
+              font-family:"IBM Plex Mono",monospace; font-size:.6875rem; color:var(--faint); }
+
+  /* ── Målkort ────────────────────────────────────────────────────────────── */
+  .maal { display:grid; gap:.75rem; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); }
+  .maalkort { background:var(--card); border:1px solid var(--rule); border-radius:12px;
+              padding:1rem 1.15rem; display:grid; gap:.55rem; }
+  .maalkort .navn { font-size:.9375rem; font-weight:600; }
+  .maalkort .tal { display:flex; align-items:baseline; gap:.5rem; }
+  .maalkort .stor { font-family:"IBM Plex Serif",Georgia,serif; font-size:1.75rem;
+                    font-weight:600; line-height:1; font-variant-numeric:tabular-nums; }
+  .maalkort .mod { font-size:.8125rem; color:var(--muted); }
+  .maalbar { height:.45rem; background:var(--sunk); border-radius:99px;
+             position:relative; overflow:hidden; }
+  .maalbar i { position:absolute; inset:0 auto 0 0; border-radius:99px; }
+  .maalbar b { position:absolute; top:-.2rem; bottom:-.2rem; width:2px;
+               background:var(--ink); z-index:2; }
+  .maalkort .note { font-size:.75rem; color:var(--faint); }
+
   /* ── Fund ───────────────────────────────────────────────────────────────── */
   .finds { display:grid; gap:.7rem; grid-template-columns:repeat(auto-fit,minmax(19rem,1fr)); }
   .find { background:var(--card); border:1px solid var(--rule); border-radius:12px;
@@ -410,6 +447,50 @@
     <div class="rule" id="skoen" style="margin-top:1.25rem" hidden>
       <span class="n">skøn</span>
       <p id="skoen-txt"></p>
+    </div>
+  </section>
+
+  <section id="rigtige">
+    <div class="sec-head"><h2>Ringer de rigtige medlemmer?</h2><span class="src">CRM × medlemsliste</span></div>
+    <p class="sec-note" id="note-rigtige"></p>
+    <div class="grid2">
+      <div class="panel">
+        <header><h3>Medlemstype</h3><span class="hint">mod andel af bestanden</span></header>
+        <div class="div-rows" id="rep-mtype"></div>
+        <div class="div-akse"><span>ringer mindre</span><span>som forventet</span><span>ringer mere</span></div>
+      </div>
+      <div class="panel">
+        <header><h3>Alder</h3><span class="hint">mod andel af bestanden</span></header>
+        <div class="div-rows" id="rep-alder"></div>
+        <div class="div-akse"><span>ringer mindre</span><span>som forventet</span><span>ringer mere</span></div>
+      </div>
+    </div>
+    <p style="font-size:.8125rem;color:var(--faint);margin-top:1rem" id="rep-note"></p>
+  </section>
+
+  <section id="maal">
+    <div class="sec-head"><h2>Mod Valeurs egne mål</h2><span class="src">Valeur Insights · benchmark</span></div>
+    <p class="sec-note" id="note-maal"></p>
+    <div class="maal" id="maalkort"></div>
+  </section>
+
+  <section id="koster">
+    <div class="sec-head"><h2>Hvad en henvendelse koster</h2><span class="src">Valeurs ugerapporter</span></div>
+    <p class="sec-note" id="note-koster"></p>
+    <div class="grid2">
+      <div class="panel">
+        <header><h3>Tid pr. emne</h3><span class="hint">samtale + efterbehandling</span></header>
+        <div class="bars" id="tid-emne"></div>
+        <div class="legend">
+          <span><i style="background:var(--c1)"></i>samtale</span>
+          <span><i style="background:var(--c2)"></i>efterbehandling</span>
+        </div>
+      </div>
+      <div class="panel">
+        <header><h3>Medlem eller ikke?</h3><span class="hint" id="h-medlemskab"></span></header>
+        <div class="bars" id="medlemskab"></div>
+        <p style="font-size:.75rem;color:var(--faint);margin-top:.9rem" id="n-medlemskab"></p>
+      </div>
     </div>
   </section>
 
@@ -610,6 +691,12 @@
     { navn: "Valeur Insights", farve: "--c2", status: "aktiv", txt: V
         ? `${n0(V.opkald)} kald over ${V.dage} åbningsdage. Viser hvor mange Valeur selv når at tage.`
         : "Afventer eksport." },
+    { navn: "Valeurs ugerapporter", farve: "--c6", status: "aktiv", txt: D.rapporter && D.rapporter.uger
+        ? `${D.rapporter.uger.uger} rapporter med ${n0(D.rapporter.uger.registreringer)} registreringer. Giver tid pr. emne og medlemsstatus.`
+        : "Afventer eksport." },
+    { navn: "Medlemslisten", farve: "--c5", status: "aktiv", txt: D.medlemmer
+        ? `To øjebliksbilleder, ${D.medlemmer.vaekst.fra} og ${D.medlemmer.vaekst.til}. Gør det muligt at se, hvem der ringer mere end sin andel.`
+        : "Afventer udtræk." },
   ];
   const kb = document.getElementById("kilder");
   kilder.forEach(s => {
@@ -1092,7 +1179,9 @@
     [["--c3","Kald til Valeur",n0(V.opkald),`${V.periode_fra.slice(0,7)} – ${V.periode_til.slice(0,7)}`],
      ["--god","Besvaret",p1(V.svarprocent),`${n0(V.besvarede)} kald`],
      ["--c4","Nåede ikke igennem",n0(V.opkald-V.besvarede),"lagde på inden nogen svarede"],
-     ["--c1","Kald pr. åbningsdag",String(Math.round(V.opkald/V.dage)),`over ${V.dage} dage`],
+     h && h.maalt
+       ? ["--c1","Klaret uden viderestilling",p1(h.andel),`målt · mål ${p1(h.maal)}`]
+       : ["--c1","Kald pr. åbningsdag",String(Math.round(V.opkald/V.dage)),`over ${V.dage} dage`],
     ].filter(Boolean).forEach(([c,t,v,s]) => {
       const d = el("div"); d.style.setProperty("--accent",`var(${c})`);
       d.append(el("dt",null,t), el("dd",null,`${v}<small>${s}</small>`));
@@ -1126,22 +1215,160 @@
         v.innerHTML = p1(V.afbrudt_pr_time[i].andel);
       });
     }
-    if (h) {
+    if (h && h.maalt) {
       const s = document.getElementById("skoen");
       s.hidden = false;
+      s.querySelector(".n").textContent = "målt";
+      const mdr = (h.maaneder || []).map(m => `${m.maaned} ${p1(m.andel)}`).join(" · ");
       document.getElementById("skoen-txt").innerHTML =
-        `<b>Hvor meget klarer Valeur helt selv?</b> Trækker man de ${n0(h.videre)} opkald,
-         sekretariatets køer modtog, fra de ${n0(h.besvarede)} Valeur besvarede, bliver der
-         ${n0(h.selv)} tilbage — <b>${p1(h.andel)}</b> mod et mål på ${h.maal} %.
-         Regnestykket er skrøbeligt og skal ikke bruges som facit: de to tal kommer fra hver
-         sin kilde og dækker ikke helt samme periode, og en kø kan modtage opkald, der aldrig
-         gik gennem Valeur. Medarbejderbriefingen målte 63 % på fire måneder i 2025.
-         Et rigtigt tal kræver, at Valeur Insights kan udskille de viderestillede kald.`;
+        `<b>En straksbesvarelse er et opkald, Valeur afsluttede selv</b> — altså ikke sendte
+         videre til sekretariatet. Agentopgørelsen tæller viderestillingerne pr. medarbejder,
+         så tallet er en måling og ikke et skøn: af <b>${n0(h.besvarede)}</b> besvarede opkald
+         blev <b>${n0(h.selv)}</b> klaret helt af Valeur — <b>${p1(h.andel)}</b> mod et mål
+         på ${p1(h.maal)}. ${mdr ? `Pr. måned: ${mdr}.` : ""}
+         Opgørelsen dækker kun de måneder, den omfatter, ikke hele samarbejdet.
+         Medarbejderbriefingen målte 63 % på fire måneder i 2025.`;
     }
     setNote("note-valeur",
       `Valeur tager <b>${p1(V.svarprocent)}</b> af de kald, der når frem — og andelen er
        steget gennem samarbejdet. De <b>${n0(V.opkald-V.besvarede)}</b> der ikke nåede igennem,
        lagde på mens de ventede. Næsten alle i åbningstidens tre timer.`);
+  }
+
+
+  /* ── Repræsentation: hvem ringer mere end deres andel af bestanden ─────── */
+  const M = D.medlemmer, R = D.rapporter;
+
+  function divBars(mount, raekker) {
+    const box = document.getElementById(mount);
+    if (!box) return;
+    const maxAfv = Math.max(...raekker.map(r => Math.abs(Math.log2(r.faktor || 1))), .6);
+    raekker.forEach(r => {
+      const row = el("div","div-row");
+      row.append(el("div","lab", `${r.navn}<small>${n0(r.medlemmer)} medlemmer</small>`));
+      const tr = el("div","div-track");
+      const f = el("div","div-fill");
+      // Logaritmisk om 1, så "halvt så meget" fylder lige så meget som "dobbelt".
+      const a = Math.log2(r.faktor || 1) / maxAfv;      // -1 … 1
+      const bredde = Math.min(Math.abs(a), 1) * 50;
+      if (a >= 0) { f.style.left = "50%"; f.style.width = bredde + "%"; f.style.borderRadius = "0 3px 3px 0"; }
+      else { f.style.right = "50%"; f.style.width = bredde + "%"; f.style.borderRadius = "3px 0 0 3px"; }
+      f.style.background = `var(${a >= 0 ? "--c1" : "--c2"})`;
+      tr.append(f);
+      const fk = el("div","fk", (r.faktor).toFixed(2).replace(".", ","));
+      fk.style.color = Math.abs(Math.log2(r.faktor)) < .15 ? "var(--faint)"
+        : a >= 0 ? "var(--c1)" : "var(--c2)";
+      row.append(tr, fk);
+      bindTip(row, () => tipRows(r.navn, [
+        ["Andel af bestanden", p1(r.bestand_andel)],
+        ["Andel af dem der ringer", p1(r.henv_andel)],
+        ["Faktor", r.faktor.toFixed(2).replace(".", ",")],
+        ["Medlemmer i gruppen", n0(r.medlemmer)],
+      ]));
+      box.append(row);
+    });
+  }
+
+  if (M && M.repraesentation) {
+    divBars("rep-mtype", M.repraesentation.medlemstype);
+    divBars("rep-alder", M.repraesentation.alder);
+    const kb = M.kobling, b = M.bestand;
+    const unge = M.repraesentation.alder.find(r => /under 26/.test(r.navn));
+    const selv = M.repraesentation.medlemstype.find(r => /^Selvstændig/.test(r.navn));
+    setNote("note-rigtige",
+      `<b>${p1(kb.andel)}</b> af registreringerne kunne slås op i medlemslisten.
+       Faktoren siger, hvor meget en gruppe fylder blandt dem der ringer, holdt op mod
+       hvor meget den fylder i bestanden: 1,00 er præcis som forventet.
+       ${selv ? `De selvstændige ligger på <b>${selv.faktor.toFixed(2).replace(".", ",")}</b>` : ""}${unge ? `, mens medlemmer under 26 ligger på <b>${unge.faktor.toFixed(2).replace(".", ",")}</b>` : ""}.`);
+    document.getElementById("rep-note").innerHTML =
+      `Medianalderen blandt dem der ringer er <b>${Math.round(kb.median_alder_ringer)} år</b>
+       mod <b>${Math.round(b.median_alder)} år</b> i bestanden — hypotesen om at det især er
+       de ældre medlemmer, der ringer, holder ikke.
+       Kun de seneste henvendelser er brugt (efter ${dk(kb.skel)}), fordi medlemstypen
+       ændrer sig: en dimittend bliver normalansat, og ville ellers blive talt i den
+       gruppe, hun tilhører i dag frem for den, hun tilhørte da hun ringede.`;
+  }
+
+  /* ── Mål ───────────────────────────────────────────────────────────────── */
+  if (R) {
+    const kort = [];
+    const h2 = V && V.haandtering;
+    if (h2 && h2.maalt) kort.push({
+      navn: "Klaret uden viderestilling", vaerdi: h2.andel, maal: h2.maal,
+      note: `${n0(h2.selv)} af ${n0(h2.besvarede)} besvarede opkald blev klaret helt af Valeur.`,
+    });
+    (R.benchmark || []).forEach(b => kort.push({
+      navn: b.navn, vaerdi: b.snit, maal: b.maal,
+      note: `Målt over ${b.uger} uger. Spænd ${p1(b.vaerste)} – ${p1(b.bedste)}.`,
+    }));
+    const mb = document.getElementById("maalkort");
+    kort.forEach(k => {
+      const naaet = k.maal ? k.vaerdi >= k.maal : null;
+      const d = el("div","maalkort");
+      d.append(el("div","navn", k.navn));
+      const t = el("div","tal");
+      const s = el("span","stor", p1(k.vaerdi));
+      s.style.color = naaet ? "var(--god)" : "var(--c2)";
+      t.append(s, el("span","mod", k.maal ? `mål ${p1(k.maal)}` : ""));
+      d.append(t);
+      const bar = el("div","maalbar");
+      const i = el("i");
+      i.style.width = Math.min(k.vaerdi, 100) + "%";
+      i.style.background = naaet ? "var(--god)" : "var(--c2)";
+      bar.append(i);
+      if (k.maal) { const m = el("b"); m.style.left = k.maal + "%"; bar.append(m); }
+      d.append(bar, el("div","note", k.note));
+      mb.append(d);
+    });
+    const fcr = (R.benchmark || []).find(b => /første/.test(b.navn));
+    setNote("note-maal",
+      `Valeur måler sig selv på faste servicemål hver uge. Svarraten holder,
+       ${h2 && h2.maalt ? `men <b>${p1(h2.andel)}</b> af opkaldene klares uden viderestilling mod et mål på ${p1(h2.maal)}` : ""}${fcr ? `, og kun <b>${p1(fcr.snit)}</b> bliver løst ved første opkald mod et mål på ${p1(fcr.maal)}` : ""}.
+       De to sidste er det, der for alvor afgør, hvor meget sekretariatet mærker samarbejdet.`);
+  }
+
+  /* ── Tid pr. emne og medlemskab ────────────────────────────────────────── */
+  if (R && R.uger) {
+    const U = R.uger;
+    const emner = U.emner.slice(0, 10);
+    const maxTid = Math.max(...emner.map(e => e.samtale_sek + e.efter_sek));
+    const box = document.getElementById("tid-emne");
+    emner.forEach(e => {
+      const row = el("div","bar-row");
+      row.append(el("div","lab", `${e.navn.replace(/\s*\(.*/, "")}<small>${n0(e.antal)} henvendelser</small>`));
+      const tr = el("div","bar-track");
+      tr.style.display = "flex"; tr.style.gap = "2px";
+      [["--c1", e.samtale_sek], ["--c2", e.efter_sek]].forEach(([c, v]) => {
+        const f = el("div");
+        f.style.cssText = `width:${(v/maxTid*100).toFixed(1)}%;background:var(${c});height:100%`;
+        tr.append(f);
+      });
+      const sum = e.samtale_sek + e.efter_sek;
+      row.append(tr, el("div","val", `${Math.floor(sum/60)}:${String(sum%60).padStart(2,"0")}`));
+      bindTip(row, () => tipRows(e.navn, [
+        ["Henvendelser", n0(e.antal)],
+        ["Samtale", e.samtale], ["Efterbehandling", e.efterbehandling],
+        ["I alt pr. henvendelse", `${Math.floor(sum/60)}:${String(sum%60).padStart(2,"0")}`],
+      ]));
+      box.append(row);
+    });
+    setNote("note-koster",
+      `Valeurs ugerapporter måler både samtalen og efterbehandlingen bagefter — den tid,
+       der går med at skrive registreringen. Tilsammen er det, hvad én henvendelse koster.`);
+
+    const grupper = {};
+    U.medlemskab.forEach(r => {
+      grupper[r.type] = (grupper[r.type] || 0) + r.antal;
+    });
+    const NAVNE = { "medlem": "Medlem af DP", "ikke-medlem": "Ikke medlem",
+                    "associeret": "Associeret medlem" };
+    const raek = Object.entries(grupper).sort((a,b) => b[1]-a[1])
+      .map(([k,v]) => ({ navn: NAVNE[k] || k, antal: v }));
+    bars("medlemskab", raek, { farve: r => /^Medlem/.test(r.navn) ? "--c3" : "--c2" });
+    document.getElementById("h-medlemskab").textContent = `${n0(U.registreringer)} registreringer`;
+    document.getElementById("n-medlemskab").innerHTML =
+      `Målt over ${U.uger} ugerapporter. Briefingen anslog 87 % medlemmer —
+       det holder. De øvrige er typisk kommuner og regioner, der ikke kan blive medlemmer.`;
   }
 
   /* ── Beregnede fund ────────────────────────────────────────────────────── */
@@ -1250,18 +1477,16 @@
 
   /* ── Ventende moduler ──────────────────────────────────────────────────── */
   const vent = [
-    { h: "Straksbesvarelser, målt", fra: "Valeur Insights",
-      p: "Kerne-KPI'en. Dashboardet kan i dag kun anslå den ved at trække køtallet fra. Et rigtigt tal kræver, at Insights kan udskille de kald, der blev viderestillet." },
-    { h: "Stamdatarettelser", fra: "Valeur Insights",
-      p: "Briefingen anslog 15–20 % af de medlemmer, der ringer ind. Findes hverken i servicefanen eller i de eksporter, der foreligger." },
-    { h: "Medlemmer mod ikke-medlemmer", fra: "Valeur Insights",
-      p: "Briefingen målte 87 % medlemmer. CRM rummer kun dem, der blev fundet i Membercare — de øvrige efterlader intet spor." },
-    { h: "Over- og underrepræsentation", fra: "Membercare — bestandstal",
-      p: "Et udtræk med antal medlemmer pr. type, kreds og alder. Så kan det afgøres, om de selvstændige stadig fylder 30 % af opkaldene mod 19 % af bestanden." },
-    { h: "Samtaletid pr. emne", fra: "IP Nordic + CRM",
-      p: "Hvad koster en henvendelsestype i minutter? Kræver, at et opkald kan kobles til sin registrering — i dag findes der ingen fælles nøgle." },
+    { h: "Stamdatarettelser", fra: "Valeur Insights — under afklaring",
+      p: "Briefingen anslog 15–20 % af de medlemmer, der ringer ind. Findes hverken i servicefanen eller i de eksporter, der foreligger. DP undersøger, om tallet kan trækkes." },
     { h: "Ventetid før Valeur", fra: "IP Nordic — 2024/25",
-      p: "CDR-udtrækket starter 1. maj 2025, fire dage før opstarten. En egentlig før-måling af ventetid kræver et udtræk længere tilbage." },
+      p: "CDR-udtrækket starter 1. maj 2025, fire dage før opstarten. En egentlig før-måling af ventetid og svarprocent kræver et udtræk længere tilbage." },
+    { h: "Straksbesvarelse hele perioden", fra: "Valeur Insights",
+      p: "Agentopgørelsen dækker kun nogle måneder. Med samme opgørelse for hele samarbejdet kunne udviklingen mod målet på 70 % følges måned for måned." },
+    { h: "Årsag til afmelding af opkald", fra: "Valeur Insights",
+      p: "Hvorfor lagde de 2.271 på, inden nogen svarede? Ventetiden kendes, men ikke om de ringede igen bagefter." },
+    { h: "Kobling mellem opkald og registrering", fra: "IP Nordic + CRM",
+      p: "I dag findes ingen fælles nøgle mellem et enkelt opkald og dets registrering. Med en ville dashboardet kunne følge hele rejsen for én henvendelse." },
   ];
   const vb = document.getElementById("venter");
   vent.forEach(v => {

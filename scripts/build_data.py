@@ -27,6 +27,8 @@ import pandas as pd
 import ipnordic
 import valeur
 import egne
+import medlemmer
+import valeur_rapporter
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -298,12 +300,28 @@ def main():
     telefoni = ipnordic.build()
     koe_opkald = (telefoni or {}).get("koeer", {}).get("ialt", {}).get("opkald")
     insights = valeur.build(koe_opkald)
+    rapporter = valeur_rapporter.build()
+    if insights and rapporter and rapporter.get("agenter"):
+        # Agentopgørelsen er en måling. Den slår skønnet, der blev regnet ud
+        # af køtallet, så den overtager pladsen.
+        insights["haandtering"] = {
+            "besvarede": rapporter["agenter"]["besvarede"],
+            "videre": rapporter["agenter"]["omstillet"],
+            "selv": rapporter["agenter"]["selv"],
+            "andel": rapporter["agenter"]["andel"],
+            "maal": rapporter["agenter"]["maal"],
+            "maalt": True,
+            "maaneder": rapporter["agenter"]["maaneder"],
+        }
     data = {
         "genereret": date.today().isoformat(),
         "crm": crm,
         "telefoni": telefoni,
         "valeur": insights,
         "egne": egne.build(),
+        "rapporter": rapporter,
+        "medlemmer": medlemmer.build(
+            pd.read_excel(RAW / "Serviceregistreringer.xlsx", dtype=str)),
     }
     if telefoni:
         c = telefoni["cdr"]
@@ -313,6 +331,13 @@ def main():
     if insights:
         print(f"  Valeur Insights: {insights['opkald']} kald, "
               f"{insights['svarprocent']}% besvaret")
+    if rapporter and rapporter.get("uger"):
+        u = rapporter["uger"]
+        print(f"  Ugerapporter: {u['uger']} stk, {u['registreringer']} reg, "
+              f"{u['medlemsandel']}% medlemmer")
+    if data.get("medlemmer", {}).get("kobling"):
+        kb = data["medlemmer"]["kobling"]
+        print(f"  Medlemsliste: {kb['andel']}% af registreringerne koblet")
 
     navne = set(
         clean(pd.read_excel(RAW / "Serviceregistreringer.xlsx", dtype=str)["Medlem"]).unique()
