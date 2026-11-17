@@ -91,3 +91,23 @@ scripts/template.html   dashboardet: markup, stil og tegnekode
 docs/                   det, GitHub Pages udstiller
 data/raw/               kildefiler (uden for versionsstyring)
 ```
+
+## Briefing-dashboardet (`docs/briefing.html`)
+
+En selvstændig side, bygget efter medarbejderbriefingen fra september 2025
+(*Valeur_Statistik_Medarbejderbriefing_17_09_25*), med data frem til november 2026.
+Den læser eksporterne direkte fra mappen "Thomas data", som den ligger på
+skrivebordet, og kræver hverken CDR-udtrækket eller medlemslisterne.
+
+Sektioner: status, opkald og svar, aflastning af sekretariatet (før og efter, kø
+for kø), hvornår der ringes, hvad og hvem (Membercare), Valeur målt mod de
+aftalte mål, mails pr. uge og en liste over datahuller.
+
+```sh
+python -X utf8 scripts/briefing/build_data.py "<sti til Thomas data>"   # → docs/briefing.json
+python -X utf8 scripts/briefing/render.py                               # → docs/briefing.html og dist/briefing.html
+```
+
+Uden argument læser scriptet `data/raw/thomas/`. Samme privatlivsregler som
+ovenfor: kun aggregerede tal, ingen krydstabelcelle under 5, og kørslen stopper,
+hvis outputtet indeholder telefonnumre, mailadresser eller cpr-lignende numre.
