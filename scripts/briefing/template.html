@@ -86,6 +86,8 @@ td:first-child{font-family:var(--body)}
 .gap .st{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-top:2px}
 .src{font-size:12px;color:var(--muted)}
 footer{color:var(--muted);font-size:12px}
+.crosslink{font-size:14px;font-weight:500;color:var(--valeur);text-decoration:none;width:max-content;max-width:100%}
+.crosslink:hover,.crosslink:focus-visible{text-decoration:underline}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -93,6 +95,7 @@ footer{color:var(--muted);font-size:12px}
 <header class="top">
   <div class="eyebrow">Dansk Psykolog Forening · Valeur-samarbejdet</div>
   <h1>Medlemmernes indgang</h1>
+  <a class="crosslink" href="index.html">← Dashboardet over henvendelserne til hovednummeret</a>
   <p class="lede" id="lede"></p>
   <div class="legend">
     <span><i class="dot" style="background:var(--valeur)"></i>Valeur, frontlinjen</span>
@@ -172,7 +175,8 @@ footer{color:var(--muted);font-size:12px}
   <div class="card"><h3>Medlemstyper</h3><div class="bars" id="bSeg"></div></div>
   <div class="card"><h3>Hvad ringer de forskellige grupper om?</h3>
     <p class="sub">Andel af gruppens registreringer i hver hovedkategori. Mørkere felt betyder større andel.</p>
-    <div class="tbl"><div class="heat" id="heat"></div></div></div>
+    <div class="tbl"><div class="heat" id="heat"></div></div>
+    <p class="sub" id="tomNote"></p></div>
 </section>
 
 <section class="blok" id="maal">
@@ -370,6 +374,8 @@ function render(){
   segs.forEach(s=>{ const tot = Object.values(MC.kryds[s]).reduce((a,b)=>a+b,0); h += `<div class="r">${s} <span class="src">(${fmt(tot)})</span></div>`;
     hg.forEach(g=>{ const a=(MC.kryds[s][g]||0)/tot; h += `<div class="c" style="background:${alpha("--valeur",Math.min(.9,a*1.6+.04))};color:${a>.32?"#fff":css("--ink")}">${fmt(a*100)} %</div>`; }); });
   document.getElementById("heat").innerHTML = h+"</div>";
+  const TF = MC.tomt_felt;
+  document.getElementById("tomNote").innerHTML = `<b>Medlemskab ikke angivet</b> betyder, at medlemskabsfeltet er tomt i udtrækket. Det gælder ${fmt(TF.registreringer)} registreringer fra ${fmt(TF.personer)} personer. Alle har et stamkort i Membercare, men feltet viser medlemskabet på det tidspunkt, udtrækket blev lavet. ${pct(TF.andel_kontingent)} af dem handler om medlemskab og kontingent, mod ${pct(TF.andel_kontingent_alle)} samlet. Det er derfor sandsynligvis udmeldte og nye medlemmer, hvis medlemskab endnu ikke var aktivt. Det kan bekræftes ved at slå et par af stamkortene op i Membercare.`;
 
   // --- mål
   const B = D.benchmark.perioder, M = D.benchmark.maal;

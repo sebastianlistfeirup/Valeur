@@ -203,16 +203,23 @@ def membercare():
     typ = efter["Servicetype"].fillna("Ikke angivet").str.strip()
     efter["gruppe"], efter["type"] = gruppe, typ
 
-    # medlemstype = første led af medlemskabsfeltet
+    # medlemstype = første led af medlemskabsfeltet. Feltet viser medlemskabet på
+    # udtrækstidspunktet, så udmeldte og medlemskaber under oprettelse står tomme.
+    TOM = "Medlemskab ikke angivet"
+
     def seg(s):
         if not isinstance(s, str) or not s.strip():
-            return "Ikke medlem / tom"
+            return TOM
         s = s.strip().split(",")[0]
         s = s.split("-")[0].strip()
         s = re.sub(r"\s+", " ", s)
-        return s.rstrip(".") or "Ikke medlem / tom"
+        return s.rstrip(".") or TOM
     efter["seg"] = efter["Medlemskab"].map(seg)
 
+    tom = efter[efter["seg"] == TOM]
+    tomt_felt = {"registreringer": int(len(tom)), "personer": int(tom["Stamkort"].nunique()),
+                 "andel_kontingent": round((tom["type"] == "Medlemskab og kontingent").mean(), 3),
+                 "andel_kontingent_alle": round((efter["type"] == "Medlemskab og kontingent").mean(), 3)}
     grp = efter["gruppe"].value_counts()
     typer = (efter.groupby(["gruppe", "type"]).size().reset_index(name="n")
              .sort_values("n", ascending=False))
@@ -239,6 +246,7 @@ def membercare():
         "foer_valeur": {"foerste": df["dato"].min().strftime("%Y-%m-%d"),
                         "antal": int((df["dato"] < START).sum())},
         "unikke": int(efter["Stamkort"].nunique()),
+        "tomt_felt": tomt_felt,
         "gentag": gentag,
         "andel_valeur": round(efter["af_valeur"].mean(), 3),
         "antal_valeur_agenter": len(valeur_agenter),
