@@ -602,8 +602,8 @@
   "_plan": "0ac0b671-5b71-4f12-a205-8341bcbe8e1b_0.png|0ac0b671-5b71-4f12-a205-8341bcbe8e1b_1.png"
  },
  "0bb5d413-d125-463a-8262-5b90ad6c1c34": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -618,7 +618,7 @@
     "navn": "Værelse",
     "m2": 9.2,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -663,10 +663,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Luk den franske dobbeltdør mellem stuen og værelset, og sæt en almindelig enkeltdør i.",
   "ekstra_rum": "",
   "opholdsflade": "Stue + spisestue ca. 27 m² (2,8×4,1 + 3,8×4,1) + spisekøkken ca. 9,9 m²",
-  "begrundelse": "Soveværelset (3,7×3,4 m) har dør til entréen og vindue. Værelset (4,4×2,1 m) er smalt, men en dobbeltseng kan stå på tværs; det har fransk dobbeltdør fra stuen og altandør, så altanen nås gennem soveværelset – overvej at skifte dobbeltdøren til en tæt dør. Stue/spisestue på ca. 27 m² er tilbage.",
+  "begrundelse": "Soveværelset (3,7×3,4 m) har dør til entréen og vindue og tæller i dag. Værelset (4,4×2,1 m) er smalt og nås kun gennem en fransk dobbeltdør fra stuen, så det tæller ikke, før dobbeltdøren erstattes af en enkeltdør; altanen nås også kun gennem det. Stue/spisestue på ca. 27 m² er tilbage.",
   "sikkerhed": "middel",
   "_plan": "0bb5d413-d125-463a-8262-5b90ad6c1c34_0.png"
  },
@@ -1371,8 +1371,8 @@
   "_plan": "22020c4d-1338-487d-ac98-fec688a284ce_0.png|22020c4d-1338-487d-ac98-fec688a284ce_1.png"
  },
  "2244d127-ead9-43d5-8b83-f561172866bc": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -1387,7 +1387,7 @@
     "navn": "Værelse",
     "m2": 9.9,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -1424,10 +1424,10 @@
     "gennemgang": false
    }
   ],
-  "indgreb": "",
+  "indgreb": "Sæt en dør i åbningen mellem det mindste værelse og gangen.",
   "ekstra_rum": "Altan ca. 1,55 × 4,30 m",
   "opholdsflade": "Stue ca. 17 m² (4,30 × 3,96) plus lille separat køkken",
-  "begrundelse": "Værelserne på 4,39 × 3,19 m og 4,30 × 2,30 m ligger begge ud til gangen med vindue; døren til det mindste værelse er ikke tegnet ind (kun en åbning), så tjek den. Stuen på ca. 17 m² er tilbage, men køkkenet er lille, så opholdsfladen er moderat.",
+  "begrundelse": "Værelset med altan (4,39 × 3,19 m) har dør til gangen og vindue og tæller i dag. Det mindste værelse (4,30 × 2,30 m) har kun en åbning uden tegnet dør mod gangen og tæller ikke, før der sættes en dør i. Stuen på ca. 17 m² er tilbage, men køkkenet er lille.",
   "sikkerhed": "middel",
   "_plan": "2244d127-ead9-43d5-8b83-f561172866bc_0.png"
  },
@@ -1493,8 +1493,8 @@
   "_plan": "2361a182-432f-4012-b5ac-ca3f76a1b097_0.png|2361a182-432f-4012-b5ac-ca3f76a1b097_1.png|2361a182-432f-4012-b5ac-ca3f76a1b097_2.png"
  },
  "248bc1e6-fe44-4209-a5b5-b79128fe606e": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -1509,7 +1509,7 @@
     "navn": "Værelse (gård)",
     "m2": 11.9,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -1554,10 +1554,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Sæt en dør i den dørløse åbning mellem gårdværelset og gangen.",
   "ekstra_rum": "",
   "opholdsflade": "Stue ca. 20,7 m² (511×405) + køkken ca. 9,8 m²",
-  "begrundelse": "Værelset med altan (417×350) har dør fra stuen og vindue; det andet værelse (405×295) har dør til stuen og en dørløs åbning mod gangen, hvor en dør let kan monteres. Badet ligger reelt en-suite til altanværelset, men der er separat toilet ved entréen. Stuen på ca. 21 m² og køkkenet er tilbage.",
+  "begrundelse": "Værelset med altan (417×350) har almindelig dør fra stuen og vindue og tæller i dag. Gårdværelset (405×295) har dør til stuen, men også en åbning uden dør mod gangen, så det kan ikke lukkes af og tæller ikke i dag; en dør i åbningen løser det. Stuen på ca. 21 m² og køkkenet er tilbage.",
   "sikkerhed": "middel",
   "_plan": "248bc1e6-fe44-4209-a5b5-b79128fe606e_0.png"
  },
@@ -4081,8 +4081,8 @@
   "_plan": "4ec8b075-b70f-4d88-a85e-3fa80211bd7a_0.png|4ec8b075-b70f-4d88-a85e-3fa80211bd7a_1.png"
  },
  "502c2d49-8bf4-40de-b564-f4fa3104d59d": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -4097,7 +4097,7 @@
     "navn": "Værelse (øst, karnap)",
     "m2": 16.0,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -4134,11 +4134,11 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Luk dobbeltdøren mellem stuen og det østlige værelse, og sæt en almindelig enkeltdør i.",
   "ekstra_rum": "",
   "opholdsflade": "Stue ca. 18 m² (3,52 × 5,05 m) med altan. Køkkenet er et smalt køkken på ca. 8 m² uden spiseplads.",
-  "begrundelse": "Værelset mod vest (3,52 × 4,88 m) har dør fra gangen. Værelset mod øst (4,86 × 3,29 m) har dobbeltdør fra stuen. Begge har vindue og er store. Stuen på ca. 18 m² skal rumme både sofa og spisebord, fordi køkkenet er smalt.",
-  "sikkerhed": "middel",
+  "begrundelse": "Værelset mod vest (3,52 × 4,88 m) har dør fra gangen og vindue og tæller i dag. Værelset mod øst (4,86 × 3,29 m) har kun en dobbeltdør fra stuen og tæller ikke, før den erstattes af en enkeltdør. Stuen på ca. 18 m² skal så rumme både sofa og spisebord, fordi køkkenet er smalt.",
+  "sikkerhed": "høj",
   "_plan": "502c2d49-8bf4-40de-b564-f4fa3104d59d_0.png"
  },
  "52606b7e-4b03-45e6-96bd-7d1ed3fb3d75": {
@@ -4728,8 +4728,8 @@
   "_plan": "5d1915fa-e25f-49f6-86bb-e9baae8c148a_0.png|5d1915fa-e25f-49f6-86bb-e9baae8c148a_1.png"
  },
  "5d432053-b8a7-40ab-aef6-c5e976bc88e0": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -4744,7 +4744,7 @@
     "navn": "Værelse (nord)",
     "m2": 20.0,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -4773,10 +4773,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Erstat den brede skydedør (ca. 1,8 m) mellem stuen og det nordlige værelse med en væg og en almindelig enkeltdør.",
   "ekstra_rum": "",
   "opholdsflade": "Stue 5,50×5,77 m med åbent køkken (4,45×1,57 m), i alt ca. 30 m²",
-  "begrundelse": "Værelset ved entréen (5,32×3,75 m) har egen dør og vindue. Det andet værelse har skydedør til stuen og vindue, og stuen er fællesflade. Dobbeltdøren mellem de to værelser bør lukkes eller låses. Stuen med køkken på ca. 30 m² er tilbage.",
+  "begrundelse": "Værelset ved entréen (5,32×3,75 m) har egen dør og vindue og tæller i dag. Det nordlige værelse forbindes kun med stuen via en skydedør i en ca. 1,8 m bred åbning (en skydevæg) og ellers kun via dobbeltdøren til det andet værelse, så det tæller ikke i dag. Med en væg og en enkeltdør mod stuen er der to soveværelser, og stuen med køkken på ca. 30 m² er tilbage.",
   "sikkerhed": "middel",
   "_plan": "5d432053-b8a7-40ab-aef6-c5e976bc88e0_0.png|5d432053-b8a7-40ab-aef6-c5e976bc88e0_1.png"
  },
@@ -4842,8 +4842,8 @@
   "_plan": "5d57a225-cdeb-4edd-a26a-aec48b843682_0.png"
  },
  "5e4e5c4b-4e6e-4b82-acce-8e17a2d451e8": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -4866,7 +4866,7 @@
     "navn": "Værelse (øst)",
     "m2": 14.1,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -4903,10 +4903,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Luk dobbeltdøren mellem stuen og det østlige værelse, og sæt en almindelig enkeltdør i (evt. i en kort ny væg).",
   "ekstra_rum": "To altaner",
   "opholdsflade": "Stue ca. 23 m² (5,76 × 3,97) + køkken ca. 7,7 m²",
-  "begrundelse": "To værelser på ca. 12,6 m² (+ walk-in) og 14,1 m², begge med vindue/altandør. Det vestlige har dør til gangen; det østlige har dobbeltdør fra stuen, som er fællesareal, så ingen af dem er gennemgangsrum. Stuen på ca. 23 m² er tilbage som opholdsrum.",
+  "begrundelse": "Det vestlige værelse (ca. 12,6 m² + walk-in) har egen dør til gangen og vindue. Det østlige værelse på ca. 14,1 m² har altandør, men dets eneste adgang er en dobbeltdør fra stuen, så det tæller ikke i dag. Lukkes dobbeltdøren og erstattes af en enkeltdør, er der to soveværelser, og stuen på ca. 23 m² er tilbage.",
   "sikkerhed": "høj",
   "_plan": "5e4e5c4b-4e6e-4b82-acce-8e17a2d451e8_0.png"
  },
@@ -5746,8 +5746,8 @@
   "_plan": "7007fbe3-530a-4a92-a105-c1fbcb590d29_0.png|7007fbe3-530a-4a92-a105-c1fbcb590d29_1.png"
  },
  "730cb6e3-3aee-4c74-91c4-c84dddea4a9a": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -5770,7 +5770,7 @@
     "navn": "Soveværelse",
     "m2": 12.1,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -5799,10 +5799,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Luk dobbeltdøren mellem stuen og soveværelset, og sæt en almindelig enkeltdør i.",
   "ekstra_rum": "",
   "opholdsflade": "Stue og køkken i ét rum ca. 25 m² (3,99×6,89 minus skorstensblok)",
-  "begrundelse": "Soveværelset (3,56×3,41 ≈ 12 m², dobbeltdør til stuen) og værelset (3,30×3,42 ≈ 11 m², dør til køkkenet) har begge kvistvindue og egen dør til opholdsrummet. Stue og køkken på ca. 25 m² er tilbage. Loftshøjden er lav, 2,02–2,12 m.",
+  "begrundelse": "Værelset (3,30×3,42 ≈ 11 m²) har almindelig dør fra køkkenet og kvistvindue og tæller i dag. Soveværelset (3,56×3,41 ≈ 12 m²) har kun en dobbeltdør til stuen og tæller derfor ikke, før dobbeltdøren lukkes og erstattes af en enkeltdør. Stue og køkken på ca. 25 m² er tilbage, men loftshøjden er lav (2,02–2,12 m).",
   "sikkerhed": "høj",
   "_plan": "730cb6e3-3aee-4c74-91c4-c84dddea4a9a_0.png"
  },
@@ -8169,8 +8169,8 @@
   "_plan": "9e243562-242d-46ad-99cc-1ef0624fd00c_0.png"
  },
  "9e5354c4-26a8-44c5-a622-da140860b628": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -8185,7 +8185,7 @@
     "navn": "Værelse (mod park/altan)",
     "m2": 7.6,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -8230,10 +8230,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Luk de franske døre mellem stuen og det lille værelse, og sæt en almindelig enkeltdør i – eller lav adgang fra entréen, som annoncen nævner.",
   "ekstra_rum": "Viktualierum ca. 1,4 m²",
   "opholdsflade": "Stue/alrum ca. 24 m² (6,08 × 4,02 m) med altan. Køkkenet er et smalt køkken på ca. 7 m².",
-  "begrundelse": "Værelset på 4,87 × 2,67 m nås via en lille gang fra stuen. Værelset på 3,46 × 2,19 m har franske døre direkte til stuen. Begge har vindue, så der er to soveværelser i dag, men begge nås gennem stuen. Annoncen nævner, at der kan laves adgang fra entréen, hvilket vil give bedre lydadskillelse.",
+  "begrundelse": "Værelset på 4,87 × 2,67 m har almindelig dør fra en lille gang ved stuen og vindue og tæller i dag. Værelset på 3,46 × 2,19 m har kun franske døre til stuen og tæller ikke, før de erstattes af en enkeltdør eller der laves adgang fra entréen. Stue/alrum på ca. 24 m² med altan er tilbage.",
   "sikkerhed": "middel",
   "_plan": "9e5354c4-26a8-44c5-a622-da140860b628_0.png|9e5354c4-26a8-44c5-a622-da140860b628_1.png|9e5354c4-26a8-44c5-a622-da140860b628_2.png"
  },
@@ -11783,8 +11783,8 @@
   "_plan": "df2f4cad-9185-45c6-a676-d91d2ce0b720_0.png|df2f4cad-9185-45c6-a676-d91d2ce0b720_1.png|df2f4cad-9185-45c6-a676-d91d2ce0b720_2.png"
  },
  "e1ee7ebc-92fc-4b1c-bdc9-7536fd7817ed": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -11799,7 +11799,7 @@
     "navn": "Værelse (vest, altan)",
     "m2": 8.7,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -11836,10 +11836,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Luk dobbeltdøren mellem stuen og det vestlige værelse, og sæt en almindelig enkeltdør i.",
   "ekstra_rum": "",
   "opholdsflade": "Stue ca. 21 m² med altan + køkken ca. 6,5 m²",
-  "begrundelse": "To smalle, men brugbare værelser (422×207 og 457×208 cm) med vinduer/altandør. Det ene har dør fra gangen, det andet åbner med dobbeltdør fra stuen – fungerer, men giver mindre lydskel. Stuen på ca. 21 m² forbliver opholdsrum.",
+  "begrundelse": "Det østlige værelse (457×208 cm) har dør fra gangen og altandør og tæller i dag. Det vestlige værelse (422×207 cm) nås kun via en dobbeltdør fra stuen og tæller ikke, før den erstattes af en enkeltdør. Begge værelser er smalle; stuen på ca. 21 m² forbliver opholdsrum.",
   "sikkerhed": "høj",
   "_plan": "e1ee7ebc-92fc-4b1c-bdc9-7536fd7817ed_0.png"
  },
@@ -12756,8 +12756,8 @@
   "_plan": "f00e8a7f-c4db-46b3-8e85-f9d92ca39bc2_0.png"
  },
  "f17b12a1-5780-453f-897e-8378d1269ffa": {
-  "dom": "ja",
-  "sovevaerelser_i_dag": 2,
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
   "sovevaerelser_mulige": 2,
   "rum": [
    {
@@ -12772,7 +12772,7 @@
     "navn": "Værelse (gade)",
     "m2": 13.7,
     "funktion": "sovevaerelse",
-    "egen_doer": true,
+    "egen_doer": false,
     "vindue": true,
     "gennemgang": false
    },
@@ -12809,10 +12809,10 @@
     "gennemgang": true
    }
   ],
-  "indgreb": "",
+  "indgreb": "Luk den franske dobbeltdør mellem stuen og værelset mod gaden, og sæt en almindelig enkeltdør i.",
   "ekstra_rum": "",
   "opholdsflade": "Stue/alrum ca. 16,7 m² (466×358) + køkken ca. 7,9 m²",
-  "begrundelse": "To værelser på 466×262 og 460×297, begge med vindue og dør fra stuen (det ene via fransk dobbeltdør, som evt. kan skiftes til en tæt dør for lydens skyld). Stuen på ca. 16,7 m² med altan og et separat køkken er tilbage som opholdsflade.",
+  "begrundelse": "Værelset mod gården (466×262) har almindelig dør fra stuen og vindue og tæller i dag. Værelset mod gaden (460×297) nås kun gennem en fransk dobbeltdør fra stuen og tæller ikke, før den erstattes af en enkeltdør. Stuen på ca. 16,7 m² med altan og et separat køkken er tilbage.",
   "sikkerhed": "høj",
   "_plan": "f17b12a1-5780-453f-897e-8378d1269ffa_0.png|f17b12a1-5780-453f-897e-8378d1269ffa_1.png|f17b12a1-5780-453f-897e-8378d1269ffa_2.png"
  },
