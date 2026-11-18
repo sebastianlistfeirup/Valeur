@@ -138,7 +138,7 @@ footer{color:var(--muted);font-size:12px}
   <div class="toc-gruppe" data-tema="lev" role="group" aria-label="Valeurs leverance"><a href="#loeser" data-tema="lev">Løser Valeur selv?</a><a href="#maal" data-tema="lev">Mål</a></div>
   <div class="toc-gruppe" data-tema="emne" role="group" aria-label="Hvad og hvem"><a href="#hvad" data-tema="emne">Hvad</a><a href="#hvem" data-tema="emne">Hvem</a><a href="#aarshjul" data-tema="emne">Årshjulet</a><a href="#udsendelser" data-tema="emne">Udsendelser</a><a href="#igen" data-tema="emne">Sager igen</a><a href="#geografi" data-tema="emne">Geografi</a></div>
   <div class="toc-gruppe" data-tema="oek" role="group" aria-label="Økonomi og medlemmer"><a href="#oekonomi" data-tema="oek">Økonomi og medlemmer</a></div>
-  <div class="toc-gruppe" data-tema="ovr" role="group" aria-label="Øvrigt"><a href="#mails" data-tema="ovr">Mails</a><a href="#data" data-tema="ovr">Data og huller</a></div>
+  <div class="toc-gruppe" data-tema="ovr" role="group" aria-label="Øvrigt"><a href="#mails" data-tema="ovr">Mails</a></div>
 </nav>
 
 <section class="blok" id="status" data-tema="tlf">
@@ -314,14 +314,6 @@ footer{color:var(--muted);font-size:12px}
   <div class="blok-head"><div class="eyebrow">Øvrigt</div><h2>Mails til foreningen pr. uge</h2>
   <p>Valeur håndterer også mails. Optællingen er ugevis og manuel.</p></div>
   <div class="card"><div class="chart"><canvas id="cMails"></canvas></div><div class="src">Kilde: Samlet Oversigt mails, ugeopdelt 2025–2026</div></div>
-</section>
-
-<section class="blok" id="data" data-tema="ovr">
-  <div class="blok-head"><div class="eyebrow">Øvrigt</div><h2>Det har vi, og det mangler</h2></div>
-  <div class="grid2">
-    <div class="card"><h3>Kilder i dashboardet</h3><div class="tbl"><table id="tKilder"></table></div></div>
-    <div class="card"><h3>Huller og forbehold</h3><div class="gaps" id="gaps"></div></div>
-  </div>
 </section>
 
 <footer id="foot"></footer>
@@ -648,24 +640,6 @@ function render(){
     pctBars(document.getElementById("bNye"), NY.pr_type.map(t=>[t.g,t.a,t.n]), "var(--valeur)");
   }
 
-  // --- kilder og huller
-  const K = [["Valeur Insights (opkald pr. dag, time, ugedag, medlem)",`${dato(V.foerste)} – ${dato(V.sidste)}`],
-    ["IP Nordic kø-rapporter pr. måned, 7 køer","nov 2023 – nov 2026"],["IP Nordic, hvert kald i køerne",`${dato(D.koeer.periode[0])} – ${dato(D.koeer.periode[1])}`],
-    ["Membercare, servicefanen",`${fmt(MC.total_alle)} registreringer`],["Valeurs benchmark-ark",`${B.length} perioder`],
-    ["Valeurs månedsopgørelse og efterbehandling","maj 2025 – jul 2026"],["Mails pr. uge (manuel optælling)",`${ML.length} uger`],["Valeur Insights, pris og tid i alt","pilotstart – 17. nov 2026"],["Medlemslister (8 kvartalsudtræk)","31. mar 2025 – 18. nov 2026"]];
-  document.getElementById("tKilder").innerHTML = "<thead><tr><th>Kilde</th><th>Periode/omfang</th></tr></thead><tbody>"+K.map(r=>`<tr><td>${r[0]}</td><td style="font-family:var(--body)">${r[1]}</td></tr>`).join("")+"</tbody>";
-  const gap = (st,cls,t) => `<div class="gap"><span class="st pill ${cls}">${st}</span><span>${t}</span></div>`;
-  document.getElementById("gaps").innerHTML = [
-    gap("Delvist","warn","<b>Pris og tid pr. opkald</b> findes nu som totaler for hele perioden. Detaljeudtrækket indeholder stadig kun tidsstempler, så prisen kan ikke følges måned for måned."),
-    gap("Mangler","bad","<b>Telefonsvareren og velkomstbeskeden.</b> Opkald uden for 10–13 og om onsdagen ses ikke. Repoets CDR-udtræk (cdr.xlsx) har dem, men filen ligger ikke i mappen."),
-    gap("Forbehold","warn","<b>Medlemslisten fra 18. nov 2026 har ingen stamkortnumre</b> og kan kun bruges til at tælle medlemmer. Koblingen til Membercare bruger listen fra 30. sep 2026."),
-    gap("Mangler","bad","<b>Stamdatarettelser.</b> Briefingen viste 15–20 % rettelser. Der er ingen kilde til det i mappen."),
-    gap("Forbehold","warn","<b>Før-perioden for Valeurs frontlinje findes ikke.</b> Før 5. maj 2025 gik opkald direkte til køerne. Før/efter kan derfor kun måles i sekretariatets køer."),
-    gap("Forbehold","warn","<b>Selvstændig-køen var lukket</b> i december 2025 og januar 2026. Det trækker efter-tallet ned."),
-    gap("Forbehold","warn","<b>Andelen løst af Valeur</b> er fundet ved at søge efter faste formuleringer i noterne og er et skøn."),
-    gap("Forbehold","warn","<b>FCR og registreringsgrad</b> er kun delvist udfyldt i benchmark-arket."),
-    gap("Forbehold","warn","<b>Valeurs svarprocent</b> regnes af alle kald i Valeur Insights. Valeurs egen opgørelse bruger “tilbudte kald i åbningstid” og giver 1–3 point mere."),
-  ].join("");
   document.getElementById("foot").textContent = `Bygget ${dato(D.genereret)} af scripts/briefing/build_data.py. Kun aggregerede tal: ingen navne, numre eller fritekst fra Membercare.`;
 }
 render();
