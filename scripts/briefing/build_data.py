@@ -379,6 +379,8 @@ if __name__ == "__main__":
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import dybde
     data["dybde"] = dybde.build(ROOT, data["valeur"]["dage"], data["valeur"]["sidste"])
+    import medlemmer
+    data["om"] = medlemmer.build(ROOT)
 
     agenter = data["mc"].pop("_agenter")
     txt = json.dumps(data, ensure_ascii=False, default=str)

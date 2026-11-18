@@ -86,6 +86,7 @@ td:first-child{font-family:var(--body)}
 .gap .st{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-top:2px}
 .src{font-size:12px;color:var(--muted)}
 footer{color:var(--muted);font-size:12px}
+#omKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .hjul{display:grid;gap:2px;font-size:12px;min-width:720px}
 .hjul .c{height:30px;border-radius:3px;display:grid;place-items:center;font-family:var(--mono);font-size:11px}
 .hjul .h{color:var(--muted);font-weight:600;text-align:center;padding:4px 0}
@@ -116,7 +117,7 @@ footer{color:var(--muted);font-size:12px}
 
 <nav class="toc" aria-label="Sektioner">
   <a href="#status">Status</a><a href="#svar">Opkald og svar</a><a href="#aflastning">Aflastning</a>
-  <a href="#hvornaar">Hvornår</a><a href="#hvad">Hvad</a><a href="#hvem">Hvem</a><a href="#loeser">Løser Valeur selv?</a><a href="#udsendelser">Udsendelser</a><a href="#aarshjul">Årshjulet</a><a href="#igen">Sager igen</a><a href="#geografi">Geografi</a><a href="#koe">Køen og prognosen</a><a href="#maal">Mål</a><a href="#mails">Mails</a><a href="#data">Data og huller</a>
+  <a href="#hvornaar">Hvornår</a><a href="#hvad">Hvad</a><a href="#hvem">Hvem</a><a href="#loeser">Løser Valeur selv?</a><a href="#udsendelser">Udsendelser</a><a href="#aarshjul">Årshjulet</a><a href="#igen">Sager igen</a><a href="#geografi">Geografi</a><a href="#koe">Køen og prognosen</a><a href="#oekonomi">Økonomi og medlemmer</a><a href="#maal">Mål</a><a href="#mails">Mails</a><a href="#data">Data og huller</a>
 </nav>
 
 <section class="blok" id="status">
@@ -229,7 +230,7 @@ footer{color:var(--muted);font-size:12px}
 
 <section class="blok" id="geografi">
   <div class="blok-head"><div class="eyebrow">Dybere spadestik · 5</div><h2>Hvor i landet ringer de fra?</h2>
-  <p>Registreringer fordelt på medlemmets kreds. Tallene er rå antal. Uden en medlemsliste kan de ikke regnes om pr. 1.000 medlemmer, så store kredse fylder mest.</p></div>
+  <p>Registreringer fordelt på medlemmets kreds. Tallene er rå antal, så store kredse fylder mest. Omregnet til pr. 1.000 medlemmer findes de under Økonomi og medlemmer.</p></div>
   <div class="grid2">
     <div class="card"><h3>Registreringer pr. kreds</h3><div class="bars" id="bKreds"></div></div>
     <div class="card"><h3>Andel selvstændige og rådgivningssager pr. kreds</h3><div class="chart tall"><canvas id="cKreds"></canvas></div><div class="src">Kilde: Membercare, medlemskabsfeltet</div></div>
@@ -246,6 +247,36 @@ footer{color:var(--muted);font-size:12px}
   <div class="card"><h3>Forventede opkald til Valeur, de næste 20 åbningsdage</h3>
     <div class="prog" id="prog"></div>
     <p class="sub" id="progNote"></p></div>
+</section>
+
+<section class="blok" id="oekonomi">
+  <div class="blok-head"><div class="eyebrow">Økonomi og medlemmer</div><h2>Hvad koster det, og hvem når vi?</h2>
+  <p>Valeurs samlede pris og tidsforbrug fra Valeur Insights og foreningens medlemslister koblet til registreringerne i Membercare. Medlemslisterne bruges kun til at tælle: ingen enkeltpersoner kan ses.</p></div>
+  <div class="kpis" id="omKpi"></div>
+  <div class="grid2">
+    <div class="card"><h3>Hvad får vi for pengene?</h3><div class="flow" id="omFlow"></div><p class="sub" id="omFlowNote"></p></div>
+    <div class="card"><h3>Medlemmer, kvartal for kvartal</h3><div class="chart short"><canvas id="cBestand"></canvas></div><div class="src">Kilde: medlemslisterne. Medlemmer uden udmeldelsesdato på listedagen.</div></div>
+  </div>
+
+  <h3>Hvor stor en del af medlemmerne er i kontakt?</h3>
+  <div class="grid2">
+    <div class="card"><h3>Andel i kontakt pr. medlemstype</h3><div class="bars" id="bDaekType"></div></div>
+    <div class="card"><h3>Andel i kontakt pr. alder</h3><div class="chart"><canvas id="cDaekAlder"></canvas></div><div class="sub" id="daekAlderNote"></div></div>
+  </div>
+  <div class="card"><h3>I kontakt pr. 1.000 medlemmer, kreds for kreds</h3><div class="chart tall"><canvas id="cDaekKreds"></canvas></div><div class="src" id="daekKredsNote"></div></div>
+
+  <h3>Melder medlemmer med kontakt sig sjældnere ud?</h3>
+  <div class="grid2">
+    <div class="card"><h3>Den enkle sammenligning</h3><div class="chart short"><canvas id="cUdmNaiv"></canvas></div><p class="sub" id="udmNaivNote"></p></div>
+    <div class="card"><h3>Med fast tidsramme</h3><div class="chart short"><canvas id="cUdmFast"></canvas></div><p class="sub" id="udmFastNote"></p></div>
+  </div>
+  <div class="insight alert" id="udmInsight"></div>
+
+  <h3>Nye medlemmer siden Valeur startede</h3>
+  <div class="grid2">
+    <div class="card"><div class="flow" id="nyeFlow"></div></div>
+    <div class="card"><h3>Andel i kontakt pr. medlemstype</h3><div class="bars" id="bNye"></div></div>
+  </div>
 </section>
 
 <section class="blok" id="maal">
@@ -543,17 +574,70 @@ function render(){
   document.getElementById("prog").innerHTML = PG.dage.map(x=>{ const d=new Date(x.d); return `<div class="d ${x.f>=snitF*1.12?"hoej":""}"><span class="w">${x.wd.slice(0,3)} ${d.getDate()}/${d.getMonth()+1}</span><span class="n">${fmt(x.f)}</span></div>`; }).join("");
   document.getElementById("progNote").textContent = `Prognosen er gennemsnittet for samme ugedag i samme måned sidste år, ganget med væksten de seneste tre måneder (${PG.vaekst_mdr.map(mdLabel).join(", ")}: ${PG.vaekst>1?"+":""}${fmt((PG.vaekst-1)*100)} % mod året før). Markerede dage ligger mindst 12 % over snittet. Dage efter 21. december er udeladt. Prognosen tager ikke højde for udsendelser, som kan give mange flere opkald.`;
 
+  // --- økonomi og medlemmer
+  if (D.om && D.om.oekonomi && D.om.medlemmer) {
+    const OK = D.om.oekonomi, OM = D.om.medlemmer;
+    const mdr = (new Date(V.sidste) - new Date(V.foerste)) / (1000*60*60*24*30.44);
+    document.getElementById("omKpi").innerHTML = [
+      kpi(fmt(OK.kr_pr_opkald) + " kr.", "Pris pr. besvaret opkald", `${fmt(OK.kr_pr_min,2)} kr. pr. minut`),
+      kpi(fmt(OK.kr) + " kr.", "Samlet pris", `${fmt(OK.besvarede)} besvarede opkald`),
+      kpi(fmt(OK.kr/mdr) + " kr.", "Pr. måned", `i snit over ${fmt(mdr,1)} måneder`),
+      kpi(fmt(OK.timer), "Timer hos Valeur", `samtale ${mmss(OK.tale_pr_opkald)} + efterbehandling ${mmss(OK.efter_pr_opkald)} pr. opkald`),
+      kpi(pct(OM.daekning.andel), "Medlemmer i kontakt", `${fmt(OM.daekning.i_kontakt)} af ${fmt(OM.daekning.medlemmer)} det seneste år`),
+    ].join("");
+    const loestSelv = 1 - D.dybde.loeser.andel_besked;
+    const omStep = (k,n,s)=>`<div class="step"><div class="k">${k}</div><div class="n num">${n}</div><div class="k">${s}</div></div>`;
+    document.getElementById("omFlow").innerHTML =
+      omStep("Besvarede opkald", fmt(OK.besvarede), `${fmt(OK.kr_pr_opkald)} kr. stykket`) +
+      omStep("Løst uden sekretariatet", "ca. " + fmt(OK.besvarede*loestSelv, 0), `ca. ${fmt(OK.kr/(OK.besvarede*loestSelv))} kr. stykket`) +
+      omStep("Registreringer i Membercare", fmt(D.mc.total_efter), `${pct(D.mc.andel_valeur)} lavet af Valeur`) +
+      omStep("Kald i køerne pr. md.", `${fmt(eO)}`, `før ${fmt(fO)}`);
+    document.getElementById("omFlowNote").textContent = `Prisen dækker samtale og efterbehandling for alle besvarede opkald fra pilotstarten til ${dato(V.sidste)}. Ud over at besvare opkald registrerer Valeur alle henvendelser, opdaterer stamdata og løser medlemsservice-opgaverne helt. Prisen pr. sag løst uden sekretariatet bygger på skønnet over, hvor mange sager Valeur løser selv.`;
+
+    const B = OM.bestand;
+    mk("cBestand",{type:"line",data:{labels:B.map(b=>dato(b.d)),datasets:[{label:"Medlemmer",data:B.map(b=>b.n),borderColor:css("--valeur"),backgroundColor:alpha("--valeur",.12),fill:true,tension:.3,pointRadius:3}]},
+      options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:10}},y:{ticks:{callback:v=>fmt(v)}}}},plugins:[startLine(B.findIndex(b=>b.d>=V.foerste))]});
+
+    const DK = OM.daekning;
+    pctBars(document.getElementById("bDaekType"), DK.pr_type.map(t=>[t.g,t.a,t.n]), "var(--valeur)");
+    mk("cDaekAlder",{type:"bar",data:{labels:DK.pr_alder.map(a=>a.g),datasets:[{label:"Andel i kontakt",data:DK.pr_alder.map(a=>a.a*100),backgroundColor:DK.pr_alder.map(a=>a.a<.2?css("--warn"):css("--valeur")),borderRadius:3}]},
+      options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw,1)} % af ${fmt(DK.pr_alder[c.dataIndex].n)} medlemmer`}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>v+" %"}}}}});
+    const u26 = DK.pr_alder[0];
+    document.getElementById("daekAlderNote").textContent = `Kun ${pct(u26.a)} af medlemmerne under 26 år har været i kontakt, mod 28–33 % i alle grupper fra 26 til 70 år. De unge er næsten alle studerende. Det bekræfter briefingens iagttagelse, at de helt unge sjældent ringer.`;
+    const KR = DK.pr_kreds.filter(k=>k.g!=="Uden kreds");
+    mk("cDaekKreds",{type:"bar",data:{labels:KR.map(k=>k.g),datasets:[{label:"I kontakt pr. 1.000 medlemmer",data:KR.map(k=>k.a*1000),backgroundColor:css("--sek"),borderRadius:3}]},
+      options:{indexAxis:"y",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw)} pr. 1.000 · ${fmt(KR[c.dataIndex].n)} medlemmer`}}},scales:{y:{grid:{display:false}}}}});
+    const uk = DK.pr_kreds.find(k=>k.g==="Uden kreds");
+    document.getElementById("daekKredsNote").textContent = `Kilde: medlemslisten pr. ${dato(DK.dato)} og Membercare de foregående 12 måneder. Medlemmer uden kreds (${fmt(uk?.n)}, mest studerende) er udeladt; de ligger på ${fmt((uk?.a||0)*1000)} pr. 1.000. Kredse under 25 medlemmer vises ikke.`;
+
+    const U = OM.udmeldelser, N = U.naiv, F = U.fast;
+    const udmChart = (id, x) => mk(id,{type:"bar",data:{labels:["Ingen kontakt","Faglig kontakt"],datasets:[{data:[x.uden*100,x.med*100],backgroundColor:[css("--foer"),css("--valeur")],borderRadius:3}]},
+      options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw,1)} % meldt ud · ${fmt(c.dataIndex?x.n_med:x.n_uden)} medlemmer`}}},scales:{x:{grid:{display:false}},y:{min:0,max:6,ticks:{callback:v=>v+" %"}}}}});
+    udmChart("cUdmNaiv", N); udmChart("cUdmFast", F);
+    const pp = v => `${v>0?"+":""}${fmt(v*100,1)}`;
+    document.getElementById("udmNaivNote").textContent = `Normalansatte og selvstændige på listen ${dato(U.kohorte_naiv)}, kontakt frem til udmeldelse. ${fmt(N.uden*100,1)} % mod ${fmt(N.med*100,1)} % meldt ud (${pp(N.diff)} point, 95 %-interval ${pp(N.lav)} til ${pp(N.hoej)}). Ser ud til at virke, men sammenligningen er skæv: dem, der bliver, har haft længere tid til at ringe.`;
+    document.getElementById("udmFastNote").textContent = `Samme grupper på listen ${dato(U.kohorte_fast)}: kontakt i maj–december 2025, udmeldelse derefter til ${dato(U.slut)}. ${fmt(F.uden*100,1)} % mod ${fmt(F.med*100,1)} % (${pp(F.diff)} point, 95 %-interval ${pp(F.lav)} til ${pp(F.hoej)}). Forskellen er væk.`;
+    document.getElementById("udmInsight").innerHTML = `<b>Data kan ikke vise, at kontakt med foreningen holder på medlemmerne.</b> Den enkle sammenligning giver et flot billede, men når alle får lige lang tid til at ringe, er der ingen forskel i udmeldelser mellem dem, der har været i kontakt, og dem, der ikke har. Det gælder både normalansatte og selvstændige. Påstanden fra briefingen om, at medlemmer i kontakt er tilfredse medlemmer, kan derfor ikke underbygges med udmeldelsestal. Den kan stadig være rigtig, men den skal i så fald måles med en tilfredshedsmåling. "Faglig kontakt" betyder mindst én henvendelse om andet end medlemskab og kontingent, fordi nogle af kontingentopkaldene er selve udmeldelsen. "Meldt ud" omfatter også varslede udmeldelser med en fremtidig dato.`;
+
+    const NY = OM.nye;
+    document.getElementById("nyeFlow").innerHTML =
+      omStep("Meldt ind", fmt(NY.antal), `siden ${dato(V.foerste)}`) +
+      omStep("I kontakt", pct(NY.andel_kontakt), "på et tidspunkt") +
+      omStep("Inden for 90 dage", pct(NY.andel_90), "efter indmeldelsen");
+    pctBars(document.getElementById("bNye"), NY.pr_type.map(t=>[t.g,t.a,t.n]), "var(--valeur)");
+  }
+
   // --- kilder og huller
   const K = [["Valeur Insights (opkald pr. dag, time, ugedag, medlem)",`${dato(V.foerste)} – ${dato(V.sidste)}`],
     ["IP Nordic kø-rapporter pr. måned, 7 køer","nov 2023 – nov 2026"],["IP Nordic, hvert kald i køerne",`${dato(D.koeer.periode[0])} – ${dato(D.koeer.periode[1])}`],
     ["Membercare, servicefanen",`${fmt(MC.total_alle)} registreringer`],["Valeurs benchmark-ark",`${B.length} perioder`],
-    ["Valeurs månedsopgørelse og efterbehandling","maj 2025 – jul 2026"],["Mails pr. uge (manuel optælling)",`${ML.length} uger`]];
+    ["Valeurs månedsopgørelse og efterbehandling","maj 2025 – jul 2026"],["Mails pr. uge (manuel optælling)",`${ML.length} uger`],["Valeur Insights, pris og tid i alt","pilotstart – 17. nov 2026"],["Medlemslister (8 kvartalsudtræk)","31. mar 2025 – 18. nov 2026"]];
   document.getElementById("tKilder").innerHTML = "<thead><tr><th>Kilde</th><th>Periode/omfang</th></tr></thead><tbody>"+K.map(r=>`<tr><td>${r[0]}</td><td style="font-family:var(--body)">${r[1]}</td></tr>`).join("")+"</tbody>";
   const gap = (st,cls,t) => `<div class="gap"><span class="st pill ${cls}">${st}</span><span>${t}</span></div>`;
   document.getElementById("gaps").innerHTML = [
-    gap("Mangler","bad","<b>Valeurs samtale- og efterbehandlingstid pr. opkald.</b> Eksporterne “Pris tid og opkald”, “Projekttid” og “Alle opkald” indeholder kun tidsstempler. Kolonnerne med tid og pris er faldet af. Uden dem kan timeforbrug og pris pr. opkald ikke beregnes."),
+    gap("Delvist","warn","<b>Pris og tid pr. opkald</b> findes nu som totaler for hele perioden. Detaljeudtrækket indeholder stadig kun tidsstempler, så prisen kan ikke følges måned for måned."),
     gap("Mangler","bad","<b>Telefonsvareren og velkomstbeskeden.</b> Opkald uden for 10–13 og om onsdagen ses ikke. Repoets CDR-udtræk (cdr.xlsx) har dem, men filen ligger ikke i mappen."),
-    gap("Mangler","bad","<b>Medlemsbestanden.</b> Uden en medlemsliste kan vi ikke sige, om fx selvstændige er overrepræsenteret, eller regne alder ud, sådan som briefingen gjorde."),
+    gap("Forbehold","warn","<b>Medlemslisten fra 18. nov 2026 har ingen stamkortnumre</b> og kan kun bruges til at tælle medlemmer. Koblingen til Membercare bruger listen fra 30. sep 2026."),
     gap("Mangler","bad","<b>Stamdatarettelser.</b> Briefingen viste 15–20 % rettelser. Der er ingen kilde til det i mappen."),
     gap("Forbehold","warn","<b>Før-perioden for Valeurs frontlinje findes ikke.</b> Før 5. maj 2025 gik opkald direkte til køerne. Før/efter kan derfor kun måles i sekretariatets køer."),
     gap("Forbehold","warn","<b>Selvstændig-køen var lukket</b> i december 2025 og januar 2026. Det trækker efter-tallet ned."),

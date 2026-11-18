@@ -115,6 +115,13 @@ løser selv, udsendelsernes effekt, årshjulet, sager der kommer igen, geografi
 samt køopgivelse og prognose. Modulet læser bemærkningsfeltet i Membercare,
 men kun for at klassificere hver registrering (besked/viderestilling ja/nej,
 nævner en rykker ja/nej). Fritekst, navne og overskrifter fjernes, før noget
-regnes ud, og outputtet er udelukkende optællinger. Samme privatlivsregler som
+regnes ud, og outputtet er udelukkende optællinger.
+
+`scripts/briefing/medlemmer.py` står for sektionen Økonomi og medlemmer. Den
+læser Valeurs samlede pris og tid (mappen `Nye Valeur træk`) og de kvartalsvise
+medlemslister (mappen `Medlemslister`). Medlemslisterne indeholder
+kontaktoplysninger, så scriptet læser kun kreds, medlemstype, stamkort, alder og
+ind- og udmeldelsesdatoer. Stamkort bruges kun til at koble til Membercare, og
+ingen gruppe under 25 personer vises. Samme privatlivsregler som
 ovenfor: kun aggregerede tal, ingen krydstabelcelle under 5, og kørslen stopper,
 hvis outputtet indeholder telefonnumre, mailadresser eller cpr-lignende numre.
