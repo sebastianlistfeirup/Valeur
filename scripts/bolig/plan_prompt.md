@@ -13,7 +13,13 @@ Et rum tæller kun, hvis det opfylder alle fire:
 
 1. **Egen dør** til gang, entré eller anden fællesflade — man skal ikke gå
    gennem rummet for at nå et andet rum (ikke gennemgangsrum), og man skal ikke
-   gennem et andet soveværelse for at komme ind.
+   gennem et andet soveværelse for at komme ind. En almindelig enkeltdør eller
+   skydedør fra stuen eller køkken-alrummet er fin. Er rummets eneste
+   forbindelse til stuen en **dobbeltdør, fløjdør, fransk dør, foldevæg eller
+   åbning** (klassiske stuer en suite), tæller det ikke i dag — det er
+   "mulighed" med indgrebet "luk dobbeltdøren/åbningen og sæt en enkeltdør i".
+   Har rummet både en dobbeltdør til stuen og en almindelig dør til gang eller
+   entré, tæller det (dobbeltdøren kan blot holdes lukket).
 2. **Vindue** mod det fri (tegnet som dobbeltstreg/brud i ydervæggen).
 3. **Mindst ca. 7 m²** og plads til en dobbeltseng (140×200) eller to
    enkeltsenge med gangplads. Brug målene på tegningen; mangler de, så skøn ud
