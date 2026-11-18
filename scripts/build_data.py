@@ -122,7 +122,8 @@ def build_crm():
     df = pd.read_excel(kilde, dtype=str)
     df["gruppe"] = clean(df["Servicegruppe"])
     df["type"] = clean(df["Servicetype"]).map(lambda v: KORT_TYPE.get(v, v))
-    df["registrant"] = clean(df["Oprettet af"])
+    # kun fornavn: siden er offentlig på GitHub Pages
+    df["registrant"] = clean(df["Oprettet af"]).str.split().str[0]
     df["dato"] = pd.to_datetime(df["Service dato"], errors="coerce")
     df["oprettet"] = pd.to_datetime(df["Oprettet"], errors="coerce")
     df["mtype"], df["kreds"] = split_medlemskab(clean(df["Medlemskab"]))
@@ -260,7 +261,7 @@ def assert_clean(data, kendte_navne):
         if fund:
             sys.exit(f"AFBRUDT: resultatet indeholder et {hvad}: {fund.group()!r}")
 
-    # Medlemsnavne må ikke optræde. Registranternes navne er en bevidst,
+    # Medlemsnavne må ikke optræde. Registranternes fornavne er en bevidst,
     # dokumenteret undtagelse — det er en intern driftsmetrik.
     tilladte = {r["navn"] for r in data["crm"]["registranter"]}
     for navn in kendte_navne - tilladte:

@@ -75,7 +75,7 @@ med telefonnumre og mailadresser. Derfor:
 - Kørslen afbrydes automatisk, hvis resultatet alligevel matcher et medlemsnavn,
   et telefonnummer, en e-mail eller et cpr-lignende nummer.
 
-Registranternes navne er en bevidst undtagelse — det er en intern driftsmetrik,
+Registranternes fornavne er en bevidst undtagelse — det er en intern driftsmetrik,
 og undtagelsen er navngivet i `assert_clean()`.
 
 ## Filer
