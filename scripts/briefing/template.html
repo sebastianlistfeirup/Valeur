@@ -8,16 +8,17 @@
   --bg:#f3f5f7; --panel:#ffffff; --ink:#132430; --muted:#5b6b78; --line:#dde3e8;
   --valeur:#0e7c78; --valeur-soft:#d5ecea; --sek:#4a58a6; --sek-soft:#dfe2f3; --foer:#a3adb7;
   --good:#1f8a4c; --warn:#b7791f; --bad:#c0392b; --warn-soft:#fbf1df; --bad-soft:#f8e3e0; --good-soft:#e1f2e7;
+  --t-tlf:#0e7c78; --t-sek:#4a58a6; --t-lev:#b45f06; --t-emne:#8a3ea0; --t-oek:#b4366a; --t-ovr:#5b6b78;
   --display:"Instrument Sans",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0f171d; --panel:#16222b; --ink:#e4ecf1; --muted:#93a4b1; --line:#26343f;
   --valeur:#3fb8b1; --valeur-soft:#173a3a; --sek:#8d99e6; --sek-soft:#262c4d; --foer:#5c6873;
-  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; color-scheme:dark}}
+  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; --t-tlf:#3fb8b1; --t-sek:#8d99e6; --t-lev:#eda15a; --t-emne:#c99ae0; --t-oek:#ec86ab; --t-ovr:#93a4b1; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f171d; --panel:#16222b; --ink:#e4ecf1; --muted:#93a4b1; --line:#26343f;
   --valeur:#3fb8b1; --valeur-soft:#173a3a; --sek:#8d99e6; --sek-soft:#262c4d; --foer:#5c6873;
-  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; color-scheme:dark}
+  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; --t-tlf:#3fb8b1; --t-sek:#8d99e6; --t-lev:#eda15a; --t-emne:#c99ae0; --t-oek:#ec86ab; --t-ovr:#93a4b1; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
@@ -34,10 +35,26 @@ header.top{display:grid;gap:14px;padding-top:36px}
 .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--muted)}
 .dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 nav.toc{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;border-bottom:1px solid var(--line);
-  display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-nav.toc a{white-space:nowrap;text-decoration:none;color:var(--muted);font-size:13px;font-weight:500;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel)}
-nav.toc a:hover,nav.toc a:focus-visible{color:var(--ink);border-color:var(--valeur);outline:none}
+  display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.toc-gruppe{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.toc-gruppe + .toc-gruppe{padding-left:14px;border-left:1px solid var(--line)}
+nav.toc a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:13px;font-weight:500;padding:5px 11px 5px 9px;border-radius:999px;
+  border:1px solid color-mix(in srgb,var(--c) 35%,var(--line));background:color-mix(in srgb,var(--c) 9%,var(--panel));display:inline-flex;align-items:center;gap:7px;transition:background .15s,border-color .15s}
+nav.toc a::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+nav.toc a:hover,nav.toc a:focus-visible{background:color-mix(in srgb,var(--c) 18%,var(--panel));border-color:var(--c);outline:none}
+nav.toc a.aktiv{background:var(--c);border-color:var(--c);color:var(--panel)}
+nav.toc a.aktiv::before{background:var(--panel)}
+[data-tema="tlf"]{--c:var(--t-tlf)} [data-tema="sek"]{--c:var(--t-sek)} [data-tema="lev"]{--c:var(--t-lev)}
+[data-tema="emne"]{--c:var(--t-emne)} [data-tema="oek"]{--c:var(--t-oek)} [data-tema="ovr"]{--c:var(--t-ovr)}
+section.blok[data-tema] .blok-head .eyebrow{color:var(--c);display:flex;align-items:center;gap:8px}
+section.blok[data-tema] .blok-head .eyebrow::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c)}
+section.blok[data-tema] .blok-head h2{border-bottom:2px solid color-mix(in srgb,var(--c) 40%,transparent);padding-bottom:6px;width:fit-content;max-width:100%}
+.card{grid-template-columns:minmax(0,1fr)} .chart{min-width:0} .chart canvas{max-width:100%}
+section.blok{scroll-margin-top:118px} @media (max-width:720px){section.blok{scroll-margin-top:70px}}
+@media (max-width:720px){
+  nav.toc{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .toc-gruppe{flex-wrap:nowrap}
+}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:6px;align-content:start}
 .kpi .v{font-family:var(--display);font-size:30px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
@@ -116,16 +133,20 @@ footer{color:var(--muted);font-size:12px}
 </header>
 
 <nav class="toc" aria-label="Sektioner">
-  <a href="#status">Status</a><a href="#svar">Opkald og svar</a><a href="#aflastning">Aflastning</a>
-  <a href="#hvornaar">Hvornår</a><a href="#hvad">Hvad</a><a href="#hvem">Hvem</a><a href="#loeser">Løser Valeur selv?</a><a href="#udsendelser">Udsendelser</a><a href="#aarshjul">Årshjulet</a><a href="#igen">Sager igen</a><a href="#geografi">Geografi</a><a href="#koe">Køen og prognosen</a><a href="#oekonomi">Økonomi og medlemmer</a><a href="#maal">Mål</a><a href="#mails">Mails</a><a href="#data">Data og huller</a>
+  <div class="toc-gruppe" data-tema="tlf" role="group" aria-label="Telefonen"><a href="#status" data-tema="tlf">Status</a><a href="#svar" data-tema="tlf">Opkald og svar</a><a href="#hvornaar" data-tema="tlf">Hvornår</a></div>
+  <div class="toc-gruppe" data-tema="sek" role="group" aria-label="Sekretariatet"><a href="#aflastning" data-tema="sek">Aflastning</a><a href="#koe" data-tema="sek">Kø og prognose</a></div>
+  <div class="toc-gruppe" data-tema="lev" role="group" aria-label="Valeurs leverance"><a href="#loeser" data-tema="lev">Løser Valeur selv?</a><a href="#maal" data-tema="lev">Mål</a></div>
+  <div class="toc-gruppe" data-tema="emne" role="group" aria-label="Hvad og hvem"><a href="#hvad" data-tema="emne">Hvad</a><a href="#hvem" data-tema="emne">Hvem</a><a href="#aarshjul" data-tema="emne">Årshjulet</a><a href="#udsendelser" data-tema="emne">Udsendelser</a><a href="#igen" data-tema="emne">Sager igen</a><a href="#geografi" data-tema="emne">Geografi</a></div>
+  <div class="toc-gruppe" data-tema="oek" role="group" aria-label="Økonomi og medlemmer"><a href="#oekonomi" data-tema="oek">Økonomi og medlemmer</a></div>
+  <div class="toc-gruppe" data-tema="ovr" role="group" aria-label="Øvrigt"><a href="#mails" data-tema="ovr">Mails</a><a href="#data" data-tema="ovr">Data og huller</a></div>
 </nav>
 
-<section class="blok" id="status">
+<section class="blok" id="status" data-tema="tlf">
   <div class="kpis" id="kpis"></div>
   <div class="insight" id="hovedfund"></div>
 </section>
 
-<section class="blok" id="svar">
+<section class="blok" id="svar" data-tema="tlf">
   <div class="blok-head"><div class="eyebrow">Telefonen</div><h2>Så mange ringer, og så mange får svar</h2>
   <p>Alle opkald, der når Valeur, uge for uge. Søjlen viser opkald i alt, den mørke del dem, Valeur besvarede. Linjen er svarprocenten, holdt op mod målet på 90 %.</p></div>
   <div class="card"><div class="chart tall"><canvas id="cUger"></canvas></div>
@@ -137,7 +158,20 @@ footer{color:var(--muted);font-size:12px}
   </div>
 </section>
 
-<section class="blok" id="aflastning">
+<section class="blok" id="hvornaar" data-tema="tlf">
+  <div class="blok-head"><div class="eyebrow">Telefonen</div><h2>Hvornår ringer medlemmerne?</h2>
+  <p>Trykket ligger lige når telefonen åbner kl. 10. Det er også her flest lægger på, før de når i kø.</p></div>
+  <div class="grid2">
+    <div class="card"><h3>Opkald og afbrudte pr. time</h3><div class="chart"><canvas id="cTime"></canvas></div><div class="src">Kilde: Valeur Insights, timefordeling og kald afbrudt inden kø</div></div>
+    <div class="card"><h3>Sekretariatets køer pr. time, efter Valeur</h3><div class="chart"><canvas id="cKoeTime"></canvas></div><div class="src">Kilde: IP Nordic, hvert kald efter 5. maj 2025</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Fordeling på ugedage</h3><div class="chart short"><canvas id="cUgedag"></canvas></div><div class="sub" id="ugedagNote"></div></div>
+    <div class="insight warnbox" id="tidInsight"></div>
+  </div>
+</section>
+
+<section class="blok" id="aflastning" data-tema="sek">
   <div class="blok-head"><div class="eyebrow">Sekretariatet</div><h2>Hvor meget aflastes vi?</h2>
   <p>Opkald, der lander i sekretariatets køer pr. måned, fra februar 2024. Den lodrette streg er 5. maj 2025, hvor Valeur gik i luften. Kø 1500 (Velkommen/Øvrige) blev nedlagt i september 2024 og er udeladt, så før og efter sammenligner de samme seks køer.</p></div>
   <div class="card"><div class="chart tall"><canvas id="cKoeer"></canvas></div><div class="src">Kilde: IP Nordic kø-rapporter pr. måned (6 køer)</div></div>
@@ -152,46 +186,20 @@ footer{color:var(--muted);font-size:12px}
   <div class="src">Kilde: IP Nordic, hvert enkelt kald i køerne. Rådgivning og Selvstændig vist; de mindre køer svinger for meget fra måned til måned.</div></div>
 </section>
 
-<section class="blok" id="hvornaar">
-  <div class="blok-head"><div class="eyebrow">Mønstre</div><h2>Hvornår ringer medlemmerne?</h2>
-  <p>Trykket ligger lige når telefonen åbner kl. 10. Det er også her flest lægger på, før de når i kø.</p></div>
+<section class="blok" id="koe" data-tema="sek">
+  <div class="blok-head"><div class="eyebrow">Sekretariatet</div><h2>Hvornår opgiver medlemmerne i køen, og hvad kommer der?</h2>
+  <p>Kald i sekretariatets køer, der blev afbrudt, før nogen tog telefonen, siden 5. maj 2025. Nederst en prognose for opkald til Valeur de næste 20 åbningsdage.</p></div>
   <div class="grid2">
-    <div class="card"><h3>Opkald og afbrudte pr. time</h3><div class="chart"><canvas id="cTime"></canvas></div><div class="src">Kilde: Valeur Insights, timefordeling og kald afbrudt inden kø</div></div>
-    <div class="card"><h3>Sekretariatets køer pr. time, efter Valeur</h3><div class="chart"><canvas id="cKoeTime"></canvas></div><div class="src">Kilde: IP Nordic, hvert kald efter 5. maj 2025</div></div>
+    <div class="card"><h3>Afbrudte kald pr. time</h3><div class="chart"><canvas id="cAfbTime"></canvas></div><div class="src">Kilde: IP Nordic, hvert kald i køerne</div></div>
+    <div class="card"><h3>Hvor længe ventede de, før de lagde på?</h3><div class="chart"><canvas id="cAfbSpand"></canvas></div><div class="sub" id="afbNote"></div></div>
   </div>
-  <div class="grid2">
-    <div class="card"><h3>Fordeling på ugedage</h3><div class="chart short"><canvas id="cUgedag"></canvas></div><div class="sub" id="ugedagNote"></div></div>
-    <div class="insight warnbox" id="tidInsight"></div>
-  </div>
+  <div class="card"><h3>Forventede opkald til Valeur, de næste 20 åbningsdage</h3>
+    <div class="prog" id="prog"></div>
+    <p class="sub" id="progNote"></p></div>
 </section>
 
-<section class="blok" id="hvad">
-  <div class="blok-head"><div class="eyebrow">Membercare</div><h2>Hvad ringer medlemmerne om?</h2>
-  <p>Hver samtale registreres i servicefanen med en hovedkategori og en underkategori. Her er alle registreringer siden 5. maj 2025.</p></div>
-  <div class="grid2">
-    <div class="card"><h3>Hovedkategorier</h3><div class="bars" id="bGrupper"></div></div>
-    <div class="card"><h3>De 12 hyppigste emner</h3><div class="bars" id="bTyper"></div></div>
-  </div>
-  <div class="card"><h3>Registreringer pr. måned, fordelt på hovedkategori</h3><div class="chart tall"><canvas id="cMcMd"></canvas></div><div class="src">Kilde: Membercare, servicefanen</div></div>
-</section>
-
-<section class="blok" id="hvem">
-  <div class="blok-head"><div class="eyebrow">Membercare</div><h2>Hvem ringer, og hvor tit?</h2>
-  <p>Medlemstypen er første led i medlemskabsfeltet på den, der ringer.</p></div>
-  <div class="grid3">
-    <div class="card"><h3>Medlem eller ej</h3><div class="chart short"><canvas id="cMedlem"></canvas></div><div class="src">Kilde: Valeur Insights</div></div>
-    <div class="card"><h3>Gentagne henvendelser</h3><div class="chart short"><canvas id="cGentag"></canvas></div><div class="sub" id="gentagNote"></div></div>
-    <div class="card"><h3>Hvem registrerer?</h3><div class="chart short"><canvas id="cReg"></canvas></div><div class="sub" id="regNote"></div></div>
-  </div>
-  <div class="card"><h3>Medlemstyper</h3><div class="bars" id="bSeg"></div></div>
-  <div class="card"><h3>Hvad ringer de forskellige grupper om?</h3>
-    <p class="sub">Andel af gruppens registreringer i hver hovedkategori. Mørkere felt betyder større andel.</p>
-    <div class="tbl"><div class="heat" id="heat"></div></div>
-    <p class="sub" id="tomNote"></p></div>
-</section>
-
-<section class="blok" id="loeser">
-  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 1</div><h2>Hvor meget løser Valeur selv?</h2>
+<section class="blok" id="loeser" data-tema="lev">
+  <div class="blok-head"><div class="eyebrow">Valeurs leverance</div><h2>Hvor meget løser Valeur selv?</h2>
   <p>Når Valeur ikke kan løse sagen, skriver de en besked til sekretariatet eller stiller opkaldet videre. Det står i noten til registreringen. Her er andelen af registreringer med en besked eller viderestilling, siden Valeur begyndte at bruge den faste beskedskabelon i juli 2025.</p></div>
   <div class="kpis" id="loeserKpi"></div>
   <div class="grid2">
@@ -205,22 +213,57 @@ footer{color:var(--muted);font-size:12px}
   <div class="insight" id="loeserInsight"></div>
 </section>
 
-<section class="blok" id="udsendelser">
-  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 2</div><h2>Foreningens egne udsendelser skaber opkald</h2>
-  <p>Registreringer om medlemskab og kontingent og om kurser uge for uge, med de registreringer, hvor medlemmet nævner en rykker. Spidserne følger foreningens egne breve og mails.</p></div>
-  <div class="card"><div class="chart tall"><canvas id="cUdsend"></canvas></div><div class="src">Kilde: Membercare. "Nævner en rykker" er fundet automatisk i overskrift og note.</div></div>
-  <div class="insight warnbox" id="udsendInsight"></div>
+<section class="blok" id="maal" data-tema="lev">
+  <div class="blok-head"><div class="eyebrow">Valeurs leverance</div><h2>Valeur målt mod de aftalte mål</h2>
+  <p>Fra Valeurs egne benchmark-ark, uge for uge fra uge 33 2025 og måned for måned fra april 2026. Tomme felter betyder, at tallet ikke er udfyldt i arket.</p></div>
+  <div class="card"><div class="tbl"><table id="tBench"></table></div></div>
+  <div class="grid2">
+    <div class="card"><h3>Efterbehandling pr. samtale</h3><div class="chart short"><canvas id="cEfter"></canvas></div><div class="src">Kilde: Valeur_statistik_11_06 og Datagennemgang_21_09_26</div></div>
+    <div class="insight warnbox" id="fcrInsight"></div>
+  </div>
 </section>
 
-<section class="blok" id="aarshjul">
-  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 3</div><h2>Årshjulet: hvornår der ringes om hvad</h2>
+<section class="blok" id="hvad" data-tema="emne">
+  <div class="blok-head"><div class="eyebrow">Hvad og hvem</div><h2>Hvad ringer medlemmerne om?</h2>
+  <p>Hver samtale registreres i servicefanen med en hovedkategori og en underkategori. Her er alle registreringer siden 5. maj 2025.</p></div>
+  <div class="grid2">
+    <div class="card"><h3>Hovedkategorier</h3><div class="bars" id="bGrupper"></div></div>
+    <div class="card"><h3>De 12 hyppigste emner</h3><div class="bars" id="bTyper"></div></div>
+  </div>
+  <div class="card"><h3>Registreringer pr. måned, fordelt på hovedkategori</h3><div class="chart tall"><canvas id="cMcMd"></canvas></div><div class="src">Kilde: Membercare, servicefanen</div></div>
+</section>
+
+<section class="blok" id="hvem" data-tema="emne">
+  <div class="blok-head"><div class="eyebrow">Hvad og hvem</div><h2>Hvem ringer, og hvor tit?</h2>
+  <p>Medlemstypen er første led i medlemskabsfeltet på den, der ringer.</p></div>
+  <div class="grid3">
+    <div class="card"><h3>Medlem eller ej</h3><div class="chart short"><canvas id="cMedlem"></canvas></div><div class="src">Kilde: Valeur Insights</div></div>
+    <div class="card"><h3>Gentagne henvendelser</h3><div class="chart short"><canvas id="cGentag"></canvas></div><div class="sub" id="gentagNote"></div></div>
+    <div class="card"><h3>Hvem registrerer?</h3><div class="chart short"><canvas id="cReg"></canvas></div><div class="sub" id="regNote"></div></div>
+  </div>
+  <div class="card"><h3>Medlemstyper</h3><div class="bars" id="bSeg"></div></div>
+  <div class="card"><h3>Hvad ringer de forskellige grupper om?</h3>
+    <p class="sub">Andel af gruppens registreringer i hver hovedkategori. Mørkere felt betyder større andel.</p>
+    <div class="tbl"><div class="heat" id="heat"></div></div>
+    <p class="sub" id="tomNote"></p></div>
+</section>
+
+<section class="blok" id="aarshjul" data-tema="emne">
+  <div class="blok-head"><div class="eyebrow">Hvad og hvem</div><h2>Årshjulet: hvornår der ringes om hvad</h2>
   <p>De 14 hyppigste emner måned for måned. Tallet er et indeks: 100 betyder, at emnet fylder som normalt, og 200, at det fylder dobbelt så meget som normalt i den måned. Orange felter er højsæson, blå felter lavsæson.</p></div>
   <div class="card"><div class="tbl"><div class="hjul" id="hjul"></div></div>
   <div class="src" id="hjulNote"></div></div>
 </section>
 
-<section class="blok" id="igen">
-  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 4</div><h2>Sager, der kommer igen</h2>
+<section class="blok" id="udsendelser" data-tema="emne">
+  <div class="blok-head"><div class="eyebrow">Hvad og hvem</div><h2>Foreningens egne udsendelser skaber opkald</h2>
+  <p>Registreringer om medlemskab og kontingent og om kurser uge for uge, med de registreringer, hvor medlemmet nævner en rykker. Spidserne følger foreningens egne breve og mails.</p></div>
+  <div class="card"><div class="chart tall"><canvas id="cUdsend"></canvas></div><div class="src">Kilde: Membercare. "Nævner en rykker" er fundet automatisk i overskrift og note.</div></div>
+  <div class="insight warnbox" id="udsendInsight"></div>
+</section>
+
+<section class="blok" id="igen" data-tema="emne">
+  <div class="blok-head"><div class="eyebrow">Hvad og hvem</div><h2>Sager, der kommer igen</h2>
   <p>Hvor ofte den samme person henvender sig igen inden for 14 dage. Det er et tegn på sager, der ikke blev afsluttet første gang, eller som kræver flere samtaler.</p></div>
   <div class="grid2">
     <div class="card"><h3>Emner, der oftest kommer igen inden 14 dage</h3><div class="bars" id="bIgen"></div></div>
@@ -228,8 +271,8 @@ footer{color:var(--muted);font-size:12px}
   </div>
 </section>
 
-<section class="blok" id="geografi">
-  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 5</div><h2>Hvor i landet ringer de fra?</h2>
+<section class="blok" id="geografi" data-tema="emne">
+  <div class="blok-head"><div class="eyebrow">Hvad og hvem</div><h2>Hvor i landet ringer de fra?</h2>
   <p>Registreringer fordelt på medlemmets kreds. Tallene er rå antal, så store kredse fylder mest. Omregnet til pr. 1.000 medlemmer findes de under Økonomi og medlemmer.</p></div>
   <div class="grid2">
     <div class="card"><h3>Registreringer pr. kreds</h3><div class="bars" id="bKreds"></div></div>
@@ -237,19 +280,7 @@ footer{color:var(--muted);font-size:12px}
   </div>
 </section>
 
-<section class="blok" id="koe">
-  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 6</div><h2>Hvornår opgiver medlemmerne i køen, og hvad kommer der?</h2>
-  <p>Kald i sekretariatets køer, der blev afbrudt, før nogen tog telefonen, siden 5. maj 2025. Nederst en prognose for opkald til Valeur de næste 20 åbningsdage.</p></div>
-  <div class="grid2">
-    <div class="card"><h3>Afbrudte kald pr. time</h3><div class="chart"><canvas id="cAfbTime"></canvas></div><div class="src">Kilde: IP Nordic, hvert kald i køerne</div></div>
-    <div class="card"><h3>Hvor længe ventede de, før de lagde på?</h3><div class="chart"><canvas id="cAfbSpand"></canvas></div><div class="sub" id="afbNote"></div></div>
-  </div>
-  <div class="card"><h3>Forventede opkald til Valeur, de næste 20 åbningsdage</h3>
-    <div class="prog" id="prog"></div>
-    <p class="sub" id="progNote"></p></div>
-</section>
-
-<section class="blok" id="oekonomi">
+<section class="blok" id="oekonomi" data-tema="oek">
   <div class="blok-head"><div class="eyebrow">Økonomi og medlemmer</div><h2>Hvad koster det, og hvem når vi?</h2>
   <p>Valeurs samlede pris og tidsforbrug fra Valeur Insights og foreningens medlemslister koblet til registreringerne i Membercare. Medlemslisterne bruges kun til at tælle: ingen enkeltpersoner kan ses.</p></div>
   <div class="kpis" id="omKpi"></div>
@@ -279,24 +310,14 @@ footer{color:var(--muted);font-size:12px}
   </div>
 </section>
 
-<section class="blok" id="maal">
-  <div class="blok-head"><div class="eyebrow">Leverancen</div><h2>Valeur målt mod de aftalte mål</h2>
-  <p>Fra Valeurs egne benchmark-ark, uge for uge fra uge 33 2025 og måned for måned fra april 2026. Tomme felter betyder, at tallet ikke er udfyldt i arket.</p></div>
-  <div class="card"><div class="tbl"><table id="tBench"></table></div></div>
-  <div class="grid2">
-    <div class="card"><h3>Efterbehandling pr. samtale</h3><div class="chart short"><canvas id="cEfter"></canvas></div><div class="src">Kilde: Valeur_statistik_11_06 og Datagennemgang_21_09_26</div></div>
-    <div class="insight warnbox" id="fcrInsight"></div>
-  </div>
-</section>
-
-<section class="blok" id="mails">
-  <div class="blok-head"><div class="eyebrow">Den anden kanal</div><h2>Mails til foreningen pr. uge</h2>
+<section class="blok" id="mails" data-tema="ovr">
+  <div class="blok-head"><div class="eyebrow">Øvrigt</div><h2>Mails til foreningen pr. uge</h2>
   <p>Valeur håndterer også mails. Optællingen er ugevis og manuel.</p></div>
   <div class="card"><div class="chart"><canvas id="cMails"></canvas></div><div class="src">Kilde: Samlet Oversigt mails, ugeopdelt 2025–2026</div></div>
 </section>
 
-<section class="blok" id="data">
-  <div class="blok-head"><div class="eyebrow">Datagrundlag</div><h2>Det har vi, og det mangler</h2></div>
+<section class="blok" id="data" data-tema="ovr">
+  <div class="blok-head"><div class="eyebrow">Øvrigt</div><h2>Det har vi, og det mangler</h2></div>
   <div class="grid2">
     <div class="card"><h3>Kilder i dashboardet</h3><div class="tbl"><table id="tKilder"></table></div></div>
     <div class="card"><h3>Huller og forbehold</h3><div class="gaps" id="gaps"></div></div>
@@ -650,4 +671,20 @@ function render(){
 render();
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
 new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+(function(){
+  const links = [...document.querySelectorAll('nav.toc a[href^="#"]')];
+  const byId = Object.fromEntries(links.map(a=>[a.getAttribute("href").slice(1), a]));
+  const synlige = new Map();
+  const io = new IntersectionObserver(es=>{
+    es.forEach(e=>synlige.set(e.target.id, e.isIntersecting ? e.boundingClientRect.top : null));
+    let bedst=null, top=Infinity;
+    synlige.forEach((t,id)=>{ if(t!==null && Math.abs(t) < top){ top=Math.abs(t); bedst=id; } });
+    if(!bedst) return;
+    links.forEach(a=>a.classList.toggle("aktiv", a===byId[bedst]));
+    const a = byId[bedst]; const nav = a.closest("nav");
+    if (nav.scrollWidth > nav.clientWidth) nav.scrollTo({left:a.offsetLeft-16, behavior:"smooth"});
+  },{rootMargin:"-120px 0px -55% 0px"});
+  document.querySelectorAll("section.blok[id]").forEach(sec=>io.observe(sec));
+})();
+
 </script>
