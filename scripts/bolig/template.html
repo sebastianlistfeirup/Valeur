@@ -1,0 +1,472 @@
+<title>Boligagenten</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Treværelses i København 1000–2300 til 6–8 mio. kr., med plantegningerne læst for to reelle soveværelser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: tegnestue-ark — kriterier og overblik øverst, derefter boligerne
+     som kort med plantegningen i front, grupperet efter bydel. */
+  :root {
+    --paper: #f5f6f3;
+    --sheet: #ffffff;
+    --sunk: #eceee9;
+    --ink: #1d2422;
+    --muted: #5d6763;
+    --faint: #8c9692;
+    --rule: #dde1dc;
+    --accent: #2c6e62;          /* kobbergrøn, som tårnene */
+    --accent-soft: #dcebe6;
+    --ja: #1f7a4d;     --ja-bg: #dff1e5;
+    --mul: #9a6400;    --mul-bg: #fbeccb;
+    --nej: #a63a2e;    --nej-bg: #f8e1dc;
+    --ukendt: #59636b; --ukendt-bg: #e6e9ec;
+    --plan-bg: #ffffff;
+    --shadow: 0 1px 2px rgba(29,36,34,.05), 0 8px 24px -16px rgba(29,36,34,.35);
+    --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --f-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #131816; --sheet: #1b211f; --sunk: #222a27;
+      --ink: #e6ebe8; --muted: #a3ada9; --faint: #78837f; --rule: #2e3734;
+      --accent: #6cc0ad; --accent-soft: #1f3732;
+      --ja: #7fd3a1; --ja-bg: #183326;
+      --mul: #f0c36a; --mul-bg: #3a2e14;
+      --nej: #f19a8c; --nej-bg: #3b1f1a;
+      --ukendt: #b5bec5; --ukendt-bg: #283036;
+      --plan-bg: #e9ece9;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -16px rgba(0,0,0,.7);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #131816; --sheet: #1b211f; --sunk: #222a27;
+    --ink: #e6ebe8; --muted: #a3ada9; --faint: #78837f; --rule: #2e3734;
+    --accent: #6cc0ad; --accent-soft: #1f3732;
+    --ja: #7fd3a1; --ja-bg: #183326;
+    --mul: #f0c36a; --mul-bg: #3a2e14;
+    --nej: #f19a8c; --nej-bg: #3b1f1a;
+    --ukendt: #b5bec5; --ukendt-bg: #283036;
+    --plan-bg: #e9ece9;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 26px -16px rgba(0,0,0,.7);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font: 15px/1.5 var(--f-body);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 28px 64px;
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; display: grid; gap: 28px; }
+  h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+  .num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+  a { color: var(--accent); }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ── Hoved ─────────────────────────────────────────────── */
+  header { display: grid; gap: 14px; }
+  .eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: clamp(34px, 5vw, 52px); font-weight: 800; font-stretch: 80%; letter-spacing: -.01em; line-height: 1; }
+  .lede { max-width: 68ch; color: var(--muted); margin: 0; }
+  .krav { display: flex; flex-wrap: wrap; gap: 8px; }
+  .krav span {
+    font: 500 13px/1 var(--f-mono); padding: 7px 10px; border-radius: 4px;
+    border: 1px dashed var(--faint); color: var(--ink); background: var(--sheet);
+  }
+
+  /* ── Domme ─────────────────────────────────────────────── */
+  .domme { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+  .dom-knap {
+    text-align: left; cursor: pointer; background: var(--sheet); border: 1px solid var(--rule);
+    border-radius: 8px; padding: 12px 14px; display: grid; gap: 4px; position: relative;
+    transition: border-color .15s, opacity .15s;
+  }
+  .dom-knap::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--c); }
+  .dom-knap .n { font: 600 28px/1 var(--f-mono); color: var(--c); }
+  .dom-knap .t { font-weight: 600; font-size: 14px; }
+  .dom-knap .s { font-size: 12px; color: var(--muted); }
+  .dom-knap[aria-pressed="false"] { opacity: .45; }
+  .dom-knap[aria-pressed="true"] { border-color: var(--c); }
+  .dom-knap.alle { --c: var(--ink); }
+
+  /* ── Bydele ────────────────────────────────────────────── */
+  .sektion-hoved { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+  h2 { font-size: 22px; font-weight: 700; font-stretch: 90%; }
+  .hint { font-size: 13px; color: var(--muted); }
+  .tabel-boks { overflow-x: auto; background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+  th, td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  th { font: 500 11px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  th:first-child, td:first-child { text-align: left; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: var(--sunk); }
+  tbody tr.valgt { background: var(--accent-soft); }
+  tbody tr:last-child td { border-bottom: 0; }
+  .fordeling { display: inline-flex; width: 120px; height: 8px; border-radius: 4px; overflow: hidden; background: var(--sunk); vertical-align: middle; }
+  .fordeling i { display: block; height: 100%; }
+  .omr-navn { font-weight: 600; }
+  .omr-navn small { font: 400 12px var(--f-mono); color: var(--faint); margin-left: 6px; }
+
+  /* ── Kontroller ───────────────────────────────────────── */
+  .kontrol {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+    background: var(--paper); padding-block: 10px; border-bottom: 1px solid var(--rule);
+    display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center;
+  }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+  .kontrol label { font-size: 13px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  select, input[type="search"] {
+    font: 14px var(--f-body); color: var(--ink); background: var(--sheet);
+    border: 1px solid var(--rule); border-radius: 6px; padding: 7px 9px; min-width: 0;
+  }
+  input[type="search"] { width: 220px; max-width: 100%; }
+  .antal { margin-left: auto; font: 500 13px var(--f-mono); color: var(--muted); }
+
+  /* ── Kort ──────────────────────────────────────────────── */
+  .gruppe { display: grid; gap: 14px; }
+  .gruppe-hoved { display: flex; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 6px; }
+  .gruppe-hoved h3 { font-size: 20px; font-weight: 700; font-stretch: 85%; }
+  .gruppe-hoved span { font: 13px var(--f-mono); color: var(--muted); }
+  .kort-gitter { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); gap: 16px; }
+  .kort {
+    background: var(--sheet); border: 1px solid var(--rule); border-radius: 10px; box-shadow: var(--shadow);
+    display: grid; grid-template-rows: auto 1fr; overflow: hidden; min-width: 0;
+  }
+  .plan {
+    position: relative; background: var(--plan-bg); aspect-ratio: 4 / 3; max-width: 100%;
+    border: 0; padding: 0; cursor: zoom-in; display: block; width: 100%;
+    border-bottom: 1px solid var(--rule);
+  }
+  .plan img { width: 100%; height: 100%; object-fit: contain; display: block; padding: 10px; }
+  .plan.tom { cursor: default; display: grid; place-items: center; color: #6b7570; font-size: 13px; text-align: center; padding: 20px;
+    background-image: repeating-linear-gradient(45deg, transparent 0 10px, rgba(0,0,0,.03) 10px 20px); }
+  .pille {
+    display: inline-flex; align-items: center; gap: 6px; font: 600 12px/1 var(--f-body);
+    padding: 6px 9px; border-radius: 999px; color: var(--c); background: var(--cb); white-space: nowrap;
+  }
+  .pille::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .plan .pille { position: absolute; left: 10px; top: 10px; box-shadow: 0 1px 2px rgba(0,0,0,.12); }
+  .krop { padding: 14px 16px 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .adr { display: grid; gap: 2px; }
+  .adr h4 { margin: 0; font: 700 17px/1.25 var(--f-display); font-stretch: 92%; }
+  .adr span { font-size: 13px; color: var(--muted); }
+  .tal { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding: 10px 0; border-block: 1px solid var(--rule); }
+  .tal div { display: grid; gap: 2px; min-width: 0; }
+  .tal b { font: 500 15px/1.2 var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tal small { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .vurdering { display: grid; gap: 6px; font-size: 14px; }
+  .vurdering p { margin: 0; }
+  .vurdering .indgreb { padding: 8px 10px; border-radius: 6px; background: var(--mul-bg); color: var(--ink); font-size: 13px; }
+  .vurdering .indgreb b { color: var(--mul); }
+  .rum { display: flex; flex-wrap: wrap; gap: 6px; }
+  .rum span { font: 12px/1 var(--f-mono); padding: 5px 7px; border-radius: 4px; background: var(--sunk); color: var(--muted); }
+  .rum span.sov { background: var(--ja-bg); color: var(--ja); }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12.5px; color: var(--muted); }
+  .note { font-size: 12.5px; color: var(--mul); }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2px; }
+  .links a {
+    font-size: 13px; font-weight: 600; text-decoration: none; padding: 7px 11px; border-radius: 6px;
+    border: 1px solid var(--rule); color: var(--ink);
+  }
+  .links a.prim { background: var(--accent); border-color: var(--accent); color: var(--sheet); }
+  .links a:hover { border-color: var(--accent); }
+  .sikker { font: 11px var(--f-mono); color: var(--faint); }
+
+  .tom-liste { padding: 40px; text-align: center; color: var(--muted); background: var(--sheet); border: 1px dashed var(--rule); border-radius: 10px; }
+
+  /* ── Lysboks ───────────────────────────────────────────── */
+  dialog {
+    border: 0; padding: 0; border-radius: 10px; background: var(--sheet); color: var(--ink);
+    width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 32px); box-shadow: 0 30px 80px rgba(0,0,0,.4);
+  }
+  dialog::backdrop { background: rgba(10,14,13,.7); }
+  .lys-hoved { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--rule); }
+  .lys-hoved b { font-family: var(--f-display); font-size: 17px; }
+  .luk { border: 1px solid var(--rule); background: var(--sunk); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  .lys-plan { background: var(--plan-bg); max-height: calc(100vh - 110px); overflow: auto; }
+  .lys-plan img { display: block; width: 100%; height: auto; }
+
+  footer { font-size: 13px; color: var(--muted); display: grid; gap: 8px; max-width: 80ch; }
+  footer h2 { font-size: 16px; color: var(--ink); }
+  footer p { margin: 0; }
+
+  @media (max-width: 860px) {
+    .domme { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 520px) {
+    .domme { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .antal { margin-left: 0; width: 100%; }
+    input[type="search"] { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="hentet">Boligagent · København</div>
+    <h1>Boligagenten</h1>
+    <p class="lede">Alle treværelses til salg i postnumrene 1000–2300, hentet fra Boligsiden og mæglernes egne sider. Hver plantegning er læst for at se, om der reelt er to soveværelser ud over køkken og stue, eller om et af rummene kan blive det.</p>
+    <div class="krav" id="krav"></div>
+  </header>
+
+  <section class="domme" id="domme" aria-label="Vis boliger efter dom"></section>
+
+  <section style="display:grid;gap:10px">
+    <div class="sektion-hoved">
+      <h2>Bydele</h2>
+      <span class="hint">Klik på en bydel for kun at se dens boliger</span>
+    </div>
+    <div class="tabel-boks">
+      <table>
+        <thead><tr>
+          <th>Bydel</th><th>Boliger</th><th>To sovevær. / mulighed</th><th>Fordeling</th>
+          <th>Laveste pris</th><th>Median pris</th><th>Median kr./m²</th>
+        </tr></thead>
+        <tbody id="bydele"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:18px">
+    <div class="kontrol">
+      <label for="sort">Sortér
+        <select id="sort">
+          <option value="omraade">Område, derefter pris</option>
+          <option value="pris">Pris, laveste først</option>
+          <option value="pris-ned">Pris, højeste først</option>
+          <option value="kvm">Kr./m², laveste først</option>
+          <option value="m2">Største først</option>
+          <option value="ny">Nyeste på markedet</option>
+        </select>
+      </label>
+      <label for="omr">Område
+        <select id="omr"><option value="">Alle områder</option></select>
+      </label>
+      <label for="sog">Søg
+        <input type="search" id="sog" placeholder="Vej, mægler …">
+      </label>
+      <span class="antal" id="antal"></span>
+    </div>
+    <div id="liste" style="display:grid;gap:30px"></div>
+  </section>
+
+  <footer>
+    <h2>Sådan er boligerne vurderet</h2>
+    <p><b>To soveværelser</b>: to rum med egen dør fra gang eller entré, vindue og mindst ca. 7 m², og der er stadig en stue eller et køkken-alrum at opholde sig i. Hvad mægleren kalder rummet, er ligegyldigt.</p>
+    <p><b>Mulighed</b>: ét soveværelse i dag, og et andet rum kan blive det med et overskueligt indgreb, typisk at lukke åbningen mellem to stuer eller sætte en dør i. Indgrebet står på kortet.</p>
+    <p><b>Ét soveværelse</b>: det andet rum er gennemgangsrum, for lille, uden vindue eller boligens eneste stue.</p>
+    <p>Boliger under 70 m² er kun med, hvis der er disponible ekstra rum som kælder eller hems. Vurderingen er foretaget ud fra mæglerens plantegning og bør altid efterprøves ved fremvisning.</p>
+    <p id="kilder"></p>
+  </footer>
+</div>
+
+<dialog id="lys" aria-label="Plantegning">
+  <div class="lys-hoved"><b id="lys-titel"></b><button class="luk" id="luk" type="button">Luk</button></div>
+  <div class="lys-plan"><img id="lys-img" alt=""></div>
+</dialog>
+
+<script>
+const DATA = /*__DATA__*/null;
+
+const DOMME = {
+  ja:        { navn: "To soveværelser", kort: "To soveværelser", c: "--ja",     cb: "--ja-bg",     s: "Klar til to soverum" },
+  mulighed:  { navn: "Mulighed",        kort: "Mulighed",        c: "--mul",    cb: "--mul-bg",    s: "Med et overskueligt indgreb" },
+  nej:       { navn: "Ét soveværelse",  kort: "Ét soveværelse",  c: "--nej",    cb: "--nej-bg",    s: "Typisk to stuer + ét værelse" },
+  uvist:     { navn: "Uvist", kort: "Uvist", c: "--ukendt", cb: "--ukendt-bg", s: "Ingen eller uklar plantegning" },
+};
+const ORDEN = ["ja", "mulighed", "nej", "uvist"];
+
+const kr = n => n == null ? "–" : n.toLocaleString("da-DK");
+const mio = n => n == null ? "–" : (n / 1e6).toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " mio.";
+const median = a => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : Math.round((s[m - 1] + s[m]) / 2); };
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const v = name => `var(${name})`;
+
+const boliger = DATA.boliger;
+const omraader = [...new Set(boliger.map(b => b.omraade))].sort((a, b) => {
+  const pa = Math.min(...boliger.filter(x => x.omraade === a).map(x => x.postnr));
+  const pb = Math.min(...boliger.filter(x => x.omraade === b).map(x => x.postnr));
+  return pa - pb;
+});
+
+let state = { domme: new Set(["ja", "mulighed"]), omr: "", sort: "omraade", sog: "" };
+try {
+  const gemt = JSON.parse(localStorage.getItem("boligagent") || "null");
+  if (gemt) state = { ...state, ...gemt, domme: new Set(gemt.domme || ["ja", "mulighed"]) };
+} catch (e) {}
+function gem() {
+  try { localStorage.setItem("boligagent", JSON.stringify({ ...state, domme: [...state.domme] })); } catch (e) {}
+}
+
+// ── Hoved ──
+const k = DATA.kriterier;
+document.getElementById("krav").innerHTML = [
+  `${mio(k.pris_min).replace(" mio.", "")}–${mio(k.pris_max)} kr.`,
+  `${k.vaerelser} værelser`,
+  `Postnr. ${k.postnr_min}–${k.postnr_max}`,
+  `Min. ${k.m2_min} m² (eller ekstra rum)`,
+  "To reelle soveværelser",
+].map(t => `<span>${esc(t)}</span>`).join("");
+const hentet = new Date(DATA.hentet);
+document.getElementById("hentet").textContent =
+  `Boligagent · opdateret ${hentet.toLocaleDateString("da-DK", { day: "numeric", month: "long", year: "numeric" })} kl. ${hentet.toLocaleTimeString("da-DK", { hour: "2-digit", minute: "2-digit" })}`;
+document.getElementById("kilder").textContent =
+  `Kilder: Boligsidens søgning (${DATA.kilder.i_alt_landet} treværelses i prislejet i hele landet, ${boliger.length} i postnr. ${k.postnr_min}–${k.postnr_max}). ` +
+  `Plantegninger fra Boligsiden (${DATA.kilder.plan_boligsiden}) og fra mæglernes egne sider (${DATA.kilder.plan_maegler}); ${DATA.kilder.plan_mangler} boliger havde ingen plantegning, der kunne hentes.`;
+
+// ── Domme ──
+function tegnDomme() {
+  const n = d => boliger.filter(b => b.dom === d).length;
+  const alle = ORDEN.every(d => state.domme.has(d));
+  document.getElementById("domme").innerHTML =
+    ORDEN.map(d => `<button type="button" class="dom-knap" data-dom="${d}" aria-pressed="${state.domme.has(d)}" style="--c:${v(DOMME[d].c)}">
+      <span class="n">${n(d)}</span><span class="t">${DOMME[d].navn}</span><span class="s">${DOMME[d].s}</span></button>`).join("") +
+    `<button type="button" class="dom-knap alle" data-dom="alle" aria-pressed="${alle}">
+      <span class="n">${boliger.length}</span><span class="t">Alle boliger</span><span class="s">Vis eller skjul alle</span></button>`;
+}
+document.getElementById("domme").addEventListener("click", e => {
+  const knap = e.target.closest(".dom-knap"); if (!knap) return;
+  const d = knap.dataset.dom;
+  if (d === "alle") state.domme = ORDEN.every(x => state.domme.has(x)) ? new Set(["ja", "mulighed"]) : new Set(ORDEN);
+  else state.domme.has(d) ? state.domme.delete(d) : state.domme.add(d);
+  gem(); tegnDomme(); tegnListe();
+});
+
+// ── Bydele ──
+function tegnBydele() {
+  document.getElementById("bydele").innerHTML = omraader.map(o => {
+    const bs = boliger.filter(b => b.omraade === o);
+    const post = [...new Set(bs.map(b => b.postnr))].sort((a, b) => a - b);
+    const postTxt = post.length > 1 ? `${post[0]}–${post[post.length - 1]}` : post[0];
+    const gode = bs.filter(b => b.dom === "ja").length, mul = bs.filter(b => b.dom === "mulighed").length;
+    const bar = ORDEN.map(d => { const n = bs.filter(b => b.dom === d).length; return n ? `<i style="width:${n / bs.length * 100}%;background:${v(DOMME[d].c)}" title="${DOMME[d].navn}: ${n}"></i>` : ""; }).join("");
+    return `<tr data-omr="${esc(o)}" class="${state.omr === o ? "valgt" : ""}">
+      <td class="omr-navn">${esc(o)}<small>${postTxt}</small></td>
+      <td class="num">${bs.length}</td>
+      <td class="num">${gode} / ${mul}</td>
+      <td><span class="fordeling">${bar}</span></td>
+      <td class="num">${mio(Math.min(...bs.map(b => b.pris)))}</td>
+      <td class="num">${mio(median(bs.map(b => b.pris)))}</td>
+      <td class="num">${kr(median(bs.map(b => b.kvmpris).filter(Boolean)))}</td></tr>`;
+  }).join("");
+}
+document.getElementById("bydele").addEventListener("click", e => {
+  const tr = e.target.closest("tr"); if (!tr) return;
+  state.omr = state.omr === tr.dataset.omr ? "" : tr.dataset.omr;
+  document.getElementById("omr").value = state.omr;
+  gem(); tegnBydele(); tegnListe();
+  document.getElementById("liste").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// ── Kontroller ──
+const omrSel = document.getElementById("omr");
+omrSel.insertAdjacentHTML("beforeend", omraader.map(o => `<option>${esc(o)}</option>`).join(""));
+omrSel.value = state.omr;
+document.getElementById("sort").value = state.sort;
+document.getElementById("sog").value = state.sog;
+omrSel.addEventListener("change", e => { state.omr = e.target.value; gem(); tegnBydele(); tegnListe(); });
+document.getElementById("sort").addEventListener("change", e => { state.sort = e.target.value; gem(); tegnListe(); });
+document.getElementById("sog").addEventListener("input", e => { state.sog = e.target.value; gem(); tegnListe(); });
+
+// ── Kort ──
+const SORT = {
+  omraade: (a, b) => omraader.indexOf(a.omraade) - omraader.indexOf(b.omraade) || a.pris - b.pris,
+  pris: (a, b) => a.pris - b.pris,
+  "pris-ned": (a, b) => b.pris - a.pris,
+  kvm: (a, b) => (a.kvmpris || 1e9) - (b.kvmpris || 1e9),
+  m2: (a, b) => b.m2 - a.m2,
+  ny: (a, b) => (a.dage ?? 1e9) - (b.dage ?? 1e9),
+};
+
+function rumChips(b) {
+  const a = b.analyse; if (!a || !a.rum?.length) return "";
+  const vis = a.rum.filter(r => ["sovevaerelse", "stue", "koekken_alrum", "koekken"].includes(r.funktion));
+  return `<div class="rum">${vis.map(r => {
+    const m = r.m2 ? ` ${String(r.m2).replace(".", ",")} m²` : "";
+    return `<span class="${r.funktion === "sovevaerelse" ? "sov" : ""}">${esc(r.navn)}${m}</span>`;
+  }).join("")}</div>`;
+}
+
+function kort(b) {
+  const d = DOMME[b.dom], a = b.analyse;
+  const plan = b.plan_thumb
+    ? `<button type="button" class="plan" data-plan="${esc(b.plan_thumb)}" data-titel="${esc(b.adresse)}" aria-label="Se plantegningen for ${esc(b.adresse)} i stor størrelse">
+         <img src="${esc(b.plan_thumb)}" alt="Plantegning, ${esc(b.adresse)}" loading="lazy">
+         <span class="pille" style="--c:${v(d.c)};--cb:${v(d.cb)}">${d.kort}</span></button>`
+    : `<div class="plan tom"><span class="pille" style="--c:${v(d.c)};--cb:${v(d.cb)}">${d.kort}</span>
+         <span>Mægleren har ikke lagt plantegningen et sted, agenten kan hente den.</span></div>`;
+  const ekstra = [b.altan && "Altan", b.terrasse && "Terrasse", b.elevator && "Elevator",
+    b.etage && (b.etage === "st" || b.etage === "0" ? "Stuen" : `${b.etage}. sal`),
+    b.byggeaar && `Opført ${b.byggeaar}`, b.energi && `Energi ${b.energi}`,
+    b.dage != null && `${b.dage} dage til salg`,
+    b.prisaendring ? `Pris ${b.prisaendring > 0 ? "+" : ""}${String(b.prisaendring).replace(".", ",")} %` : null,
+  ].filter(Boolean);
+  const vurd = a ? `<div class="vurdering">
+      <p>${esc(a.begrundelse)}</p>
+      ${a.indgreb && b.dom === "mulighed" ? `<p class="indgreb"><b>Indgreb:</b> ${esc(a.indgreb)}</p>` : ""}
+      ${rumChips(b)}
+      ${a.opholdsflade ? `<p class="meta">Opholdsflade: ${esc(a.opholdsflade)}</p>` : ""}
+      ${a.ekstra_rum ? `<p class="meta">Ekstra rum: ${esc(a.ekstra_rum)}</p>` : ""}
+      <span class="sikker">Sikkerhed i vurderingen: ${esc(a.sikkerhed)}</span>
+    </div>` : `<div class="vurdering"><p class="meta">${b.plan_thumb ? "Plantegningen er ikke vurderet endnu." : "Ingen plantegning at vurdere. Se annoncen hos mægleren."}</p></div>`;
+  const links = [
+    b.maegler_link && `<a class="prim" href="${esc(b.maegler_link)}" target="_blank" rel="noopener">Se hos mægleren</a>`,
+    `<a href="${esc(b.boligsiden_link)}" target="_blank" rel="noopener">Boligsiden</a>`,
+  ].filter(Boolean).join("");
+  return `<article class="kort">
+    ${plan}
+    <div class="krop">
+      <div class="adr"><h4>${esc(b.adresse)}</h4><span>${b.postnr} ${esc(b.by)} · ${esc(b.maegler)}</span></div>
+      <div class="tal">
+        <div><b>${mio(b.pris)}</b><small>Kontant</small></div>
+        <div><b>${b.m2} m²</b><small>${b.vaerelser} vær.</small></div>
+        <div><b>${kr(b.kvmpris)}</b><small>Kr./m²</small></div>
+        <div><b>${kr(b.ejerudgift)}</b><small>Ejerudg./md.</small></div>
+      </div>
+      ${b.areal_note ? `<p class="note">${esc(b.areal_note)}</p>` : ""}
+      ${vurd}
+      <div class="meta">${ekstra.map(esc).join("<span aria-hidden='true'>·</span>")}</div>
+      <div class="links">${links}</div>
+    </div></article>`;
+}
+
+function tegnListe() {
+  const q = state.sog.trim().toLowerCase();
+  const vis = boliger.filter(b => state.domme.has(b.dom) && (!state.omr || b.omraade === state.omr) &&
+    (!q || `${b.adresse} ${b.by} ${b.postnr} ${b.maegler} ${b.titel || ""}`.toLowerCase().includes(q)))
+    .sort(SORT[state.sort]);
+  document.getElementById("antal").textContent = `${vis.length} af ${boliger.length} boliger`;
+  const liste = document.getElementById("liste");
+  if (!vis.length) { liste.innerHTML = `<div class="tom-liste">Ingen boliger passer til valget. Slå flere domme til ovenfor, eller vælg et andet område.</div>`; return; }
+  if (state.sort === "omraade") {
+    liste.innerHTML = omraader.filter(o => vis.some(b => b.omraade === o)).map(o => {
+      const bs = vis.filter(b => b.omraade === o);
+      return `<section class="gruppe"><div class="gruppe-hoved"><h3>${esc(o)}</h3><span>${bs.length} ${bs.length === 1 ? "bolig" : "boliger"} · fra ${mio(bs[0].pris)}</span></div>
+        <div class="kort-gitter">${bs.map(kort).join("")}</div></section>`;
+    }).join("");
+  } else {
+    liste.innerHTML = `<div class="kort-gitter">${vis.map(kort).join("")}</div>`;
+  }
+}
+
+// ── Lysboks ──
+const lys = document.getElementById("lys");
+document.getElementById("liste").addEventListener("click", e => {
+  const p = e.target.closest(".plan[data-plan]"); if (!p) return;
+  document.getElementById("lys-img").src = p.dataset.plan;
+  document.getElementById("lys-img").alt = "Plantegning, " + p.dataset.titel;
+  document.getElementById("lys-titel").textContent = p.dataset.titel;
+  lys.showModal();
+});
+document.getElementById("luk").addEventListener("click", () => lys.close());
+lys.addEventListener("click", e => { if (e.target === lys) lys.close(); });
+
+tegnDomme(); tegnBydele(); tegnListe();
+</script>

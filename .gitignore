@@ -7,3 +7,6 @@ data/raw/
 __pycache__/
 .venv/
 .DS_Store
+
+# Boligagentens plantegninger i fuld opløsning (hentes igen af scripts/bolig/hent.py)
+data/bolig/plan/

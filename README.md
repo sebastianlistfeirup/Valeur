@@ -125,3 +125,54 @@ ind- og udmeldelsesdatoer. Stamkort bruges kun til at koble til Membercare, og
 ingen gruppe under 25 personer vises. Samme privatlivsregler som
 ovenfor: kun aggregerede tal, ingen krydstabelcelle under 5, og kørslen stopper,
 hvis outputtet indeholder telefonnumre, mailadresser eller cpr-lignende numre.
+
+## Boligagenten (`docs/bolig.html`)
+
+Et selvstændigt dashboard, der finder treværelses ejerlejligheder i København
+og læser plantegningerne for at se, om der reelt er to soveværelser.
+
+Kriterier (i `KRITERIER` i `scripts/bolig/hent.py`):
+
+| | |
+|---|---|
+| Pris | 6.000.000–8.000.000 kr. kontant |
+| Værelser | 3 |
+| Postnumre | 1000–2300 (København K, V, Frederiksberg, Ø, Nordhavn, N, S) |
+| Areal | mindst 70 m², eller 60–69 m² hvis der er disponible ekstra rum (kælder, vægtet areal, hems/loftsrum i teksten) |
+| Plantegning | to reelle soveværelser ud over køkken/stue/alrum, eller mulighed for det |
+
+### Kilder
+
+Boligsidens søge-API samler sagerne fra alle mæglere (home, Nybolig, danbolig,
+EDC, LokalBolig, Estate og de selvstændige). Boligsiden har plantegningen med for
+home, EDC og en del mindre mæglere. For Nybolig, Estate, danbolig og LokalBolig
+henter scriptet plantegningen på mæglerens egen sagsside. De små selvstændige
+mæglere, hvis sider ikke kan læses automatisk, står som "Uvist" med link.
+
+### Plantegningsanalysen
+
+Reglerne står i `scripts/bolig/plan_prompt.md`. Et rum tæller kun som
+soveværelse med egen dør (ikke gennemgangsrum), vindue og mindst ca. 7 m², og der
+skal stadig være en stue eller et køkken-alrum tilbage. Hvad mægleren kalder
+rummet, er ligegyldigt. Domme: **ja**, **mulighed** (med det konkrete indgreb),
+**nej** og **uvist**. Resultaterne gemmes i `docs/bolig/analyser.json`, nøglet
+på plantegningens filnavn, så kun nye boliger analyseres ved næste kørsel.
+
+### Kør det
+
+```sh
+pip install requests pillow cairosvg anthropic
+python3 scripts/bolig/hent.py       # → data/bolig/annoncer.json, plantegninger
+python3 scripts/bolig/analyse.py    # nye plantegninger → docs/bolig/analyser.json (kræver ANTHROPIC_API_KEY)
+python3 scripts/bolig/render.py     # → docs/bolig.html og dist/bolig.html
+```
+
+Uden API-nøgle skriver `analyse.py --batches <mappe>` de nye boliger ud til
+manuel eller agent-baseret vurdering, og `analyse.py --indlaes <mappe>` lægger
+svarene ind bagefter.
+
+Netværket skal tillade `api.boligsiden.dk`, `images.boligsiden.dk`, mæglernes
+sider (`nybolig.dk`, `estate.dk`, `danbolig.dk`, `www.lokalbolig.dk`,
+`lokalbolig.io`, `portal.diakrit.com`) og billedserverne `*.mindworking.eu`.
+Plantegningerne i fuld opløsning (`data/bolig/plan/`) er uden for
+versionsstyring; de små udgaver i `docs/bolig/plan/` bruges af siden.

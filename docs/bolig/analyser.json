@@ -1,0 +1,4037 @@
+{
+ "0022cd6c-1533-45a8-a279-56cb4142ffe6": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nederst)",
+    "m2": 9.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øverst)",
+    "m2": 6.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum/køkken",
+    "m2": 28.5,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Walk-in",
+    "m2": 4.0,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Viktualierum",
+    "m2": 2.3,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Det øverste værelse er kun 286×211 cm (6,0 m²). Flyt den lette skillevæg mellem de to værelser ca. 60–70 cm ned (og flyt døren til det nederste værelse), så begge bliver ca. 8 m² med vindue. Alternativt bruges det lille rum som børneværelse som det er.",
+  "ekstra_rum": "Walk-in ca. 4 m² (uden vindue)",
+  "opholdsflade": "Stue/køkken-alrum ca. 28,5 m²",
+  "begrundelse": "Begge værelser har egen dør fra entréen og vindue, men det ene er kun 6,0 m² og under kravet på ca. 7 m² — en dobbeltseng kan lige stå der. Den store stue/køkken-alrum på ca. 28,5 m² giver god opholdsflade. Med en flytning af skillevæggen mellem værelserne bliver begge reelle soveværelser.",
+  "sikkerhed": "middel",
+  "_plan": "0022cd6c-1533-45a8-a279-56cb4142ffe6_0.png|0022cd6c-1533-45a8-a279-56cb4142ffe6_1.png|0022cd6c-1533-45a8-a279-56cb4142ffe6_2.png"
+ },
+ "01eff742-e6e7-4e3d-a0af-a874c5a24fa3": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 15.5,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 13.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 17.5,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 9.0,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Depot",
+    "m2": 2.5,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Depot ca. 2,5 m²",
+  "opholdsflade": "Stue ca. 17,5 m² (3,80 × 4,60) med altan + køkken i gangforløb",
+  "begrundelse": "To fuldgyldige værelser på ca. 15,5 og 13,1 m² med vindue. Det nordlige værelse har dør fra stuen (stuen er åben mod gangen, så det er ikke gennem et andet soveværelse), det østlige har dør til gangen. Stuen på ca. 17,5 m² er tilbage som opholdsrum, men køkkenet er en gangløsning uden spiseplads.",
+  "sikkerhed": "middel",
+  "_plan": "01eff742-e6e7-4e3d-a0af-a874c5a24fa3_0.png"
+ },
+ "07ffec33-af03-4e4e-892e-5aafee7aa650": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 10.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd)",
+    "m2": 11.3,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 29.0,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 8.3,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 29 m² (584×521 minus hjørne) plus separat køkken ca. 8 m²",
+  "begrundelse": "To regulære værelser (ca. 10 og 11 m²) med vinduer. Det ene har dør fra entréen og det andet dør fra stuen, og ingen af dem er gennemgangsrum. Stuen på næsten 30 m² er stadig et fuldt opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "07ffec33-af03-4e4e-892e-5aafee7aa650_0.png"
+ },
+ "0a51325e-a1c0-432b-b9ea-38af91638f2c": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (øverst)",
+    "m2": 12.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (nederst)",
+    "m2": 12.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken",
+    "m2": 40.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 10.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.9,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Teknik",
+    "m2": null,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue med køkken ca. 40 m² (6,80 × 5,85 m) med altan",
+  "begrundelse": "To ens værelser på 4,40 × 2,88/2,86 m (ca. 12,6 m² hver) med egen dør fra entréen og vindue/fransk altan. Stue og køkken udgør ét stort opholdsrum på ca. 40 m², så kravet er klart opfyldt.",
+  "sikkerhed": "høj",
+  "_plan": "0a51325e-a1c0-432b-b9ea-38af91638f2c_0.png"
+ },
+ "0cc9df81-db80-4c10-89e8-84e1c75211e5": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue",
+    "m2": 17.6,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (altan)",
+    "m2": 12.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 9.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 8.7,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 1.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 17,6 m² + køkken ca. 8,7 m² (alternativ tegning viser stue og køkken slået sammen til køkken-alrum)",
+  "begrundelse": "Begge værelser (403×302 og 293×310 cm) har egen dør fra entréen og vinduer, og stuen er et separat rum. Ægte delevenlig treværelses; alternativ tegning viser mulighed for køkken-alrum. Badet er meget lille.",
+  "sikkerhed": "høj",
+  "_plan": "0cc9df81-db80-4c10-89e8-84e1c75211e5_0.png|0cc9df81-db80-4c10-89e8-84e1c75211e5_1.png|0cc9df81-db80-4c10-89e8-84e1c75211e5_2.png"
+ },
+ "1451a223-f3e3-49b1-b450-8f3e59404d4f": {
+  "dom": "nej",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 1,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 10.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum",
+    "m2": 16.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Stue (H:430, åben mod alrum)",
+    "m2": 20.0,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Hems",
+    "m2": 25.0,
+    "funktion": "andet",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Stor hems ca. 436×679 cm (op til ca. 25 m², ovenlysvinduer) — åben, tæller ikke som soveværelse",
+  "opholdsflade": "Sammenhængende køkken-alrum og stue ca. 35 m²",
+  "begrundelse": "Kun ét lukket værelse (360×295 cm ≈ 10,6 m²). Køkken, alrum og stue er ét åbent, skævt rum under højt loft, og det andet 'værelse' i annoncen er reelt hemsen, som er åben og ikke et soveværelse. En opdeling af den skæve stue er ikke et oplagt eller enkelt indgreb.",
+  "sikkerhed": "middel",
+  "_plan": "1451a223-f3e3-49b1-b450-8f3e59404d4f_0.png|1451a223-f3e3-49b1-b450-8f3e59404d4f_1.png|1451a223-f3e3-49b1-b450-8f3e59404d4f_2.png"
+ },
+ "21096c06-a643-49a6-9d82-59a111eb6694": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (øst)",
+    "m2": 10.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (tilbygget, syd)",
+    "m2": 9.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 22.2,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 7.4,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Altan/terrasse ca. 2,08 × 5,55 m",
+  "opholdsflade": "Stue ca. 22 m² (7,22 × 3,07) i åben forbindelse med køkken",
+  "begrundelse": "To værelser på 3,95 × 2,58 m og 3,52 × 2,60 m, begge med vindue og egen dør til stue/køkken (ingen gennemgang). Den alternative plantegning viser endda et tredje 'evt. værelse' på ca. 6 m² afskilt fra stuen. Stuen er tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "21096c06-a643-49a6-9d82-59a111eb6694_0.png|21096c06-a643-49a6-9d82-59a111eb6694_1.png"
+ },
+ "2669ed96-8f60-46c9-8994-cfa47c73796b": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 12.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Soveværelse",
+    "m2": 13.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/spisestue/køkken",
+    "m2": 45.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 8.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Vaskerum",
+    "m2": 2.1,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken, spisestue og stue i ét rum ca. 45 m² (6,72 × 5,82 m + stuedel) med altan",
+  "begrundelse": "Værelse 4,49 × 2,87 m og soveværelse 4,49 × 2,90 m (ca. 13 m² hver), begge med egen dør fra entréen og fransk altan. Stort samlet køkken/spise/stue-rum bevares.",
+  "sikkerhed": "høj",
+  "_plan": "2669ed96-8f60-46c9-8994-cfa47c73796b_0.png"
+ },
+ "2914504d-23ee-4198-a1a1-90d9b5dee81a": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord, mod altan)",
+    "m2": 10.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd, mod altan)",
+    "m2": 10.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 20.0,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 6.5,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 3.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré og gang ved bad",
+    "m2": 4.5,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Kælder med disp.rum ca. 15 m² (242/357×448, H 2,29) med vinduer og trappe direkte fra stuen, plus lille disp. ved trappen",
+  "opholdsflade": "Stue ca. 20 m² (362×506 plus areal ved trappen) samt køkken",
+  "begrundelse": "To værelser på hver ca. 10 m² med egne døre (det ene fra entréen, det andet fra gangen ved badet) og franske døre til hver sin altan. Der er også en forbindelsesdør mellem de to værelser, som kan lukkes af. Stuen på ca. 20 m² er tilbage som opholdsrum, og kælderen på ca. 15 m² med vinduer er en stor bonus.",
+  "sikkerhed": "høj",
+  "_plan": "2914504d-23ee-4198-a1a1-90d9b5dee81a_0.png|2914504d-23ee-4198-a1a1-90d9b5dee81a_1.png"
+ },
+ "2b3536c4-5a88-4d40-9f77-15c0cd4b1f5d": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue/alrum med køkken",
+    "m2": 45.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (nord)",
+    "m2": 10.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd)",
+    "m2": 9.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 4.0,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "To altaner (ca. 4,4 m² og ca. 2,7 m²); loft til kip (H 4,37 m)",
+  "opholdsflade": "Stue/alrum/køkken ca. 45 m² (5,78×7,02 + køkkenzone)",
+  "begrundelse": "To værelser (2,62×4,12 ≈ 10,8 m² og 2,89×3,38 ≈ 9,8 m²), begge med egen dør fra entréen og med vindue eller altandør. Det store alrum med køkken er tilbage som opholdsrum. Det er en tagbolig, så skråvægge kan gøre en del af gulvarealet mindre brugbart.",
+  "sikkerhed": "høj",
+  "_plan": "2b3536c4-5a88-4d40-9f77-15c0cd4b1f5d_0.png"
+ },
+ "306572b6-c021-4d8b-a060-8a6f0a21be75": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Køkken/alrum",
+    "m2": 24.4,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (skråvægge, ovenlys)",
+    "m2": 12.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 18.5,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 3.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Luk den brede åbning mellem køkken-alrummet og stuen med en let skillevæg med dør, så stuen (ca. 467×397 cm ≈ 18,5 m² med vindue og altandør) bliver soveværelse. Køkken-alrummet (ca. 24 m²) bliver så eneste opholdsrum.",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum ca. 24 m²",
+  "begrundelse": "Kun værelset med skråvægge og ovenlys er lukket i dag; stuen står åben mod køkken-alrummet. Køkken-alrummet er stort nok (ca. 24 m²) til at være opholdsrum, så stuen kan lukkes af med en skillevæg og dør og blive et stort soveværelse med adgang til altanen.",
+  "sikkerhed": "middel",
+  "_plan": "306572b6-c021-4d8b-a060-8a6f0a21be75_0.png"
+ },
+ "33aa9479-8c92-486a-8ee0-4f3a069f8ee2": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue",
+    "m2": 21.4,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue 2",
+    "m2": 13.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 14.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 5.0,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.1,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Gang",
+    "m2": 5.0,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 21,4 m² (4,70 × 4,55); køkkenet er lille",
+  "begrundelse": "Begge stuer har egen dør til gangen og vinduer, så den mindre stue (4,70 × 2,80 = 13,2 m²) fungerer allerede som soveværelse; dobbeltdøren til den store stue kan lukkes/blændes for lyd. Værelset på ca. 14 m² har dør til gang og altan. Den store stue er tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "33aa9479-8c92-486a-8ee0-4f3a069f8ee2_0.png|33aa9479-8c92-486a-8ee0-4f3a069f8ee2_1.png"
+ },
+ "36a8fff5-d928-4780-b9cb-ae7a77211795": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 14.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (nord, med walk-in)",
+    "m2": 11.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Walk-in closet",
+    "m2": 5.9,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum/køkken",
+    "m2": 43.8,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bryggers",
+    "m2": 4.8,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 2.6,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Bryggers ca. 4,8 m²; walk-in closet; stor overdækket altan",
+  "opholdsflade": "Stue/alrum/køkken ca. 44 m² (12,28 × 3,57 m)",
+  "begrundelse": "To værelser (ca. 14,4 og 11,4 m²), begge med skydedør til stue/alrum og glasfacade/dør mod altanen. Ingen af dem er gennemgangsrum, og den lange stue/alrum på ca. 44 m² er tilbage som opholdsrum. Skydedøre mod stuen giver mindre lydisolering end en almindelig dør.",
+  "sikkerhed": "høj",
+  "_plan": "36a8fff5-d928-4780-b9cb-ae7a77211795_0.png|36a8fff5-d928-4780-b9cb-ae7a77211795_1.png"
+ },
+ "39610884-b51e-4c2f-ad3c-181730698b9e": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue",
+    "m2": 17.7,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 12.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Alrum + entré",
+    "m2": 16.5,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 7.0,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Bruge stuen (ca. 18 m², egen dør fra køkkenet og vinduer) som andet soveværelse og lade alrummet ved entréen være eneste opholdsrum. Intet byggeri nødvendigt.",
+  "ekstra_rum": "",
+  "opholdsflade": "Alrum ca. 16 m² (inkl. entréområde) med køkken – hvis stuen bliver soveværelse",
+  "begrundelse": "Kun ét egentligt værelse i dag. Stuen har egen dør og vinduer og kan bruges som soveværelse, men så er alrummet – som også er entré og gennemgang til køkkenet – eneste opholdsflade på ca. 16 m².",
+  "sikkerhed": "middel",
+  "_plan": "39610884-b51e-4c2f-ad3c-181730698b9e_0.png"
+ },
+ "3ac68f12-9aeb-4c6b-95ee-63b997aeaf4d": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (stort)",
+    "m2": 11.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (lille)",
+    "m2": 7.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum/køkken",
+    "m2": 38.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Altan ca. 1,24 × 2,19 m",
+  "opholdsflade": "Køkken-alrum/stue ca. 38 m² (6,08–6,36 m bred)",
+  "begrundelse": "To værelser på 3,94 × 3,00 m og 2,46 × 3,13 m, begge med dør direkte fra entréen og vinduer i facaden. Det lille værelse er smalt (2,46 m), men rummer en dobbeltseng. Stort køkken-alrum er tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "3ac68f12-9aeb-4c6b-95ee-63b997aeaf4d_0.png|3ac68f12-9aeb-4c6b-95ee-63b997aeaf4d_1.png|3ac68f12-9aeb-4c6b-95ee-63b997aeaf4d_2.png"
+ },
+ "3fb89575-a4d1-4097-8def-82416c95eae6": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue",
+    "m2": 21.3,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (stort)",
+    "m2": 14.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (lille)",
+    "m2": 6.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 8.7,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 2.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Gang",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "Lukke åbningen mellem de to værelser og sætte en dør ind fra gangen til det lille værelse – mæglerens alternative tegning viser netop denne løsning. Det lille værelse bliver dog kun ca. 6,2 m² (182 cm bredt).",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 21 m² (plus køkken ca. 9 m²)",
+  "begrundelse": "I dag nås det lille værelse (341×182 cm) kun gennem det store soveværelse via en åbning. Med en ny dør fra gangen bliver det et selvstændigt rum, men det er under 7 m² og kun 1,82 m bredt – en dobbeltseng kan lige stå på langs med smal gangplads, reelt et børne-/gæsteværelse.",
+  "sikkerhed": "middel",
+  "_plan": "3fb89575-a4d1-4097-8def-82416c95eae6_0.png|3fb89575-a4d1-4097-8def-82416c95eae6_1.png|3fb89575-a4d1-4097-8def-82416c95eae6_2.png"
+ },
+ "464cc5d8-cba2-4d2c-a938-07a7377c4e81": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 16.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd)",
+    "m2": 17.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue + køkken/alrum",
+    "m2": 75.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Depot",
+    "m2": 4.5,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Stor privat terrasse; depot ca. 4,5 m²",
+  "opholdsflade": "Stue og køkken-alrum, meget stort (ca. 70+ m², 14,30 m facade)",
+  "begrundelse": "To værelser på ca. 16 og 17,6 m² med hver sin dør til køkken-alrummet og glasfacade/dør mod terrassen. Opholdsfladen er meget stor, og alternativplanen viser, at stuedelen endda kan blive et tredje værelse.",
+  "sikkerhed": "høj",
+  "_plan": "464cc5d8-cba2-4d2c-a938-07a7377c4e81_0.png|464cc5d8-cba2-4d2c-a938-07a7377c4e81_1.png"
+ },
+ "4714d86f-83ca-4d67-b41f-d34c8536c7b8": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue",
+    "m2": 18.9,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Stue 2 (mod altan)",
+    "m2": 8.4,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 6.4,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 12.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.6,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 2.4,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "Lukke den åbne åbning mellem den store stue og den lille stue (4,00 × 2,11 m) med en let væg og dør. Rummet har altandør mod vest og kan rumme en dobbeltseng på langs, men er smalt (2,11 m) og døren vil åbne mod stuen.",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 19 m² (entréen åbner direkte i stuen) + lille køkken ca. 6 m²",
+  "begrundelse": "Ét reelt soveværelse (ca. 12,4 m²) i dag; de '2 stuer' er én L-formet stue. Den lille stuedel på ca. 8,4 m² med altandør kan lukkes af til et smalt andet soveværelse, men det bliver kompakt, og stuen fungerer samtidig som entré.",
+  "sikkerhed": "middel",
+  "_plan": "4714d86f-83ca-4d67-b41f-d34c8536c7b8_0.png"
+ },
+ "49670a30-615e-4021-914b-91a2361f1edf": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 11.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 6.3,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken",
+    "m2": 28.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Disp./teknik",
+    "m2": 3.2,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue/køkken-alrum ca. 28 m² med altan",
+  "begrundelse": "Planløsningen er den samme som 8. tv., med to værelser med egen dør og vindue. Det lille værelse er her målsat til kun 2,10 × 2,99 m (ca. 6,3 m²). Proportionerne og samme lejlighed på 8. sal (2,65 m) tyder på, at det er større, men tjek målet. En dobbeltseng kan stå der.",
+  "sikkerhed": "middel",
+  "_plan": "49670a30-615e-4021-914b-91a2361f1edf_0.png"
+ },
+ "4b573003-3629-442e-ac29-97407bda80ac": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Kontor",
+    "m2": 12.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 10.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum/køkken",
+    "m2": 42.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue, alrum og køkken i ét rum ca. 42 m² (9,05 m dybt) med altan",
+  "begrundelse": "Kontoret (3,71 m bredt, ca. 12 m² inkl. skab) og værelset (3,58 × 3,04 m ≈ 10,9 m²) har begge egen dør fra opholdsrummet/entréen og vindue med altandør. Den store åbne stue/køkken bevares som opholdsrum, så begge rum kan bruges som soveværelser.",
+  "sikkerhed": "høj",
+  "_plan": "4b573003-3629-442e-ac29-97407bda80ac_0.png|4b573003-3629-442e-ac29-97407bda80ac_1.png"
+ },
+ "4c4ce461-a8a6-4193-bbc2-d81730a6e62f": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue",
+    "m2": 13.9,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (ved stue)",
+    "m2": 10.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum",
+    "m2": 23.9,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (ved entré)",
+    "m2": 8.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 12.0,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "To altaner",
+  "opholdsflade": "Stue ca. 14 m² åben mod køkken/alrum ca. 24 m², i alt ca. 38 m²",
+  "begrundelse": "Samme plan som de øvrige boliger i opgangen (spejlvendt): værelse på 4,45×2,25 ≈ 10 m² med dør til køkken/alrum og gavlvindue, og værelse på 2,80×ca. 3,0 ≈ 8,4 m² med dør til entréen og vindue. Stue og køkken-alrum står tilbage som opholdsflade.",
+  "sikkerhed": "høj",
+  "_plan": "4c4ce461-a8a6-4193-bbc2-d81730a6e62f_0.png"
+ },
+ "4d3fb7dd-f77d-4a5c-a0f8-3a7ec51b35d9": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Køkken/alrum med entré (stueplan)",
+    "m2": 19.5,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Toilet (stueplan)",
+    "m2": 2.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (1. sal, med trappeankomst)",
+    "m2": 13.8,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (1. sal)",
+    "m2": 11.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad (1. sal, adgang via værelse)",
+    "m2": 2.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Rejs en let skillevæg på 1. sal i forlængelse af værelsets sydvæg, så trappeankomsten bliver en lille repos og stuen (ca. 312×341 cm ≈ 10,6 m² med vinduer mod gården) bliver et lukket rum med egen dør; flyt værelsets dør ud mod reposen. Badet på 1. sal ligger kun med adgang gennem værelset, så det andet soveværelse må bruge toilettet i stueplan.",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum i stueplan ca. 19,5 m² (entréen ligger i rummet)",
+  "begrundelse": "Duplex med ét rigtigt værelse (11,6 m²) på 1. sal; den anden 'stue' på 1. sal er åben mod trappen og fungerer som gennemgang. En skillevæg og en flyttet dør kan give et soveværelse på ca. 10–11 m², mens køkken-alrummet nedenunder (ca. 19,5 m²) bliver eneste opholdsrum — stramt men muligt. Badet ligger en-suite til det eksisterende værelse.",
+  "sikkerhed": "middel",
+  "_plan": "4d3fb7dd-f77d-4a5c-a0f8-3a7ec51b35d9_0.png|4d3fb7dd-f77d-4a5c-a0f8-3a7ec51b35d9_1.png|4d3fb7dd-f77d-4a5c-a0f8-3a7ec51b35d9_2.png"
+ },
+ "502c2d49-8bf4-40de-b564-f4fa3104d59d": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 17.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst, karnap)",
+    "m2": 16.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 17.8,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 7.7,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 2.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Gang",
+    "m2": 5.4,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 18 m² (3,52 × 5,05 m) med altan. Køkkenet er et smalt køkken på ca. 8 m² uden spiseplads.",
+  "begrundelse": "Værelset mod vest (3,52 × 4,88 m) har dør fra gangen. Værelset mod øst (4,86 × 3,29 m) har dobbeltdør fra stuen. Begge har vindue og er store. Stuen på ca. 18 m² skal rumme både sofa og spisebord, fordi køkkenet er smalt.",
+  "sikkerhed": "middel",
+  "_plan": "502c2d49-8bf4-40de-b564-f4fa3104d59d_0.png"
+ },
+ "52606b7e-4b03-45e6-96bd-7d1ed3fb3d75": {
+  "dom": "nej",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 1,
+  "rum": [
+   {
+    "navn": "Værelse (stort)",
+    "m2": 10.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (lille)",
+    "m2": 5.3,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 14.0,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 13.5,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.8,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 3.4,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 14 m² (408 × 342 cm) og køkken ca. 13,5 m² (352 × 383 cm)",
+  "begrundelse": "Kun det store værelse (367 × 291 cm ≈ 10,7 m²) er et reelt soveværelse; det lille værelse er kun 298 × 179 cm (ca. 5,3 m²) og kan ikke rumme en dobbeltseng. Stuen har egen dør fra entréen og kunne blive soveværelse, men så er køkkenet på ca. 13,5 m² inkl. elementer eneste opholdsrum, hvilket er for lidt.",
+  "sikkerhed": "middel",
+  "_plan": "52606b7e-4b03-45e6-96bd-7d1ed3fb3d75_0.png"
+ },
+ "569ca4eb-daa8-4ebd-9062-749d836167fb": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 15.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse/stue (øst, karnap)",
+    "m2": 16.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Alrum/stue",
+    "m2": 16.6,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 11.0,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 1.4,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 6.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue/alrum ca. 17 m² (3,53 × 4,69 m) med altan plus køkken ca. 11 m² med lille spiseplads",
+  "begrundelse": "Værelset mod vest (3,34 × 4,69 m) har dør fra entréen. Det østlige rum (5,23 × 3,21 m med karnap) nås kun fra stuen gennem en skyde- eller foldedør, men er ikke gennemgangsrum. Mægleren kalder det selv det andet soveværelse. Til ophold er der stuen på ca. 17 m² og et køkken med plads til lille spiseplads. Badeværelset er meget lille.",
+  "sikkerhed": "middel",
+  "_plan": "569ca4eb-daa8-4ebd-9062-749d836167fb_0.png|569ca4eb-daa8-4ebd-9062-749d836167fb_1.png"
+ },
+ "5d1915fa-e25f-49f6-86bb-e9baae8c148a": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (venstre)",
+    "m2": 10.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (højre)",
+    "m2": 11.3,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum/stue",
+    "m2": 42.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Brugsret til kælderrum (ifølge annoncen)",
+  "opholdsflade": "Køkken/alrum og stue i ét rum ca. 42 m² (8,61 × 4,93 m) med terrasse",
+  "begrundelse": "Værelserne måler 3,43 × 3,19 m (ca. 10,9 m²) og 3,52 × 3,21 m (ca. 11,3 m²), begge med egen dør fra opholdsrummet og vindue/terrassedør. Stort samlet køkken-alrum og stue tilbage.",
+  "sikkerhed": "høj",
+  "_plan": "5d1915fa-e25f-49f6-86bb-e9baae8c148a_0.png|5d1915fa-e25f-49f6-86bb-e9baae8c148a_1.png"
+ },
+ "61b4a936-a944-4447-a2f0-3b23cf98a325": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 12.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 12.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum og stue",
+    "m2": 38.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum med stue ca. 38 m² (931×352 plus køkkendel)",
+  "begrundelse": "To værelser på ca. 12 m² hver (284×426 og 446×269) med egne døre fra alrummet og vinduer. Ingen af dem er gennemgangsrum, og det store køkken-alrum med stue er tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "61b4a936-a944-4447-a2f0-3b23cf98a325_0.png"
+ },
+ "6f5028bc-54a2-4d08-b4f5-6da7205b53b0": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 13.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (vest)",
+    "m2": 18.0,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken-alrum/stue (øst)",
+    "m2": 35.2,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Rejse skillevæg med dør i den vestlige stue, så der dannes en gang langs skabsvæggen og et værelse ud mod altanen (som vist på mæglerens alternative plantegning). Alternativplanen viser endda tre værelser ved også at afskære den østlige ende.",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum ca. 35 m² (ca. 20–25 m² hvis tre værelser)",
+  "begrundelse": "I dag er der kun ét lukket værelse (ca. 13,7 m², skydedør mod stuen); resten er ét langt åbent rum. Mæglerens alternative plantegning viser et overskueligt indgreb med lette skillevægge, der giver to eller tre værelser med altandør hver, og køkken-alrummet er stort nok til at bære opholdet.",
+  "sikkerhed": "høj",
+  "_plan": "6f5028bc-54a2-4d08-b4f5-6da7205b53b0_0.png|6f5028bc-54a2-4d08-b4f5-6da7205b53b0_1.png"
+ },
+ "7007fbe3-530a-4a92-a105-c1fbcb590d29": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue (bageste)",
+    "m2": 14.0,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (forreste)",
+    "m2": 18.4,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse",
+    "m2": 14.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 5.5,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 2.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 3.5,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "Brug den bageste stue (5,61×2,49 ≈ 14 m²) som soveværelse ved at erstatte dobbeltdøren mod forreste stue med en tæt dør eller lukke den med en væg og en almindelig dør. Adgangen går fortsat gennem den forreste stue, for rummet støder ikke op til entréen.",
+  "ekstra_rum": "Altan ca. 6,6 m² (1,57×4,22)",
+  "opholdsflade": "Forreste stue ca. 18,4 m² (5,61×3,28); køkkenet er et lille arbejdskøkken",
+  "begrundelse": "Klassisk to stuer en suite plus ét soveværelse (4,54×3,08 ≈ 14 m²). Den bageste stue har vindue og en god størrelse, men den nås kun gennem dobbeltdøren fra den forreste stue. Den kan blive værelse nummer to, men man skal gå gennem stuen for at komme ind.",
+  "sikkerhed": "middel",
+  "_plan": "7007fbe3-530a-4a92-a105-c1fbcb590d29_0.png|7007fbe3-530a-4a92-a105-c1fbcb590d29_1.png"
+ },
+ "7412c939-c681-41da-b7bd-f9272ee0f6c3": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Soveværelse (øst)",
+    "m2": 12.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (vest, skydedøre til stue)",
+    "m2": 8.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue og køkken/alrum",
+    "m2": 33.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.6,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 2.5,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue og køkken-alrum ca. 33 m²",
+  "begrundelse": "Soveværelset (350×349, ca. 12 m²) har egen dør og vinduer. Det vestlige værelse (235×349, ca. 8 m²) har vinduer og lukkes mod stuen med skydedøre, så det er et reelt men lidt smalt soveværelse uden gennemgang. Den store stue med køkken-alrum på over 30 m² er tilbage at bo i.",
+  "sikkerhed": "middel",
+  "_plan": "7412c939-c681-41da-b7bd-f9272ee0f6c3_0.png"
+ },
+ "74adeea5-92bb-4fa4-bd54-7e8e608331dd": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (øverst)",
+    "m2": 11.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (nederst)",
+    "m2": 10.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum/køkken",
+    "m2": 42.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Teknik",
+    "m2": null,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue, alrum og køkken i ét rum ca. 42 m² (9,07 m dybt) med altan",
+  "begrundelse": "Samme planløsning som naboopgangen: værelser på 3,16 × 3,73 m og 3,59 × 3,05 m med egen dør fra alrummet og vindue/altandør. Det store åbne opholdsrum bevares.",
+  "sikkerhed": "høj",
+  "_plan": "74adeea5-92bb-4fa4-bd54-7e8e608331dd_0.png|74adeea5-92bb-4fa4-bd54-7e8e608331dd_1.png"
+ },
+ "76185509-72ab-4833-af6b-dd0f23c815f1": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 15.5,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 10.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 23.2,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Alrum/køkken",
+    "m2": 19.8,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré",
+    "m2": 4.6,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.4,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 23 m² i åben forbindelse med alrum/køkken ca. 20 m²",
+  "begrundelse": "Værelset mod vest (3,93 × 3,94 m) har dør fra entréen, og værelset mod øst (2,86–2,46 × 4,00 m) har dør fra stuen. Begge har vindue. Stue og alrum giver rigeligt opholdsflade.",
+  "sikkerhed": "høj",
+  "_plan": "76185509-72ab-4833-af6b-dd0f23c815f1_0.png|76185509-72ab-4833-af6b-dd0f23c815f1_1.png"
+ },
+ "83f86c64-79af-4aff-a3fd-f52bfaa0fbd9": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 12.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (ved terrasse)",
+    "m2": 8.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum",
+    "m2": 45.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.4,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.6,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Egen vestvendt terrasse og P-plads i kælder",
+  "opholdsflade": "Køkken-alrum ca. 45 m² (7,01 × 4,00 plus 2,59 × 6,90)",
+  "begrundelse": "Værelset på 4,32 × 2,80 m (skydedør) og værelset på 4,08 × 2,12 m har begge vindue og egen dør til køkken-alrummet. Det mindste er smalt, men rummer en dobbeltseng på langs. De alternative tegninger viser, at en del af det store alrum kan blive et tredje værelse.",
+  "sikkerhed": "høj",
+  "_plan": "83f86c64-79af-4aff-a3fd-f52bfaa0fbd9_0.png|83f86c64-79af-4aff-a3fd-f52bfaa0fbd9_1.png|83f86c64-79af-4aff-a3fd-f52bfaa0fbd9_2.png"
+ },
+ "84472015-da9a-40b9-a407-ce8303ed23bd": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 12.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 9.9,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Spisestue",
+    "m2": 26.2,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 9.8,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.3,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.4,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Brug den lille stue (3,10 × 3,20 m, vindue) som soveværelse og udskift dobbeltdøren mod spisestuen med en almindelig dør; spisestuen på 26 m² bliver opholdsrum. Den alternative plantegning viser desuden, at køkkenet kan flyttes ind i spisestuen, så det nuværende køkken (ca. 4,10 × 2,4 m med vindue) bliver et tredje værelse.",
+  "ekstra_rum": "P-plads i kælder og adgang til fælles tagterrasser",
+  "opholdsflade": "Spisestue ca. 26 m² (3,80 × 6,90) plus separat køkken",
+  "begrundelse": "Kun værelset (ca. 3,1 × 4,1 m) er i dag et rigtigt soveværelse; 'stuen' på ca. 10 m² er forbundet med spisestuen via dobbeltdør. Den kan let blive soveværelse, og den alternative plan med to-tre værelser og køkken-alrum bekræfter potentialet.",
+  "sikkerhed": "høj",
+  "_plan": "84472015-da9a-40b9-a407-ce8303ed23bd_0.png|84472015-da9a-40b9-a407-ce8303ed23bd_1.png"
+ },
+ "87189d7f-4344-4ffd-aaaf-34163bea6bfd": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (ved stue)",
+    "m2": 10.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 13.9,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum",
+    "m2": 23.9,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (ved entré)",
+    "m2": 8.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 12.0,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Altan",
+  "opholdsflade": "Stue ca. 14 m² åben mod køkken/alrum ca. 24 m², i alt ca. 38 m²",
+  "begrundelse": "Værelset på 4,45×2,25 ≈ 10 m² har dør til køkken/alrum og gavlvindue, og værelset på 2,80×ca. 3,0 ≈ 8,4 m² har dør til entréen, vindue og plads til dobbeltseng. Stue og køkken-alrum (ca. 38 m²) bliver tilbage som opholdsflade.",
+  "sikkerhed": "høj",
+  "_plan": "87189d7f-4344-4ffd-aaaf-34163bea6bfd_0.png"
+ },
+ "89d1607a-3052-4b5b-a1fa-4dacf7dcd18f": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Køkken/alrum + stue",
+    "m2": 38.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (stort)",
+    "m2": 14.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (lille)",
+    "m2": 8.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 7.1,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum med stue ca. 38 m² og to altaner",
+  "begrundelse": "To ægte soveværelser (344×406 og 347×251 cm) med egen dør fra entréen og vinduer. Det store køkken-alrum med stue forbliver samlet opholdsrum. Klar treværelses fra 2023.",
+  "sikkerhed": "høj",
+  "_plan": "89d1607a-3052-4b5b-a1fa-4dacf7dcd18f_0.png"
+ },
+ "8c174b63-b686-4c5f-9b11-9a8e6246a462": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 10.3,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd)",
+    "m2": 11.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue med åbent køkken",
+    "m2": 27.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.6,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 2.5,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue med køkken ca. 27 m² (7,94×3,42)",
+  "begrundelse": "Der er et værelse i hver ende af boligen (3,02×3,42 og 3,50×3,41), begge med egen dør fra stuen og vinduer. Ingen af dem er gennemgangsrum. Den lange stue med køkken på ca. 27 m² er tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "8c174b63-b686-4c5f-9b11-9a8e6246a462_0.png"
+ },
+ "8d74830b-8657-453a-8e76-c1f25b74bc98": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (ved stue)",
+    "m2": 10.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 13.9,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum",
+    "m2": 23.9,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (ved entré)",
+    "m2": 8.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 12.0,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Altan",
+  "opholdsflade": "Stue ca. 14 m² åben mod køkken/alrum ca. 24 m², i alt ca. 38 m²",
+  "begrundelse": "Værelset ved stuen (4,45×2,25 ≈ 10 m²) har dør til køkken/alrum og vindue i gavlen; værelset ved entréen (2,80×ca. 3,0 ≈ 8,4 m²) har dør til entréen og vindue, og der er tegnet dobbeltseng. Stue og køkken-alrum giver rigeligt opholdsflade.",
+  "sikkerhed": "høj",
+  "_plan": "8d74830b-8657-453a-8e76-c1f25b74bc98_0.png"
+ },
+ "94332ec1-d553-490a-a5e0-1de378a52d69": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 11.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd)",
+    "m2": 11.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken",
+    "m2": 33.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.1,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Disp./teknik",
+    "m2": 3.0,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum/stue ca. 33 m² (6,20 × 5,40 m) med altan",
+  "begrundelse": "To reelle værelser på 4,45 × 2,50 m og 4,00 × 2,85 m, begge med egen dør fra køkken-alrummet og vindue. Det store køkken-alrum står tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "94332ec1-d553-490a-a5e0-1de378a52d69_0.png"
+ },
+ "99480917-67bd-4a44-9b2f-ff8f6682b0c3": {
+  "dom": "nej",
+  "sovevaerelser_i_dag": 0,
+  "sovevaerelser_mulige": 1,
+  "rum": [
+   {
+    "navn": "Værelse (indgangsrum)",
+    "m2": 26.5,
+    "funktion": "andet",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Stue + køkken/alrum",
+    "m2": 37.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Kælder med to disponible rum ca. 17 m² (397×429) og ca. 19 m² (391×487), lofthøjde ca. 2,0 m, små lyskasser",
+  "opholdsflade": "Stue og køkken-alrum i ét ca. 37 m²",
+  "begrundelse": "Hoveddøren går direkte ind i 'værelset', som har åben forbindelse til stue/køkken-alrum – der er ingen rum med egen dør ud over badet. At skabe to lukkede soveværelser kræver en ny planløsning med gang, og med kælderens lave loftshøjde tæller den ikke som soveværelser.",
+  "sikkerhed": "middel",
+  "_plan": "99480917-67bd-4a44-9b2f-ff8f6682b0c3_0.png|99480917-67bd-4a44-9b2f-ff8f6682b0c3_1.png"
+ },
+ "9a554995-18d9-42ed-b370-46e1408cf7de": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (øverst)",
+    "m2": 8.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (nederst)",
+    "m2": 10.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum/køkken",
+    "m2": 32.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 6.2,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.6,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue, alrum og køkken ca. 32 m² (ca. 5,54–6,12 × 5,42 m)",
+  "begrundelse": "Værelserne måler 3,02 × 2,72 m (ca. 8,2 m² plus skabsnische) og 3,92 × 2,58 m (ca. 10,1 m²), begge med vindue/altandør og skydedør ind fra stuen. Det øverste værelse er lille men rummer en dobbeltseng, og stuen/køkkenet på ca. 32 m² bevares som opholdsrum.",
+  "sikkerhed": "middel",
+  "_plan": "9a554995-18d9-42ed-b370-46e1408cf7de_0.png"
+ },
+ "a3ef8d62-d855-4d7a-b9a1-47883efb2c64": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 10.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd)",
+    "m2": 8.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken-alrum/stue",
+    "m2": 45.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.4,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stort køkken-alrum og stue ca. 45 m² med sydvendt altan",
+  "begrundelse": "To værelser med egen dør og vindue: 3,47 × 3,00 m med dør fra køkken-alrummet og 3,42 × 2,50 m med dør fra entréen. Det store køkken-alrum står tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "a3ef8d62-d855-4d7a-b9a1-47883efb2c64_0.png|a3ef8d62-d855-4d7a-b9a1-47883efb2c64_1.png"
+ },
+ "a58ec7cf-6f53-43f7-9e6a-9fbe8199d349": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 9.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd)",
+    "m2": 8.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue med entré",
+    "m2": 34.1,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": null,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 34 m² (6,21 × 5,49) i åben forbindelse med køkken",
+  "begrundelse": "To værelser på ca. 3,49 × 2,84 m og 3,49 × 2,53 m, begge med vindue mod vest og egen dør til stue/køkken (det sydlige med skydedør). Den store stue på ca. 34 m² er tilbage som opholdsrum. Bemærk at man træder direkte ind i stuen – der er ingen separat entré.",
+  "sikkerhed": "høj",
+  "_plan": "a58ec7cf-6f53-43f7-9e6a-9fbe8199d349_0.png"
+ },
+ "a83c2244-b7e1-4bef-a689-f1f7aba4a802": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Soveværelse",
+    "m2": 12.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 12.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum",
+    "m2": 30.0,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 9.9,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Gang",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue/alrum ca. 30 m² (4,00 × 6,10 m + udvidelse) plus køkken ca. 10 m² med altan",
+  "begrundelse": "Soveværelse og værelse er begge 3,00 × 4,00 m (ca. 12 m² inkl. skab) med egen dør fra entré/gang og vindue. Alternativ plantegning viser endda et tredje værelse ved at lukke stuens øverste del af, så der er god plads.",
+  "sikkerhed": "høj",
+  "_plan": "a83c2244-b7e1-4bef-a689-f1f7aba4a802_0.png|a83c2244-b7e1-4bef-a689-f1f7aba4a802_1.png"
+ },
+ "b34c0892-8985-4bb6-9e43-0fd1983cf2bd": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Soveværelse",
+    "m2": 9.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 12.5,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken/spisestue",
+    "m2": 42.7,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Disp.",
+    "m2": 3.3,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.8,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Disponibelt rum ca. 3,3 m²",
+  "opholdsflade": "Gennemgående stue, køkken og spisestue ca. 43 m² (12,20 × 3,50 m)",
+  "begrundelse": "Soveværelset (3,80 × 2,40 m) har dør fra entréen, og værelset (3,80 × 3,30 m) har dør fra spisestuen. Begge har vindue. Den lange stue med køkken og spisestue giver masser af opholdsflade.",
+  "sikkerhed": "høj",
+  "_plan": "b34c0892-8985-4bb6-9e43-0fd1983cf2bd_0.png"
+ },
+ "b594a670-fb6e-4e68-a0c9-966cac70bfb0": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (syd)",
+    "m2": 8.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (nord)",
+    "m2": 5.8,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken",
+    "m2": 40.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Stue (sydlig niche)",
+    "m2": 9.1,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Gang/entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 3.1,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Rejs en let skillevæg med dør ud for stuens sydlige niche (ca. 3,54 × 2,57 m = 9 m², vindue og altandør), så den bliver soveværelse; det lille værelse på 5,8 m² kan så bruges som kontor/gæsteværelse.",
+  "ekstra_rum": "To altaner (5,56 × 1,86 og 2,40 × 1,86 m)",
+  "opholdsflade": "Stue/køkken ca. 35–40 m² efter afskillelse",
+  "begrundelse": "Kun værelset på 3,25 × 2,59 m er et fuldgyldigt soveværelse; det andet værelse er 3,05 × 1,90 m (ca. 5,8 m²) og for smalt til en dobbeltseng med gangplads. Stuen er meget stor, og den sydlige niche med vindue og altandør kan lukkes af til et rigtigt soveværelse.",
+  "sikkerhed": "middel",
+  "_plan": "b594a670-fb6e-4e68-a0c9-966cac70bfb0_0.png"
+ },
+ "b8d72085-c34d-4270-be3a-e66059ec5383": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (med walk-in)",
+    "m2": 13.3,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 9.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken-alrum/stue",
+    "m2": 40.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 20.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Walk-in",
+    "m2": 3.3,
+    "funktion": "andet",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.7,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum og stue ca. 40 m² (4,37 × 6,22 m plus køkken)",
+  "begrundelse": "To værelser (4,66 × 2,86 m og 4,66 × 2,12 m), begge med egen dør fra entréen og vindue eller altandør. Det lille værelse er smalt, men der er plads til en dobbeltseng. Køkken-alrummet er stort.",
+  "sikkerhed": "høj",
+  "_plan": "b8d72085-c34d-4270-be3a-e66059ec5383_0.png"
+ },
+ "ba45969e-2f1e-4ce4-9cae-9a2e0d125bbc": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (øverst)",
+    "m2": 11.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (nederst)",
+    "m2": 10.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum/køkken",
+    "m2": 42.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Teknik",
+    "m2": null,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue, alrum og køkken i ét rum ca. 42 m² (9,06 m dybt) med altan",
+  "begrundelse": "Værelserne måler 3,16 × 3,73 m (ca. 11,8 m²) og 3,59 × 3,05 m (ca. 10,9 m²), begge med egen dør fra alrummet/entréen og vindue med altandør. Stort åbent opholdsrum tilbage.",
+  "sikkerhed": "høj",
+  "_plan": "ba45969e-2f1e-4ce4-9cae-9a2e0d125bbc_0.png"
+ },
+ "bab99218-f496-44c7-a574-8112a0ccda9e": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 10.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 10.6,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 6.3,
+    "funktion": "andet",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken-alrum",
+    "m2": 16.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 2.1,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 3.7,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "Sæt en dør i den åbne forbindelse (stiplet) mellem stuen (388×274) og køkken-alrummet, og brug stuen som soveværelse nr. 2; køkken-alrummet (ca. 15-16 m² + entréareal) bliver så eneste opholdsrum.",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum ca. 15-16 m² (457×323) hvis stuen bruges som soveværelse",
+  "begrundelse": "Kun det vestlige værelse (ca. 10,6 m²) er et fuldgyldigt soveværelse. Det lille østlige værelse er ca. 6,3 m² med indhak og åben/stiplet forbindelse til entréen, så det er for lille til dobbeltseng med gangplads. Stuen på 10,6 m² har vindue og kan blive soveværelse med en ny dør mod alrummet, men så er køkken-alrummet på ca. 15 m² det eneste opholdsrum.",
+  "sikkerhed": "middel",
+  "_plan": "bab99218-f496-44c7-a574-8112a0ccda9e_0.png"
+ },
+ "bb522316-df11-49b3-9269-e9dab637d501": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Køkken + stue",
+    "m2": 33.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (vest)",
+    "m2": 9.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 9.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad (vest)",
+    "m2": 3.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad (øst)",
+    "m2": 2.9,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Køkken-alrum og stue i forbindelse ca. 33 m²",
+  "begrundelse": "To værelser på ca. 10 m² (287×342 og 279×363 cm) med egen dør, vinduer og hvert sit bad. Det ene åbner fra køkkenet, det andet fra stuen – ingen er gennemgangsrum. Hoveddøren går direkte ind i køkkenet.",
+  "sikkerhed": "høj",
+  "_plan": "bb522316-df11-49b3-9269-e9dab637d501_0.png"
+ },
+ "bd828e85-1a40-466b-adef-6e417a96aa7b": {
+  "dom": "nej",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 1,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 14.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (karnap)",
+    "m2": 23.7,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Alrum/køkken",
+    "m2": 30.1,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.7,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 4.1,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 24 m² + alrum/køkken ca. 30 m²",
+  "begrundelse": "Kun værelset (ca. 14,6 m²) er et reelt soveværelse med dør til entré. Stuen kan ikke lukkes af, fordi alrum/køkken kun nås gennem stuen – den er gennemgangsrum. Alrummet har ingen egen adgang fra entréen, så en ny gang skulle skæres ud af stuen.",
+  "sikkerhed": "middel",
+  "_plan": "bd828e85-1a40-466b-adef-6e417a96aa7b_0.png|bd828e85-1a40-466b-adef-6e417a96aa7b_1.png"
+ },
+ "c297b4b1-d5bf-495e-83e0-a9eacca6b1d2": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Soveværelse",
+    "m2": 12.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 6.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 18.2,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum",
+    "m2": 18.6,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.7,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Stor vestvendt tagterrasse",
+  "opholdsflade": "Stue ca. 18 m² (4,62 × 3,94) i åben forbindelse med køkken-alrum",
+  "begrundelse": "Soveværelset (3,03 × 3,96 m) og værelset (2,51 × 2,71 m) har begge vindue og dør (værelset skydedør) direkte fra entréen. Værelset er med ca. 6,8 m² i underkanten, men der er plads til en dobbeltseng. Stue og køkken-alrum giver god opholdsflade.",
+  "sikkerhed": "middel",
+  "_plan": "c297b4b1-d5bf-495e-83e0-a9eacca6b1d2_0.png"
+ },
+ "c4a8e63b-edfd-4c15-926a-d9ea7459fc70": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 15.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 16.5,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Alrum",
+    "m2": 11.1,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 9.2,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 6.0,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "Luk den brede åbning mellem alrum og stue med en let væg, og sæt en dør i den dørløse åbning fra entréen til alrummet. Så bliver alrummet (4,31×2,58 ≈ 11 m² med vindue) et lukket værelse.",
+  "ekstra_rum": "Altan ca. 6 m² (1,71×3,51)",
+  "opholdsflade": "Stue ca. 16,5 m² (4,57×3,61) plus køkken ca. 9 m²",
+  "begrundelse": "I dag er der ét lukket værelse (4,72×3,23 ≈ 15 m²). Alrummet har vindue og en åbning til entréen, men det står åbent mod stuen og har ingen dør. Med en væg og en dør bliver det et værelse på ca. 11 m², og stuen bevares.",
+  "sikkerhed": "høj",
+  "_plan": "c4a8e63b-edfd-4c15-926a-d9ea7459fc70_0.png|c4a8e63b-edfd-4c15-926a-d9ea7459fc70_1.png|c4a8e63b-edfd-4c15-926a-d9ea7459fc70_2.png"
+ },
+ "c725762d-7500-476e-aeac-ed23bee2165d": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (nord)",
+    "m2": 13.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd, dobbeltdør til stue)",
+    "m2": 12.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 20.3,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 8.0,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 2.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 4.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 20 m² (5,02×4,05) plus separat køkken ca. 8 m²",
+  "begrundelse": "Det nordlige værelse (4,64×2,94) har dør fra entréområdet og vindue. Det sydlige værelse (3,66×3,48) går ind fra stuen gennem dobbelte fyldningsdøre, men det er ikke et gennemgangsrum. Stuen på ca. 20 m² er stadig tilbage at bo i, men dobbeltdøren giver mindre lydskærm end en almindelig dør.",
+  "sikkerhed": "høj",
+  "_plan": "c725762d-7500-476e-aeac-ed23bee2165d_0.png"
+ },
+ "c76ade14-8d42-4617-bf31-32ea9ed21f72": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 12.4,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (øst, 326×393)",
+    "m2": 12.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/alrum (460×393)",
+    "m2": 18.1,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 10.4,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 3.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Walk-in",
+    "m2": 3.2,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Walk-in ca. 3 m²",
+  "opholdsflade": "Stue/alrum ca. 18 m² plus separat køkken ca. 10 m²",
+  "begrundelse": "Den østlige stue (ca. 12,8 m²) har egen dør fra entréen og vindue og kan bruges som soveværelse i dag; foldedørene mod den anden stue skal blot holdes lukket. Sammen med værelset (ca. 12,4 m² + walk-in) giver det to reelle soveværelser, og stue/alrum på ca. 18 m² plus et separat køkken er stadig opholdsflade.",
+  "sikkerhed": "høj",
+  "_plan": "c76ade14-8d42-4617-bf31-32ea9ed21f72_0.png"
+ },
+ "cb51fbf9-be7e-490a-82cb-6f7f8b999f6f": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Soveværelse",
+    "m2": 13.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 7.1,
+    "funktion": "andet",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Spisestue",
+    "m2": 19.7,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré med køkken",
+    "m2": 12.0,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 3.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Værelset (353 × 200 cm) har i dag kun en åben åbning ind fra spisestuen og ingen dør. Sæt en dør/lukket væg i åbningen mod spisestuen, så værelset bliver lukket med adgang fra spisestuen.",
+  "ekstra_rum": "",
+  "opholdsflade": "Spisestue ca. 19,7 m² (519 × 380 cm); køkkenet ligger i entréen",
+  "begrundelse": "Soveværelset (463 × 299 cm ≈ 13,8 m²) er reelt. Det ekstra værelse er ca. 7,1 m² med vindue, men er i dag en åben niche fra spisestuen uden dør, og 2,00 m dybde gør det stramt til dobbeltseng. Med en dør i åbningen kan det blive et lille andet soveværelse, mens spisestuen er tilbage som stue.",
+  "sikkerhed": "middel",
+  "_plan": "cb51fbf9-be7e-490a-82cb-6f7f8b999f6f_0.png"
+ },
+ "cbf9968a-2434-41b2-881e-27b30747d11a": {
+  "dom": "nej",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 1,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 12.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (midt)",
+    "m2": 14.6,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Stue (øst)",
+    "m2": 11.9,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken",
+    "m2": 5.8,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Gang",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "To stuer i forbindelse ca. 26,5 m² plus lille køkken ca. 6 m²",
+  "begrundelse": "Værelset (ca. 12,1 m²) er det eneste reelle soveværelse. Man kommer fra entréen ind i den østlige stue og videre gennem den midterste stue til gang, bad og værelse — begge stuer er altså gennemgangsrum, og den østlige kan ikke lukkes af uden at afskære resten af boligen. Med et køkken på kun ca. 6 m² er der heller ikke et køkken-alrum at bo i.",
+  "sikkerhed": "middel",
+  "_plan": "cbf9968a-2434-41b2-881e-27b30747d11a_0.png|cbf9968a-2434-41b2-881e-27b30747d11a_1.png"
+ },
+ "cf3957ba-0025-4c9a-b72a-18a355104bb5": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (øst, altan)",
+    "m2": 13.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (vest)",
+    "m2": 10.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue med køkken",
+    "m2": 38.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 2.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Altan ca. 1,51 × 2,98 m fra det østlige værelse",
+  "opholdsflade": "Stue og køkken i ét, ca. 35–38 m² (6,18 × 5,09 plus køkkendel)",
+  "begrundelse": "Værelserne på 4,19 × 3,14 m og 4,17 × 2,42 m har begge vindue og egen dør fra stuen, uden at man skal gennem det ene for at nå det andet. Stue/køkken på ca. 35 m² er tilbage som opholdsrum. De tre tegninger er samme plan.",
+  "sikkerhed": "høj",
+  "_plan": "cf3957ba-0025-4c9a-b72a-18a355104bb5_0.png|cf3957ba-0025-4c9a-b72a-18a355104bb5_1.png|cf3957ba-0025-4c9a-b72a-18a355104bb5_2.png"
+ },
+ "cfd84b67-6a12-42cd-a6f1-91c1e90a20bc": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (øverst)",
+    "m2": 14.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (nederst)",
+    "m2": 14.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 40.0,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken (gangkøkken)",
+    "m2": 14.2,
+    "funktion": "koekken",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Entré",
+    "m2": 6.6,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Gang",
+    "m2": 4.3,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stor stue ca. 40 m² (skæv, ca. 7,57 × 6,06 m) plus køkken ca. 14 m²",
+  "begrundelse": "To værelser på 5,04 × 2,90 og 5,04 × 2,77 m (ca. 14 m² hver) med egen dør fra køkken/gang-området og vindue/altandør. Den store stue står tilbage som opholdsrum. Bemærk at det ene værelse ser ud til at have glasvæg mod køkkenet.",
+  "sikkerhed": "høj",
+  "_plan": "cfd84b67-6a12-42cd-a6f1-91c1e90a20bc_0.png"
+ },
+ "d0500003-ca7c-4d84-a8e7-89b4dce3a3d3": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Soveværelse",
+    "m2": 13.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 10.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 22.8,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken/spisestue",
+    "m2": 12.2,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.8,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 3.7,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 23 m² plus køkken/spisestue ca. 12 m²",
+  "begrundelse": "Soveværelse 4,20 × 3,30 m og værelse 4,20 × 2,40 m har begge egen dør fra entréen og vindue. Stue på 6,00 × 3,80 m og separat køkken med spiseplads giver rigelig opholdsflade.",
+  "sikkerhed": "høj",
+  "_plan": "d0500003-ca7c-4d84-a8e7-89b4dce3a3d3_0.png|d0500003-ca7c-4d84-a8e7-89b4dce3a3d3_1.png"
+ },
+ "d6f766ef-fa18-4651-8c06-3043ab607f37": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 11.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 7.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken",
+    "m2": 28.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Disp./teknik",
+    "m2": 3.2,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue/køkken-alrum ca. 28 m² (6,07 × 4,07 m plus mere) med altan",
+  "begrundelse": "To værelser med egen dør fra stue/køkken og vindue: 3,24 × 3,46 m og 2,65 × 2,99 m. Det mindste har plads til en dobbeltseng. Køkken-alrummet står tilbage som opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "d6f766ef-fa18-4651-8c06-3043ab607f37_0.png|d6f766ef-fa18-4651-8c06-3043ab607f37_1.png"
+ },
+ "da4d537d-722c-4e3c-9be1-3138303561fd": {
+  "dom": "nej",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 1,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 17.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken-alrum med entré",
+    "m2": 34.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue/køkken-alrum ca. 34 m², inklusive entréen",
+  "begrundelse": "Selv om annoncen siger 3 værelser, viser tegningen kun ét værelse (4,17 × 4,13 m) og et samlet køkken-alrum med entré. Værelset kan ikke deles i to brugbare rum med hver sit vindue, og alrummet er boligens eneste opholdsrum.",
+  "sikkerhed": "høj",
+  "_plan": "da4d537d-722c-4e3c-9be1-3138303561fd_0.png|da4d537d-722c-4e3c-9be1-3138303561fd_1.png"
+ },
+ "df2f4cad-9185-45c6-a676-d91d2ce0b720": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (kvist med fransk altan)",
+    "m2": 18.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 21.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue + køkken/alrum",
+    "m2": 41.7,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Gang",
+    "m2": 3.5,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.9,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue/køkken-alrum ca. 42 m² (7,06 × 5,90 m)",
+  "begrundelse": "To store værelser med egen dør til gang/fællesareal og vinduer (kviste og ovenlys). Tagetage med skråvægge, så den reelle gulvflade med fuld loftshøjde er mindre end målene, men begge rum kan rumme dobbeltseng. Den store stue/køkken-alrum er tilbage som opholdsrum; alternativplanen viser endda et tredje værelse i stuen.",
+  "sikkerhed": "høj",
+  "_plan": "df2f4cad-9185-45c6-a676-d91d2ce0b720_0.png|df2f4cad-9185-45c6-a676-d91d2ce0b720_1.png|df2f4cad-9185-45c6-a676-d91d2ce0b720_2.png"
+ },
+ "e47a4f2e-59ec-41c8-b9fa-88121ff23b1f": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (stort)",
+    "m2": 8.2,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (lille)",
+    "m2": 4.7,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 24.3,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken/alrum med entré",
+    "m2": 18.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.5,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "Brug den separate stue (4,63 × 5,25 m, egen dør og fransk altan) som soveværelse og lad køkken-alrummet være opholdsrum; det lille værelse på 1,41 m bredde bliver kontor.",
+  "ekstra_rum": "Adgang til fælles tagterrasse",
+  "opholdsflade": "Køkken-alrum ca. 18 m² inkl. entréområde (efter at stuen bruges som soveværelse)",
+  "begrundelse": "Værelset på 3,35 × 2,46 m er reelt, men det andet 'værelse' er kun 3,35 × 1,41 m (ca. 4,7 m²) – for smalt til et soveværelse. Stuen har egen dør fra køkken-alrummet og kan blive soveværelse, men så er køkken-alrummet på ca. 18 m² (med entré og køkkenelementer) eneste opholdsrum, hvilket er stramt.",
+  "sikkerhed": "middel",
+  "_plan": "e47a4f2e-59ec-41c8-b9fa-88121ff23b1f_0.png"
+ },
+ "e4a04927-8607-4d6e-a2bd-89edb5ebd0ef": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Ophold/Køkken (inkl. entré)",
+    "m2": 30.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse (nord/øst)",
+    "m2": 12.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (syd/øst)",
+    "m2": 12.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Tagterrasse (stor)",
+  "opholdsflade": "Samlet ophold/køkken ca. 30 m² (3,60+4,25 m × ca. 3,9 m)",
+  "begrundelse": "To lukkede værelser på ca. 12,9 m² (4,70×2,75) og ca. 12 m² (3,45×3,50 + karnap), begge med egen dør fra køkken/ophold og vinduer. Opholds- og køkkenfladen på ca. 30 m² er tilbage som stue, så det er en reel treværelses.",
+  "sikkerhed": "høj",
+  "_plan": "e4a04927-8607-4d6e-a2bd-89edb5ebd0ef_0.png"
+ },
+ "f2e6d8e4-7750-4e04-8d71-662a3fad5766": {
+  "dom": "mulighed",
+  "sovevaerelser_i_dag": 1,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 9.8,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 17.5,
+    "funktion": "stue",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Køkken (åbent mod stue)",
+    "m2": 18.5,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.6,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 3.0,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "Rejs en let skillevæg med dør i stuens vestlige ende som vist på den alternative plantegning, så der opstår et værelse på ca. 8-9 m² (ca. 3,2×2,65 m) med det eksisterende vindue og dør fra stuen.",
+  "ekstra_rum": "",
+  "opholdsflade": "Efter indgreb ca. 27 m² køkken-alrum med stue (5,92×3,12 + resten af stuen)",
+  "begrundelse": "I dag er boligen en stor toværelses med ét soveværelse (3,37×2,90 m, ca. 9,8 m²). Den alternative plantegning viser et ekstra værelse udskilt med en let væg i stuen, og det får eget vindue og egen dør. Køkken-alrummet på omkring 27 m² er stadig rigeligt at bo i.",
+  "sikkerhed": "middel",
+  "_plan": "f2e6d8e4-7750-4e04-8d71-662a3fad5766_0.png|f2e6d8e4-7750-4e04-8d71-662a3fad5766_1.png|f2e6d8e4-7750-4e04-8d71-662a3fad5766_2.png"
+ },
+ "f81616a8-490b-4394-b5dd-3c71fe1949b2": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Soveværelse",
+    "m2": 14.0,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse",
+    "m2": 10.1,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue/køkken",
+    "m2": 55.0,
+    "funktion": "koekken_alrum",
+    "egen_doer": false,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 5.3,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Teknik",
+    "m2": null,
+    "funktion": "andet",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Parkeringsplads kan medfølge (annoncen)",
+  "opholdsflade": "Stor stue med køkken ca. 55 m² (op til 8,30 m bred) med vestvendt altan",
+  "begrundelse": "Soveværelset (280 × 500 cm ≈ 14 m²) har dør fra entréen og vindue; værelset (280 × 360 cm ≈ 10 m²) har dør fra køkkenområdet og fransk altan. Den meget store stue/køkken bevares.",
+  "sikkerhed": "høj",
+  "_plan": "f81616a8-490b-4394-b5dd-3c71fe1949b2_0.png"
+ },
+ "f8b8c26a-8d50-4b3a-b5bd-b04ddc4a6c87": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 12.9,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (nord)",
+    "m2": 15.6,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Spisestue med karnap",
+    "m2": 16.5,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 8.4,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 6.2,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 6.1,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Spisestue med karnap ca. 16–17 m² (4,99 × 3,13 m) plus lille køkken ca. 8 m²",
+  "begrundelse": "Begge stuer har egen dør fra entréen og vindue. Den nordlige stue (3,88 × 4,01 m) kan derfor bruges som soveværelse i dag, men bør lukkes af mod den franske dobbeltdør. Opholdsfladen bliver kun karnapstuen på ca. 16 m² og et lille køkken, så det bliver stramt.",
+  "sikkerhed": "middel",
+  "_plan": "f8b8c26a-8d50-4b3a-b5bd-b04ddc4a6c87_0.png"
+ },
+ "fbd797ea-513c-4f58-b4d9-508077f41a57": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Stue",
+    "m2": 21.0,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Værelse",
+    "m2": 14.7,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (fransk altan)",
+    "m2": 14.5,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 11.2,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.0,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.0,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 21 m² + køkken ca. 11 m²",
+  "begrundelse": "To store værelser (462×319 og 413×444/266 cm) med egen dør fra stuen og vinduer. Stuen fungerer som fordelingsrum men er stadig et fuldt opholdsrum. Badet nås kun gennem køkkenet.",
+  "sikkerhed": "høj",
+  "_plan": "fbd797ea-513c-4f58-b4d9-508077f41a57_0.png"
+ },
+ "fccc1147-3ecf-4fff-932d-e43d81d56b4f": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse",
+    "m2": 13.5,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue (nord)",
+    "m2": 17.3,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue med karnap",
+    "m2": 20.6,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 15.1,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 2.6,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Gang/entré",
+    "m2": null,
+    "funktion": "gang",
+    "egen_doer": false,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "Disponibelt rum ca. 0,9 m²",
+  "opholdsflade": "Stue med karnap ca. 21 m² plus køkken ca. 15 m²",
+  "begrundelse": "Den nordlige stue (4,34 × 3,99 m) har egen dør fra gangen og vindue og kan bruges som soveværelse i dag. Fransk dobbeltdør til den anden stue bør lukkes af for lydens skyld. Værelset på 4,25 × 3,18 m er det andet soveværelse, og stuen med karnap plus et stort køkken er tilbage at bo i.",
+  "sikkerhed": "middel",
+  "_plan": "fccc1147-3ecf-4fff-932d-e43d81d56b4f_0.png"
+ },
+ "fde0f308-8db8-4223-b649-9839145eae7a": {
+  "dom": "ja",
+  "sovevaerelser_i_dag": 2,
+  "sovevaerelser_mulige": 2,
+  "rum": [
+   {
+    "navn": "Værelse (vest)",
+    "m2": 13.5,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Stue",
+    "m2": 15.5,
+    "funktion": "stue",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Værelse (øst)",
+    "m2": 9.5,
+    "funktion": "sovevaerelse",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Køkken",
+    "m2": 5.5,
+    "funktion": "koekken",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Bad",
+    "m2": 4.8,
+    "funktion": "bad",
+    "egen_doer": true,
+    "vindue": true,
+    "gennemgang": false
+   },
+   {
+    "navn": "Entré",
+    "m2": 5.5,
+    "funktion": "gang",
+    "egen_doer": true,
+    "vindue": false,
+    "gennemgang": true
+   }
+  ],
+  "indgreb": "",
+  "ekstra_rum": "",
+  "opholdsflade": "Stue ca. 15,5 m² (4,30×3,61); køkkenet er lille",
+  "begrundelse": "Begge værelser (4,42×3,05 ≈ 13,5 m² og 3,98×2,38 ≈ 9,5 m²) har egen dør til entréen og vinduer. Det lille værelse har også en dobbeltdør til stuen, som kan holdes lukket. Stuen på ca. 15,5 m² er tilbage som opholdsrum, men køkkenet er kun et arbejdskøkken.",
+  "sikkerhed": "høj",
+  "_plan": "fde0f308-8db8-4223-b649-9839145eae7a_0.png"
+ }
+}
