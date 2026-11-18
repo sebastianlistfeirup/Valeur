@@ -108,6 +108,13 @@ python -X utf8 scripts/briefing/build_data.py "<sti til Thomas data>"   # → do
 python -X utf8 scripts/briefing/render.py                               # → docs/briefing.html og dist/briefing.html
 ```
 
-Uden argument læser scriptet `data/raw/thomas/`. Samme privatlivsregler som
+Uden argument læser scriptet `data/raw/thomas/`.
+
+`scripts/briefing/dybde.py` står for de seks dybere spadestik: hvor meget Valeur
+løser selv, udsendelsernes effekt, årshjulet, sager der kommer igen, geografi
+samt køopgivelse og prognose. Modulet læser bemærkningsfeltet i Membercare,
+men kun for at klassificere hver registrering (besked/viderestilling ja/nej,
+nævner en rykker ja/nej). Fritekst, navne og overskrifter fjernes, før noget
+regnes ud, og outputtet er udelukkende optællinger. Samme privatlivsregler som
 ovenfor: kun aggregerede tal, ingen krydstabelcelle under 5, og kørslen stopper,
 hvis outputtet indeholder telefonnumre, mailadresser eller cpr-lignende numre.

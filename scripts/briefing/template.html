@@ -86,6 +86,16 @@ td:first-child{font-family:var(--body)}
 .gap .st{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-top:2px}
 .src{font-size:12px;color:var(--muted)}
 footer{color:var(--muted);font-size:12px}
+.hjul{display:grid;gap:2px;font-size:12px;min-width:720px}
+.hjul .c{height:30px;border-radius:3px;display:grid;place-items:center;font-family:var(--mono);font-size:11px}
+.hjul .h{color:var(--muted);font-weight:600;text-align:center;padding:4px 0}
+.hjul .r{padding:6px 8px 6px 0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prog{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.prog .d{border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:grid;gap:2px;background:var(--panel)}
+.prog .d .w{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.prog .d .n{font-family:var(--display);font-size:20px;font-weight:700;font-variant-numeric:tabular-nums}
+.prog .d.hoej{border-color:var(--warn);background:var(--warn-soft)}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
 .crosslink{font-size:14px;font-weight:500;color:var(--valeur);text-decoration:none;width:max-content;max-width:100%}
 .crosslink:hover,.crosslink:focus-visible{text-decoration:underline}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -106,7 +116,7 @@ footer{color:var(--muted);font-size:12px}
 
 <nav class="toc" aria-label="Sektioner">
   <a href="#status">Status</a><a href="#svar">Opkald og svar</a><a href="#aflastning">Aflastning</a>
-  <a href="#hvornaar">Hvornår</a><a href="#hvad">Hvad</a><a href="#hvem">Hvem</a><a href="#maal">Mål</a><a href="#mails">Mails</a><a href="#data">Data og huller</a>
+  <a href="#hvornaar">Hvornår</a><a href="#hvad">Hvad</a><a href="#hvem">Hvem</a><a href="#loeser">Løser Valeur selv?</a><a href="#udsendelser">Udsendelser</a><a href="#aarshjul">Årshjulet</a><a href="#igen">Sager igen</a><a href="#geografi">Geografi</a><a href="#koe">Køen og prognosen</a><a href="#maal">Mål</a><a href="#mails">Mails</a><a href="#data">Data og huller</a>
 </nav>
 
 <section class="blok" id="status">
@@ -177,6 +187,65 @@ footer{color:var(--muted);font-size:12px}
     <p class="sub">Andel af gruppens registreringer i hver hovedkategori. Mørkere felt betyder større andel.</p>
     <div class="tbl"><div class="heat" id="heat"></div></div>
     <p class="sub" id="tomNote"></p></div>
+</section>
+
+<section class="blok" id="loeser">
+  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 1</div><h2>Hvor meget løser Valeur selv?</h2>
+  <p>Når Valeur ikke kan løse sagen, skriver de en besked til sekretariatet eller stiller opkaldet videre. Det står i noten til registreringen. Her er andelen af registreringer med en besked eller viderestilling, siden Valeur begyndte at bruge den faste beskedskabelon i juli 2025.</p></div>
+  <div class="kpis" id="loeserKpi"></div>
+  <div class="grid2">
+    <div class="card"><h3>Andel sendt videre, måned for måned</h3><div class="chart"><canvas id="cLoeserMd"></canvas></div><div class="src">Kilde: Membercare, noter klassificeret automatisk. Noterne er ikke gemt.</div></div>
+    <div class="card"><h3>Sendt videre pr. hovedkategori</h3><div class="bars" id="bLoeserG"></div></div>
+  </div>
+  <div class="split">
+    <div class="card"><h3>Sendes oftest videre</h3><div class="bars" id="bLoeserTop"></div></div>
+    <div class="card"><h3>Løses oftest af Valeur</h3><div class="bars" id="bLoeserBund"></div></div>
+  </div>
+  <div class="insight" id="loeserInsight"></div>
+</section>
+
+<section class="blok" id="udsendelser">
+  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 2</div><h2>Foreningens egne udsendelser skaber opkald</h2>
+  <p>Registreringer om medlemskab og kontingent og om kurser uge for uge, med de registreringer, hvor medlemmet nævner en rykker. Spidserne følger foreningens egne breve og mails.</p></div>
+  <div class="card"><div class="chart tall"><canvas id="cUdsend"></canvas></div><div class="src">Kilde: Membercare. "Nævner en rykker" er fundet automatisk i overskrift og note.</div></div>
+  <div class="insight warnbox" id="udsendInsight"></div>
+</section>
+
+<section class="blok" id="aarshjul">
+  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 3</div><h2>Årshjulet: hvornår der ringes om hvad</h2>
+  <p>De 14 hyppigste emner måned for måned. Tallet er et indeks: 100 betyder, at emnet fylder som normalt, og 200, at det fylder dobbelt så meget som normalt i den måned. Orange felter er højsæson, blå felter lavsæson.</p></div>
+  <div class="card"><div class="tbl"><div class="hjul" id="hjul"></div></div>
+  <div class="src" id="hjulNote"></div></div>
+</section>
+
+<section class="blok" id="igen">
+  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 4</div><h2>Sager, der kommer igen</h2>
+  <p>Hvor ofte den samme person henvender sig igen inden for 14 dage. Det er et tegn på sager, der ikke blev afsluttet første gang, eller som kræver flere samtaler.</p></div>
+  <div class="grid2">
+    <div class="card"><h3>Emner, der oftest kommer igen inden 14 dage</h3><div class="bars" id="bIgen"></div></div>
+    <div class="card"><h3>Hvor hurtigt de kommer igen</h3><div class="chart short"><canvas id="cIgen"></canvas></div><div class="sub" id="igenNote"></div></div>
+  </div>
+</section>
+
+<section class="blok" id="geografi">
+  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 5</div><h2>Hvor i landet ringer de fra?</h2>
+  <p>Registreringer fordelt på medlemmets kreds. Tallene er rå antal. Uden en medlemsliste kan de ikke regnes om pr. 1.000 medlemmer, så store kredse fylder mest.</p></div>
+  <div class="grid2">
+    <div class="card"><h3>Registreringer pr. kreds</h3><div class="bars" id="bKreds"></div></div>
+    <div class="card"><h3>Andel selvstændige og rådgivningssager pr. kreds</h3><div class="chart tall"><canvas id="cKreds"></canvas></div><div class="src">Kilde: Membercare, medlemskabsfeltet</div></div>
+  </div>
+</section>
+
+<section class="blok" id="koe">
+  <div class="blok-head"><div class="eyebrow">Dybere spadestik · 6</div><h2>Hvornår opgiver medlemmerne i køen, og hvad kommer der?</h2>
+  <p>Kald i sekretariatets køer, der blev afbrudt, før nogen tog telefonen, siden 5. maj 2025. Nederst en prognose for opkald til Valeur de næste 20 åbningsdage.</p></div>
+  <div class="grid2">
+    <div class="card"><h3>Afbrudte kald pr. time</h3><div class="chart"><canvas id="cAfbTime"></canvas></div><div class="src">Kilde: IP Nordic, hvert kald i køerne</div></div>
+    <div class="card"><h3>Hvor længe ventede de, før de lagde på?</h3><div class="chart"><canvas id="cAfbSpand"></canvas></div><div class="sub" id="afbNote"></div></div>
+  </div>
+  <div class="card"><h3>Forventede opkald til Valeur, de næste 20 åbningsdage</h3>
+    <div class="prog" id="prog"></div>
+    <p class="sub" id="progNote"></p></div>
 </section>
 
 <section class="blok" id="maal">
@@ -396,6 +465,84 @@ function render(){
   mk("cMails",{type:"bar",data:{labels:ML.map(([k])=>k.replace("-U"," u")),datasets:[{label:"Mails",data:ML.map(([,v])=>v),backgroundColor:ML.map(([k])=>k.startsWith("2026")?css("--valeur"):alpha("--valeur",.5)),borderRadius:2}]},
     options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:12}},y:{title:{display:true,text:"Mails pr. uge"}}}}});
 
+  // --- dybere spadestik
+  const DY = D.dybde;
+  const pctBars = (el, rows, color) => { el.innerHTML = rows.map(([k,a,n]) => `<div class="bar-row"><div class="lab"><span title="${k}">${k}</span><span class="num">${pct(a)} <span style="color:var(--muted)">af ${fmt(n)}</span></span></div>
+    <div class="bar-track"><div class="bar-fill" style="width:${(a*100).toFixed(1)}%;background:${color}"></div></div></div>`).join(""); };
+
+  // 1 løser selv
+  const L = DY.loeser;
+  const lG = Object.fromEntries(L.pr_gruppe.map(g=>[g.g,g.a]));
+  document.getElementById("loeserKpi").innerHTML = [
+    kpi(pct(1-L.andel_besked), "Løst af Valeur", `uden besked eller viderestilling · ${fmt(L.n)} registreringer`),
+    kpi(pct(L.andel_besked), "Sendt videre", "besked eller viderestilling til sekretariatet"),
+    kpi(pct(1-lG["Rådgivning/forhandling"]), "Løst i rådgivning", `${pct(lG["Rådgivning/forhandling"])} sendes videre`),
+    kpi(pct(1-lG["Autorisation og Tilsyn"]), "Løst i autorisation", `${pct(lG["Autorisation og Tilsyn"])} sendes videre`),
+  ].join("");
+  mk("cLoeserMd",{type:"bar",data:{labels:L.pr_md.map(m=>mdLabel(m.md)),datasets:[
+    {label:"Sendt videre",data:L.pr_md.map(m=>m.b/m.n*100),backgroundColor:css("--sek"),stack:"s",borderRadius:2},
+    {label:"Løst af Valeur",data:L.pr_md.map(m=>(1-m.b/m.n)*100),backgroundColor:css("--valeur"),stack:"s",borderRadius:2}]},
+    options:{interaction:{mode:"index",intersect:false},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,max:100,ticks:{callback:v=>v+" %"}}},
+      plugins:{tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.raw,1)} %`,footer:it=>`${fmt(L.pr_md[it[0].dataIndex].n)} registreringer`}}}}});
+  pctBars(document.getElementById("bLoeserG"), [...L.pr_gruppe].sort((a,b)=>b.a-a.a).map(g=>[g.g,g.a,g.n]), "var(--sek)");
+  pctBars(document.getElementById("bLoeserTop"), L.pr_type.slice(0,7).map(t=>[t.t,t.a,t.n]), "var(--sek)");
+  pctBars(document.getElementById("bLoeserBund"), [...L.pr_type].reverse().slice(0,7).map(t=>[t.t,1-t.a,t.n]), "var(--valeur)");
+  const lMed = L.pr_type.find(t=>t.t==="Medlemskab og kontingent");
+  document.getElementById("loeserInsight").innerHTML = `<b>Valeur løser omkring ${pct(1-L.andel_besked)} af sagerne selv.</b> Rådgivningsemnerne sendes videre i ${pct(lG["Rådgivning/forhandling"])} af tilfældene, sådan som Valeur er instrueret. Medlemskab og kontingent sendes videre i ${pct(lMed?.a)} af tilfældene, selv om det handler om foreningens egne regler. Det og de øvrige emner i midten af listen er de oplagte at se på, hvis Valeur skal løse mere selv: med flere faste svar kunne en del af dem afsluttes i første opkald. <span class="src">Forbehold: Andelen er fundet ved at søge efter faste formuleringer i noterne, fx "Har ringet i dag" og kønumre. ${pct(L.andel_tom)} af noterne er tomme og tæller som løst. Valeurs eget mål for løst i første kald (30–40 % i benchmark-arket) er målt på en anden måde og kan ikke sammenlignes direkte.</span>`;
+
+  // 2 udsendelser
+  const US = DY.udsendelser, UU = US.uger.filter(u=>u.n>=20);
+  mk("cUdsend",{data:{labels:UU.map(u=>u.uge.replace("-U"," u")),datasets:[
+    {type:"bar",label:"Medlemskab og kontingent",data:UU.map(u=>u.kont),backgroundColor:css("--valeur"),borderRadius:2,order:2},
+    {type:"bar",label:"Kurser og arrangementer",data:UU.map(u=>u.kursus),backgroundColor:alpha("--sek",.6),borderRadius:2,order:2},
+    {type:"line",label:"Nævner en rykker",data:UU.map(u=>u.ryk),borderColor:css("--bad"),backgroundColor:css("--bad"),pointRadius:2,borderWidth:1.5,tension:.2,order:1}]},
+    options:{interaction:{mode:"index",intersect:false},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:12}},y:{title:{display:true,text:"Registreringer pr. uge"}}},
+      plugins:{tooltip:{callbacks:{footer:it=>`Ugen fra ${dato(UU[it[0].dataIndex].start)} · ${fmt(UU[it[0].dataIndex].n)} registreringer i alt`}}}}});
+  const topU = [...US.uger].sort((a,b)=>b.kont-a.kont)[0];
+  const kontSnit = US.uger.reduce((a,u)=>a+u.kont,0)/US.uger.length;
+  document.getElementById("udsendInsight").innerHTML = `<b>Én rykkerudsendelse giver en hel uges ekstra opkald.</b> I ugen fra ${dato(topU.start)} var der ${fmt(topU.kont)} registreringer om medlemskab og kontingent, mod ${fmt(kontSnit)} i en gennemsnitlig uge, og ${fmt(topU.ryk)} af dem nævnte en rykker. I alt nævner ${fmt(US.ryk_i_alt)} registreringer en rykker, og ${pct(US.ryk_andel_kontingent)} af dem handler om kontingent. Hvis Valeur får besked om udsendelser på forhånd og har et fast svar klar, kan spidsen planlægges i stedet for at ramme som en overraskelse.`;
+
+  // 3 årshjul
+  const AH = DY.aarshjul, MDK = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
+  let hj = `<div style="display:grid;grid-template-columns:230px repeat(12,1fr);gap:2px"><div></div>`+AH.maaneder.map(m=>`<div class="h">${MDK[m-1]}</div>`).join("");
+  AH.emner.forEach(e=>{ hj += `<div class="r" title="${e.t}">${e.t}</div>`;
+    e.idx.forEach((v,i)=>{ const t=Math.max(0,Math.min(1,(v-100)/120)); const bg = v>=100 ? alpha("--warn", .1+t*.8) : alpha("--sek", .08+(100-v)/100*.4);
+      hj += `<div class="c" style="background:${bg};color:${v>=175?"#fff":css("--ink")}" title="${e.t}, ${MDK[AH.maaneder[i]-1]}: indeks ${v}">${v}</div>`; }); });
+  document.getElementById("hjul").innerHTML = hj+"</div>";
+  document.getElementById("hjulNote").textContent = "Kilde: Membercare, maj 2025–november 2026. Maj–november indgår to gange, de øvrige måneder én gang, så en enkelt begivenhed kan præge en måned. Februar er fx præget af rykkerudsendelsen i 2026.";
+
+  // 4 sager igen
+  const GI = DY.gentagne;
+  pctBars(document.getElementById("bIgen"), GI.pr_type.slice(0,10).map(t=>[t.t,t.a,t.n]), "var(--sek)");
+  const fd = Object.entries(GI.fordeling_dage);
+  mk("cIgen",{type:"bar",data:{labels:fd.map(x=>x[0]),datasets:[{label:"Gentagne henvendelser",data:fd.map(x=>x[1]),backgroundColor:css("--sek"),borderRadius:3}]},
+    options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}}}}});
+  document.getElementById("igenNote").textContent = `${pct(GI.andel)} af registreringerne følges af en ny henvendelse fra samme person inden for 14 dage, og i ${pct(GI.samme_emne)} af tilfældene handler den om samme emne. Den største gruppe kommer igen samme dag. Det kan være medlemmer, der ringer tilbage, fordi de ikke fik fat i den, de blev stillet videre til.`;
+
+  // 5 geografi
+  const GE = DY.geografi, geTot = GE.reduce((a,x)=>a+x.n,0);
+  bars(document.getElementById("bKreds"), GE.map(k=>[k.k,k.n,pct(k.n/geTot)]), GE[0].n);
+  mk("cKreds",{type:"bar",data:{labels:GE.map(k=>k.k),datasets:[
+    {label:"Selvstændige",data:GE.map(k=>k.selv*100),backgroundColor:css("--warn"),borderRadius:2},
+    {label:"Rådgivningssager",data:GE.map(k=>k.raad*100),backgroundColor:css("--sek"),borderRadius:2}]},
+    options:{indexAxis:"y",scales:{x:{ticks:{callback:v=>v+" %"}},y:{grid:{display:false}}},plugins:{tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.raw,1)} %`}}}}});
+
+  // 6 køen og prognosen
+  const KO = DY.koe, KOT = KO.pr_time.filter(t=>t.n>=50);
+  mk("cAfbTime",{data:{labels:KOT.map(t=>`${t.t}–${t.t+1}`),datasets:[
+    {type:"bar",label:"Afbrudte kald",data:KOT.map(t=>t.afb),backgroundColor:css("--bad"),borderRadius:3,yAxisID:"y"},
+    {type:"line",label:"Andel afbrudt",data:KOT.map(t=>t.afb/t.n*100),borderColor:css("--ink"),backgroundColor:css("--ink"),pointRadius:3,yAxisID:"y2"}]},
+    options:{interaction:{mode:"index",intersect:false},scales:{x:{grid:{display:false}},y:{title:{display:true,text:"Afbrudte kald"}},y2:{position:"right",min:0,max:50,grid:{display:false},ticks:{callback:v=>v+" %"}}},
+      plugins:{tooltip:{callbacks:{label:c=>c.dataset.yAxisID==="y2"?`Andel afbrudt: ${fmt(c.raw,1)} %`:`Afbrudte: ${fmt(c.raw)}`,footer:it=>`Median ventetid før afbrydelse: ${mmss(KOT[it[0].dataIndex].med)} min.`}}}}});
+  const SP = Object.entries(KO.spand), spTot = SP.reduce((a,x)=>a+x[1],0);
+  mk("cAfbSpand",{type:"bar",data:{labels:SP.map(x=>x[0]),datasets:[{label:"Afbrudte kald",data:SP.map(x=>x[1]),backgroundColor:css("--bad"),borderRadius:3}]},
+    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw)} kald · ${pct(c.raw/spTot)}`}}},scales:{x:{grid:{display:false}}}}});
+  const under2 = (KO.spand["Under 30 sek."]+KO.spand["30–60 sek."]+KO.spand["1–2 min."])/spTot;
+  document.getElementById("afbNote").textContent = `${pct(KO.afb_i_alt/KO.kald_i_alt)} af kaldene i sekretariatets køer bliver afbrudt, før nogen tager telefonen, og ${pct(under2)} af dem lægger på inden for to minutter. Et tilbud om at blive ringet op efter et minut i kø vil sandsynligvis fange de fleste af dem.`;
+  const PG = DY.prognose, snitF = PG.dage.reduce((a,x)=>a+x.f,0)/PG.dage.length;
+  document.getElementById("prog").innerHTML = PG.dage.map(x=>{ const d=new Date(x.d); return `<div class="d ${x.f>=snitF*1.12?"hoej":""}"><span class="w">${x.wd.slice(0,3)} ${d.getDate()}/${d.getMonth()+1}</span><span class="n">${fmt(x.f)}</span></div>`; }).join("");
+  document.getElementById("progNote").textContent = `Prognosen er gennemsnittet for samme ugedag i samme måned sidste år, ganget med væksten de seneste tre måneder (${PG.vaekst_mdr.map(mdLabel).join(", ")}: ${PG.vaekst>1?"+":""}${fmt((PG.vaekst-1)*100)} % mod året før). Markerede dage ligger mindst 12 % over snittet. Dage efter 21. december er udeladt. Prognosen tager ikke højde for udsendelser, som kan give mange flere opkald.`;
+
   // --- kilder og huller
   const K = [["Valeur Insights (opkald pr. dag, time, ugedag, medlem)",`${dato(V.foerste)} – ${dato(V.sidste)}`],
     ["IP Nordic kø-rapporter pr. måned, 7 køer","nov 2023 – nov 2026"],["IP Nordic, hvert kald i køerne",`${dato(D.koeer.periode[0])} – ${dato(D.koeer.periode[1])}`],
@@ -410,6 +557,7 @@ function render(){
     gap("Mangler","bad","<b>Stamdatarettelser.</b> Briefingen viste 15–20 % rettelser. Der er ingen kilde til det i mappen."),
     gap("Forbehold","warn","<b>Før-perioden for Valeurs frontlinje findes ikke.</b> Før 5. maj 2025 gik opkald direkte til køerne. Før/efter kan derfor kun måles i sekretariatets køer."),
     gap("Forbehold","warn","<b>Selvstændig-køen var lukket</b> i december 2025 og januar 2026. Det trækker efter-tallet ned."),
+    gap("Forbehold","warn","<b>Andelen løst af Valeur</b> er fundet ved at søge efter faste formuleringer i noterne og er et skøn."),
     gap("Forbehold","warn","<b>FCR og registreringsgrad</b> er kun delvist udfyldt i benchmark-arket."),
     gap("Forbehold","warn","<b>Valeurs svarprocent</b> regnes af alle kald i Valeur Insights. Valeurs egen opgørelse bruger “tilbudte kald i åbningstid” og giver 1–3 point mere."),
   ].join("");

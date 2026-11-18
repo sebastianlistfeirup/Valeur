@@ -376,6 +376,9 @@ if __name__ == "__main__":
     data["koe_navn"] = KOE_NAVN
     data["koe_fe"] = koe_foer_efter(data["koeer_md"])
     data["koeer"].pop("gentag")
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import dybde
+    data["dybde"] = dybde.build(ROOT, data["valeur"]["dage"], data["valeur"]["sidste"])
 
     agenter = data["mc"].pop("_agenter")
     txt = json.dumps(data, ensure_ascii=False, default=str)
