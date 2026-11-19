@@ -117,6 +117,26 @@ def gentagne(df, min_n=MIN_N):
 
 
 # 5 ------------------------------------------------------------------ geografi
+def geo_taelling(df, min_celle=3):
+    """{kreds: [registreringer, heraf selvstændige, heraf rådgivningssager]}; små kredse lægges sammen."""
+    if not len(df):
+        return {}
+    felt = df["Medlemskab"].fillna("").str.split(",").str[0]
+    kreds = felt.str.split("-", n=1).str[1].fillna("").str.strip().replace(KREDS_NAVN).replace("", pd.NA)
+    seg = felt.str.split("-").str[0].str.strip()
+    d = pd.DataFrame({"kreds": kreds, "selv": seg.eq("Selvstændig"), "raad": df["gruppe"].eq("Rådgivning/forhandling")}).dropna(subset=["kreds"])
+    g = d.groupby("kreds").agg(n=("selv", "size"), selv=("selv", "sum"), raad=("raad", "sum"))
+    ud, rest = {}, [0, 0, 0]
+    for k, r in g.iterrows():
+        if r.n >= min_celle:
+            ud[k] = [int(r.n), int(r.selv), int(r.raad)]
+        else:
+            rest = [rest[0] + int(r.n), rest[1] + int(r.selv), rest[2] + int(r.raad)]
+    if rest[0]:
+        ud["Øvrige kredse"] = rest
+    return ud
+
+
 def geografi(df, min_n=25):
     felt = df["Medlemskab"].fillna("").str.split(",").str[0]
     kreds = felt.str.split("-", n=1).str[1].fillna("").str.strip()

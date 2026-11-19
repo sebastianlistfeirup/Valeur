@@ -121,6 +121,11 @@ footer{color:var(--muted);font-size:12px}
 .mdtabel tbody tr.valgt td{background:color-mix(in srgb,var(--t-ovb) 16%,var(--panel));font-weight:600}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 #mdKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.mdlabel{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.forvalg{display:flex;flex-wrap:wrap;gap:6px}
+.forvalg button{font:500 12px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer}
+.forvalg button:hover,.forvalg button:focus-visible{border-color:var(--t-ovb);outline:none}
+#lokNote{margin-top:-6px}
 .wrap{grid-template-columns:minmax(0,1fr)} nav.toc{min-width:0} .filtre{min-width:0}
 .toc-chips{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;flex-basis:100%;min-width:0}
 @media (max-width:720px){
@@ -130,6 +135,9 @@ footer{color:var(--muted);font-size:12px}
   .filtre label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
   .filtre select{flex:1 1 calc(50% - 8px);max-width:none;font-size:13px}
   .filterinfo{display:none}
+  #fAfd{flex:1 1 100%}
+  #fFra,#fTil{flex:1 1 calc(50% - 4px);min-width:0}
+  .toplinks .crosslink{width:auto;white-space:normal}
 }
 #omKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .hjul{display:grid;gap:2px;font-size:12px;min-width:720px}
@@ -169,7 +177,8 @@ footer{color:var(--muted);font-size:12px}
 <nav class="toc" aria-label="Sektioner og filtre">
   <div class="filtre" role="group" aria-label="Filtre">
     <label for="fAfd">Afdeling</label><select id="fAfd"></select>
-    <label for="fMd">Måned</label><select id="fMd"></select>
+    <label for="fFra">Fra</label><select id="fFra"></select>
+    <label for="fTil">Til</label><select id="fTil"></select>
     <span class="filterinfo" id="filterInfo" aria-live="polite"></span><button type="button" id="fNulstil" hidden>Nulstil filtre</button>
   </div>
   <div class="toc-chips">
@@ -190,17 +199,21 @@ footer{color:var(--muted);font-size:12px}
 
 <section class="blok" id="maaned" data-tema="ovb">
   <div class="blok-head"><div class="eyebrow">Overblik</div><h2>Måned for måned</h2>
-  <p>Nøgletal for én måned sammenlignet med måneden før og samme måned sidste år. Månedsvælgeren her ændrer kun denne sektion. Afdelingsfilteret øverst gælder også her.</p></div>
+  <p>Nøgletal for en måned eller en periode, sammenlignet med perioden lige før (samme længde) og samme periode sidste år. Vælgerne her ændrer kun denne sektion. Afdelingsfilteret øverst gælder også her.</p></div>
   <div class="mdvaelger">
-    <button type="button" class="mdknap" id="mdForrige" aria-label="Forrige måned">‹</button>
-    <label for="lokMd" class="visually-hidden">Måned</label><select id="lokMd"></select>
-    <button type="button" class="mdknap" id="mdNaeste" aria-label="Næste måned">›</button>
-    <span class="sub" id="lokNote"></span>
+    <button type="button" class="mdknap" id="mdForrige" aria-label="Flyt perioden tilbage">‹</button>
+    <label for="lokFra" class="mdlabel">Fra</label><select id="lokFra"></select>
+    <label for="lokTil" class="mdlabel">Til</label><select id="lokTil"></select>
+    <button type="button" class="mdknap" id="mdNaeste" aria-label="Flyt perioden frem">›</button>
+    <span class="forvalg" role="group" aria-label="Hurtigvalg">
+      <button type="button" data-forvalg="1">Seneste måned</button><button type="button" data-forvalg="3">Seneste 3 mdr.</button><button type="button" data-forvalg="aar">År til dato</button><button type="button" data-forvalg="12">Seneste 12 mdr.</button><button type="button" data-forvalg="alt">Hele perioden</button>
+    </span>
   </div>
+  <p class="sub" id="lokNote"></p>
   <div class="kpis" id="mdKpi"></div>
   <div class="grid2">
-    <div class="card"><h3>Månedens emner</h3><div class="bars" id="bMdEmner"></div><div class="src" id="mdEmneNote"></div></div>
-    <div class="card"><h3>Månedens hovedkategorier</h3><div class="bars" id="bMdGrupper"></div></div>
+    <div class="card"><h3 id="mdEmneTitel">Emner</h3><div class="bars" id="bMdEmner"></div><div class="src" id="mdEmneNote"></div></div>
+    <div class="card"><h3>Hovedkategorier i perioden</h3><div class="bars" id="bMdGrupper"></div></div>
   </div>
   <div class="card">
     <div class="mdvaelger" style="justify-content:space-between"><h3>Alle måneder</h3><button type="button" class="knap-lille" id="csv">Download til Excel (CSV)</button></div>
@@ -394,47 +407,94 @@ const MD = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","d
 const mdLabel = k => { const [y,m]=k.split("-"); return MD[+m-1]+" "+y.slice(2); };
 const dato = s => { const d=new Date(s); return d.getDate()+". "+MD[d.getMonth()]+" "+d.getFullYear(); };
 const charts = [];
-// ------------------------------------------------------------------ filtre: afdeling og måned
+// ------------------------------------------------------------------ filtre: afdeling og periode (fra–til)
 const DATA = D;
 const AFD_DEF = D.afd_def || [];
 const KOE_ALLE = ["1510","1515","15123","15122","1525","1520"];
 const MDNAVN = ["januar","februar","marts","april","maj","juni","juli","august","september","oktober","november","december"];
+const ALLE_MDR = D.valeur.maaneder.map(m=>m.md);
 const mdLang = k => { const [y,m]=k.split("-"); return MDNAVN[+m-1]+" "+y; };
-const forrigeMd = k => { let [y,m]=k.split("-").map(Number); m--; if(!m){m=12;y--;} return `${y}-${String(m).padStart(2,"0")}`; };
-const naesteMd = k => { let [y,m]=k.split("-").map(Number); m++; if(m>12){m=1;y++;} return `${y}-${String(m).padStart(2,"0")}`; };
-const sidsteAarMd = k => { const [y,m]=k.split("-"); return `${+y-1}-${m}`; };
+const flytMd = (k, n) => { let [y,m]=k.split("-").map(Number); m+=n; while(m<1){m+=12;y--;} while(m>12){m-=12;y++;} return `${y}-${String(m).padStart(2,"0")}`; };
+const forrigeMd = k => flytMd(k, -1);
+const mdrMellem = (fra, til) => ALLE_MDR.filter(m => m >= fra && m <= til);
+const periodeNavn = (fra, til) => fra === til ? mdLang(fra) : `${mdLang(fra)} – ${mdLang(til)}`;
+const periodeKort = (fra, til) => fra === til ? mdLabel(fra) : `${mdLabel(fra)}–${mdLabel(til)}`;
 const ugeTilMd = k => { const [y,w]=k.split("-U").map(Number); const j4=new Date(Date.UTC(y,0,4)); const dag=(j4.getUTCDay()+6)%7;
   const man=new Date(j4); man.setUTCDate(j4.getUTCDate()-dag+(w-1)*7); return man.toISOString().slice(0,7); };
 const delvisMd = md => { const s=D.valeur.sidste; if (md!==s.slice(0,7)) return false; const [y,m]=md.split("-").map(Number); return +s.slice(8,10) < new Date(y,m,0).getDate(); };
-let FILTER = {afd:"alle", md:"alle"}, LOKAL_MD = null, MD_RAEKKER = [];
+let FILTER = {afd:"alle", fra:null, til:null}, LOKAL = null, MD_RAEKKER = [];
+const perFilter = () => FILTER.fra ? {fra: FILTER.fra, til: FILTER.til} : null;
 try {
   const q = new URLSearchParams(location.search);
-  const a = q.get("afdeling"), m = q.get("maaned");
+  const a = q.get("afdeling"), m = q.get("maaned"), f = q.get("fra"), t = q.get("til");
   if (a && AFD_DEF.some(x=>x.id===a)) FILTER.afd = a;
-  if (m && D.valeur.maaneder.some(x=>x.md===m)) FILTER.md = m;
+  if (m && ALLE_MDR.includes(m)) { FILTER.fra = m; FILTER.til = m; }
+  if (f && t && ALLE_MDR.includes(f) && ALLE_MDR.includes(t)) { FILTER.fra = f <= t ? f : t; FILTER.til = f <= t ? t : f; }
+  if (FILTER.fra === ALLE_MDR[0] && FILTER.til === ALLE_MDR[ALLE_MDR.length-1]) FILTER.fra = FILTER.til = null;
 } catch(e) {}
+
+// læg månedernes optællinger sammen til én periode (grænser for små tal anvendes på summen)
+function periodeAggr(U, mdr){
+  const T = mdr.map(m => ((U||{}).md||{})[m]?.t).filter(Boolean);
+  if (!T.length) return null;
+  const add = (o, k, n) => { o[k] = (o[k]||0) + n; };
+  let n=0, v=0, kont=0; const g={}, t={}, s={}, k={}, tom=[0,0,0];
+  for (const x of T) {
+    n += x.n; v += x.v; kont += x.kont; tom[0] += x.tom[0]; tom[1] += x.tom[1]; tom[2] += x.tom[2];
+    for (const [a,b] of Object.entries(x.g)) add(g,a,b);
+    for (const [a,b] of Object.entries(x.t)) add(t,a,b);
+    for (const [a,b] of Object.entries(x.s)) add(s,a,b);
+    for (const [sg,gg] of Object.entries(x.k)) { k[sg] = k[sg] || {}; for (const [a,b] of Object.entries(gg)) add(k[sg],a,b); }
+  }
+  const typer = Object.entries(t).map(([gt,nn]) => { const [gg,tt] = gt.split("\t"); return {g:gg, t:tt, n:nn}; })
+    .filter(x => x.n >= 5).sort((a,b) => b.n-a.n || a.t.localeCompare(b.t));
+  const segE = Object.entries(s).sort((a,b) => b[1]-a[1]);
+  const segmenter = {}; let ovr = 0;
+  segE.forEach(([a,b]) => { if (b >= 5 && a !== "Øvrige grupper") segmenter[a] = b; else ovr += b; });
+  segmenter["Øvrige grupper"] = ovr;
+  const kryds = Object.fromEntries(segE.filter(([a,b]) => a !== "Øvrige grupper" && b >= 25).slice(0,6).map(([a]) => [a, k[a]||{}]));
+  const en = T.length === 1 && mdr.length === 1;
+  const mc = {total_efter: n, unikke_periode: en ? T[0].u : null, grupper: Object.fromEntries(Object.entries(g).sort((a,b)=>b[1]-a[1])),
+    typer, segmenter, kryds, andel_valeur: n ? v/n : null,
+    tomt_felt: {registreringer: tom[0], personer: en ? tom[1] : null, andel_kontingent: tom[0] ? tom[2]/tom[0] : null, andel_kontingent_alle: n ? kont/n : null}};
+  let loeser = null;
+  const L = T.map(x => x.l).filter(Boolean);
+  if (L.length) {
+    let ln=0, lb=0, lt=0; const lg={}, ltp={};
+    const addP = (o,a,[nn,bb]) => { o[a] = o[a] || [0,0]; o[a][0] += nn; o[a][1] += bb; };
+    for (const x of L) { ln += x.n; lb += x.b; lt += x.tom; for (const [a,p] of Object.entries(x.g)) addP(lg,a,p); for (const [a,p] of Object.entries(x.t)) addP(ltp,a,p); }
+    loeser = {n: ln, andel_besked: lb/ln, andel_tom: lt/ln, fra: "2025-07-01",
+      pr_gruppe: Object.entries(lg).filter(([,[nn]]) => nn >= 20).map(([a,[nn,bb]]) => ({g:a, n:nn, a:bb/nn})),
+      pr_type: Object.entries(ltp).filter(([,[nn]]) => nn >= 20).map(([a,[nn,bb]]) => ({t:a, n:nn, a:bb/nn})).sort((x,y) => y.a-x.a || x.t.localeCompare(y.t))};
+  }
+  const geo = {};
+  for (const x of T) for (const [kr,[nn,se,ra]] of Object.entries(x.geo||{})) { geo[kr] = geo[kr] || [0,0,0]; geo[kr][0] += nn; geo[kr][1] += se; geo[kr][2] += ra; }
+  const geografi = Object.entries(geo).filter(([kr,[nn]]) => nn >= 10 && kr !== "Øvrige kredse")
+    .map(([kr,[nn,se,ra]]) => ({k:kr, n:nn, selv:se/nn, raad:ra/nn})).sort((a,b) => b.n-a.n || a.k.localeCompare(b.k));
+  return {mc, loeser, geografi, maaneder: T.length};
+}
 
 function vis(){
   const U = (DATA.udsnit||{})[FILTER.afd] || {md:{}};
   const afd = AFD_DEF.find(a=>a.id===FILTER.afd);
   const v = {...DATA, filter:{...FILTER, afd_navn: afd ? afd.navn : "Hele foreningen"}};
   if (afd) { v.mc = U.mc || DATA.mc; v.dybde = {...DATA.dybde, ...(U.dybde||{})}; v.koeOrder = afd.koeer; }
-  if (FILTER.md !== "alle") {
-    const M = (U.md||{})[FILTER.md];
-    const tomMc = {total_efter:0, unikke:0, grupper:{}, typer:[], segmenter:{}, kryds:{}, gentag:{}, andel_valeur:null,
+  const P = perFilter();
+  if (P) {
+    const A = periodeAggr(U, mdrMellem(P.fra, P.til));
+    const tomMc = {total_efter:0, unikke_periode:0, grupper:{}, typer:[], segmenter:{}, kryds:{}, andel_valeur:null,
                    tomt_felt:{registreringer:0, personer:0}};
-    v.mc = {...v.mc, ...((M && M.mc) || tomMc), pr_md: v.mc.pr_md, valeur_pr_md: v.mc.valeur_pr_md,
-            antal_valeur_agenter: v.mc.antal_valeur_agenter};
+    v.mc = {...v.mc, ...(A ? A.mc : tomMc)};
     const helL = (v.dybde||{}).loeser;
-    v.dybde = {...v.dybde, loeser: (M && M.loeser) ? {...M.loeser, pr_md: helL ? helL.pr_md : []} : null,
-               geografi: (M && M.geografi) || []};
+    v.dybde = {...v.dybde, loeser: A && A.loeser ? {...A.loeser, pr_md: helL ? helL.pr_md : []} : null, geografi: A ? A.geografi : []};
   }
   return v;
 }
 
 const markMd = keys => ({id:"markMd", beforeDatasetsDraw(c){
-  if (FILTER.md === "alle" || !c.scales.x) return;
-  const idx = keys.map((k,i)=>k===FILTER.md?i:-1).filter(i=>i>=0);
+  const P = perFilter();
+  if (!P || !c.scales.x) return;
+  const idx = keys.map((k,i)=>k>=P.fra&&k<=P.til?i:-1).filter(i=>i>=0);
   if (!idx.length) return;
   const x = c.scales.x, w = Math.abs(x.getPixelForValue(1)-x.getPixelForValue(0)) || 24;
   const x0 = x.getPixelForValue(idx[0])-w/2, x1 = x.getPixelForValue(idx[idx.length-1])+w/2, {top,bottom} = c.chartArea;
@@ -443,27 +503,45 @@ const markMd = keys => ({id:"markMd", beforeDatasetsDraw(c){
 const MKEYS = {};
 
 function opsaetFiltre(){
-  const fA = document.getElementById("fAfd"), fM = document.getElementById("fMd");
+  const fA = document.getElementById("fAfd"), fF = document.getElementById("fFra"), fT = document.getElementById("fTil");
+  const mdOpt = m => `<option value="${m}">${mdLang(m)}${delvisMd(m)?" (indtil videre)":""}</option>`;
   fA.innerHTML = `<option value="alle">Hele foreningen</option>` + AFD_DEF.map(a=>`<option value="${a.id}">${a.navn}${a.koeer.length?` (kø ${a.koeer.join(" og ")})`:" (ingen kø)"}</option>`).join("");
-  fM.innerHTML = `<option value="alle">Hele perioden</option>` + [...DATA.valeur.maaneder].reverse().map(m=>`<option value="${m.md}">${mdLang(m.md)}${delvisMd(m.md)?" (indtil videre)":""}</option>`).join("");
-  fA.value = FILTER.afd; fM.value = FILTER.md;
-  const skift = () => {
-    FILTER = {afd: fA.value, md: fM.value};
-    if (FILTER.md !== "alle") LOKAL_MD = FILTER.md;
+  fF.innerHTML = ALLE_MDR.map(mdOpt).join(""); fT.innerHTML = ALLE_MDR.map(mdOpt).join("");
+  const visVaerdier = () => { fA.value = FILTER.afd; fF.value = FILTER.fra || ALLE_MDR[0]; fT.value = FILTER.til || ALLE_MDR[ALLE_MDR.length-1]; };
+  visVaerdier();
+  const skift = (kilde) => {
+    let fra = fF.value, til = fT.value;
+    if (fra > til) { if (kilde === "fra") til = fra; else fra = til; }
+    const hele = fra === ALLE_MDR[0] && til === ALLE_MDR[ALLE_MDR.length-1];
+    FILTER = {afd: fA.value, fra: hele ? null : fra, til: hele ? null : til};
+    if (FILTER.fra) LOKAL = {fra: FILTER.fra, til: FILTER.til};
+    visVaerdier();
     try {
       const q = new URLSearchParams(location.search);
+      q.delete("maaned");
       FILTER.afd === "alle" ? q.delete("afdeling") : q.set("afdeling", FILTER.afd);
-      FILTER.md === "alle" ? q.delete("maaned") : q.set("maaned", FILTER.md);
+      if (FILTER.fra) { q.set("fra", FILTER.fra); q.set("til", FILTER.til); } else { q.delete("fra"); q.delete("til"); }
       const s = q.toString(); history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + location.hash);
     } catch(e) {}
     render();
   };
-  fA.addEventListener("change", skift); fM.addEventListener("change", skift);
-  document.getElementById("fNulstil").addEventListener("click", () => { fA.value = "alle"; fM.value = "alle"; skift(); });
-  document.getElementById("lokMd").addEventListener("change", e => { LOKAL_MD = e.target.value; render(); });
-  document.getElementById("mdForrige").addEventListener("click", () => { const i = DATA.valeur.maaneder.findIndex(m=>m.md===LOKAL_MD); if (i>0) { LOKAL_MD = DATA.valeur.maaneder[i-1].md; render(); } });
-  document.getElementById("mdNaeste").addEventListener("click", () => { const i = DATA.valeur.maaneder.findIndex(m=>m.md===LOKAL_MD); if (i>=0 && i<DATA.valeur.maaneder.length-1) { LOKAL_MD = DATA.valeur.maaneder[i+1].md; render(); } });
-  document.getElementById("tMd").addEventListener("click", e => { const tr = e.target.closest("tr[data-md]"); if (tr) { LOKAL_MD = tr.dataset.md; render(); document.getElementById("maaned").scrollIntoView({behavior:"smooth"}); } });
+  fA.addEventListener("change", () => skift("afd")); fF.addEventListener("change", () => skift("fra")); fT.addEventListener("change", () => skift("til"));
+  document.getElementById("fNulstil").addEventListener("click", () => { FILTER = {afd:"alle", fra:null, til:null}; visVaerdier(); skift("afd"); });
+  // lokal periode i Måned for måned
+  const lF = document.getElementById("lokFra"), lT = document.getElementById("lokTil");
+  lF.addEventListener("change", () => { LOKAL = {fra: lF.value, til: lF.value > LOKAL.til ? lF.value : LOKAL.til}; render(); });
+  lT.addEventListener("change", () => { LOKAL = {fra: lT.value < LOKAL.fra ? lT.value : LOKAL.fra, til: lT.value}; render(); });
+  const flyt = retning => { const n = mdrMellem(LOKAL.fra, LOKAL.til).length, f = flytMd(LOKAL.fra, retning*n), t = flytMd(LOKAL.til, retning*n);
+    if (f < ALLE_MDR[0] || t > ALLE_MDR[ALLE_MDR.length-1]) return; LOKAL = {fra: f, til: t}; render(); };
+  document.getElementById("mdForrige").addEventListener("click", () => flyt(-1));
+  document.getElementById("mdNaeste").addEventListener("click", () => flyt(1));
+  document.querySelectorAll("[data-forvalg]").forEach(b => b.addEventListener("click", () => {
+    const sidste = [...ALLE_MDR].reverse().find(m=>!delvisMd(m)) || ALLE_MDR[ALLE_MDR.length-1], v = b.dataset.forvalg;
+    if (v === "aar") LOKAL = {fra: ALLE_MDR.find(m=>m.startsWith(ALLE_MDR[ALLE_MDR.length-1].slice(0,4))), til: ALLE_MDR[ALLE_MDR.length-1]};
+    else if (v === "alt") LOKAL = {fra: ALLE_MDR[0], til: ALLE_MDR[ALLE_MDR.length-1]};
+    else { const n = +v; LOKAL = {fra: ALLE_MDR[Math.max(0, ALLE_MDR.indexOf(sidste)-n+1)], til: sidste}; }
+    render(); }));
+  document.getElementById("tMd").addEventListener("click", e => { const tr = e.target.closest("tr[data-md]"); if (tr) { LOKAL = {fra: tr.dataset.md, til: tr.dataset.md}; render(); document.getElementById("maaned").scrollIntoView({behavior:"smooth"}); } });
   document.getElementById("csv").addEventListener("click", hentCsv);
   // menuen er fast og kan være flere linjer høj: rul selv, så målet lander lige under den
   const gaaTil = (id, glat) => { const el = document.getElementById(id), nav = document.querySelector("nav.toc"); if (!el) return;
@@ -542,30 +620,38 @@ function render(){
 
   const kpi = (v,label,from,pill) => `<div class="kpi"><div class="eyebrow">${label}</div><div class="v">${v}</div>${from?`<div class="from">${from}</div>`:""}${pill||""}</div>`;
   const chg = (a,b,goodDown=true) => { const d=(b-a)/a; const good = goodDown ? d<0 : d>0; return `<span class="pill ${good?"good":"bad"}">${d>0?"▲":"▼"} ${fmt(Math.abs(d)*100)} %</span>`; };
-  const afdNavn = D.filter.afd_navn, erAfd = FILTER.afd !== "alle", MDV = FILTER.md !== "alle" ? FILTER.md : null;
+  const afdNavn = D.filter.afd_navn, erAfd = FILTER.afd !== "alle";
+  const P0 = perFilter();
+  const PER = P0 ? {...P0, mdr: mdrMellem(P0.fra, P0.til), navn: periodeNavn(P0.fra, P0.til), kort: periodeKort(P0.fra, P0.til)} : null;
+  const MDV = PER && PER.fra === PER.til ? PER.fra : null;
   const ingenKoe = !koeOrder.length;
   const koeMd = md => { let o=0,b=0,vw=0; koeOrder.forEach(k=>{ const x=(D.koeer_md[k]||{})[md]; if(x){ o+=x.opkald; b+=x.besvarede; vw+=(x.vent||0)*x.besvarede; } }); return {o, b, v: b ? vw/b : null}; };
+  const sumV = mdr => mdr.reduce((a,m) => { const x = V.maaneder.find(z=>z.md===m); if (x) { a.i += x.i; a.b += x.b; a.d += x.dage; } return a; }, {i:0, b:0, d:0});
+  const sumK = mdr => { const a = mdr.reduce((a,m) => { const x = koeMd(m); a.o += x.o; a.b += x.b; a.vw += (x.v||0)*x.b; return a; }, {o:0, b:0, vw:0}); a.v = a.b ? a.vw/a.b : null; return a; };
   const hel = erAfd ? " · hele hovednummeret" : "";
   const koeNavn = erAfd ? (koeOrder.length > 1 ? "afdelingens køer" : "afdelingens kø") : "sekretariatets køer";
   const stort = s => s.charAt(0).toUpperCase() + s.slice(1);
-  if (MDV) {
-    const fm = forrigeMd(MDV), vm = V.maaneder.find(m=>m.md===MDV), vf = V.maaneder.find(m=>m.md===fm);
-    const k = koeMd(MDV), kf = koeMd(fm);
-    const dlt = (a,b,dir) => { if (a==null||b==null||!a) return ""; const d=(b-a)/a; const cls = dir===0 ? "neutral" : (d*dir>0 ? "good" : "bad");
-      return `<span class="pill ${cls}">${d>=0?"▲":"▼"} ${fmt(Math.abs(d)*100)} % mod ${mdLabel(fm)}</span>`; };
+  if (PER) {
+    const L = PER.mdr.length, ff = flytMd(PER.fra, -L), ft = flytMd(PER.til, -L), FM = mdrMellem(ff, ft);
+    const fK = periodeKort(ff, ft), fOk = FM.length === L, delvis = PER.mdr.some(delvisMd);
+    const vm = sumV(PER.mdr), vf = sumV(FM), k = sumK(PER.mdr), kf = sumK(FM);
+    const dlt = (a,b,dir,antal) => { if (!fOk || a==null||b==null||!a || (antal && delvis)) return ""; const d=(b-a)/a; const cls = dir===0 ? "neutral" : (d*dir>0 ? "good" : "bad");
+      return `<span class="pill ${cls}">${d>=0?"▲":"▼"} ${fmt(Math.abs(d)*100)} % mod ${fK}</span>`; };
+    const sml = (f, v) => fOk ? `${fK}: ${f(v)}` : "ingen periode før at sammenligne med";
     document.getElementById("kpis").innerHTML = [
-      kpi(fmt(vm?.i), "Opkald til Valeur", `${fmt(vm?.dage)} åbningsdage${hel}`, dlt(vf?.i, vm?.i, 0)),
-      kpi(pct(vm && vm.i ? vm.b/vm.i : null), "Valeurs svarprocent", `${mdLabel(fm)}: ${pct(vf && vf.i ? vf.b/vf.i : null)}${hel}`, ""),
+      kpi(fmt(vm.i), "Opkald til Valeur", `${fmt(vm.d)} åbningsdage${hel}`, dlt(vf.i, vm.i, 0, true)),
+      kpi(pct(vm.i ? vm.b/vm.i : null), "Valeurs svarprocent", sml(v=>pct(v), vf.i ? vf.b/vf.i : null) + hel, ""),
       ...(ingenKoe ? [kpi("–", "Ingen egen kø", "Henvendelserne kommer gennem Valeur")] : [
-        kpi(fmt(k.o), `Kald i ${koeNavn}`, `${mdLabel(fm)}: ${fmt(kf.o)}`, dlt(kf.o, k.o, 0)),
-        kpi(mmss(k.v), `Ventetid i ${koeNavn}`, `${mdLabel(fm)}: ${mmss(kf.v)} min.`, dlt(kf.v, k.v, -1)),
-        kpi(pct(k.o ? k.b/k.o : null), `Svar i ${koeNavn}`, `${mdLabel(fm)}: ${pct(kf.o ? kf.b/kf.o : null)}`, "")]),
-      kpi(fmt(MC.total_efter), "Registreringer i Membercare", `${fmt(MC.unikke)} forskellige personer`),
+        kpi(fmt(k.o), `Kald i ${koeNavn}`, sml(fmt, kf.o), dlt(kf.o, k.o, 0, true)),
+        kpi(mmss(k.v), `Ventetid i ${koeNavn}`, sml(mmss, kf.v), dlt(kf.v, k.v, -1, false)),
+        kpi(pct(k.o ? k.b/k.o : null), `Svar i ${koeNavn}`, sml(v=>pct(v), kf.o ? kf.b/kf.o : null), "")]),
+      kpi(fmt(MC.total_efter), "Registreringer i Membercare", MC.unikke_periode != null ? `${fmt(MC.unikke_periode)} forskellige personer` : `${fmt(MC.total_efter/Math.max(1, L))} pr. måned i snit`),
     ].join("");
     document.getElementById("hovedfund").innerHTML =
-      `<b>${stort(mdLang(MDV))}${erAfd ? " · " + afdNavn : ""}${delvisMd(MDV) ? " (måneden er ikke slut)" : ""}.</b> Valeur tog imod ${fmt(vm?.i)} opkald og besvarede ${pct(vm && vm.i ? vm.b/vm.i : null)}${erAfd ? " (hele hovednummeret)" : ""}. ` +
+      `<b>${stort(PER.navn)}${erAfd ? " · " + afdNavn : ""}${delvis ? " (sidste måned er ikke slut)" : ""}.</b> Valeur tog imod ${fmt(vm.i)} opkald og besvarede ${pct(vm.i ? vm.b/vm.i : null)}${erAfd ? " (hele hovednummeret)" : ""}. ` +
       (ingenKoe ? "" : `${stort(koeNavn)} fik ${fmt(k.o)} kald, og ${pct(k.o ? k.b/k.o : null)} blev besvaret efter i snit ${mmss(k.v)} min. `) +
-      `I Membercare blev der registreret ${fmt(MC.total_efter)} henvendelser${erAfd ? " om afdelingens emner" : ""} fra ${fmt(MC.unikke)} personer.`;
+      `I Membercare blev der registreret ${fmt(MC.total_efter)} henvendelser${erAfd ? " om afdelingens emner" : ""}${MC.unikke_periode != null ? ` fra ${fmt(MC.unikke_periode)} personer` : ""}.` +
+      (delvis ? " Antal sammenlignes ikke med perioden før, fordi den sidste måned ikke er slut." : "");
   } else {
     document.getElementById("kpis").innerHTML = [
       kpi(fmt(V.total), "Opkald til Valeur", `${fmt(V.aabningsdage)} åbningsdage · ${fmt(V.total/V.aabningsdage)} pr. dag${hel}`),
@@ -748,8 +834,8 @@ function render(){
   pctBars(document.getElementById("bLoeserBund"), [...L.pr_type].reverse().slice(0,7).map(t=>[t.t,1-t.a,t.n]), "var(--valeur)");
   const lMed = L.pr_type.find(t=>t.t==="Medlemskab og kontingent");
   document.getElementById("loeserInsight").innerHTML = `<b>Valeur løser omkring ${pct(1-L.andel_besked)} af sagerne selv.</b> Rådgivningsemnerne sendes videre i ${pct(lG["Rådgivning/forhandling"])} af tilfældene, sådan som Valeur er instrueret. Medlemskab og kontingent sendes videre i ${pct(lMed?.a)} af tilfældene, selv om det handler om foreningens egne regler. Det og de øvrige emner i midten af listen er de oplagte at se på, hvis Valeur skal løse mere selv: med flere faste svar kunne en del af dem afsluttes i første opkald. <span class="src">Forbehold: Andelen er fundet ved at søge efter faste formuleringer i noterne, fx "Har ringet i dag" og kønumre. ${pct(L.andel_tom)} af noterne er tomme og tæller som løst. Valeurs eget mål for løst i første kald (30–40 % i benchmark-arket) er målt på en anden måde og kan ikke sammenlignes direkte.</span>`;
-  if (erAfd || MDV) { const top = L.pr_type[0], bund = L.pr_type[L.pr_type.length-1];
-    document.getElementById("loeserInsight").innerHTML = `<b>${erAfd ? afdNavn : "Hele foreningen"}${MDV ? " · " + mdLang(MDV) : ""}: Valeur løser omkring ${pct(1-L.andel_besked)} selv</b> (${fmt(L.n)} registreringer). ${top ? `Sendes oftest videre: ${top.t} (${pct(top.a)}). ` : ""}${bund && bund !== top ? `Løses oftest af Valeur: ${bund.t} (${pct(1-bund.a)} løst). ` : ""}<span class="src">Andelen er fundet ved at søge efter faste formuleringer i noterne og er et skøn.</span>`; }
+  if (erAfd || PER) { const top = L.pr_type[0], bund = L.pr_type[L.pr_type.length-1];
+    document.getElementById("loeserInsight").innerHTML = `<b>${erAfd ? afdNavn : "Hele foreningen"}${PER ? " · " + PER.navn : ""}: Valeur løser omkring ${pct(1-L.andel_besked)} selv</b> (${fmt(L.n)} registreringer). ${top ? `Sendes oftest videre: ${top.t} (${pct(top.a)}). ` : ""}${bund && bund !== top ? `Løses oftest af Valeur: ${bund.t} (${pct(1-bund.a)} løst). ` : ""}<span class="src">Andelen er fundet ved at søge efter faste formuleringer i noterne og er et skøn.</span>`; }
 
   }
   // 2 udsendelser
@@ -861,57 +947,68 @@ function render(){
     pctBars(document.getElementById("bNye"), NY.pr_type.map(t=>[t.g,t.a,t.n]), "var(--valeur)");
   }
 
-  // --- måned for måned (lokalt filter: LOKAL_MD; afdeling følger filteret øverst)
+  // --- måned for måned (lokal periode LOKAL; afdeling følger filteret øverst)
   {
     const UD = (DATA.udsnit||{})[FILTER.afd] || {md:{}};
-    const alleMdr = V.maaneder.map(m=>m.md);
-    const sidsteHele = [...alleMdr].reverse().find(m=>!delvisMd(m)) || alleMdr[alleMdr.length-1];
-    if (!LOKAL_MD || !alleMdr.includes(LOKAL_MD)) LOKAL_MD = MDV || sidsteHele;
+    const sidsteHele = [...ALLE_MDR].reverse().find(m=>!delvisMd(m)) || ALLE_MDR[ALLE_MDR.length-1];
+    if (!LOKAL || !ALLE_MDR.includes(LOKAL.fra) || !ALLE_MDR.includes(LOKAL.til)) LOKAL = PER ? {fra: PER.fra, til: PER.til} : {fra: sidsteHele, til: sidsteHele};
     const mailsMd = {};
     Object.entries(DATA.mails||{}).forEach(([k,v]) => { const m = ugeTilMd(k); mailsMd[m] = (mailsMd[m]||0) + v; });
-    const raekke = md => {
-      const vm = V.maaneder.find(x=>x.md===md), k = koeMd(md), u = UD.md[md] || {};
-      return {md, vI: vm?.i ?? null, vB: vm?.b ?? null, vS: vm && vm.i ? vm.b/vm.i : null, dage: vm?.dage ?? null,
-              kO: ingenKoe ? null : (k.o || null), kB: ingenKoe ? null : (k.o ? k.b : null), kS: ingenKoe || !k.o ? null : k.b/k.o, kV: ingenKoe ? null : k.v,
-              reg: u.mc ? u.mc.total_efter : (vm ? 0 : null), pers: u.mc ? u.mc.unikke : (vm ? 0 : null),
-              loest: u.loeser ? 1 - u.loeser.andel_besked : null, mails: erAfd ? null : (mailsMd[md] ?? null)};
+    const harMails = new Set(Object.keys(mailsMd));
+    const opg = mdr => {   // nøgletal for en række måneder (null, hvis ingen måneder)
+      if (!mdr.length) return null;
+      const v = sumV(mdr), k = sumK(mdr), T = mdr.map(m => (UD.md[m]||{}).t).filter(Boolean);
+      const L = T.map(t=>t.l).filter(Boolean), ln = L.reduce((a,x)=>a+x.n,0), lb = L.reduce((a,x)=>a+x.b,0);
+      const mailsOk = !erAfd && mdr.every(m=>harMails.has(m));
+      return {vI: v.i, vB: v.b, vS: v.i ? v.b/v.i : null, dage: v.d,
+              kO: ingenKoe ? null : k.o, kB: ingenKoe ? null : k.b, kS: ingenKoe || !k.o ? null : k.b/k.o, kV: ingenKoe ? null : k.v,
+              reg: T.reduce((a,t)=>a+t.n,0), pers: mdr.length === 1 && T[0] ? T[0].u : null,
+              loest: ln ? 1 - lb/ln : null, mails: mailsOk ? mdr.reduce((a,m)=>a+mailsMd[m],0) : null, n: mdr.length};
     };
-    MD_RAEKKER = alleMdr.map(raekke);
-    const r = raekke(LOKAL_MD), fm = forrigeMd(LOKAL_MD), am = sidsteAarMd(LOKAL_MD), rf = raekke(fm), ra = raekke(am);
-    const dd = (a,b,dir) => (a==null||b==null||!a) ? "" : `<span class="pill ${dir===0?"neutral":((b-a)/a*dir>0?"good":"bad")}">${b>=a?"▲":"▼"} ${fmt(Math.abs((b-a)/a)*100)} % mod ${mdLabel(fm)}</span>`;
-    const dp = (a,b,dir=1) => (a==null||b==null) ? "" : `<span class="pill ${(b-a)*dir>=0?"good":"bad"}">${b>=a?"▲":"▼"} ${fmt(Math.abs(b-a)*100)} point mod ${mdLabel(fm)}</span>`;
-    const sam = (fv, av, f) => [fv!=null ? `${mdLabel(fm)}: ${f(fv)}` : null, av!=null ? `${mdLabel(am)}: ${f(av)}` : null].filter(Boolean).join(" · ") || "ingen sammenligning";
-    const sel = document.getElementById("lokMd");
-    sel.innerHTML = [...alleMdr].reverse().map(m=>`<option value="${m}">${mdLang(m)}${delvisMd(m)?" (indtil videre)":""}</option>`).join("");
-    sel.value = LOKAL_MD;
-    document.getElementById("mdForrige").disabled = alleMdr.indexOf(LOKAL_MD) <= 0;
-    document.getElementById("mdNaeste").disabled = alleMdr.indexOf(LOKAL_MD) >= alleMdr.length-1;
-    document.getElementById("lokNote").textContent = (delvisMd(LOKAL_MD) ? `Måneden er ikke slut: data til og med ${dato(V.sidste)}. ` : "") + (erAfd ? `Afdeling: ${afdNavn}.` : "");
+    MD_RAEKKER = ALLE_MDR.map(m => ({md: m, ...opg([m])}));
+    const mdr = mdrMellem(LOKAL.fra, LOKAL.til), L = mdr.length;
+    const ff = flytMd(LOKAL.fra, -L), ft = flytMd(LOKAL.til, -L), af = flytMd(LOKAL.fra, -12), at = flytMd(LOKAL.til, -12);
+    const fM = mdrMellem(ff, ft), aM = mdrMellem(af, at);
+    const r = opg(mdr), rf = fM.length === L ? opg(fM) : null, ra = aM.length === L ? opg(aM) : null;
+    const delvis = mdr.some(delvisMd), fK = periodeKort(ff, ft), aK = periodeKort(af, at);
+    const dd = (a,b,dir,antal) => (a==null||b==null||!a||(antal&&delvis)) ? "" : `<span class="pill ${dir===0?"neutral":((b-a)/a*dir>0?"good":"bad")}">${b>=a?"▲":"▼"} ${fmt(Math.abs((b-a)/a)*100)} % mod ${fK}</span>`;
+    const dp = (a,b,dir=1) => (a==null||b==null) ? "" : `<span class="pill ${(b-a)*dir>=0?"good":"bad"}">${b>=a?"▲":"▼"} ${fmt(Math.abs(b-a)*100)} point mod ${fK}</span>`;
+    const sam = (felt, f) => [rf && rf[felt]!=null ? `${fK}: ${f(rf[felt])}` : null, ra && ra[felt]!=null ? `${aK}: ${f(ra[felt])}` : null].filter(Boolean).join(" · ") || "ingen sammenligning";
+    const g = k => rf ? rf[k] : null;
+    const opt = m => `<option value="${m}">${mdLang(m)}${delvisMd(m)?" (indtil videre)":""}</option>`;
+    const lF = document.getElementById("lokFra"), lT = document.getElementById("lokTil");
+    lF.innerHTML = ALLE_MDR.map(opt).join(""); lT.innerHTML = ALLE_MDR.map(opt).join("");
+    lF.value = LOKAL.fra; lT.value = LOKAL.til;
+    document.getElementById("mdForrige").disabled = flytMd(LOKAL.fra, -L) < ALLE_MDR[0];
+    document.getElementById("mdNaeste").disabled = flytMd(LOKAL.til, L) > ALLE_MDR[ALLE_MDR.length-1];
+    document.getElementById("lokNote").textContent = `${L} ${L === 1 ? "måned" : "måneder"} sammenlignet med ${fK}${ra ? " og " + aK : ""}.` +
+      (delvis ? ` Sidste måned er ikke slut (data til ${dato(V.sidste)}), så antal sammenlignes ikke.` : "") + (erAfd ? ` Afdeling: ${afdNavn}.` : "");
     document.getElementById("mdKpi").innerHTML = [
-      kpi(fmt(r.vI), "Opkald til Valeur" + (erAfd ? " (hele nummeret)" : ""), sam(rf.vI, ra.vI, fmt), dd(rf.vI, r.vI, 0)),
-      kpi(pct(r.vS), "Valeurs svarprocent", sam(rf.vS, ra.vS, v=>pct(v)), dp(rf.vS, r.vS)),
+      kpi(fmt(r.vI), "Opkald til Valeur" + (erAfd ? " (hele nummeret)" : ""), sam("vI", fmt), dd(g("vI"), r.vI, 0, true)),
+      kpi(pct(r.vS), "Valeurs svarprocent", sam("vS", v=>pct(v)), dp(g("vS"), r.vS)),
       ...(ingenKoe ? [] : [
-        kpi(fmt(r.kO), erAfd ? `Kald i ${koeNavn}` : "Kald i sekretariatets køer", sam(rf.kO, ra.kO, fmt), dd(rf.kO, r.kO, 0)),
-        kpi(pct(r.kS), "Svar i køerne", sam(rf.kS, ra.kS, v=>pct(v)), dp(rf.kS, r.kS)),
-        kpi(mmss(r.kV), "Ventetid i køerne", sam(rf.kV, ra.kV, mmss), dd(rf.kV, r.kV, -1))]),
-      kpi(fmt(r.reg), "Registreringer", `${fmt(r.pers)} personer · ` + sam(rf.reg, ra.reg, fmt), dd(rf.reg, r.reg, 0)),
-      kpi(pct(r.loest), "Løst af Valeur", r.loest==null ? "måles fra juli 2025" : sam(rf.loest, ra.loest, v=>pct(v)), dp(rf.loest, r.loest)),
-      ...(erAfd ? [] : [kpi(fmt(r.mails), "Mails", sam(rf.mails, ra.mails, fmt), dd(rf.mails, r.mails, 0))]),
+        kpi(fmt(r.kO), erAfd ? `Kald i ${koeNavn}` : "Kald i sekretariatets køer", sam("kO", fmt), dd(g("kO"), r.kO, 0, true)),
+        kpi(pct(r.kS), "Svar i køerne", sam("kS", v=>pct(v)), dp(g("kS"), r.kS)),
+        kpi(mmss(r.kV), "Ventetid i køerne", sam("kV", mmss), dd(g("kV"), r.kV, -1, false))]),
+      kpi(fmt(r.reg), "Registreringer", (r.pers != null ? `${fmt(r.pers)} personer · ` : L > 1 ? `${fmt(r.reg/L)} pr. md. · ` : "") + sam("reg", fmt), dd(g("reg"), r.reg, 0, true)),
+      kpi(pct(r.loest), "Løst af Valeur", r.loest==null ? "måles fra juli 2025" : sam("loest", v=>pct(v)), dp(g("loest"), r.loest)),
+      ...(erAfd ? [] : [kpi(fmt(r.mails), "Mails", r.mails==null ? "ikke talt for hele perioden" : sam("mails", fmt), dd(g("mails"), r.mails, 0, true))]),
     ].join("");
-    const M = (UD.md[LOKAL_MD] || {}).mc, MF = (UD.md[fm] || {}).mc;
-    const fTyper = Object.fromEntries(((MF||{}).typer||[]).map(t=>[t.t, t.n]));
-    const typer = ((M||{}).typer || []).slice(0, 10);
+    const A = periodeAggr(UD, mdr), AF = rf ? periodeAggr(UD, fM) : null;
+    const fTyper = Object.fromEntries(((AF||{}).mc||{typer:[]}).typer.map(t=>[t.t, t.n]));
+    const typer = ((A||{}).mc||{typer:[]}).typer.slice(0, 10);
     const kortT = s => s.replace("Selvstændig psykolog spørgsmål om ","").replace("Selvstændig psykolog – spørgsmål om ","").replace(/\s*\(.*\)$/,"");
-    bars(document.getElementById("bMdEmner"), typer.map(t => [kortT(t.t), t.n, fTyper[t.t] != null ? `${t.n>=fTyper[t.t]?"+":""}${fmt(t.n-fTyper[t.t])} mod ${mdLabel(fm)}` : ""]), typer[0]?.n || 1, "var(--t-ovb)");
-    document.getElementById("mdEmneNote").textContent = "Emner med færre end 5 registreringer i måneden vises ikke.";
-    const gr = Object.entries((M||{}).grupper || {}).sort((a,b)=>b[1]-a[1]);
-    bars(document.getElementById("bMdGrupper"), gr.map(([g,n]) => [g, n, pct(n/((M||{}).total_efter||1))]), gr[0]?.[1] || 1, "var(--t-ovb)");
+    bars(document.getElementById("bMdEmner"), typer.map(t => [kortT(t.t), t.n, fTyper[t.t] != null && !delvis ? `${t.n>=fTyper[t.t]?"+":""}${fmt(t.n-fTyper[t.t])} mod ${fK}` : ""]), typer[0]?.n || 1, "var(--t-ovb)");
+    document.getElementById("mdEmneNote").textContent = "Emner med færre end 5 registreringer i perioden vises ikke.";
+    const gr = Object.entries(((A||{}).mc||{grupper:{}}).grupper).sort((a,b)=>b[1]-a[1]);
+    bars(document.getElementById("bMdGrupper"), gr.map(([gg,n]) => [gg, n, pct(n/(A.mc.total_efter||1))]), gr[0]?.[1] || 1, "var(--t-ovb)");
+    document.getElementById("mdEmneTitel").textContent = `Emner, ${periodeNavn(LOKAL.fra, LOKAL.til)}`;
     const th = ["Måned","Opkald til Valeur","Svar Valeur", ...(ingenKoe ? [] : ["Kald i køerne","Svar køer","Vent køer"]),"Registreringer","Personer","Løst af Valeur", ...(erAfd ? [] : ["Mails"])];
     document.getElementById("tMd").innerHTML = `<thead><tr>${th.map(t=>`<th>${t}</th>`).join("")}</tr></thead><tbody>` +
-      [...MD_RAEKKER].reverse().map(x => `<tr data-md="${x.md}" class="${x.md===LOKAL_MD?"valgt":""}" tabindex="0"><td>${mdLang(x.md)}${delvisMd(x.md)?" *":""}</td><td>${fmt(x.vI)}</td><td>${pct(x.vS)}</td>` +
+      [...MD_RAEKKER].reverse().map(x => `<tr data-md="${x.md}" class="${x.md>=LOKAL.fra && x.md<=LOKAL.til?"valgt":""}" tabindex="0"><td>${mdLang(x.md)}${delvisMd(x.md)?" *":""}</td><td>${fmt(x.vI)}</td><td>${pct(x.vS)}</td>` +
         (ingenKoe ? "" : `<td>${fmt(x.kO)}</td><td>${pct(x.kS)}</td><td>${mmss(x.kV)}</td>`) +
         `<td>${fmt(x.reg)}</td><td>${fmt(x.pers)}</td><td>${pct(x.loest)}</td>` + (erAfd ? "" : `<td>${fmt(x.mails)}</td>`) + `</tr>`).join("") + "</tbody>";
-    document.getElementById("tMdNote").textContent = `Klik på en måned for at se den ovenfor. * Måneden er ikke slut. Opkald til Valeur${erAfd ? "" : " og mails"} gælder hele hovednummeret${erAfd ? `; køer og registreringer gælder ${afdNavn}` : ""}. Løst af Valeur er et skøn ud fra noterne og måles fra juli 2025. Mails er talt pr. uge og lagt i den måned, ugen begynder i.`;
+    document.getElementById("tMdNote").textContent = `Den valgte periode er markeret. Klik på en måned for at se den alene. * Måneden er ikke slut. Opkald til Valeur${erAfd ? "" : " og mails"} gælder hele hovednummeret${erAfd ? `; køer og registreringer gælder ${afdNavn}` : ""}. Forskellige personer kan kun tælles for én måned ad gangen. Løst af Valeur er et skøn ud fra noterne og måles fra juli 2025. Mails er talt pr. uge og lagt i den måned, ugen begynder i.`;
   }
 
   // --- mærker på sektioner, der ikke følger filtrene
@@ -921,13 +1018,16 @@ function render(){
     document.querySelectorAll("section.blok[id]").forEach(sec => {
       sec.querySelectorAll(".filterbadge").forEach(b => b.remove());
       const t = [];
-      if (MDV && !FM.md.includes(sec.id) && sec.id !== "maaned") t.push("Hele perioden");
+      if (PER && !FM.md.includes(sec.id) && sec.id !== "maaned") t.push("Hele perioden");
       if (erAfd && !FM.afd.includes(sec.id)) t.push("Hele foreningen");
       const eb = sec.querySelector(".blok-head .eyebrow");
       if (eb) t.forEach(x => { const s = document.createElement("span"); s.className = "filterbadge"; s.textContent = x; eb.appendChild(s); });
     });
     document.getElementById("aflastning").hidden = ingenKoe;
-    const info = [erAfd ? afdNavn : null, MDV ? mdLang(MDV) : null].filter(Boolean);
+    document.getElementById("fAfd").value = FILTER.afd;
+    document.getElementById("fFra").value = FILTER.fra || ALLE_MDR[0];
+    document.getElementById("fTil").value = FILTER.til || ALLE_MDR[ALLE_MDR.length-1];
+    const info = [erAfd ? afdNavn : null, PER ? PER.navn : null].filter(Boolean);
     document.getElementById("filterInfo").textContent = info.length ? "Viser: " + info.join(" · ") : "";
     document.getElementById("fNulstil").hidden = !info.length;
   }

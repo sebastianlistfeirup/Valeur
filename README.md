@@ -105,9 +105,10 @@ aftalte mål, mails pr. uge og en liste over datahuller.
 
 ### Filtre: afdeling og måned
 
-Øverst på siden kan man vælge **afdeling** og **måned**. Valget står i adressen, så
-en leder kan gemme et link til sin egen afdeling, fx
-`briefing.html?afdeling=raadgivning` eller `briefing.html?afdeling=selvstaendige&maaned=2026-10`.
+Øverst på siden kan man vælge **afdeling** og en **periode** (fra–til; samme måned i
+begge felter giver én måned). Valget står i adressen, så en leder kan gemme et link til
+sin egen afdeling, fx `briefing.html?afdeling=raadgivning` eller
+`briefing.html?afdeling=selvstaendige&fra=2026-01&til=2026-08`.
 
 | Afdeling | Køer | Membercare |
 |---|---|---|
@@ -118,13 +119,18 @@ en leder kan gemme et link til sin egen afdeling, fx
 | `oekonomi` | 1520, 1525 | Betalinger til og fra foreningen |
 | `faglig` | ingen | Psykologfaglige henvendelser, Autorisation og Tilsyn |
 
-Opdelingen står i `AFDELINGER` i `scripts/briefing/build_data.py`. Tallene pr. afdeling
-og pr. måned beregnes på forhånd (`data["udsnit"]`). Sektioner, der ikke kan deles op,
+Opdelingen står i `AFDELINGER` i `scripts/briefing/build_data.py`. For hver afdeling og
+måned gemmes optællinger (`data["udsnit"][afdeling]["md"][måned]["t"]`), som siden lægger
+sammen til den valgte periode. Grænserne for små tal (fx emner under 5 registreringer)
+anvendes på periodens sum, og medlemstyper og kredse under 3 lægges sammen allerede i
+datafilen. Sektioner, der ikke kan deles op,
 fx Valeurs opkald, timefordelingen og benchmark, får mærket "Hele foreningen" eller
 "Hele perioden", når et filter er valgt.
 
-Sektionen **Måned for måned** har sin egen månedsvælger, der kun gælder sektionen,
-og en tabel over alle måneder, der kan hentes som CSV til Excel.
+Sektionen **Måned for måned** har sin egen periodevælger (fra–til, pile og hurtigvalg),
+der kun gælder sektionen. Perioden sammenlignes med perioden lige før af samme længde og
+med samme periode sidste år. Er den sidste måned ikke slut, sammenlignes antal ikke, kun
+andele og ventetider. Tabellen over alle måneder kan hentes som CSV til Excel.
 
 ### Opdatér med nye data
 

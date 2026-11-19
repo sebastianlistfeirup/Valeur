@@ -282,6 +282,38 @@ def membercare(sti):
     return mc_aggr(df, len(agenter)), navne
 
 
+def _taelling(sm, sdm, min_celle=3):
+    """Optællinger for én måned i ét udsnit. Kan lægges sammen til en vilkårlig periode i browseren.
+    Medlemstyper og kredse under min_celle lægges sammen, så ingen lille gruppe kan udpeges."""
+    import dybde
+    e = sm[sm["dato"] >= START]
+    if not len(e):
+        return None
+    TOM = "Medlemskab ikke angivet"
+    segs = e["seg"].value_counts()
+    smaa = set(segs[segs < min_celle].index)
+    seg = e["seg"].where(~e["seg"].isin(smaa), "Øvrige grupper")
+    kryds = {}
+    for (sg, g), n in e.assign(seg2=seg).groupby(["seg2", "gruppe"]).size().items():
+        if n >= min_celle and sg != "Øvrige grupper":
+            kryds.setdefault(sg, {})[g] = int(n)
+    tom = e[e["seg"] == TOM]
+    ud = {"n": int(len(e)), "u": int(e["Stamkort"].nunique()), "v": int(e["af_valeur"].sum()),
+          "kont": int((e["type"] == "Medlemskab og kontingent").sum()),
+          "tom": [int(len(tom)), int(tom["Stamkort"].nunique()), int((tom["type"] == "Medlemskab og kontingent").sum())],
+          "g": {g: int(n) for g, n in e["gruppe"].value_counts().items()},
+          "t": {f"{g}\t{t}": int(n) for (g, t), n in e.groupby(["gruppe", "type"]).size().items()},
+          "s": {k: int(n) for k, n in seg.value_counts().items()},
+          "k": kryds,
+          "geo": dybde.geo_taelling(sdm, min_celle)}
+    d = sdm[sdm["dato"] >= dybde.SKABELON_START]
+    if len(d):
+        ud["l"] = {"n": int(len(d)), "b": int(d["besked"].sum()), "tom": int(d["tom_note"].sum()),
+                   "g": {g: [int(x.size), int(x.sum())] for g, x in d.groupby("gruppe")["besked"]},
+                   "t": {t: [int(x.size), int(x.sum())] for t, x in d.groupby("type")["besked"]}}
+    return ud
+
+
 def udsnit(df, dfd, antal_agenter, log=print):
     """Tal pr. afdeling og pr. måned til filtrene øverst på siden."""
     import dybde
@@ -296,12 +328,9 @@ def udsnit(df, dfd, antal_agenter, log=print):
             u["mc"] = mc_aggr(sub, antal_agenter)
             u["dybde"] = dybde.mc_dele(subd)
         for m in maaneder:
-            sm, sdm = sub[sub["md"] == m], subd[subd["md"] == m]
-            if not len(sm):
-                continue
-            u["md"][m] = {"mc": mc_aggr(sm, antal_agenter, udsnit=True),
-                          "loeser": dybde.loeser_selv(sdm, 20) if len(sdm) else None,
-                          "geografi": dybde.geografi(sdm, 10) if len(sdm) else []}
+            t = _taelling(sub[sub["md"] == m], subd[subd["md"] == m])
+            if t:
+                u["md"][m] = {"t": t}
         ud[a["id"]] = u
     return ud
 
