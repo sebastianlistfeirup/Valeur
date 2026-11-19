@@ -176,7 +176,7 @@ footer{color:var(--muted);font-size:12px}
   <p>Opkald, der lander i sekretariatets køer pr. måned, fra februar 2024. Den lodrette streg er 5. maj 2025, hvor Valeur gik i luften. Kø 1500 (Velkommen/Øvrige) blev nedlagt i september 2024 og er udeladt, så før og efter sammenligner de samme seks køer.</p></div>
   <div class="card"><div class="chart tall"><canvas id="cKoeer"></canvas></div><div class="src">Kilde: IP Nordic kø-rapporter pr. måned (6 køer)</div></div>
   <div class="card"><h3>Før og efter, kø for kø</h3>
-  <p class="sub">Før: september 2024–april 2025 (8 måneder). Efter: november 2025–oktober 2026 (12 måneder). Ventetid og samtaletid gælder besvarede kald.</p>
+  <p class="sub" id="feNote"></p>
   <div class="tbl"><table id="tFE"></table></div></div>
   <div class="grid2">
     <div class="insight" id="aflInsight"></div>
@@ -215,7 +215,7 @@ footer{color:var(--muted);font-size:12px}
 
 <section class="blok" id="maal" data-tema="lev">
   <div class="blok-head"><div class="eyebrow">Valeurs leverance</div><h2>Valeur målt mod de aftalte mål</h2>
-  <p>Fra Valeurs egne benchmark-ark, uge for uge fra uge 33 2025 og måned for måned fra april 2026. Tomme felter betyder, at tallet ikke er udfyldt i arket.</p></div>
+  <p>Fra Valeurs egne benchmark-ark, uge for uge og senere måned for måned. Tomme felter betyder, at tallet ikke er udfyldt i arket.</p></div>
   <div class="card"><div class="tbl"><table id="tBench"></table></div></div>
   <div class="grid2">
     <div class="card"><h3>Efterbehandling pr. samtale</h3><div class="chart short"><canvas id="cEfter"></canvas></div><div class="src">Kilde: Valeur_statistik_11_06 og Datagennemgang_21_09_26</div></div>
@@ -313,10 +313,11 @@ footer{color:var(--muted);font-size:12px}
 <section class="blok" id="mails" data-tema="ovr">
   <div class="blok-head"><div class="eyebrow">Øvrigt</div><h2>Mails til foreningen pr. uge</h2>
   <p>Valeur håndterer også mails. Optællingen er ugevis og manuel.</p></div>
-  <div class="card"><div class="chart"><canvas id="cMails"></canvas></div><div class="src">Kilde: Samlet Oversigt mails, ugeopdelt 2025–2026</div></div>
+  <div class="card"><div class="chart"><canvas id="cMails"></canvas></div><div class="src">Kilde: Samlet oversigt over mails, ugeopdelt</div></div>
 </section>
 
 <footer id="foot"></footer>
+<p class="src"><a href="opdater.html" style="color:var(--muted)">Opdatér dashboardet med nye data (admin)</a></p>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -368,7 +369,11 @@ function render(){
   const fV = sum(KFE,x=>x.foer.vent*x.foer.besv_md)/fB, eV = sum(KFE,x=>x.efter.vent*x.efter.besv_md)/eB;
   const fT = sum(KFE,x=>x.foer.tale_timer_md), eT = sum(KFE,x=>x.efter.tale_timer_md);
   const vSvar = V.besvarede/V.total;
-  const last12 = V.maaneder.filter(m=>m.md>="2025-11"&&m.md<="2026-10");
+  const PE = D.perioder || {foer:["2024-09","2025-04"], efter:["2025-11","2026-10"]};
+  const mdNavn = k => { const [y,m]=k.split("-"); return ["januar","februar","marts","april","maj","juni","juli","august","september","oktober","november","december"][+m-1]+" "+y; };
+  const antalMd = (a,b) => { const [y1,m1]=a.split("-").map(Number), [y2,m2]=b.split("-").map(Number); return (y2-y1)*12+m2-m1+1; };
+  document.getElementById("feNote").textContent = `Før: ${mdNavn(PE.foer[0])}–${mdNavn(PE.foer[1])} (${antalMd(...PE.foer)} måneder). Efter: ${mdNavn(PE.efter[0])}–${mdNavn(PE.efter[1])} (${antalMd(...PE.efter)} måneder). Ventetid og samtaletid gælder besvarede kald.`;
+  const last12 = V.maaneder.filter(m=>m.md>=PE.efter[0]&&m.md<=PE.efter[1]);
   const vMd = last12.reduce((a,m)=>a+m.i,0)/last12.length, vBmd = last12.reduce((a,m)=>a+m.b,0)/last12.length;
   const medlem = V.medlem["Medlem"];
   const gentag2 = Object.entries(MC.gentag).filter(([k])=>+k>=2).reduce((a,[,v])=>a+v,0);
@@ -429,7 +434,7 @@ function render(){
   document.getElementById("aflInsight").innerHTML = `<b>Aflastningen er størst i medlemsservice.</b> Kø 15123 er gået fra ${fmt(ms.foer.opkald_md)} til ${fmt(ms.efter.opkald_md)} kald om måneden, og Valeur løser selv opgaven. Selvstændig er faldet ${fmt((1-sel.efter.opkald_md/sel.foer.opkald_md)*100)} %. Ansættelse og rådgivning falder mindst (${fmt((1-ans.efter.opkald_md/ans.foer.opkald_md)*100)} %), fordi Valeur er instrueret i at stille de fleste af de opkald videre. Samtalerne i rådgivningen er blevet længere (${mmss(ans.foer.tale)} → ${mmss(ans.efter.tale)}), så den samlede tid i telefonen er uændret, omkring ${fmt(ans.efter.tale_timer_md)} timer om måneden.`;
   document.getElementById("koeHul").innerHTML = `<b>Kø-hullet.</b> Før Valeur svarede sekretariatet på ${pct(fB/fO)} af kaldene i køerne. Efter er det ${pct(eB/eO)}. I rådgivningen er svarprocenten faldet fra ${pct(ans.foer.svarpct)} til ${pct(ans.efter.svarpct)} og hos selvstændige fra ${pct(sel.foer.svarpct)} til ${pct(sel.efter.svarpct)}. Ventetiden er kort, så medlemmerne lægger ikke på efter lang tid. Det tyder på, at der ofte ikke sidder nogen klar i køen, når Valeur stiller om. Omkring ${fmt(eO-eB)} kald om måneden ender uden svar efter at være blevet stillet videre.`;
 
-  const KM = D.koeer.pr_md, kmMd = Object.keys(KM["1510"]||{}).filter(m=>m>="2024-03"&&m<"2026-11").sort();
+  const KM = D.koeer.pr_md, kmMd = Object.keys(KM["1510"]||{}).filter(m=>m>="2024-03"&&m<=PE.efter[1]).sort();
   mk("cKoeSvar",{type:"line",data:{labels:kmMd.map(mdLabel),datasets:[
     {label:KN["1510"],data:kmMd.map(m=>{const x=KM["1510"][m];return x?x.besv/x.kald*100:null}),borderColor:css("--sek"),backgroundColor:alpha("--sek",.12),fill:true,tension:.3,pointRadius:2},
     {label:KN["1515"],data:kmMd.map(m=>{const x=(KM["1515"]||{})[m];return x&&x.kald>=20?x.besv/x.kald*100:null}),borderColor:css("--warn"),tension:.3,pointRadius:2,spanGaps:false}]},
@@ -506,7 +511,7 @@ function render(){
 
   // --- mails
   const ML = Object.entries(D.mails);
-  mk("cMails",{type:"bar",data:{labels:ML.map(([k])=>k.replace("-U"," u")),datasets:[{label:"Mails",data:ML.map(([,v])=>v),backgroundColor:ML.map(([k])=>k.startsWith("2026")?css("--valeur"):alpha("--valeur",.5)),borderRadius:2}]},
+  mk("cMails",{type:"bar",data:{labels:ML.map(([k])=>k.replace("-U"," u")),datasets:[{label:"Mails",data:ML.map(([,v])=>v),backgroundColor:ML.map(([k])=>k.startsWith(ML[ML.length-1][0].slice(0,4))?css("--valeur"):alpha("--valeur",.5)),borderRadius:2}]},
     options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:12}},y:{title:{display:true,text:"Mails pr. uge"}}}}});
 
   // --- dybere spadestik
@@ -553,7 +558,7 @@ function render(){
     e.idx.forEach((v,i)=>{ const t=Math.max(0,Math.min(1,(v-100)/120)); const bg = v>=100 ? alpha("--warn", .1+t*.8) : alpha("--sek", .08+(100-v)/100*.4);
       hj += `<div class="c" style="background:${bg};color:${v>=175?"#fff":css("--ink")}" title="${e.t}, ${MDK[AH.maaneder[i]-1]}: indeks ${v}">${v}</div>`; }); });
   document.getElementById("hjul").innerHTML = hj+"</div>";
-  document.getElementById("hjulNote").textContent = "Kilde: Membercare, maj 2025–november 2026. Maj–november indgår to gange, de øvrige måneder én gang, så en enkelt begivenhed kan præge en måned. Februar er fx præget af rykkerudsendelsen i 2026.";
+  document.getElementById("hjulNote").textContent = `Kilde: Membercare, ${mdNavn(D.mc.periode[0].slice(0,7))}–${mdNavn(D.mc.periode[1].slice(0,7))}. Nogle måneder indgår flere gange end andre, så en enkelt begivenhed, fx en rykkerudsendelse, kan præge en måned.`;
 
   // 4 sager igen
   const GI = DY.gentagne;

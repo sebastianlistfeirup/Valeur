@@ -103,12 +103,40 @@ Sektioner: status, opkald og svar, aflastning af sekretariatet (før og efter, k
 for kø), hvornår der ringes, hvad og hvem (Membercare), Valeur målt mod de
 aftalte mål, mails pr. uge og en liste over datahuller.
 
+### Opdatér med nye data
+
+**Den nemme vej:** gå til [`opdater.html`](https://sebastianlistfeirup.github.io/Valeur/opdater.html)
+(linket står også nederst på dashboardet).
+
+1. Siden viser en tjekliste over alle kilder: hvad der skal eksporteres, og hvilken
+   periode dashboardet bygger på lige nu.
+2. Vælg mappen med de nye eksporter. Filerne genkendes ud fra indholdet, så navne og
+   undermapper er ligegyldige, og den nyeste version af hver kilde bliver brugt. Kun
+   medlemslister skal have datoen i filnavnet, fx `Medlemsliste periode_31_12_26.xlsx`.
+3. Tryk **Byg**. Browseren kører de samme Python-scripts som nedenfor via Pyodide,
+   lokalt i en baggrundstråd. Ingen filer forlader computeren. Det tager 2–5 minutter.
+4. Se forhåndsvisningen, log ind med en admin-nøgle og tryk **Publicér**. Kun
+   `docs/briefing.json` og `docs/briefing.html` bliver skrevet til repoet.
+
+Admin-nøglen er en *fine-grained personal access token* med adgang til kun dette repo
+og *Contents: Read and write*. Den gemmes kun i browserfanen (sessionStorage).
+
+Mangler en kilde i en upload, genbruges de tal, der sidst blev publiceret, og
+tjeklisten markerer det.
+
+**Fra kommandolinjen:**
+
 ```sh
-python -X utf8 scripts/briefing/build_data.py "<sti til Thomas data>"   # → docs/briefing.json
-python -X utf8 scripts/briefing/render.py                               # → docs/briefing.html og dist/briefing.html
+python -X utf8 scripts/briefing/build_data.py "<mappe med eksporter>"   # → docs/briefing.json
+python -X utf8 scripts/briefing/render.py                               # → docs/briefing.html, dist/, docs/py/
 ```
 
-Uden argument læser scriptet `data/raw/thomas/`.
+Uden argument læser scriptet `data/raw/thomas/`. `render.py` kopierer også
+byggescripts og tjeklistens tekster til `docs/py/`, som opdateringssiden henter.
+Kør den altid efter ændringer i `scripts/briefing/`.
+
+`scripts/briefing/kilder.py` genkender kildefilerne ud fra deres indhold og
+indeholder tjeklistens tekster (`ROLLER`).
 
 `scripts/briefing/dybde.py` står for de seks dybere spadestik: hvor meget Valeur
 løser selv, udsendelsernes effekt, årshjulet, sager der kommer igen, geografi
@@ -118,10 +146,12 @@ nævner en rykker ja/nej). Fritekst, navne og overskrifter fjernes, før noget
 regnes ud, og outputtet er udelukkende optællinger.
 
 `scripts/briefing/medlemmer.py` står for sektionen Økonomi og medlemmer. Den
-læser Valeurs samlede pris og tid (mappen `Nye Valeur træk`) og de kvartalsvise
-medlemslister (mappen `Medlemslister`). Medlemslisterne indeholder
-kontaktoplysninger, så scriptet læser kun kreds, medlemstype, stamkort, alder og
-ind- og udmeldelsesdatoer. Stamkort bruges kun til at koble til Membercare, og
-ingen gruppe under 25 personer vises. Samme privatlivsregler som
-ovenfor: kun aggregerede tal, ingen krydstabelcelle under 5, og kørslen stopper,
-hvis outputtet indeholder telefonnumre, mailadresser eller cpr-lignende numre.
+læser Valeurs samlede pris og tid og de kvartalsvise medlemslister. Fra
+medlemslisterne læses kun kreds, medlemstype, stamkort, alder og ind- og
+udmeldelsesdatoer, fundet ud fra kolonneoverskrifterne, så andre kolonner kan og
+bør slettes før upload. Stamkort bruges kun til at koble til Membercare, og ingen
+gruppe under 25 personer vises.
+
+Samme privatlivsregler gælder overalt: kun aggregerede tal, ingen krydstabelcelle
+under 5, og kørslen stopper, hvis outputtet indeholder telefonnumre, mailadresser,
+cpr-lignende numre eller navne fra Membercare.

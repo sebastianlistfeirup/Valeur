@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Opdatér dashboardet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: én kolonne med fire trin og en altid synlig tjekliste over kilderne */
+:root{
+  --bg:#f3f5f7; --panel:#ffffff; --ink:#132430; --muted:#5b6b78; --line:#dde3e8;
+  --accent:#0e7c78; --accent-soft:#d5ecea;
+  --good:#1f8a4c; --good-soft:#e1f2e7; --warn:#a8670f; --warn-soft:#fbf1df; --bad:#c0392b; --bad-soft:#f8e3e0;
+  --display:"Instrument Sans",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f171d; --panel:#16222b; --ink:#e4ecf1; --muted:#93a4b1; --line:#26343f;
+  --accent:#3fb8b1; --accent-soft:#173a3a;
+  --good:#4cc17d; --good-soft:#18352a; --warn:#e0a84a; --warn-soft:#3a2f1a; --bad:#ef6f61; --bad-soft:#3d221f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f171d; --panel:#16222b; --ink:#e4ecf1; --muted:#93a4b1; --line:#26343f;
+  --accent:#3fb8b1; --accent-soft:#173a3a;
+  --good:#4cc17d; --good-soft:#18352a; --warn:#e0a84a; --warn-soft:#3a2f1a; --bad:#ef6f61; --bad-soft:#3d221f; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.wrap{max-width:1100px;margin:0 auto;display:grid;gap:24px}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:clamp(26px,3.6vw,36px)} h2{font-size:21px} h3{font-size:16px}
+p{margin:0}
+a{color:var(--accent)}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.lede{color:var(--muted);max-width:72ch}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px;min-width:0}
+.trin{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-items:start}
+.trin .nr{grid-row:span 2;width:30px;height:30px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-family:var(--display);font-weight:700;display:grid;place-items:center}
+.trin.aktiv .nr{background:var(--accent);color:var(--panel)}
+.trin.faerdig .nr{background:var(--good);color:var(--panel)}
+.trin .sub{color:var(--muted);font-size:14px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td .k{font-weight:600}
+td .s{font-size:12px;color:var(--muted)}
+td .eks{font-size:13px;max-width:44ch}
+td .fil{font-family:var(--mono);font-size:12px;word-break:break-all}
+.per{font-family:var(--mono);font-size:13px;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.pill.ok{background:var(--good-soft);color:var(--good)} .pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)} .pill.neutral{background:var(--accent-soft);color:var(--accent)}
+.gruppe td{background:color-mix(in srgb,var(--accent) 6%,var(--panel));font-weight:600;font-size:13px;padding-block:6px}
+button,.knap{font:600 14px var(--body);padding:10px 18px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:var(--panel);cursor:pointer}
+button.sek{background:transparent;color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,input:focus-visible,.drop:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.drop{border:2px dashed var(--line);border-radius:10px;padding:22px;display:grid;gap:8px;justify-items:start;background:var(--bg)}
+.drop.over{border-color:var(--accent);background:var(--accent-soft)}
+input[type=password],input[type=text]{font:14px var(--mono);padding:9px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:min(100%,440px)}
+.log{font-family:var(--mono);font-size:12px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;max-height:180px;overflow:auto;white-space:pre-wrap}
+.raekke{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.besked{padding:10px 14px;border-radius:8px;font-size:14px}
+.besked.ok{background:var(--good-soft);color:var(--ink);border-left:3px solid var(--good)}
+.besked.bad{background:var(--bad-soft);color:var(--ink);border-left:3px solid var(--bad)}
+.besked.info{background:var(--accent-soft);color:var(--ink);border-left:3px solid var(--accent)}
+iframe{width:100%;height:640px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+details summary{cursor:pointer;font-weight:600}
+details ol{margin:8px 0 0;padding-left:20px;display:grid;gap:4px;font-size:14px}
+.tal{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header style="display:grid;gap:10px">
+    <div class="eyebrow">Valeur-samarbejdet · administration · <a href="briefing.html">tilbage til dashboardet</a></div>
+    <h1>Opdatér dashboardet</h1>
+    <p class="lede">Vælg mappen med de nye eksporter. Filerne bliver læst her i browseren og forlader aldrig computeren. Kun de færdige, samlede tal bliver sendt til dashboardet, når du trykker Publicér.</p>
+    <p class="lede" id="status">Henter det nuværende dashboard …</p>
+  </header>
+
+  <section class="card">
+    <div><h2>Tjekliste: det skal uploades</h2>
+    <p class="lede">Hver kilde med det, der skal eksporteres, og den periode dashboardet bygger på lige nu. Når du har valgt en mappe, vises de filer, der blev fundet. Filnavne er ligegyldige, undtagen for medlemslister, som skal have datoen i navnet.</p></div>
+    <div class="tbl"><table id="tjek"></table></div>
+  </section>
+
+  <section class="card trin aktiv" id="t1">
+    <span class="nr">1</span><h2>Vælg mappen med eksporterne</h2>
+    <div style="display:grid;gap:12px">
+      <p class="sub">Vælg den mappe, hvor eksporterne ligger. Undermapper og gamle versioner gør ikke noget: den nyeste version af hver kilde bliver brugt.</p>
+      <label class="drop" id="drop" for="mappe">
+        <strong>Træk mappen herind, eller klik for at vælge den</strong>
+        <span class="sub">Kun .xlsx-filer bliver læst.</span>
+        <input type="file" id="mappe" webkitdirectory directory multiple style="position:absolute;opacity:0;width:1px;height:1px">
+      </label>
+      <p class="sub" id="valgt"></p>
+    </div>
+  </section>
+
+  <section class="card trin" id="t2">
+    <span class="nr">2</span><h2>Byg de nye tal</h2>
+    <div style="display:grid;gap:12px">
+      <p class="sub">Første gang henter browseren Python (ca. 30 MB). Selve beregningen tager typisk 2–5 minutter. Lad fanen stå åben imens.</p>
+      <div class="raekke"><button id="byg" disabled>Byg</button><span class="sub" id="bygTid"></span></div>
+      <div class="log" id="log" hidden></div>
+      <div id="bygBesked"></div>
+    </div>
+  </section>
+
+  <section class="card trin" id="t3">
+    <span class="nr">3</span><h2>Se resultatet, før det bliver offentligt</h2>
+    <div style="display:grid;gap:12px">
+      <p class="sub">Sådan kommer dashboardet til at se ud med de nye tal. Intet er publiceret endnu.</p>
+      <iframe id="vis" title="Forhåndsvisning af dashboardet" hidden></iframe>
+    </div>
+  </section>
+
+  <section class="card trin" id="t4">
+    <span class="nr">4</span><h2>Publicér</h2>
+    <div style="display:grid;gap:12px">
+      <p class="sub">Kræver en admin-nøgle til GitHub-repoet. Nøglen gemmes kun i denne fane og forsvinder, når du lukker den.</p>
+      <div class="raekke">
+        <label for="noegle" class="sub">Admin-nøgle</label>
+        <input type="password" id="noegle" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+        <button class="sek" id="login">Log ind</button>
+      </div>
+      <p class="sub" id="loginStatus"></p>
+      <details><summary>Sådan laver du en admin-nøgle</summary>
+        <ol>
+          <li>Log ind på GitHub med en konto, der har skriveadgang til repoet <span class="tal" id="repoNavn"></span>.</li>
+          <li>Gå til <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
+          <li>Giv nøglen et navn, fx "Valeur-dashboard", og en udløbsdato.</li>
+          <li>Under <em>Repository access</em>: vælg <em>Only select repositories</em> og kun dette repo.</li>
+          <li>Under <em>Permissions → Repository permissions</em>: sæt <em>Contents</em> til <em>Read and write</em>. Intet andet.</li>
+          <li>Tryk <em>Generate token</em>, kopiér nøglen og indsæt den her. Gem den i en adgangskodeboks, ikke i en fil.</li>
+        </ol>
+      </details>
+      <div class="raekke"><button id="publicer" disabled>Publicér</button></div>
+      <div id="pubBesked"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+// ------------------------------------------------------------------ opsætning
+const PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/";
+const PYFILER = ["kilder.py", "build_data.py", "dybde.py", "medlemmer.py"];
+const gh = (() => {   // repoet udledes af adressen: https://<ejer>.github.io/<repo>/
+  const ejer = location.hostname.endsWith("github.io") ? location.hostname.split(".")[0] : "sebastianlistfeirup";
+  const repo = location.hostname.endsWith("github.io") ? (location.pathname.split("/")[1] || "Valeur") : "Valeur";
+  return { ejer, repo };
+})();
+document.getElementById("repoNavn").textContent = `${gh.ejer}/${gh.repo}`;
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const MD = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
+const fmtDato = s => { if (!s) return ""; const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?$/.exec(s); if (!m) return esc(s);
+  return m[3] ? `${+m[3]}. ${MD[+m[2]-1]} ${m[1]}` : `${MD[+m[2]-1]} ${m[1]}`; };
+const periode = k => k && (k.fra || k.til) ? `${fmtDato(k.fra)} – ${fmtDato(k.til)}` : (k && k.note) || "";
+
+let ROLLER = [], NU = null, NY = null, OVERSIGT = null, FILER = [], NY_HTML = null, NOEGLE = null, GREN = null;
+
+// ------------------------------------------------------------------ tjeklisten
+function tegnTjek() {
+  const grupper = {};
+  ROLLER.forEach(r => (grupper[r.system] = grupper[r.system] || []).push(r));
+  let h = `<thead><tr><th>Kilde</th><th>Hvad skal eksporteres</th><th>På dashboardet nu</th><th>I din upload</th></tr></thead><tbody>`;
+  for (const [sys, rr] of Object.entries(grupper)) {
+    h += `<tr class="gruppe"><td colspan="4">${esc(sys)}</td></tr>`;
+    for (const r of rr) {
+      const nu = NU?.kilder?.[r.id];
+      const ny = NY?.kilder?.[r.id];
+      const fundne = (OVERSIGT || []).filter(o => o.rolle === r.id);
+      let upload = `<span class="s">Vælg en mappe</span>`;
+      if (ny) {
+        const pill = ny.status === "ny" ? `<span class="pill ok">✓ Ny</span>` : ny.status === "genbrugt"
+          ? `<span class="pill warn">Ikke fundet · genbruger tallene fra sidst</span>` : `<span class="pill bad">Mangler</span>`;
+        upload = `${pill}<div class="per">${periode(ny)}</div>` + (ny.status === "ny" ? `<div class="fil">${(ny.filer||[]).map(esc).join("<br>")}</div>` : "");
+      } else if (OVERSIGT) {
+        const brugt = fundne.filter(o => o.brugt);
+        upload = brugt.length ? `<span class="pill ok">✓ Fundet</span><div class="fil">${brugt.map(o => esc(o.fil.split("/").pop()) + (o.noegle ? ` <span class="s">(${esc(fmtDato(o.noegle) || o.noegle)})</span>` : "")).join("<br>")}</div>`
+          : r.paakraevet ? `<span class="pill bad">Ikke fundet</span><div class="s">Tallene fra sidst bliver genbrugt</div>` : `<span class="pill warn">Ikke fundet</span><div class="s">Valgfri · tallene fra sidst bliver genbrugt</div>`;
+      }
+      const ældre = fundne.filter(o => !o.brugt && !o.advarsel).length;
+      const sprunget = ældre ? `<div class="s">${ældre} ældre ${ældre === 1 ? "version" : "versioner"} sprunget over</div>` : "";
+      const adv = fundne.filter(o => o.advarsel).map(o => `<div class="s" style="color:var(--warn)">⚠ ${esc(o.fil.split("/").pop())}: ${esc(o.advarsel)}</div>`).join("");
+      h += `<tr><td><div class="k">${esc(r.navn)}</div><div class="s">${r.paakraevet ? "Påkrævet" : "Valgfri"}${r.flere ? " · flere filer" : ""}</div></td>
+        <td><div class="eks">${esc(r.eksport)}</div><div class="s">Genkendes på: ${esc(r.kendetegn)}</div></td>
+        <td>${nu ? `<div class="per">${periode(nu)}</div><div class="s">${nu.opdateret ? "Opdateret " + fmtDato(nu.opdateret) : ""}</div>` : `<span class="s">${NU ? "Ukendt" : "…"}</span>`}</td>
+        <td>${upload}${sprunget}${adv}</td></tr>`;
+    }
+  }
+  const fejl = (OVERSIGT || []).filter(o => o.rolle === "fejl");
+  if (fejl.length) h += `<tr><td colspan="4"><span class="pill bad">Kunne ikke åbnes</span> <span class="fil">${fejl.map(o => esc(o.fil)).join(", ")}</span><div class="s">Filen er måske åben i Excel. Luk den og vælg mappen igen.</div></td></tr>`;
+  $("tjek").innerHTML = h + "</tbody>";
+}
+
+async function hentNu() {
+  try {
+    const [roller, nu] = await Promise.all([
+      fetch("py/roller.json", {cache: "no-store"}).then(r => r.json()),
+      fetch("briefing.json", {cache: "no-store"}).then(r => r.ok ? r.json() : null)]);
+    ROLLER = roller; NU = nu;
+    $("status").textContent = NU ? `Dashboardet bygger nu på data til og med ${fmtDato(NU.valeur?.sidste)} og blev sidst opdateret ${fmtDato(NU.genereret)}.` : "Der er ingen publicerede tal endnu.";
+  } catch (e) { $("status").textContent = "Kunne ikke hente det nuværende dashboard: " + e.message; }
+  tegnTjek();
+}
+
+// ------------------------------------------------------------------ trin 1: mappe
+function saetTrin(n) { [1,2,3,4].forEach(i => { $("t"+i).classList.toggle("aktiv", i === n); $("t"+i).classList.toggle("faerdig", i < n); }); }
+
+async function laesDrop(items) {
+  const filer = [];
+  async function gaa(entry, sti) {
+    if (entry.isFile) { await new Promise(res => entry.file(f => { f.relativ = sti + f.name; filer.push(f); res(); }, res)); }
+    else if (entry.isDirectory) {
+      const r = entry.createReader(); let batch;
+      do { batch = await new Promise(res => r.readEntries(res, () => res([]))); for (const e of batch) await gaa(e, sti + entry.name + "/"); } while (batch.length);
+    }
+  }
+  for (const it of items) { const e = it.webkitGetAsEntry && it.webkitGetAsEntry(); if (e) await gaa(e, ""); }
+  return filer;
+}
+
+function brugFiler(liste) {
+  FILER = [...liste].filter(f => /\.xlsx$/i.test(f.name) && !f.name.startsWith("~$"));
+  NY = null; OVERSIGT = null; NY_HTML = null; $("vis").hidden = true; $("publicer").disabled = true;
+  const mb = FILER.reduce((a, f) => a + f.size, 0) / 1e6;
+  $("valgt").textContent = FILER.length ? `${FILER.length} Excel-filer valgt (${mb.toLocaleString("da-DK", {maximumFractionDigits: 1})} MB).` : "Der var ingen Excel-filer i mappen.";
+  $("byg").disabled = !FILER.length;
+  if (FILER.length) saetTrin(2);
+  tegnTjek();
+}
+$("mappe").addEventListener("change", e => brugFiler(e.target.files));
+const drop = $("drop");
+drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+drop.addEventListener("drop", async e => { e.preventDefault(); drop.classList.remove("over"); brugFiler(await laesDrop([...e.dataTransfer.items])); });
+
+// ------------------------------------------------------------------ trin 2: byg i en baggrundstråd
+const WORKER = `
+importScripts("${PYODIDE}pyodide.js");
+let py = null;
+self.onmessage = async (e) => {
+  const { filer, kode, tidligere } = e.data;
+  const log = m => postMessage({ type: "log", m });
+  try {
+    if (!py) {
+      log("Henter Python …");
+      py = await loadPyodide({ indexURL: "${PYODIDE}" });
+      log("Henter pandas og openpyxl …");
+      await py.loadPackage(["pandas", "micropip"]);
+      try { await py.loadPackage(["openpyxl"]); }
+      catch (_) { await py.pyimport("micropip").install("openpyxl"); }
+    }
+    py.FS.mkdirTree("/app");
+    for (const [navn, tekst] of Object.entries(kode)) py.FS.writeFile("/app/" + navn, tekst);
+    try { py.FS.rmdir("/data"); } catch (_) {}
+    py.runPython("import shutil, os; shutil.rmtree('/data', ignore_errors=True); os.makedirs('/data')");
+    const mtimes = {};
+    log("Lægger " + filer.length + " filer ind …");
+    for (const f of filer) {
+      const sti = "/data/" + f.sti;
+      py.FS.mkdirTree(sti.substring(0, sti.lastIndexOf("/")));
+      py.FS.writeFile(sti, new Uint8Array(f.data));
+      mtimes[f.sti] = f.mtime;
+    }
+    py.globals.set("js_log", log);
+    py.globals.set("js_mtimes", JSON.stringify(mtimes));
+    py.globals.set("js_tidligere", tidligere || "null");
+    const res = await py.runPythonAsync(\`
+import sys, json
+sys.path.insert(0, "/app")
+for m in ["kilder", "build_data", "dybde", "medlemmer"]:
+    sys.modules.pop(m, None)
+import build_data
+data, oversigt = build_data.byg("/data", json.loads(js_tidligere), json.loads(js_mtimes), log=js_log)
+json.dumps({"data": data, "oversigt": [{k: v for k, v in o.items() if k != "mtime"} for o in oversigt]}, ensure_ascii=False, default=str)
+\`);
+    postMessage({ type: "faerdig", res });
+  } catch (err) {
+    postMessage({ type: "fejl", m: String(err && err.message || err).split("\\n").filter(Boolean).slice(-1)[0] });
+  }
+};`;
+let worker = null;
+
+$("byg").addEventListener("click", async () => {
+  $("byg").disabled = true; $("log").hidden = false; $("log").textContent = ""; $("bygBesked").innerHTML = "";
+  const t0 = Date.now(); const ur = setInterval(() => $("bygTid").textContent = `${Math.round((Date.now()-t0)/1000)} sek.`, 1000);
+  const log = m => { $("log").textContent += m + "\n"; $("log").scrollTop = 1e9; };
+  try {
+    log("Læser filerne fra mappen …");
+    const kode = Object.fromEntries(await Promise.all(PYFILER.map(async n => [n, await fetch("py/" + n, {cache: "no-store"}).then(r => r.text())])));
+    const filer = await Promise.all(FILER.map(async f => ({ sti: (f.relativ || f.webkitRelativePath || f.name), mtime: f.lastModified, data: await f.arrayBuffer() })));
+    worker = worker || new Worker(URL.createObjectURL(new Blob([WORKER], { type: "text/javascript" })));
+    const svar = await new Promise((res, rej) => {
+      worker.onmessage = e => { const d = e.data; if (d.type === "log") log(d.m); else if (d.type === "faerdig") res(d.res); else rej(new Error(d.m)); };
+      worker.onerror = e => rej(new Error(e.message || "Fejl i baggrundstråden"));
+      worker.postMessage({ filer, kode, tidligere: NU ? JSON.stringify(NU) : null }, filer.map(f => f.data));
+    });
+    const r = JSON.parse(svar);
+    NY = r.data; OVERSIGT = r.oversigt;
+    tegnTjek();
+    await visForhaand();
+    const nye = Object.values(NY.kilder).filter(k => k.status === "ny").length;
+    $("bygBesked").innerHTML = `<div class="besked ok">Færdig. ${nye} af ${ROLLER.length} kilder er opdateret, og persondata-tjekket er bestået. Se tjeklisten øverst for detaljer.</div>`;
+    saetTrin(3);
+    opdaterPublicer();
+  } catch (e) {
+    $("bygBesked").innerHTML = `<div class="besked bad"><b>Byggeriet stoppede:</b> ${esc(e.message)}</div>`;
+    worker && worker.terminate(); worker = null;
+  } finally { clearInterval(ur); $("byg").disabled = !FILER.length; }
+});
+
+// ------------------------------------------------------------------ trin 3: forhåndsvisning
+async function visForhaand() {
+  const html = await fetch("briefing.html", {cache: "no-store"}).then(r => r.text());
+  const a = html.indexOf("const D = "), b = html.indexOf("\nconst css", a);
+  if (a < 0 || b < 0) throw new Error("Kunne ikke finde datablokken i briefing.html");
+  NY_HTML = html.slice(0, a) + "const D = " + JSON.stringify(NY) + ";" + html.slice(b);
+  const f = $("vis"); f.hidden = false; f.srcdoc = NY_HTML;
+}
+
+// ------------------------------------------------------------------ trin 4: login og publicering
+const api = (sti, opt = {}) => fetch("https://api.github.com" + sti, { ...opt, headers: {
+  "Accept": "application/vnd.github+json", "Authorization": "Bearer " + NOEGLE, "X-GitHub-Api-Version": "2022-11-28", ...(opt.headers || {}) } });
+function opdaterPublicer() { $("publicer").disabled = !(NY && NY_HTML && NOEGLE && GREN); if (NY && NOEGLE && GREN) saetTrin(4); }
+
+async function login(n) {
+  NOEGLE = n.trim(); GREN = null;
+  $("loginStatus").textContent = "Tjekker nøglen …";
+  try {
+    const r = await api(`/repos/${gh.ejer}/${gh.repo}`);
+    if (!r.ok) throw new Error(r.status === 401 ? "Nøglen er ikke gyldig." : r.status === 404 ? "Nøglen har ikke adgang til repoet." : "GitHub svarede " + r.status);
+    const repo = await r.json();
+    if (!repo.permissions?.push) throw new Error("Nøglen må ikke skrive i repoet. Giv den Contents: Read and write.");
+    let gren = repo.default_branch;
+    const p = await api(`/repos/${gh.ejer}/${gh.repo}/pages`);
+    if (p.ok) { const pg = await p.json(); gren = pg.source?.branch || gren; }
+    GREN = gren;
+    try { sessionStorage.setItem("valeur_noegle", NOEGLE); } catch (_) {}
+    $("loginStatus").innerHTML = `<span class="pill ok">✓ Logget ind</span> Publicerer til grenen <span class="tal">${esc(GREN)}</span> i ${esc(gh.ejer)}/${esc(gh.repo)}.`;
+  } catch (e) {
+    NOEGLE = null;
+    try { sessionStorage.removeItem("valeur_noegle"); } catch (_) {}
+    $("loginStatus").innerHTML = `<span class="pill bad">Ikke logget ind</span> ${esc(e.message)}`;
+  }
+  opdaterPublicer();
+}
+$("login").addEventListener("click", () => login($("noegle").value));
+$("noegle").addEventListener("keydown", e => { if (e.key === "Enter") login($("noegle").value); });
+try { const gemt = sessionStorage.getItem("valeur_noegle"); if (gemt) login(gemt); } catch (_) {}
+
+function b64(tekst) {
+  const bytes = new TextEncoder().encode(tekst); let s = "";
+  for (let i = 0; i < bytes.length; i += 0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+async function skriv(sti, tekst, besked) {
+  const url = `/repos/${gh.ejer}/${gh.repo}/contents/${sti}`;
+  const g = await api(`${url}?ref=${encodeURIComponent(GREN)}`);
+  const sha = g.ok ? (await g.json()).sha : undefined;
+  const r = await api(url, { method: "PUT", body: JSON.stringify({ message: besked, content: b64(tekst), sha, branch: GREN }) });
+  if (!r.ok) throw new Error(`${sti}: GitHub svarede ${r.status} ${(await r.json().catch(() => ({}))).message || ""}`);
+  return (await r.json()).commit;
+}
+$("publicer").addEventListener("click", async () => {
+  $("publicer").disabled = true; $("pubBesked").innerHTML = `<div class="besked info">Publicerer …</div>`;
+  try {
+    const dato = new Date().toISOString().slice(0, 10);
+    const besked = `Opdatér dashboardet med data til og med ${NY.valeur.sidste} (${dato})`;
+    await skriv("docs/briefing.json", JSON.stringify(NY), besked);
+    const c = await skriv("docs/briefing.html", NY_HTML, besked);
+    const side = `https://${gh.ejer}.github.io/${gh.repo}/briefing.html`;
+    $("pubBesked").innerHTML = `<div class="besked ok"><b>Publiceret.</b> Dashboardet er opdateret om cirka et minut på <a href="${side}" target="_blank" rel="noopener">${side}</a>. <a href="${esc(c.html_url)}" target="_blank" rel="noopener">Se ændringen på GitHub</a>.</div>`;
+    NU = NY; $("status").textContent = `Dashboardet bygger nu på data til og med ${fmtDato(NU.valeur?.sidste)} og blev opdateret ${fmtDato(NU.genereret)}.`;
+    saetTrin(5);
+  } catch (e) {
+    $("pubBesked").innerHTML = `<div class="besked bad"><b>Publiceringen fejlede:</b> ${esc(e.message)}</div>`;
+    $("publicer").disabled = false;
+  }
+});
+
+hentNu();
+</script>
+</body>
+</html>

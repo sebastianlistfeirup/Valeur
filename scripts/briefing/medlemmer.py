@@ -13,7 +13,22 @@ import pandas as pd
 
 START = pd.Timestamp("2025-05-05")
 MIN_GRUPPE = 25
-KOLONNER = {0: "kreds", 1: "type", 2: "stamkort", 8: "alder", 20: "dp_ind", 21: "dp_ud"}
+# Kolonnerne findes ud fra overskriften, så det er ligegyldigt, om andre kolonner er slettet.
+# Tallet er placeringen i den oprindelige eksport og bruges kun, hvis overskriften mangler.
+KOLONNER = {"kreds": ("Kreds", 0), "type": ("Medlemstype", 1), "stamkort": ("Stamkort", 2),
+            "alder": ("Alder", 8), "dp_ind": ("DP Indm.dato", 20), "dp_ud": ("DP Udm.dato", 21)}
+
+
+def kolonneplacering(hoved):
+    """{felt: kolonnenummer} ud fra overskriftsrækken."""
+    h = [str(c).strip() if c is not None else "" for c in hoved]
+    ud = {}
+    for felt, (navn, standard) in KOLONNER.items():
+        if navn in h:
+            ud[felt] = h.index(navn)
+        elif standard < len(h) and h[standard] == "":
+            ud[felt] = standard          # overskriften er tom, men kolonnen står, hvor den plejer
+    return ud
 KERNE = ["Normaltansat over 19 timer", "Selvstændig"]
 KREDS_NAVN = {"Kreds Trekantsområdet": "Trekantsområdet", "MIDTVESTjylland": "Midtvestjylland",
               "Viborg \"Limfjord\"": "Viborg-Limfjord", "Dansk Psykolog Forening": "Uden kreds"}
@@ -22,10 +37,7 @@ ALDER_NAVN = ["Under 26", "26–30", "31–35", "36–40", "41–45", "46–50",
 
 
 # ------------------------------------------------------------------ økonomi
-def oekonomi(root):
-    fil = root / "Nye Valeur træk" / "Opkaldsdata (5).xlsx"
-    if not fil.exists():
-        return None
+def oekonomi(fil):
     t = pd.read_excel(fil, header=None)
     hoved = t.index[t[0].astype(str).str.strip().eq("Kundenavn")][0]
     r = t.iloc[hoved + 1]
@@ -37,15 +49,22 @@ def oekonomi(root):
 
 
 # ------------------------------------------------------------------ medlemslister
-def _laes(root):
+def _laes(lister):
+    """lister: {"ÅÅÅÅ-MM-DD": sti} fra kilder.find()."""
     ud = []
-    for f in sorted(glob.glob(str(root / "Medlemslister" / "*.xlsx"))):
-        m = re.findall(r"periode_(\d\d_\d\d_\d\d)", f)
-        if not m:
-            continue
-        d = pd.read_excel(f, header=None, skiprows=1, usecols=list(KOLONNER), dtype={2: str})
-        d.columns = [KOLONNER[c] for c in d.columns]
-        d["snap"] = pd.to_datetime(m[0], format="%d_%m_%y")
+    for dato, f in sorted(lister.items()):
+        hoved = pd.read_excel(f, header=None, nrows=1).iloc[0].tolist()
+        plac = kolonneplacering(hoved)
+        mangler = [KOLONNER[k][0] for k in ("type", "dp_ind", "dp_ud") if k not in plac]   # uden stamkort: kun optælling
+        if mangler:
+            raise ValueError(f"Medlemslisten {Path(f).name} mangler kolonnerne: {', '.join(mangler)}")
+        d = pd.read_excel(f, header=None, skiprows=1, usecols=sorted(plac.values()),
+                          dtype={plac["stamkort"]: str} if "stamkort" in plac else None)
+        d = d.rename(columns={v: k for k, v in plac.items()})
+        for felt in KOLONNER:
+            if felt not in d:
+                d[felt] = pd.NA
+        d["snap"] = pd.Timestamp(dato)
         for c in ("dp_ind", "dp_ud"):
             d[c] = pd.to_datetime(d[c], errors="coerce")
         d["stamkort"] = d["stamkort"].astype("string").str.strip()
@@ -73,8 +92,8 @@ def _diff(a, b):
             "diff": round(p2 - p1, 4), "lav": round(p2 - p1 - 1.96 * se, 4), "hoej": round(p2 - p1 + 1.96 * se, 4)}
 
 
-def medlemmer(root):
-    p = _laes(root)
+def medlemmer(lister, mc_sti):
+    p = _laes(lister)
     if p is None:
         return None
     snaps = sorted(p["snap"].unique())
@@ -85,7 +104,7 @@ def medlemmer(root):
     seneste = p.sort_values("snap").drop_duplicates("stamkort", keep="last").set_index("stamkort")
     paa_sidste = set(p[p["snap"] == sidste]["stamkort"])
 
-    mc = pd.read_excel(root / "Membercare/Registreringer i servicefanen.xlsx", dtype=str,
+    mc = pd.read_excel(mc_sti, dtype=str,
                        usecols=["Stamkort", "Servicetype", "Service dato"])
     mc["dato"] = pd.to_datetime(mc["Service dato"], errors="coerce")
     mc["Stamkort"] = mc["Stamkort"].astype("string").str.strip()
@@ -160,6 +179,6 @@ def medlemmer(root):
             "nye": nye}
 
 
-def build(root):
-    root = Path(root)
-    return {"oekonomi": oekonomi(root), "medlemmer": medlemmer(root)}
+def build(pris_sti, lister, mc_sti):
+    return {"oekonomi": oekonomi(pris_sti) if pris_sti else None,
+            "medlemmer": medlemmer(lister, mc_sti) if lister and mc_sti else None}

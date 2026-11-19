@@ -1,0 +1,128 @@
+[
+ {
+  "id": "valeur_dag",
+  "navn": "Opkald pr. dag",
+  "system": "Valeur Insights",
+  "paakraevet": true,
+  "flere": false,
+  "eksport": "Kunderapporten \"Opkald per dag\" uden filter. Kolonnerne Date, Besvarede kald og Kald i alt.",
+  "kendetegn": "Kolonnerne Date · Besvarede kald · Kald i alt"
+ },
+ {
+  "id": "valeur_time",
+  "navn": "Timefordeling",
+  "system": "Valeur Insights",
+  "paakraevet": true,
+  "flere": false,
+  "eksport": "\"Timefordelingen\" fra kunderapporten uden filter.",
+  "kendetegn": "Kolonnerne Time · %GT Antal af unique_call_id"
+ },
+ {
+  "id": "valeur_time_afbrudt",
+  "navn": "Timefordeling for kald afbrudt inden kø",
+  "system": "Valeur Insights",
+  "paakraevet": true,
+  "flere": false,
+  "eksport": "\"Timefordelingen for kald afbrudt inden kø\" uden filter.",
+  "kendetegn": "Kolonnerne Time · Andel kald afbrudt inden kø"
+ },
+ {
+  "id": "valeur_ugedag",
+  "navn": "Ugedagenes andel af kald",
+  "system": "Valeur Insights",
+  "paakraevet": true,
+  "flere": false,
+  "eksport": "\"Ugedages andel af kald\" fra kunderapporten uden filter.",
+  "kendetegn": "Kolonnerne Ugedag · %GT Samlet antal opkald"
+ },
+ {
+  "id": "valeur_medlem",
+  "navn": "Medlem eller ikke medlem",
+  "system": "Valeur Insights",
+  "paakraevet": true,
+  "flere": false,
+  "eksport": "\"Medlem_Ikke_medlem\" uden filter.",
+  "kendetegn": "Kolonnerne Årsag · Andel"
+ },
+ {
+  "id": "valeur_pris",
+  "navn": "Pris og tid i alt",
+  "system": "Valeur Insights",
+  "paakraevet": true,
+  "flere": false,
+  "eksport": "\"Opkaldsdata\" med filteret activityType_name indeholder ikke 'opstart'. Hele perioden fra pilotstart.",
+  "kendetegn": "Kolonnerne Kundenavn · Besvarede kald · SamtaleTid i minutter · Samarbejde (kr.)"
+ },
+ {
+  "id": "koe_maaned",
+  "navn": "Køerne pr. måned",
+  "system": "IP Nordic",
+  "paakraevet": true,
+  "flere": true,
+  "eksport": "Kø-rapporten opdelt pr. måned, én fil pr. kø: 1510 Ansættelse, 1515 Selvstændig, 15122 Kursus, 15123 Øvrige/Medlemsservice, 1520 Zexpense og 1525 Debitor. Fra februar 2024 til i dag.",
+  "kendetegn": "Kolonnerne Dato · Kønummer · Kønavn · Opkald, med måneder som \"January 2026\""
+ },
+ {
+  "id": "koe_kald",
+  "navn": "Hvert kald i køerne",
+  "system": "IP Nordic",
+  "paakraevet": true,
+  "flere": true,
+  "eksport": "\"Alle opkald opdelt pr. indkomne opkald\", én fil pr. kø (samme seks køer). Fra februar 2024 til i dag.",
+  "kendetegn": "Kolonnerne Nummer · Kønummer · Kønavn · Starttidspunkt"
+ },
+ {
+  "id": "membercare",
+  "navn": "Registreringer i servicefanen",
+  "system": "Membercare",
+  "paakraevet": true,
+  "flere": false,
+  "eksport": "Alle registreringer i servicefanen fra 5. maj 2025 til i dag.",
+  "kendetegn": "Kolonnerne Stamkort · Medlem · Servicegruppe · Servicetype · Service dato"
+ },
+ {
+  "id": "medlemsliste",
+  "navn": "Medlemslister",
+  "system": "Membercare",
+  "paakraevet": true,
+  "flere": true,
+  "eksport": "Medlemslisten pr. kvartalsskifte. Den skal have kolonnerne Medlemstype, Stamkort, Kreds, Alder, DP Indm.dato og DP Udm.dato; alle andre kolonner (adresse, e-mail, telefon, arbejdsgiver) kan og bør slettes før upload. Datoen SKAL stå i filnavnet, fx \"Medlemsliste periode_31_12_26.xlsx\". Upload alle kvartaler fra 31. marts 2025, ikke kun det nyeste.",
+  "kendetegn": "Kolonnerne Medlemstype · Stamkort · DP Indm.dato · DP Udm.dato"
+ },
+ {
+  "id": "benchmark",
+  "navn": "Benchmark-ark",
+  "system": "Valeur (manuelt ark)",
+  "paakraevet": false,
+  "flere": false,
+  "eksport": "Valeurs benchmark-ark med fanen \"Benchmark\" (mål og opnået pr. uge/måned).",
+  "kendetegn": "Fanen Benchmark med Målsætning · Opnået"
+ },
+ {
+  "id": "valeur_md",
+  "navn": "Valeurs månedsopgørelse",
+  "system": "Valeur (manuelt ark)",
+  "paakraevet": false,
+  "flere": false,
+  "eksport": "Ark med fanen \"Opkald - månedsopdelt\" (tilbudte og besvarede kald pr. måned).",
+  "kendetegn": "Fanen Opkald - månedsopdelt"
+ },
+ {
+  "id": "efterbehandling",
+  "navn": "Efterbehandling pr. måned",
+  "system": "Valeur (manuelt ark)",
+  "paakraevet": false,
+  "flere": false,
+  "eksport": "Ark med fanen \"Efterbehandling\" (efterbehandlingstid pr. måned).",
+  "kendetegn": "Fanen Efterbehandling"
+ },
+ {
+  "id": "mails",
+  "navn": "Mails pr. uge",
+  "system": "Manuel optælling",
+  "paakraevet": false,
+  "flere": false,
+  "eksport": "Oversigten over mails, ugeopdelt, med én fane pr. år (fx \"2025\", \"2026\").",
+  "kendetegn": "Første celle \"Mails til Dansk Psykolog Forening\""
+ }
+]

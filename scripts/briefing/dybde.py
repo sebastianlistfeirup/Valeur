@@ -28,8 +28,8 @@ def _kort(t):
     return t.strip()
 
 
-def _membercare(root):
-    df = pd.read_excel(root / "Membercare/Registreringer i servicefanen.xlsx", dtype=str)
+def _membercare(mc_sti):
+    df = pd.read_excel(mc_sti, dtype=str)
     df["dato"] = pd.to_datetime(df["Service dato"], errors="coerce")
     df = df[df["dato"] >= START].copy()
     df["type"] = df["Servicetype"].fillna("Ikke angivet").str.strip().map(_kort)
@@ -128,9 +128,9 @@ def geografi(df):
 
 
 # 6 ------------------------------------------------------------------ køen og prognosen
-def koe_opgivelse(root):
+def koe_opgivelse(kald_stier):
     rows = []
-    for f in glob.glob(str(root / "Alle opkald opdelt pr indkomne opkald (linjer)" / "*.xlsx")):
+    for f in kald_stier:
         t = pd.read_excel(f, dtype=str, usecols=["Kønummer", "Starttidspunkt", "Besvarede", "Afbrudte",
                                                   "Ventetid for afbrudte", "Ventetid"])
         rows.append(t)
@@ -181,9 +181,8 @@ def prognose(valeur_dage, i_dag):
             "profil": {int(m): {UGEDAGE[int(w)]: round(float(v)) for w, v in r.items() if pd.notna(v)} for m, r in mat.iterrows()}}
 
 
-def build(root, valeur_dage, i_dag):
-    root = Path(root)
-    df = _membercare(root)
+def build(mc_sti, kald_stier, valeur_dage, i_dag):
+    df = _membercare(mc_sti)
     return {"loeser": loeser_selv(df), "udsendelser": udsendelser(df), "aarshjul": aarshjul(df),
-            "gentagne": gentagne(df), "geografi": geografi(df), "koe": koe_opgivelse(root),
+            "gentagne": gentagne(df), "geografi": geografi(df), "koe": koe_opgivelse(kald_stier),
             "prognose": prognose(valeur_dage, i_dag)}
