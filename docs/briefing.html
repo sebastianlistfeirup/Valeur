@@ -128,6 +128,11 @@ footer{color:var(--muted);font-size:12px}
 .mdtabel tbody tr.valgt td{background:color-mix(in srgb,var(--t-ovb) 16%,var(--panel));font-weight:600}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 #mdKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.fchip{font-size:12px;line-height:1.4;padding:4px 10px;border-radius:8px;width:fit-content;max-width:100%}
+.fchip.paa{background:color-mix(in srgb,var(--t-ovb) 13%,var(--panel));border:1px solid color-mix(in srgb,var(--t-ovb) 55%,var(--line));color:var(--ink)}
+.fchip.af{border:1px dashed var(--line);color:var(--muted);background:var(--panel)}
+.fchip .fchip-af{color:var(--muted);font-weight:400}
+.kpis + .fchip,.fchip + .kpis{margin-top:0}
 .filterforklaring{font-size:13px;line-height:1.55;border:1px dashed var(--t-ovb);border-radius:8px;padding:10px 14px;background:var(--panel);color:var(--ink)}
 .mdtabel th.grp{text-align:center;color:var(--ink);border-bottom:2px solid var(--t-ovb)}
 .mdtabel th.grp.hel{color:var(--muted);border-bottom-color:var(--line)}
@@ -314,7 +319,7 @@ footer{color:var(--muted);font-size:12px}
 
 <section class="blok" id="hvad" data-tema="emne">
   <div class="blok-head"><div class="eyebrow">Hvad og hvem</div><h2>Hvad ringer medlemmerne om?</h2>
-  <p>Hver samtale registreres i servicefanen med en hovedkategori og en underkategori. Her er alle registreringer siden 5. maj 2025.</p></div>
+  <p>Hver samtale registreres i servicefanen med en hovedkategori og en underkategori. Her er alle registreringer siden 5. maj 2025, eller kun dem for den afdeling og periode, der er valgt øverst. Mærket på hvert kort viser, hvad der er filtreret.</p></div>
   <div class="grid2">
     <div class="card"><h3>Hovedkategorier</h3><div class="bars" id="bGrupper"></div></div>
     <div class="card"><h3>De 12 hyppigste emner</h3><div class="bars" id="bTyper"></div></div>
@@ -1098,6 +1103,51 @@ function render(){
         nej.push("tidsgraferne, som viser hele forløbet med perioden markeret", "årshjul, sager igen og før/efter-tabellen for køerne");
       }
       fk.innerHTML = `<b>Filteret ændrer:</b> ${ja.join("; ")}.<br><b>Filteret ændrer ikke:</b> ${nej.join("; ")}. Sektioner, der ikke følger filteret, er mærket "Hele foreningen" eller "Hele perioden".`;
+    }
+    // mærke på hvert kort, hver tabel og hver nøgletalsrække: følger det filteret, eller ej?
+    // afd = følger afdelingsfilteret · per = følger perioden øverst · mark = hele forløbet med perioden markeret
+    // lok = følger den lokale periode i Måned for måned · note = forbehold, der skal stå i mærket
+    const SPEC = {
+      kpis: ["afd per", "Valeurs opkaldstal gælder hele nummeret"], mdKpi: ["afd lok", "Valeurs opkaldstal gælder hele nummeret"],
+      bMdEmner: ["afd lok"], bMdGrupper: ["afd lok"], tMd: ["afd mark", "Valeurs to kolonner gælder hele nummeret"],
+      cUger: ["afd mark"], cMd: ["afd mark"], flow: ["afd", "snit over de seneste 12 måneder"],
+      cTime: [""], cKoeTime: [""], cUgedag: [""],
+      cKoeer: ["afd mark"], tFE: ["afd", "fast før/efter-sammenligning"], cKoeSvar: ["afd mark"],
+      cAfbTime: [""], cAfbSpand: [""], prog: [""],
+      loeserKpi: ["afd per"], cLoeserMd: ["afd mark"], bLoeserG: ["afd per"], bLoeserTop: ["afd per"], bLoeserBund: ["afd per"],
+      tBench: [""], cEfter: [""],
+      bGrupper: ["afd per"], bTyper: ["afd per"], cMcMd: ["afd mark"],
+      cMedlem: [""], cGentag: ["afd"], cReg: ["afd mark"], bSeg: ["afd per"], heat: ["afd per"],
+      hjul: ["afd"], cUdsend: ["afd mark"], bIgen: ["afd"], cIgen: ["afd"], bKreds: ["afd per"], cKreds: ["afd per"],
+      omKpi: [""], omFlow: [""], cBestand: [""], bDaekType: [""], cDaekAlder: [""], cDaekKreds: [""],
+      cUdmNaiv: [""], cUdmFast: [""], nyeFlow: [""], bNye: [""], cMails: [""],
+    };
+    document.querySelectorAll(".fchip").forEach(e => e.remove());
+    if (erAfd || PER) {
+      const lokKort = LOKAL ? periodeKort(LOKAL.fra, LOKAL.til) : "";
+      for (const [id, [dims, note]] of Object.entries(SPEC)) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const d = dims.split(" ").filter(Boolean);
+        const paa = [], af = [];
+        if (erAfd) (d.includes("afd") ? paa.push("kun " + afdNavn) : af.push("hele foreningen"));
+        if (d.includes("lok")) paa.push(lokKort);
+        else if (PER) {
+          if (d.includes("per")) paa.push(PER.kort);
+          else if (d.includes("mark")) paa.push(`hele forløbet, ${PER.kort} markeret`);
+          else af.push("hele perioden");
+        }
+        const chip = document.createElement("div");
+        chip.className = "fchip " + (paa.length ? "paa" : "af");
+        chip.innerHTML = paa.length
+          ? `<b>Filter:</b> ${paa.join(" · ")}${af.length ? ` <span class="fchip-af">(ikke filtreret: ${af.join(", ")})</span>` : ""}${note && erAfd ? ` <span class="fchip-af">· ${note}</span>` : ""}`
+          : `<b>Ikke filtreret:</b> ${af.join(", ")}`;
+        const kort = el.closest(".card");
+        if (kort) {
+          const h = kort.querySelector(":scope > h3, :scope > .mdvaelger > h3");
+          if (h && h.parentElement === kort) h.after(chip); else kort.prepend(chip);
+        } else el.before(chip);
+      }
     }
     const info = [erAfd ? afdNavn : null, PER ? PER.navn : null].filter(Boolean);
     document.getElementById("filterInfo").textContent = info.length ? "Viser: " + info.join(" · ") : "";
