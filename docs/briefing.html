@@ -988,7 +988,8 @@ function render(){
     lF.value = LOKAL.fra; lT.value = LOKAL.til;
     document.getElementById("mdForrige").disabled = flytMd(LOKAL.fra, -L) < ALLE_MDR[0];
     document.getElementById("mdNaeste").disabled = flytMd(LOKAL.til, L) > ALLE_MDR[ALLE_MDR.length-1];
-    document.getElementById("lokNote").textContent = `${L} ${L === 1 ? "måned" : "måneder"} sammenlignet med ${fK}${ra ? " og " + aK : ""}.` +
+    document.getElementById("lokNote").textContent = `${L} ${L === 1 ? "måned" : "måneder"}` +
+      (rf ? ` sammenlignet med ${fK}${ra ? " og " + aK : ""}.` : ra ? ` sammenlignet med ${aK}.` : `. Der er ingen data fra perioden før (${fK}), fordi Valeur startede i maj 2025.`) +
       (delvis ? ` Sidste måned er ikke slut (data til ${dato(V.sidste)}), så antal sammenlignes ikke.` : "") + (erAfd ? ` Afdeling: ${afdNavn}.` : "");
     document.getElementById("mdKpi").innerHTML = [
       kpi(fmt(r.vI), "Opkald til Valeur" + (erAfd ? " (hele nummeret)" : ""), sam("vI", fmt), dd(g("vI"), r.vI, 0, true)),
