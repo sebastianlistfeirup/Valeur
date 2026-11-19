@@ -123,6 +123,9 @@ footer{color:var(--muted);font-size:12px}
 .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
 .crosslink{font-size:14px;font-weight:500;color:var(--valeur);text-decoration:none;width:max-content;max-width:100%}
 .crosslink:hover,.crosslink:focus-visible{text-decoration:underline}
+.toplinks{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.opdater-knap{font-size:13px;font-weight:600;color:var(--valeur);text-decoration:none;padding:5px 12px;border:1px solid var(--valeur);border-radius:999px}
+.opdater-knap:hover,.opdater-knap:focus-visible{background:var(--valeur);color:var(--panel);outline:none}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -130,7 +133,10 @@ footer{color:var(--muted);font-size:12px}
 <header class="top">
   <div class="eyebrow">Dansk Psykolog Forening · Valeur-samarbejdet</div>
   <h1>Medlemmernes indgang</h1>
-  <a class="crosslink" href="index.html">← Dashboardet over henvendelserne til hovednummeret</a>
+  <div class="toplinks">
+    <a class="crosslink" href="index.html">← Dashboardet over henvendelserne til hovednummeret</a>
+    <a class="opdater-knap" href="opdater.html">Opdatér med nye data</a>
+  </div>
   <p class="lede" id="lede"></p>
   <div class="legend">
     <span><i class="dot" style="background:var(--valeur)"></i>Valeur, frontlinjen</span>
@@ -386,7 +392,7 @@ function render(){
   const gentag2 = Object.entries(MC.gentag).filter(([k])=>+k>=2).reduce((a,[,v])=>a+v,0);
 
   document.getElementById("lede").textContent =
-    `Siden ${dato(V.foerste)} har Valeur taget imod medlemmernes opkald på DP's hovednummer. Siden samler telefoni, Membercare og Valeurs egne opgørelser frem til ${dato(V.sidste)} og er bygget op efter medarbejderbriefingen fra september 2025.`;
+    `Siden ${dato(V.foerste)} har Valeur taget imod medlemmernes opkald på DP's hovednummer. Siden samler telefoni, Membercare og Valeurs egne opgørelser frem til ${dato(V.sidste)}.`;
 
   const kpi = (v,label,from,pill) => `<div class="kpi"><div class="eyebrow">${label}</div><div class="v">${v}</div>${from?`<div class="from">${from}</div>`:""}${pill||""}</div>`;
   const chg = (a,b,goodDown=true) => { const d=(b-a)/a; const good = goodDown ? d<0 : d>0; return `<span class="pill ${good?"good":"bad"}">${d>0?"▲":"▼"} ${fmt(Math.abs(d)*100)} %</span>`; };
