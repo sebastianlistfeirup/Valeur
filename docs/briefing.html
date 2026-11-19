@@ -128,6 +128,7 @@ footer{color:var(--muted);font-size:12px}
 .mdtabel tbody tr.valgt td{background:color-mix(in srgb,var(--t-ovb) 16%,var(--panel));font-weight:600}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 #mdKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.vurdering{display:block;margin-top:6px;font-size:12.5px;color:var(--muted);font-style:italic}
 .fchip{font-size:12px;line-height:1.4;padding:4px 10px;border-radius:8px;width:fit-content;max-width:100%}
 .fchip.paa{background:color-mix(in srgb,var(--t-ovb) 13%,var(--panel));border:1px solid color-mix(in srgb,var(--t-ovb) 55%,var(--line));color:var(--ink)}
 .fchip.af{border:1px dashed var(--line);color:var(--muted);background:var(--panel)}
@@ -256,7 +257,7 @@ footer{color:var(--muted);font-size:12px}
 
 <section class="blok" id="hvornaar" data-tema="tlf">
   <div class="blok-head"><div class="eyebrow">Telefonen</div><h2>Hvornår ringer medlemmerne?</h2>
-  <p>Trykket ligger lige når telefonen åbner kl. 10. Det er også her flest lægger på, før de når i kø.</p></div>
+  <p id="hvornaarTekst">Hvornår på dagen medlemmerne ringer, og hvornår de lægger på, før de når i kø.</p></div>
   <div class="grid2">
     <div class="card"><h3>Opkald og afbrudte pr. time</h3><div class="chart"><canvas id="cTime"></canvas></div><div class="src">Kilde: Valeur Insights, timefordeling og kald afbrudt inden kø</div></div>
     <div class="card"><h3>Sekretariatets køer pr. time, efter Valeur</h3><div class="chart"><canvas id="cKoeTime"></canvas></div><div class="src">Kilde: IP Nordic, hvert kald efter 5. maj 2025</div></div>
@@ -427,6 +428,9 @@ const MD = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","d
 const mdLabel = k => { const [y,m]=k.split("-"); return MD[+m-1]+" "+y.slice(2); };
 const dato = s => { const d=new Date(s); return d.getDate()+". "+MD[d.getMonth()]+" "+d.getFullYear(); };
 const charts = [];
+// tekster, der ikke kan regnes ud af data (anbefalinger og fortolkninger), mærkes med datoen, de er skrevet
+const VURDERET = "november 2026";
+const vurdering = t => ` <span class="vurdering">Vurdering pr. ${VURDERET}: ${t}</span>`;
 // ------------------------------------------------------------------ filtre: afdeling og periode (fra–til)
 const DATA = D;
 const AFD_DEF = D.afd_def || [];
@@ -688,7 +692,12 @@ function render(){
       ? `<b>${afdNavn}.</b> ` + (ingenKoe ? "Afdelingen har ingen egen kø; medlemmerne kommer igennem Valeur, som besvarer eller sender en besked videre. "
           : `${stort(koeNavn)} får ${fmt(eO)} kald om måneden mod ${fmt(fO)} før Valeur (${fmt((eO/fO-1)*100)} %). Ventetiden er gået fra ${mmss(fV)} til ${mmss(eV)} min., og svarprocenten fra ${pct(fB/fO)} til ${pct(eB/eO)}. `) +
         `I Membercare er der ${fmt(MC.total_efter)} registreringer om afdelingens emner fra ${fmt(MC.unikke)} forskellige personer.`
-      : `<b>Hovedfund.</b> Valeur besvarer ${pct(vSvar)} af opkaldene og er blevet medlemmernes faste indgang. Sekretariatets køer får ${fmt((1-eO/fO)*100)} % færre kald end før, og ventetiden i køerne er faldet fra ${mmss(fV)} til ${mmss(eV)} min. Til gengæld besvares kun ${pct(eB/eO)} af de kald, Valeur stiller videre, mod ${pct(fB/fO)} før. Det er her, samarbejdet taber flest medlemmer i dag.`;
+      : (() => { const fald = 1 - eO/fO, svarNed = fB/fO - eB/eO, tabtKoe = eO - eB, tabtV = vMd - vBmd;
+          let t = `<b>Hovedfund.</b> Valeur besvarer ${pct(vSvar)} af opkaldene${vSvar >= .9 ? " og når målet på 90 %" : ", mod et mål på 90 %"}. Sekretariatets køer får ${fmt(Math.abs(fald)*100)} % ${fald >= 0 ? "færre" : "flere"} kald end før, og ventetiden i køerne er ${eV <= fV ? "faldet" : "steget"} fra ${mmss(fV)} til ${mmss(eV)} min. `;
+          t += Math.abs(svarNed) < .03 ? `Svarprocenten i køerne er nogenlunde uændret (${pct(eB/eO)} mod ${pct(fB/fO)} før). `
+             : svarNed > 0 ? `Til gengæld besvares kun ${pct(eB/eO)} af kaldene i køerne mod ${pct(fB/fO)} før. ` : `Samtidig er svarprocenten i køerne steget fra ${pct(fB/fO)} til ${pct(eB/eO)}. `;
+          t += `Om måneden går cirka ${fmt(tabtV)} opkald tabt hos Valeur og ${fmt(tabtKoe)} i sekretariatets køer${tabtKoe > tabtV ? ", så det er i køerne, flest medlemmer går tabt" : tabtV > tabtKoe ? ", så det er hos Valeur, flest medlemmer går tabt" : ""}.`;
+          return t; })();
   }
 
   // --- uger (for en afdeling: henvendelser om afdelingens emner og afdelingens kø)
@@ -767,8 +776,18 @@ function render(){
     row(`<b>${erAfd ? "I alt" : "Alle seks køer"}</b>`,{opkald_md:fO,svarpct:fB/fO,vent:fV,tale:null},{opkald_md:eO,svarpct:eB/eO,vent:eV,tale:null})+"</tbody>";
 
   const ms = KFE["15123"], ans = KFE["1510"], sel = KFE["1515"];
-  document.getElementById("aflInsight").innerHTML = `<b>Aflastningen er størst i medlemsservice.</b> Kø 15123 er gået fra ${fmt(ms.foer.opkald_md)} til ${fmt(ms.efter.opkald_md)} kald om måneden, og Valeur løser selv opgaven. Selvstændig er faldet ${fmt((1-sel.efter.opkald_md/sel.foer.opkald_md)*100)} %. Ansættelse og rådgivning falder mindst (${fmt((1-ans.efter.opkald_md/ans.foer.opkald_md)*100)} %), fordi Valeur er instrueret i at stille de fleste af de opkald videre. Samtalerne i rådgivningen er blevet længere (${mmss(ans.foer.tale)} → ${mmss(ans.efter.tale)}), så den samlede tid i telefonen er uændret, omkring ${fmt(ans.efter.tale_timer_md)} timer om måneden.`;
-  document.getElementById("koeHul").innerHTML = `<b>Kø-hullet.</b> Før Valeur svarede sekretariatet på ${pct(fB/fO)} af kaldene i køerne. Efter er det ${pct(eB/eO)}. I rådgivningen er svarprocenten faldet fra ${pct(ans.foer.svarpct)} til ${pct(ans.efter.svarpct)} og hos selvstændige fra ${pct(sel.foer.svarpct)} til ${pct(sel.efter.svarpct)}. Ventetiden er kort, så medlemmerne lægger ikke på efter lang tid. Det tyder på, at der ofte ikke sidder nogen klar i køen, når Valeur stiller om. Omkring ${fmt(eO-eB)} kald om måneden ender uden svar efter at være blevet stillet videre.`;
+  { const kk = koeOrder.filter(k => KFE[k] && KFE[k].foer.opkald_md >= 10)
+      .map(k => { const f = KFE[k].foer.opkald_md, e = KFE[k].efter.opkald_md; return {k, f, e, d: f - e, p: (f - e) / f}; });
+    const st = [...kk].sort((a,b) => b.d - a.d)[0], mi = [...kk].sort((a,b) => a.p - b.p)[0];
+    const tT = koeOrder.reduce((a,k) => a + (KFE[k] ? KFE[k].efter.tale_timer_md : 0), 0), tF = koeOrder.reduce((a,k) => a + (KFE[k] ? KFE[k].foer.tale_timer_md : 0), 0);
+    document.getElementById("aflInsight").innerHTML = st ? `<b>${st.d > 0 ? `Aflastningen er størst i ${KN[st.k].toLowerCase()}` : "Ingen af køerne er aflastet"}.</b> ${KN[st.k]} er gået fra ${fmt(st.f)} til ${fmt(st.e)} kald om måneden (${st.p >= 0 ? "−" : "+"}${fmt(Math.abs(st.p)*100)} %). ` +
+      (mi && mi !== st ? `${KN[mi.k]} ${mi.p >= 0 ? `falder mindst (−${fmt(mi.p*100)} %)` : `er steget ${fmt(-mi.p*100)} %`}. ` : "") +
+      `Samtaletiden i ${KN["1510"].toLowerCase()} er ${ans.efter.tale >= ans.foer.tale ? "steget" : "faldet"} fra ${mmss(ans.foer.tale)} til ${mmss(ans.efter.tale)} min. Samlet bruger sekretariatet ${fmt(tT)} timer om måneden i telefonen i køerne mod ${fmt(tF)} før.` +
+      vurdering("Forskellen mellem køerne skyldes især, at Valeur løser medlemsservicens opgaver helt, men er instrueret i at stille de fleste rådgivningsopkald videre.") : ""; }
+  { const ned = fB/fO - eB/eO, ord = (f,e) => Math.abs(f-e) < .03 ? `uændret ${pct(e)}` : `${e < f ? "faldet" : "steget"} fra ${pct(f)} til ${pct(e)}`;
+    document.getElementById("koeHul").innerHTML = `<b>${ned >= .03 ? "Kø-hullet." : ned <= -.03 ? "Flere kald i køerne bliver besvaret." : "Svarprocenten i køerne er stabil."}</b> Før Valeur svarede sekretariatet på ${pct(fB/fO)} af kaldene i køerne. Nu er det ${pct(eB/eO)}. ` +
+      `I ${KN["1510"].toLowerCase()} er svarprocenten ${ord(ans.foer.svarpct, ans.efter.svarpct)}, og i ${KN["1515"].toLowerCase()} ${ord(sel.foer.svarpct, sel.efter.svarpct)}. Omkring ${fmt(eO-eB)} kald om måneden ender uden svar i køerne.` +
+      (ned >= .03 ? vurdering("Ventetiden i køerne er kort, så faldet skyldes næppe, at medlemmerne giver op efter lang tid. Det tyder på, at der ofte ikke sidder nogen klar i køen, når Valeur stiller om.") : ""); }
 
   if (erAfd && !ingenKoe) {
     const kn = koeOrder.map(k=>KN[k]).join(" og ");
@@ -799,9 +818,13 @@ function render(){
   const ud = ["Monday","Tuesday","Wednesday","Thursday","Friday"], udDa=["Mandag","Tirsdag","Onsdag","Torsdag","Fredag"];
   mk("cUgedag",{type:"bar",data:{labels:udDa,datasets:[{label:"Andel af opkald til Valeur",data:ud.map(d=>(V.ugedag[d]||0)*100),backgroundColor:css("--valeur"),borderRadius:3}]},
     options:{indexAxis:"y",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw,1)+" %"}}},scales:{x:{ticks:{callback:v=>v+" %"}},y:{grid:{display:false}}}}});
-  document.getElementById("ugedagNote").textContent = "Onsdag er lukkedag og har ingen opkald hos Valeur. Briefingen fra 2025 viste, at 10–15 % af ugens opkald alligevel faldt på en onsdag, men de rammer telefonsvareren og indgår ikke her.";
+  document.getElementById("ugedagNote").textContent = (V.ugedag["Wednesday"] ? `${pct(V.ugedag["Wednesday"])} af opkaldene til Valeur falder på en onsdag.` : "Onsdag er lukkedag og har ingen opkald hos Valeur.") + " Briefingen fra 2025 viste, at 10–15 % af ugens opkald alligevel faldt på en onsdag. De rammer telefonsvareren og indgår ikke her.";
   const t10 = V.time["10"], a10 = V.time_afbrudt["10"], udenfor = (V.time["9"]||0)+(V.time["13"]||0)+(V.time["14"]||0)+(V.time["15"]||0);
-  document.getElementById("tidInsight").innerHTML = `<b>Klokken 10 er flaskehalsen.</b> ${pct(t10)} af alle opkald kommer mellem 10 og 11, og ${pct(V.time_afbrudt["10"]+V.time_afbrudt["11"]+V.time_afbrudt["12"])} af dem, der lægger på før de når i kø, gør det mellem 10 og 13. ${pct(udenfor)} af opkaldene til Valeur ligger uden for 10–13. Briefingen pegede på, at der står 5–18 i kø, når telefonen åbner. En åbning kl. 9.30 eller ekstra bemanding kl. 10–10.30 vil sandsynligvis flytte flest mistede opkald.`;
+  { const top = Object.entries(V.time).sort((a,b) => b[1]-a[1])[0] || ["10", 0], afbTop = Object.entries(V.time_afbrudt).sort((a,b) => b[1]-a[1])[0] || ["10", 0];
+    const afb1013 = (V.time_afbrudt["10"]||0) + (V.time_afbrudt["11"]||0) + (V.time_afbrudt["12"]||0), h = +top[0], ah = +afbTop[0];
+    document.getElementById("hvornaarTekst").textContent = `Trykket er størst mellem ${h} og ${h+1}, og flest lægger på, før de når i kø, mellem ${ah} og ${ah+1}.`;
+    document.getElementById("tidInsight").innerHTML = `<b>Klokken ${h} er flaskehalsen.</b> ${pct(top[1])} af alle opkald kommer mellem ${h} og ${h+1}. Af dem, der lægger på før de når i kø, gør ${pct(afbTop[1])} det mellem ${ah} og ${ah+1}, og ${pct(afb1013)} mellem 10 og 13. ${pct(udenfor)} af opkaldene til Valeur ligger uden for 10–13.` +
+      vurdering(`Briefingen fra 2025 pegede på, at der står 5–18 i kø, når telefonen åbner. En tidligere åbning eller ekstra bemanding omkring kl. ${h} vil sandsynligvis flytte flest mistede opkald.`); }
 
   // --- hvad
   const G = Object.entries(MC.grupper);
@@ -821,12 +844,14 @@ function render(){
   const gk = Object.keys(MC.gentag);
   mk("cGentag",{type:"bar",data:{labels:gk.map(k=>k==="6"?"6+":k),datasets:[{label:"Personer",data:gk.map(k=>MC.gentag[k]),backgroundColor:gk.map(k=>k==="1"?css("--foer"):css("--sek")),borderRadius:3}]},
     options:{plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:"Registreringer pr. person"},grid:{display:false}}}}});
-  document.getElementById("gentagNote").textContent = `${pct(gentag2/MC.unikke)} af de ${fmt(MC.unikke)} personer har været registreret mere end én gang. ${fmt(MC.gentag["6"])} personer har seks eller flere registreringer; det er typisk klagesager, sygdom og afskedigelser.`;
+  { const gt = (((D.dybde||{}).gentagne||{}).pr_type||[]).slice(0, 3).map(t => t.t.split(" fx ")[0].replace(/\s*\(.*?\)/g, "").toLowerCase());
+    document.getElementById("gentagNote").textContent = `${pct(gentag2/MC.unikke)} af de ${fmt(MC.unikke)} personer har været registreret mere end én gang. ${fmt(MC.gentag["6"] || 0)} personer har seks eller flere registreringer.` + (gt.length ? ` De emner, der oftest kommer igen, er ${gt.join(", ")} (se Sager igen).` : ""); }
   const vReg = MC.valeur_pr_md.reduce((a,m)=>a+m.valeur,0), aReg = MC.valeur_pr_md.reduce((a,m)=>a+m.alle,0);
   mk("cReg",{type:"line",data:{labels:MC.valeur_pr_md.map(m=>mdLabel(m.md)),datasets:[{label:"Andel registreret af Valeur",data:MC.valeur_pr_md.map(m=>m.valeur/m.alle*100),borderColor:css("--valeur"),backgroundColor:alpha("--valeur",.15),fill:true,tension:.3,pointRadius:2}]},
     options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw,1)+" %"}}},scales:{y:{min:50,max:100,ticks:{callback:v=>v+" %"}},x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:8}}}}});
   const sidste3 = MC.valeur_pr_md.slice(-4,-1), s3 = sidste3.reduce((a,m)=>a+m.valeur,0)/sidste3.reduce((a,m)=>a+m.alle,0);
-  document.getElementById("regNote").textContent = `${MC.antal_valeur_agenter} Valeur-medarbejdere står for ${pct(vReg/aReg)} af registreringerne i servicefanen. Andelen er faldet til ${pct(s3)} de seneste tre måneder. Resten er registreret af sekretariatets egne medarbejdere.`;
+  { const hel = vReg/aReg, retn = s3 < hel - .02 ? "faldet til" : s3 > hel + .02 ? "steget til" : "nogenlunde den samme,";
+    document.getElementById("regNote").textContent = `${MC.antal_valeur_agenter} Valeur-medarbejdere står for ${pct(hel)} af registreringerne i servicefanen. Andelen er ${retn} ${pct(s3)} de seneste tre måneder. Resten er registreret af sekretariatets egne medarbejdere.`; }
 
   const S = Object.entries(MC.segmenter);
   bars(document.getElementById("bSeg"), S.map(([k,v])=>[k,v,pct(v/MC.total_efter)]), (S[0]||[0,1])[1], "var(--sek)");
@@ -852,7 +877,24 @@ function render(){
     {label:"Mål 1:30",data:EB.map(()=>90),borderColor:css("--bad"),borderDash:[5,4],pointRadius:0,borderWidth:1}]},
     options:{scales:{y:{min:0,max:200,ticks:{callback:v=>mmss(v)}},x:{grid:{display:false}}},plugins:{tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${mmss(c.raw)} min.`}}}}});
   const fcr = B.filter(p=>p.FCR!=null&&p.FCR<=1).map(p=>p.FCR), fcrSnit = fcr.reduce((a,b)=>a+b,0)/fcr.length;
-  document.getElementById("fcrInsight").innerHTML = `<b>To mål nås ikke.</b> Efterbehandlingen ligger stabilt på 2–3 minutter mod et mål på 1:30. Andelen løst i første kald (FCR) er i snit ${pct(fcrSnit)} i de perioder, hvor den er målt, mod et mål på 75 %. Briefingen opgjorde i 2025 en straksbesvarelse på 63 %, så de to tal er ikke målt på samme måde. Det bør afklares med Valeur, hvad FCR dækker, før det bruges som styringsmål. Registreringsgraden i Membercare (mål 90 %) er ikke udfyldt i et eneste ark.`;
+  { const PB = B.filter(p => p.periode !== "Samlet"), seneste = (felt, n = 6) => PB.filter(p => p[felt] != null && (felt !== "FCR" || p[felt] <= 1)).slice(-n).map(p => p[felt]);
+    const snit = a => a.length ? a.reduce((x,y) => x+y, 0) / a.length : null;
+    const ebS = EB.slice(-6).map(e => e.s), ebMin = Math.min(...ebS), ebMax = Math.max(...ebS);
+    const maal = [
+      {navn: "svarraten", v: snit(seneste("SLA svarrate")), ok: v => v >= M["SLA svarrate"], vis: v => `${pct(v)} mod ${pct(M["SLA svarrate"])}`},
+      {navn: "ventetiden", v: snit(seneste("Gns Ventetid")), ok: v => v <= M["Gns Ventetid"], vis: v => `${mmss(v)} mod ${mmss(M["Gns Ventetid"])} min.`},
+      {navn: "efterbehandlingen", v: ebS.length ? snit(ebS) : snit(seneste("Efterbehandling")), ok: v => v <= M["Efterbehandling"], vis: v => `${ebS.length && ebMin !== ebMax ? `${mmss(ebMin)}–${mmss(ebMax)}` : mmss(v)} min. mod ${mmss(M["Efterbehandling"])}`},
+      {navn: "den maksimale taletid", v: snit(seneste("Max taletid")), ok: v => v <= M["Max taletid"], vis: v => `${mmss(v)} mod ${mmss(M["Max taletid"])} min. i snit`},
+      {navn: "løst i første kald (FCR)", v: snit(seneste("FCR")), ok: v => v >= M["FCR"], vis: v => `${pct(v)} mod ${pct(M["FCR"])}`},
+    ].filter(m => m.v != null);
+    const ikke = maal.filter(m => !m.ok(m.v)), tal = ["Ingen","Ét","To","Tre","Fire","Fem","Seks"];
+    const reg = seneste("Registrering MC"), fcrAlle = PB.filter(p => p.FCR != null && p.FCR <= 1).map(p => p.FCR);
+    document.getElementById("fcrInsight").innerHTML = `<b>${ikke.length ? `${tal[ikke.length] || ikke.length} af ${(tal[maal.length] || maal.length).toString().toLowerCase().replace("ét","et")} mål nås ikke` : `Alle ${(tal[maal.length] || maal.length).toString().toLowerCase().replace("ét","et")} målte mål nås`}.</b> ` +
+      (ikke.length ? `Ikke nået: ${ikke.map(m => `${m.navn} (${m.vis(m.v)})`).join("; ")}. ` : "") +
+      (maal.length - ikke.length ? `Nået: ${maal.filter(m => m.ok(m.v)).map(m => `${m.navn} (${m.vis(m.v)})`).join("; ")}. ` : "") +
+      `Opgjort som snit af de seneste seks perioder med tal. ` +
+      (reg.length ? `Registreringsgraden i Membercare er i snit ${pct(snit(reg))} mod et mål på ${pct(M["Registrering MC"])}.` : `Registreringsgraden i Membercare (mål ${pct(M["Registrering MC"])}) er ikke udfyldt i arkene.`) +
+      (fcrAlle.length ? vurdering("Briefingen fra 2025 opgjorde en straksbesvarelse på 63 %, så FCR i benchmark-arket er ikke målt på samme måde. Det bør afklares med Valeur, hvad FCR dækker, før det bruges som styringsmål.") : ""); }
 
   // --- mails
   const ML = Object.entries(D.mails);
@@ -891,7 +933,13 @@ function render(){
   pctBars(document.getElementById("bLoeserTop"), L.pr_type.slice(0,7).map(t=>[t.t,t.a,t.n]), "var(--sek)");
   pctBars(document.getElementById("bLoeserBund"), [...L.pr_type].reverse().slice(0,7).map(t=>[t.t,1-t.a,t.n]), "var(--valeur)");
   const lMed = L.pr_type.find(t=>t.t==="Medlemskab og kontingent");
-  document.getElementById("loeserInsight").innerHTML = `<b>Valeur løser omkring ${pct(1-L.andel_besked)} af sagerne selv.</b> Rådgivningsemnerne sendes videre i ${pct(lG["Rådgivning/forhandling"])} af tilfældene, sådan som Valeur er instrueret. Medlemskab og kontingent sendes videre i ${pct(lMed?.a)} af tilfældene, selv om det handler om foreningens egne regler. Det og de øvrige emner i midten af listen er de oplagte at se på, hvis Valeur skal løse mere selv: med flere faste svar kunne en del af dem afsluttes i første opkald. <span class="src">Forbehold: Andelen er fundet ved at søge efter faste formuleringer i noterne, fx "Har ringet i dag" og kønumre. ${pct(L.andel_tom)} af noterne er tomme og tæller som løst. Valeurs eget mål for løst i første kald (30–40 % i benchmark-arket) er målt på en anden måde og kan ikke sammenlignes direkte.</span>`;
+  { const PBf = D.benchmark.perioder.filter(p => p.periode !== "Samlet" && p.FCR != null && p.FCR <= 1).map(p => p.FCR), top2 = L.pr_type.slice(0, 2).map(t => `${t.t.toLowerCase()} (${pct(t.a)})`);
+    document.getElementById("loeserInsight").innerHTML = `<b>Valeur løser omkring ${pct(1-L.andel_besked)} af sagerne selv.</b> ` +
+      (lG["Rådgivning/forhandling"] != null ? `Rådgivningsemnerne sendes videre i ${pct(lG["Rådgivning/forhandling"])} af tilfældene. ` : "") +
+      (top2.length ? `Oftest sendes ${top2.join(" og ")} videre. ` : "") +
+      (lMed && lMed.a >= .3 ? `Medlemskab og kontingent sendes videre i ${pct(lMed.a)} af tilfældene.` : "") +
+      vurdering("Rådgivning sendes bevidst videre efter instruks. Emner om foreningens egne regler, som medlemskab og kontingent, er de oplagte at give Valeur flere faste svar på.") +
+      ` <span class="src">Forbehold: Andelen er fundet ved at søge efter faste formuleringer i noterne, fx "Har ringet i dag" og kønumre. ${pct(L.andel_tom)} af noterne er tomme og tæller som løst.${PBf.length ? ` Valeurs eget tal for løst i første kald (${fmt(Math.min(...PBf)*100)}–${pct(Math.max(...PBf))} i benchmark-arket) er målt på en anden måde og kan ikke sammenlignes direkte.` : ""}</span>`; }
   if (erAfd || PER) { const top = L.pr_type[0], bund = L.pr_type[L.pr_type.length-1];
     document.getElementById("loeserInsight").innerHTML = `<b>${erAfd ? afdNavn : "Hele foreningen"}${PER ? " · " + PER.navn : ""}: Valeur løser omkring ${pct(1-L.andel_besked)} selv</b> (${fmt(L.n)} registreringer). ${top ? `Sendes oftest videre: ${top.t} (${pct(top.a)}). ` : ""}${bund && bund !== top ? `Løses oftest af Valeur: ${bund.t} (${pct(1-bund.a)} løst). ` : ""}<span class="src">Andelen er fundet ved at søge efter faste formuleringer i noterne og er et skøn.</span>`; }
 
@@ -908,7 +956,11 @@ function render(){
   const topU = [...US.uger].sort((a,b)=>b.kont-a.kont)[0];
   document.getElementById("udsendInsight").hidden = !(topU && topU.kont >= 10 && (!erAfd || FILTER.afd === "medlemsservice"));
   const kontSnit = US.uger.reduce((a,u)=>a+u.kont,0)/US.uger.length;
-  if (topU) document.getElementById("udsendInsight").innerHTML = `<b>Én rykkerudsendelse giver en hel uges ekstra opkald.</b> I ugen fra ${dato(topU.start)} var der ${fmt(topU.kont)} registreringer om medlemskab og kontingent, mod ${fmt(kontSnit)} i en gennemsnitlig uge, og ${fmt(topU.ryk)} af dem nævnte en rykker. I alt nævner ${fmt(US.ryk_i_alt)} registreringer en rykker, og ${pct(US.ryk_andel_kontingent)} af dem handler om kontingent. Hvis Valeur får besked om udsendelser på forhånd og har et fast svar klar, kan spidsen planlægges i stedet for at ramme som en overraskelse.`;
+  if (topU) { const gange = kontSnit ? topU.kont / kontSnit : null;
+    document.getElementById("udsendInsight").innerHTML = `<b>${gange && gange >= 2 ? `Ugen fra ${dato(topU.start)} gav ${fmt(gange, 1)} gange så mange kontingentopkald som en normal uge.` : "Ingen enkeltuge skiller sig markant ud."}</b> Den uge var der ${fmt(topU.kont)} registreringer om medlemskab og kontingent, mod ${fmt(kontSnit)} i en gennemsnitlig uge` +
+      (topU.ryk >= 10 ? `, og ${fmt(topU.ryk)} af dem nævnte en rykker. ` : `. Få af dem nævnte en rykker, så årsagen kan ikke ses i noterne. `) +
+      `I alt nævner ${fmt(US.ryk_i_alt)} registreringer en rykker, og ${pct(US.ryk_andel_kontingent)} af dem handler om kontingent.` +
+      vurdering("Hvis Valeur får besked om udsendelser på forhånd og har et fast svar klar, kan spidserne planlægges i stedet for at ramme som en overraskelse."); }
 
   // 3 årshjul
   const AH = DY.aarshjul, MDK = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
@@ -925,7 +977,10 @@ function render(){
   const fd = Object.entries(GI.fordeling_dage);
   mk("cIgen",{type:"bar",data:{labels:fd.map(x=>x[0]),datasets:[{label:"Gentagne henvendelser",data:fd.map(x=>x[1]),backgroundColor:css("--sek"),borderRadius:3}]},
     options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false}}}}});
-  document.getElementById("igenNote").textContent = `${pct(GI.andel)} af registreringerne følges af en ny henvendelse fra samme person inden for 14 dage, og i ${pct(GI.samme_emne)} af tilfældene handler den om samme emne. Den største gruppe kommer igen samme dag. Det kan være medlemmer, der ringer tilbage, fordi de ikke fik fat i den, de blev stillet videre til.`;
+  { const stoerst = Object.entries(GI.fordeling_dage || {}).sort((a,b) => b[1]-a[1])[0];
+    document.getElementById("igenNote").textContent = `${pct(GI.andel)} af registreringerne følges af en ny henvendelse fra samme person inden for 14 dage, og i ${pct(GI.samme_emne)} af tilfældene handler den om samme emne.` +
+      (stoerst ? ` Den største gruppe kommer igen ${stoerst[0].toLowerCase()}.` : "") +
+      (stoerst && stoerst[0] === "Samme dag" ? " Det kan være medlemmer, der ringer tilbage, fordi de ikke fik fat i den, de blev stillet videre til." : ""); }
 
   // 5 geografi
   const GE = DY.geografi, geTot = GE.reduce((a,x)=>a+x.n,0);
@@ -946,7 +1001,8 @@ function render(){
   mk("cAfbSpand",{type:"bar",data:{labels:SP.map(x=>x[0]),datasets:[{label:"Afbrudte kald",data:SP.map(x=>x[1]),backgroundColor:css("--bad"),borderRadius:3}]},
     options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw)} kald · ${pct(c.raw/spTot)}`}}},scales:{x:{grid:{display:false}}}}});
   const under2 = (KO.spand["Under 30 sek."]+KO.spand["30–60 sek."]+KO.spand["1–2 min."])/spTot;
-  document.getElementById("afbNote").textContent = `${pct(KO.afb_i_alt/KO.kald_i_alt)} af kaldene i sekretariatets køer bliver afbrudt, før nogen tager telefonen, og ${pct(under2)} af dem lægger på inden for to minutter. Et tilbud om at blive ringet op efter et minut i kø vil sandsynligvis fange de fleste af dem.`;
+  document.getElementById("afbNote").innerHTML = `${pct(KO.afb_i_alt/KO.kald_i_alt)} af kaldene i sekretariatets køer bliver afbrudt, før nogen tager telefonen, og ${pct(under2)} af dem lægger på inden for to minutter.` +
+    (under2 >= .5 ? vurdering("Et tilbud om at blive ringet op efter et minut i kø vil sandsynligvis fange de fleste af dem.") : "");
   const PG = DY.prognose, snitF = PG.dage.reduce((a,x)=>a+x.f,0)/PG.dage.length;
   document.getElementById("prog").innerHTML = PG.dage.map(x=>{ const d=new Date(x.d); return `<div class="d ${x.f>=snitF*1.12?"hoej":""}"><span class="w">${x.wd.slice(0,3)} ${d.getDate()}/${d.getMonth()+1}</span><span class="n">${fmt(x.f)}</span></div>`; }).join("");
   document.getElementById("progNote").textContent = `Prognosen er gennemsnittet for samme ugedag i samme måned sidste år, ganget med væksten de seneste tre måneder (${PG.vaekst_mdr.map(mdLabel).join(", ")}: ${PG.vaekst>1?"+":""}${fmt((PG.vaekst-1)*100)} % mod året før). Markerede dage ligger mindst 12 % over snittet. Dage efter 21. december er udeladt. Prognosen tager ikke højde for udsendelser, som kan give mange flere opkald.`;
@@ -981,7 +1037,9 @@ function render(){
     mk("cDaekAlder",{type:"bar",data:{labels:DK.pr_alder.map(a=>a.g),datasets:[{label:"Andel i kontakt",data:DK.pr_alder.map(a=>a.a*100),backgroundColor:DK.pr_alder.map(a=>a.a<.2?css("--warn"):css("--valeur")),borderRadius:3}]},
       options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw,1)} % af ${fmt(DK.pr_alder[c.dataIndex].n)} medlemmer`}}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>v+" %"}}}}});
     const u26 = DK.pr_alder[0];
-    document.getElementById("daekAlderNote").textContent = `Kun ${pct(u26.a)} af medlemmerne under 26 år har været i kontakt, mod 28–33 % i alle grupper fra 26 til 70 år. De unge er næsten alle studerende. Det bekræfter briefingens iagttagelse, at de helt unge sjældent ringer.`;
+    { const midt = DK.pr_alder.filter(a => a.g !== "Under 26" && a.g !== "Over 70").map(a => a.a), lo = Math.min(...midt), hi = Math.max(...midt);
+      document.getElementById("daekAlderNote").textContent = `${pct(u26.a)} af medlemmerne under 26 år har været i kontakt, mod ${fmt(lo*100)}–${fmt(hi*100)} % i grupperne fra 26 til 70 år.` +
+        (u26.a < lo ? " De unge er næsten alle studerende. Det bekræfter briefingens iagttagelse, at de helt unge sjældent ringer." : " Briefingen fandt, at de helt unge sjældent ringer. Det ses ikke længere i data."); }
     const KR = DK.pr_kreds.filter(k=>k.g!=="Uden kreds");
     mk("cDaekKreds",{type:"bar",data:{labels:KR.map(k=>k.g),datasets:[{label:"I kontakt pr. 1.000 medlemmer",data:KR.map(k=>k.a*1000),backgroundColor:css("--sek"),borderRadius:3}]},
       options:{indexAxis:"y",plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw)} pr. 1.000 · ${fmt(KR[c.dataIndex].n)} medlemmer`}}},scales:{y:{grid:{display:false}}}}});
@@ -993,9 +1051,18 @@ function render(){
       options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw,1)} % meldt ud · ${fmt(c.dataIndex?x.n_med:x.n_uden)} medlemmer`}}},scales:{x:{grid:{display:false}},y:{min:0,max:6,ticks:{callback:v=>v+" %"}}}}});
     udmChart("cUdmNaiv", N); udmChart("cUdmFast", F);
     const pp = v => `${v>0?"+":""}${fmt(v*100,1)}`;
-    document.getElementById("udmNaivNote").textContent = `Normalansatte og selvstændige på listen ${dato(U.kohorte_naiv)}, kontakt frem til udmeldelse. ${fmt(N.uden*100,1)} % mod ${fmt(N.med*100,1)} % meldt ud (${pp(N.diff)} point, 95 %-interval ${pp(N.lav)} til ${pp(N.hoej)}). Ser ud til at virke, men sammenligningen er skæv: dem, der bliver, har haft længere tid til at ringe.`;
-    document.getElementById("udmFastNote").textContent = `Samme grupper på listen ${dato(U.kohorte_fast)}: kontakt i maj–december 2025, udmeldelse derefter til ${dato(U.slut)}. ${fmt(F.uden*100,1)} % mod ${fmt(F.med*100,1)} % (${pp(F.diff)} point, 95 %-interval ${pp(F.lav)} til ${pp(F.hoej)}). Forskellen er væk.`;
-    document.getElementById("udmInsight").innerHTML = `<b>Data kan ikke vise, at kontakt med foreningen holder på medlemmerne.</b> Den enkle sammenligning giver et flot billede, men når alle får lige lang tid til at ringe, er der ingen forskel i udmeldelser mellem dem, der har været i kontakt, og dem, der ikke har. Det gælder både normalansatte og selvstændige. Påstanden fra briefingen om, at medlemmer i kontakt er tilfredse medlemmer, kan derfor ikke underbygges med udmeldelsestal. Den kan stadig være rigtig, men den skal i så fald måles med en tilfredshedsmåling. "Faglig kontakt" betyder mindst én henvendelse om andet end medlemskab og kontingent, fordi nogle af kontingentopkaldene er selve udmeldelsen. "Meldt ud" omfatter også varslede udmeldelser med en fremtidig dato.`;
+    document.getElementById("udmNaivNote").textContent = `Normalansatte og selvstændige på listen ${dato(U.kohorte_naiv)}, kontakt frem til udmeldelse. ${fmt(N.uden*100,1)} % mod ${fmt(N.med*100,1)} % meldt ud (${pp(N.diff)} point, 95 %-interval ${pp(N.lav)} til ${pp(N.hoej)}). ` +
+      (N.hoej < 0 ? "Det ser ud, som om kontakt holder på medlemmerne, men sammenligningen er skæv: dem, der bliver, har haft længere tid til at ringe." : N.lav > 0 ? "Her melder medlemmer med kontakt sig oftere ud, men sammenligningen er skæv: dem, der bliver, har haft længere tid til at ringe." : "Heller ikke den enkle sammenligning viser en sikker forskel.");
+    document.getElementById("udmFastNote").textContent = `Samme grupper på listen ${dato(U.kohorte_fast)}: kontakt i maj–december 2025, udmeldelse derefter til ${dato(U.slut)}. ${fmt(F.uden*100,1)} % mod ${fmt(F.med*100,1)} % (${pp(F.diff)} point, 95 %-interval ${pp(F.lav)} til ${pp(F.hoej)}). ` +
+      (F.lav > 0 || F.hoej < 0 ? "Forskellen er statistisk sikker." : "Forskellen er ikke statistisk sikker.");
+    { const sikre = (U.fast_type || []).filter(t => t.lav > 0 || t.hoej < 0).map(t => t.g.toLowerCase());
+      const ordT = (U.fast_type || []).map(t => t.g === "Normaltansat over 19 timer" ? "normalansatte" : t.g === "Selvstændig" ? "selvstændige" : t.g.toLowerCase());
+      document.getElementById("udmInsight").innerHTML = (F.hoej < 0
+        ? `<b>Medlemmer med faglig kontakt melder sig sjældnere ud.</b> Også når alle får lige lang tid til at ringe, melder ${fmt(F.med*100,1)} % af dem med kontakt sig ud mod ${fmt(F.uden*100,1)} % af dem uden. Det er en sammenhæng, ikke nødvendigvis en effekt af kontakten: medlemmer, der bruger foreningen, kan også være mere loyale i forvejen.`
+        : F.lav > 0
+        ? `<b>Medlemmer med faglig kontakt melder sig oftere ud.</b> Når alle får lige lang tid til at ringe, melder ${fmt(F.med*100,1)} % af dem med kontakt sig ud mod ${fmt(F.uden*100,1)} % af dem uden. Det kan skyldes, at medlemmer ringer, når noget er galt, fx ved opsigelse eller sygdom.`
+        : `<b>Data kan ikke vise, at kontakt med foreningen holder på medlemmerne.</b> Den enkle sammenligning giver et flot billede, men når alle får lige lang tid til at ringe, er der ingen sikker forskel i udmeldelser mellem dem, der har været i kontakt, og dem, der ikke har.${sikre.length ? "" : ` Det gælder både ${ordT.join(" og ")}.`} Påstanden fra briefingen om, at medlemmer i kontakt er tilfredse medlemmer, kan derfor ikke underbygges med udmeldelsestal. Den kan stadig være rigtig, men den skal i så fald måles med en tilfredshedsmåling.`) +
+        ` "Faglig kontakt" betyder mindst én henvendelse om andet end medlemskab og kontingent, fordi nogle af kontingentopkaldene er selve udmeldelsen. "Meldt ud" omfatter også varslede udmeldelser med en fremtidig dato.`; }
 
     const NY = OM.nye;
     document.getElementById("nyeFlow").innerHTML =

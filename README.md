@@ -132,6 +132,17 @@ der kun gælder sektionen. Perioden sammenlignes med perioden lige før af samme
 med samme periode sidste år. Er den sidste måned ikke slut, sammenlignes antal ikke, kun
 andele og ventetider. Tabellen over alle måneder kan hentes som CSV til Excel.
 
+### Tekster, der følger data
+
+Overskrifter og konklusioner i tekstboksene regnes ud fra data, fx hvilken kø der er
+aflastet mest, hvilken time der har flest opkald, hvor mange af Valeurs mål der nås,
+og om forskellen i udmeldelser er statistisk sikker. De skifter derfor selv, når der
+kommer nye data.
+
+Fortolkninger og anbefalinger, der ikke kan regnes ud, vises som "Vurdering pr.
+november 2026". Datoen står i konstanten `VURDERET` i `scripts/briefing/template.html`.
+Gennemgå vurderingerne, når I opdaterer, og ret datoen, når de er læst igennem.
+
 ### Opdatér med nye data
 
 **Den nemme vej:** gå til [`opdater.html`](https://sebastianlistfeirup.github.io/Valeur/opdater.html)
