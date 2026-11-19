@@ -8,17 +8,17 @@
   --bg:#f3f5f7; --panel:#ffffff; --ink:#132430; --muted:#5b6b78; --line:#dde3e8;
   --valeur:#0e7c78; --valeur-soft:#d5ecea; --sek:#4a58a6; --sek-soft:#dfe2f3; --foer:#a3adb7;
   --good:#1f8a4c; --warn:#b7791f; --bad:#c0392b; --warn-soft:#fbf1df; --bad-soft:#f8e3e0; --good-soft:#e1f2e7;
-  --t-tlf:#0e7c78; --t-sek:#4a58a6; --t-lev:#b45f06; --t-emne:#8a3ea0; --t-oek:#b4366a; --t-ovr:#5b6b78;
+  --t-ovb:#3b4a5c; --t-tlf:#0e7c78; --t-sek:#4a58a6; --t-lev:#b45f06; --t-emne:#8a3ea0; --t-oek:#b4366a; --t-ovr:#5b6b78;
   --display:"Instrument Sans",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0f171d; --panel:#16222b; --ink:#e4ecf1; --muted:#93a4b1; --line:#26343f;
   --valeur:#3fb8b1; --valeur-soft:#173a3a; --sek:#8d99e6; --sek-soft:#262c4d; --foer:#5c6873;
-  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; --t-tlf:#3fb8b1; --t-sek:#8d99e6; --t-lev:#eda15a; --t-emne:#c99ae0; --t-oek:#ec86ab; --t-ovr:#93a4b1; color-scheme:dark}}
+  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; --t-ovb:#c5d2de; --t-tlf:#3fb8b1; --t-sek:#8d99e6; --t-lev:#eda15a; --t-emne:#c99ae0; --t-oek:#ec86ab; --t-ovr:#93a4b1; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f171d; --panel:#16222b; --ink:#e4ecf1; --muted:#93a4b1; --line:#26343f;
   --valeur:#3fb8b1; --valeur-soft:#173a3a; --sek:#8d99e6; --sek-soft:#262c4d; --foer:#5c6873;
-  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; --t-tlf:#3fb8b1; --t-sek:#8d99e6; --t-lev:#eda15a; --t-emne:#c99ae0; --t-oek:#ec86ab; --t-ovr:#93a4b1; color-scheme:dark}
+  --good:#4cc17d; --warn:#e0a84a; --bad:#ef6f61; --warn-soft:#3a2f1a; --bad-soft:#3d221f; --good-soft:#18352a; --t-ovb:#c5d2de; --t-tlf:#3fb8b1; --t-sek:#8d99e6; --t-lev:#eda15a; --t-emne:#c99ae0; --t-oek:#ec86ab; --t-ovr:#93a4b1; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
@@ -44,13 +44,13 @@ nav.toc a::before{content:"";width:8px;height:8px;border-radius:50%;background:v
 nav.toc a:hover,nav.toc a:focus-visible{background:color-mix(in srgb,var(--c) 18%,var(--panel));border-color:var(--c);outline:none}
 nav.toc a.aktiv{background:var(--c);border-color:var(--c);color:var(--panel)}
 nav.toc a.aktiv::before{background:var(--panel)}
-[data-tema="tlf"]{--c:var(--t-tlf)} [data-tema="sek"]{--c:var(--t-sek)} [data-tema="lev"]{--c:var(--t-lev)}
+[data-tema="ovb"]{--c:var(--t-ovb)} [data-tema="tlf"]{--c:var(--t-tlf)} [data-tema="sek"]{--c:var(--t-sek)} [data-tema="lev"]{--c:var(--t-lev)}
 [data-tema="emne"]{--c:var(--t-emne)} [data-tema="oek"]{--c:var(--t-oek)} [data-tema="ovr"]{--c:var(--t-ovr)}
 section.blok[data-tema] .blok-head .eyebrow{color:var(--c);display:flex;align-items:center;gap:8px}
 section.blok[data-tema] .blok-head .eyebrow::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c)}
 section.blok[data-tema] .blok-head h2{border-bottom:2px solid color-mix(in srgb,var(--c) 40%,transparent);padding-bottom:6px;width:fit-content;max-width:100%}
 .card{grid-template-columns:minmax(0,1fr)} .chart{min-width:0} .chart canvas{max-width:100%}
-section.blok{scroll-margin-top:118px} @media (max-width:720px){section.blok{scroll-margin-top:70px}}
+section.blok{scroll-margin-top:190px} @media (max-width:720px){section.blok{scroll-margin-top:70px}}
 @media (max-width:720px){
   nav.toc{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
   .toc-gruppe{flex-wrap:nowrap}
@@ -103,6 +103,34 @@ td:first-child{font-family:var(--body)}
 .gap .st{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-top:2px}
 .src{font-size:12px;color:var(--muted)}
 footer{color:var(--muted);font-size:12px}
+[hidden]{display:none!important}
+.filtre{flex-basis:100%;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.filtre label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.filtre select,.mdvaelger select{font:500 14px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px 8px;width:auto;max-width:min(100%,280px)}
+.filtre select:focus-visible,.mdvaelger select:focus-visible,.mdknap:focus-visible,.knap-lille:focus-visible,.filtre button:focus-visible{outline:2px solid var(--t-ovb);outline-offset:2px}
+.filterinfo{font-size:13px;font-weight:600;color:var(--ink)}
+.filtre button{font:600 12px var(--body);color:var(--muted);background:none;border:1px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer}
+.filterbadge{display:inline-block;margin-left:8px;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:none;color:var(--muted);border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:1px 8px}
+.pill.neutral{background:color-mix(in srgb,var(--t-ovb) 12%,var(--panel));color:var(--ink)}
+.mdvaelger{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+.mdknap{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:18px;cursor:pointer}
+.mdknap:disabled{opacity:.35;cursor:default}
+.knap-lille{font:600 13px var(--body);color:var(--panel);background:var(--t-ovb);border:none;border-radius:8px;padding:8px 14px;cursor:pointer}
+.mdtabel tbody tr{cursor:pointer}
+.mdtabel tbody tr:hover td{background:color-mix(in srgb,var(--t-ovb) 7%,var(--panel))}
+.mdtabel tbody tr.valgt td{background:color-mix(in srgb,var(--t-ovb) 16%,var(--panel));font-weight:600}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#mdKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.wrap{grid-template-columns:minmax(0,1fr)} nav.toc{min-width:0} .filtre{min-width:0}
+.toc-chips{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;flex-basis:100%;min-width:0}
+@media (max-width:720px){
+  nav.toc{flex-wrap:wrap!important;overflow:visible!important}
+  .toc-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .filtre{gap:6px 8px}
+  .filtre label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .filtre select{flex:1 1 calc(50% - 8px);max-width:none;font-size:13px}
+  .filterinfo{display:none}
+}
 #omKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .hjul{display:grid;gap:2px;font-size:12px;min-width:720px}
 .hjul .c{height:30px;border-radius:3px;display:grid;place-items:center;font-family:var(--mono);font-size:11px}
@@ -138,18 +166,47 @@ footer{color:var(--muted);font-size:12px}
   </div>
 </header>
 
-<nav class="toc" aria-label="Sektioner">
-  <div class="toc-gruppe" data-tema="tlf" role="group" aria-label="Telefonen"><a href="#status" data-tema="tlf">Status</a><a href="#svar" data-tema="tlf">Opkald og svar</a><a href="#hvornaar" data-tema="tlf">Hvornår</a></div>
+<nav class="toc" aria-label="Sektioner og filtre">
+  <div class="filtre" role="group" aria-label="Filtre">
+    <label for="fAfd">Afdeling</label><select id="fAfd"></select>
+    <label for="fMd">Måned</label><select id="fMd"></select>
+    <span class="filterinfo" id="filterInfo" aria-live="polite"></span><button type="button" id="fNulstil" hidden>Nulstil filtre</button>
+  </div>
+  <div class="toc-chips">
+  <div class="toc-gruppe" data-tema="ovb" role="group" aria-label="Overblik"><a href="#status" data-tema="ovb">Status</a><a href="#maaned" data-tema="ovb">Måned for måned</a></div>
+  <div class="toc-gruppe" data-tema="tlf" role="group" aria-label="Telefonen"><a href="#svar" data-tema="tlf">Opkald og svar</a><a href="#hvornaar" data-tema="tlf">Hvornår</a></div>
   <div class="toc-gruppe" data-tema="sek" role="group" aria-label="Sekretariatet"><a href="#aflastning" data-tema="sek">Aflastning</a><a href="#koe" data-tema="sek">Kø og prognose</a></div>
   <div class="toc-gruppe" data-tema="lev" role="group" aria-label="Valeurs leverance"><a href="#loeser" data-tema="lev">Løser Valeur selv?</a><a href="#maal" data-tema="lev">Mål</a></div>
   <div class="toc-gruppe" data-tema="emne" role="group" aria-label="Hvad og hvem"><a href="#hvad" data-tema="emne">Hvad</a><a href="#hvem" data-tema="emne">Hvem</a><a href="#aarshjul" data-tema="emne">Årshjulet</a><a href="#udsendelser" data-tema="emne">Udsendelser</a><a href="#igen" data-tema="emne">Sager igen</a><a href="#geografi" data-tema="emne">Geografi</a></div>
   <div class="toc-gruppe" data-tema="oek" role="group" aria-label="Økonomi og medlemmer"><a href="#oekonomi" data-tema="oek">Økonomi og medlemmer</a></div>
   <div class="toc-gruppe" data-tema="ovr" role="group" aria-label="Øvrigt"><a href="#mails" data-tema="ovr">Mails</a></div>
+  </div>
 </nav>
 
-<section class="blok" id="status" data-tema="tlf">
+<section class="blok" id="status" data-tema="ovb">
   <div class="kpis" id="kpis"></div>
   <div class="insight" id="hovedfund"></div>
+</section>
+
+<section class="blok" id="maaned" data-tema="ovb">
+  <div class="blok-head"><div class="eyebrow">Overblik</div><h2>Måned for måned</h2>
+  <p>Nøgletal for én måned sammenlignet med måneden før og samme måned sidste år. Månedsvælgeren her ændrer kun denne sektion. Afdelingsfilteret øverst gælder også her.</p></div>
+  <div class="mdvaelger">
+    <button type="button" class="mdknap" id="mdForrige" aria-label="Forrige måned">‹</button>
+    <label for="lokMd" class="visually-hidden">Måned</label><select id="lokMd"></select>
+    <button type="button" class="mdknap" id="mdNaeste" aria-label="Næste måned">›</button>
+    <span class="sub" id="lokNote"></span>
+  </div>
+  <div class="kpis" id="mdKpi"></div>
+  <div class="grid2">
+    <div class="card"><h3>Månedens emner</h3><div class="bars" id="bMdEmner"></div><div class="src" id="mdEmneNote"></div></div>
+    <div class="card"><h3>Månedens hovedkategorier</h3><div class="bars" id="bMdGrupper"></div></div>
+  </div>
+  <div class="card">
+    <div class="mdvaelger" style="justify-content:space-between"><h3>Alle måneder</h3><button type="button" class="knap-lille" id="csv">Download til Excel (CSV)</button></div>
+    <div class="tbl"><table id="tMd" class="mdtabel"></table></div>
+    <p class="src" id="tMdNote"></p>
+  </div>
 </section>
 
 <section class="blok" id="svar" data-tema="tlf">
@@ -332,11 +389,105 @@ const D = /*DATA*/null;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmt = (n, d=0) => (n==null||isNaN(n)) ? "–" : n.toLocaleString("da-DK",{minimumFractionDigits:d,maximumFractionDigits:d});
 const pct = (n, d=0) => n==null ? "–" : fmt(n*100, d) + " %";
-const mmss = s => { if (s==null) return "–"; s=Math.round(s); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); };
+const mmss = s => { if (s==null||isNaN(s)) return "–"; s=Math.round(s); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); };
 const MD = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
 const mdLabel = k => { const [y,m]=k.split("-"); return MD[+m-1]+" "+y.slice(2); };
 const dato = s => { const d=new Date(s); return d.getDate()+". "+MD[d.getMonth()]+" "+d.getFullYear(); };
 const charts = [];
+// ------------------------------------------------------------------ filtre: afdeling og måned
+const DATA = D;
+const AFD_DEF = D.afd_def || [];
+const KOE_ALLE = ["1510","1515","15123","15122","1525","1520"];
+const MDNAVN = ["januar","februar","marts","april","maj","juni","juli","august","september","oktober","november","december"];
+const mdLang = k => { const [y,m]=k.split("-"); return MDNAVN[+m-1]+" "+y; };
+const forrigeMd = k => { let [y,m]=k.split("-").map(Number); m--; if(!m){m=12;y--;} return `${y}-${String(m).padStart(2,"0")}`; };
+const naesteMd = k => { let [y,m]=k.split("-").map(Number); m++; if(m>12){m=1;y++;} return `${y}-${String(m).padStart(2,"0")}`; };
+const sidsteAarMd = k => { const [y,m]=k.split("-"); return `${+y-1}-${m}`; };
+const ugeTilMd = k => { const [y,w]=k.split("-U").map(Number); const j4=new Date(Date.UTC(y,0,4)); const dag=(j4.getUTCDay()+6)%7;
+  const man=new Date(j4); man.setUTCDate(j4.getUTCDate()-dag+(w-1)*7); return man.toISOString().slice(0,7); };
+const delvisMd = md => { const s=D.valeur.sidste; if (md!==s.slice(0,7)) return false; const [y,m]=md.split("-").map(Number); return +s.slice(8,10) < new Date(y,m,0).getDate(); };
+let FILTER = {afd:"alle", md:"alle"}, LOKAL_MD = null, MD_RAEKKER = [];
+try {
+  const q = new URLSearchParams(location.search);
+  const a = q.get("afdeling"), m = q.get("maaned");
+  if (a && AFD_DEF.some(x=>x.id===a)) FILTER.afd = a;
+  if (m && D.valeur.maaneder.some(x=>x.md===m)) FILTER.md = m;
+} catch(e) {}
+
+function vis(){
+  const U = (DATA.udsnit||{})[FILTER.afd] || {md:{}};
+  const afd = AFD_DEF.find(a=>a.id===FILTER.afd);
+  const v = {...DATA, filter:{...FILTER, afd_navn: afd ? afd.navn : "Hele foreningen"}};
+  if (afd) { v.mc = U.mc || DATA.mc; v.dybde = {...DATA.dybde, ...(U.dybde||{})}; v.koeOrder = afd.koeer; }
+  if (FILTER.md !== "alle") {
+    const M = (U.md||{})[FILTER.md];
+    const tomMc = {total_efter:0, unikke:0, grupper:{}, typer:[], segmenter:{}, kryds:{}, gentag:{}, andel_valeur:null,
+                   tomt_felt:{registreringer:0, personer:0}};
+    v.mc = {...v.mc, ...((M && M.mc) || tomMc), pr_md: v.mc.pr_md, valeur_pr_md: v.mc.valeur_pr_md,
+            antal_valeur_agenter: v.mc.antal_valeur_agenter};
+    const helL = (v.dybde||{}).loeser;
+    v.dybde = {...v.dybde, loeser: (M && M.loeser) ? {...M.loeser, pr_md: helL ? helL.pr_md : []} : null,
+               geografi: (M && M.geografi) || []};
+  }
+  return v;
+}
+
+const markMd = keys => ({id:"markMd", beforeDatasetsDraw(c){
+  if (FILTER.md === "alle" || !c.scales.x) return;
+  const idx = keys.map((k,i)=>k===FILTER.md?i:-1).filter(i=>i>=0);
+  if (!idx.length) return;
+  const x = c.scales.x, w = Math.abs(x.getPixelForValue(1)-x.getPixelForValue(0)) || 24;
+  const x0 = x.getPixelForValue(idx[0])-w/2, x1 = x.getPixelForValue(idx[idx.length-1])+w/2, {top,bottom} = c.chartArea;
+  c.ctx.save(); c.ctx.fillStyle = alpha("--t-ovb", .14); c.ctx.fillRect(x0, top, x1-x0, bottom-top);
+  c.ctx.strokeStyle = alpha("--t-ovb", .55); c.ctx.lineWidth = 1; c.ctx.strokeRect(x0, top, x1-x0, bottom-top); c.ctx.restore(); }});
+const MKEYS = {};
+
+function opsaetFiltre(){
+  const fA = document.getElementById("fAfd"), fM = document.getElementById("fMd");
+  fA.innerHTML = `<option value="alle">Hele foreningen</option>` + AFD_DEF.map(a=>`<option value="${a.id}">${a.navn}${a.koeer.length?` (kø ${a.koeer.join(" og ")})`:" (ingen kø)"}</option>`).join("");
+  fM.innerHTML = `<option value="alle">Hele perioden</option>` + [...DATA.valeur.maaneder].reverse().map(m=>`<option value="${m.md}">${mdLang(m.md)}${delvisMd(m.md)?" (indtil videre)":""}</option>`).join("");
+  fA.value = FILTER.afd; fM.value = FILTER.md;
+  const skift = () => {
+    FILTER = {afd: fA.value, md: fM.value};
+    if (FILTER.md !== "alle") LOKAL_MD = FILTER.md;
+    try {
+      const q = new URLSearchParams(location.search);
+      FILTER.afd === "alle" ? q.delete("afdeling") : q.set("afdeling", FILTER.afd);
+      FILTER.md === "alle" ? q.delete("maaned") : q.set("maaned", FILTER.md);
+      const s = q.toString(); history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + location.hash);
+    } catch(e) {}
+    render();
+  };
+  fA.addEventListener("change", skift); fM.addEventListener("change", skift);
+  document.getElementById("fNulstil").addEventListener("click", () => { fA.value = "alle"; fM.value = "alle"; skift(); });
+  document.getElementById("lokMd").addEventListener("change", e => { LOKAL_MD = e.target.value; render(); });
+  document.getElementById("mdForrige").addEventListener("click", () => { const i = DATA.valeur.maaneder.findIndex(m=>m.md===LOKAL_MD); if (i>0) { LOKAL_MD = DATA.valeur.maaneder[i-1].md; render(); } });
+  document.getElementById("mdNaeste").addEventListener("click", () => { const i = DATA.valeur.maaneder.findIndex(m=>m.md===LOKAL_MD); if (i>=0 && i<DATA.valeur.maaneder.length-1) { LOKAL_MD = DATA.valeur.maaneder[i+1].md; render(); } });
+  document.getElementById("tMd").addEventListener("click", e => { const tr = e.target.closest("tr[data-md]"); if (tr) { LOKAL_MD = tr.dataset.md; render(); document.getElementById("maaned").scrollIntoView({behavior:"smooth"}); } });
+  document.getElementById("csv").addEventListener("click", hentCsv);
+  // menuen er fast og kan være flere linjer høj: rul selv, så målet lander lige under den
+  const gaaTil = (id, glat) => { const el = document.getElementById(id), nav = document.querySelector("nav.toc"); if (!el) return;
+    window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - nav.getBoundingClientRect().height - 12, behavior: glat ? "smooth" : "auto"}); };
+  document.querySelector("nav.toc").addEventListener("click", e => { const a = e.target.closest('a[href^="#"]'); if (!a) return;
+    e.preventDefault(); const id = a.getAttribute("href").slice(1); try { history.replaceState(null, "", location.pathname + location.search + "#" + id); } catch(_) {}
+    gaaTil(id, !matchMedia("(prefers-reduced-motion: reduce)").matches); });
+  if (location.hash.length > 1) setTimeout(() => gaaTil(location.hash.slice(1), false), 300);
+}
+
+function hentCsv(){
+  const tal = v => v==null ? "" : String(v).replace(".", ",");
+  const kol = [["Måned","md"],["Opkald til Valeur","vI"],["Besvaret af Valeur","vB"],["Valeurs svarprocent","vS"],["Åbningsdage","dage"],
+               ["Kald i køerne","kO"],["Besvaret i køerne","kB"],["Svarprocent i køerne","kS"],["Gns. ventetid i køerne (sek.)","kV"],
+               ["Registreringer i Membercare","reg"],["Forskellige personer","pers"],["Løst af Valeur (andel)","loest"],["Mails","mails"]];
+  const linjer = [kol.map(k=>k[0]).join(";")].concat(MD_RAEKKER.map(r => kol.map(([,k]) => {
+    const v = r[k]; if (k==="md") return r.md; if (v==null) return ""; return ["vS","kS","loest"].includes(k) ? tal(Math.round(v*1000)/1000) : tal(Math.round(v));
+  }).join(";")));
+  const navn = FILTER.afd === "alle" ? "hele_foreningen" : FILTER.afd;
+  const blob = new Blob(["﻿" + linjer.join("\r\n")], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `valeur_maaned_for_maaned_${navn}.csv`;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
 
 function themeChart(){
   Chart.defaults.font.family = css("--body").split(",")[0].replace(/"/g,"") || "system-ui";
@@ -354,19 +505,21 @@ function themeChart(){
 const startLine = idx => ({id:"start", afterDatasetsDraw(c){ if(idx<0) return; const x=c.scales.x.getPixelForValue(idx); const {top,bottom}=c.chartArea; const g=c.ctx;
   g.save(); g.strokeStyle=css("--ink"); g.setLineDash([4,4]); g.lineWidth=1; g.beginPath(); g.moveTo(x,top); g.lineTo(x,bottom); g.stroke();
   g.setLineDash([]); g.fillStyle=css("--ink"); g.font="600 11px "+css("--body"); g.fillText("Valeur starter", x+6, top+12); g.restore(); }});
-const mk = (id, cfg) => { const c = new Chart(document.getElementById(id), cfg); charts.push(c); return c; };
+const mk = (id, cfg) => { if (MKEYS[id]) cfg.plugins = [...(cfg.plugins||[]), markMd(MKEYS[id])]; const c = new Chart(document.getElementById(id), cfg); charts.push(c); return c; };
 const alpha = (v, a) => { const h=css(v); if(h.startsWith("#")){ const n=parseInt(h.slice(1),16); return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`; } return h; };
 
 function bars(el, rows, max, color){
+  if (!rows.length) { el.innerHTML = '<p class="src">For få registreringer til at vise.</p>'; return; }
   el.innerHTML = rows.map(([k,v,extra]) => `<div class="bar-row"><div class="lab"><span title="${k}">${k}</span><span class="num">${fmt(v)}${extra?` <span style="color:var(--muted)">${extra}</span>`:""}</span></div>
     <div class="bar-track"><div class="bar-fill" style="width:${(v/max*100).toFixed(1)}%;background:${color||"var(--valeur)"}"></div></div></div>`).join("");
 }
 
 function render(){
+  const D = vis();
   charts.splice(0).forEach(c=>c.destroy());
   themeChart();
   const V = D.valeur, KFE = D.koe_fe, MC = D.mc, KN = D.koe_navn;
-  const koeOrder = ["1510","1515","15123","15122","1525","1520"];
+  const koeOrder = D.koeOrder || KOE_ALLE;
   const sum = (o,f) => koeOrder.reduce((a,k)=>a+(o[k]?f(o[k]):0),0);
 
   // --- aggregerede før/efter for sekretariatet
@@ -389,19 +542,50 @@ function render(){
 
   const kpi = (v,label,from,pill) => `<div class="kpi"><div class="eyebrow">${label}</div><div class="v">${v}</div>${from?`<div class="from">${from}</div>`:""}${pill||""}</div>`;
   const chg = (a,b,goodDown=true) => { const d=(b-a)/a; const good = goodDown ? d<0 : d>0; return `<span class="pill ${good?"good":"bad"}">${d>0?"▲":"▼"} ${fmt(Math.abs(d)*100)} %</span>`; };
-  document.getElementById("kpis").innerHTML = [
-    kpi(fmt(V.total), "Opkald til Valeur", `${fmt(V.aabningsdage)} åbningsdage · ${fmt(V.total/V.aabningsdage)} pr. dag`),
-    kpi(pct(vSvar), "Valeurs svarprocent", "af alle opkald, der nåede Valeur", `<span class="pill ${vSvar>=.9?"good":"warn"}">mål 90 %</span>`),
-    kpi(fmt(eO), "Kald i sekretariatets køer pr. md.", `før ${fmt(fO)} pr. md.`, chg(fO,eO)),
-    kpi(mmss(eV), "Ventetid i sekretariatets køer", `før ${mmss(fV)} min.`, chg(fV,eV)),
-    kpi(pct(eB/eO), "Svar i sekretariatets køer", `før ${pct(fB/fO)}`, `<span class="pill bad">▼ ${fmt((fB/fO-eB/eO)*100)} point</span>`),
-    kpi(fmt(MC.unikke), "Forskellige personer i kontakt", `${fmt(MC.total_efter)} registreringer · ${pct(medlem)} er medlemmer`),
-  ].join("");
-  document.getElementById("hovedfund").innerHTML =
-    `<b>Hovedfund.</b> Valeur besvarer ${pct(vSvar)} af opkaldene og er blevet medlemmernes faste indgang. Sekretariatets køer får ${fmt((1-eO/fO)*100)} % færre kald end før, og ventetiden i køerne er faldet fra ${mmss(fV)} til ${mmss(eV)} min. Til gengæld besvares kun ${pct(eB/eO)} af de kald, Valeur stiller videre, mod ${pct(fB/fO)} før. Det er her, samarbejdet taber flest medlemmer i dag.`;
+  const afdNavn = D.filter.afd_navn, erAfd = FILTER.afd !== "alle", MDV = FILTER.md !== "alle" ? FILTER.md : null;
+  const ingenKoe = !koeOrder.length;
+  const koeMd = md => { let o=0,b=0,vw=0; koeOrder.forEach(k=>{ const x=(D.koeer_md[k]||{})[md]; if(x){ o+=x.opkald; b+=x.besvarede; vw+=(x.vent||0)*x.besvarede; } }); return {o, b, v: b ? vw/b : null}; };
+  const hel = erAfd ? " · hele hovednummeret" : "";
+  const koeNavn = erAfd ? (koeOrder.length > 1 ? "afdelingens køer" : "afdelingens kø") : "sekretariatets køer";
+  const stort = s => s.charAt(0).toUpperCase() + s.slice(1);
+  if (MDV) {
+    const fm = forrigeMd(MDV), vm = V.maaneder.find(m=>m.md===MDV), vf = V.maaneder.find(m=>m.md===fm);
+    const k = koeMd(MDV), kf = koeMd(fm);
+    const dlt = (a,b,dir) => { if (a==null||b==null||!a) return ""; const d=(b-a)/a; const cls = dir===0 ? "neutral" : (d*dir>0 ? "good" : "bad");
+      return `<span class="pill ${cls}">${d>=0?"▲":"▼"} ${fmt(Math.abs(d)*100)} % mod ${mdLabel(fm)}</span>`; };
+    document.getElementById("kpis").innerHTML = [
+      kpi(fmt(vm?.i), "Opkald til Valeur", `${fmt(vm?.dage)} åbningsdage${hel}`, dlt(vf?.i, vm?.i, 0)),
+      kpi(pct(vm && vm.i ? vm.b/vm.i : null), "Valeurs svarprocent", `${mdLabel(fm)}: ${pct(vf && vf.i ? vf.b/vf.i : null)}${hel}`, ""),
+      ...(ingenKoe ? [kpi("–", "Ingen egen kø", "Henvendelserne kommer gennem Valeur")] : [
+        kpi(fmt(k.o), `Kald i ${koeNavn}`, `${mdLabel(fm)}: ${fmt(kf.o)}`, dlt(kf.o, k.o, 0)),
+        kpi(mmss(k.v), `Ventetid i ${koeNavn}`, `${mdLabel(fm)}: ${mmss(kf.v)} min.`, dlt(kf.v, k.v, -1)),
+        kpi(pct(k.o ? k.b/k.o : null), `Svar i ${koeNavn}`, `${mdLabel(fm)}: ${pct(kf.o ? kf.b/kf.o : null)}`, "")]),
+      kpi(fmt(MC.total_efter), "Registreringer i Membercare", `${fmt(MC.unikke)} forskellige personer`),
+    ].join("");
+    document.getElementById("hovedfund").innerHTML =
+      `<b>${stort(mdLang(MDV))}${erAfd ? " · " + afdNavn : ""}${delvisMd(MDV) ? " (måneden er ikke slut)" : ""}.</b> Valeur tog imod ${fmt(vm?.i)} opkald og besvarede ${pct(vm && vm.i ? vm.b/vm.i : null)}${erAfd ? " (hele hovednummeret)" : ""}. ` +
+      (ingenKoe ? "" : `${stort(koeNavn)} fik ${fmt(k.o)} kald, og ${pct(k.o ? k.b/k.o : null)} blev besvaret efter i snit ${mmss(k.v)} min. `) +
+      `I Membercare blev der registreret ${fmt(MC.total_efter)} henvendelser${erAfd ? " om afdelingens emner" : ""} fra ${fmt(MC.unikke)} personer.`;
+  } else {
+    document.getElementById("kpis").innerHTML = [
+      kpi(fmt(V.total), "Opkald til Valeur", `${fmt(V.aabningsdage)} åbningsdage · ${fmt(V.total/V.aabningsdage)} pr. dag${hel}`),
+      kpi(pct(vSvar), "Valeurs svarprocent", `af alle opkald, der nåede Valeur${hel}`, `<span class="pill ${vSvar>=.9?"good":"warn"}">mål 90 %</span>`),
+      ...(ingenKoe ? [kpi("–", "Ingen egen kø", "Henvendelserne kommer gennem Valeur")] : [
+        kpi(fmt(eO), `Kald i ${koeNavn} pr. md.`, `før ${fmt(fO)} pr. md.`, chg(fO,eO)),
+        kpi(mmss(eV), `Ventetid i ${koeNavn}`, `før ${mmss(fV)} min.`, chg(fV,eV)),
+        kpi(pct(eB/eO), `Svar i ${koeNavn}`, `før ${pct(fB/fO)}`, `<span class="pill ${eB/eO>=fB/fO?"good":"bad"}">${eB/eO>=fB/fO?"▲":"▼"} ${fmt(Math.abs(fB/fO-eB/eO)*100)} point</span>`)]),
+      kpi(fmt(MC.unikke), "Forskellige personer i kontakt", `${fmt(MC.total_efter)} registreringer${erAfd ? " om afdelingens emner" : " · " + pct(medlem) + " er medlemmer"}`),
+    ].join("");
+    document.getElementById("hovedfund").innerHTML = erAfd
+      ? `<b>${afdNavn}.</b> ` + (ingenKoe ? "Afdelingen har ingen egen kø; medlemmerne kommer igennem Valeur, som besvarer eller sender en besked videre. "
+          : `${stort(koeNavn)} får ${fmt(eO)} kald om måneden mod ${fmt(fO)} før Valeur (${fmt((eO/fO-1)*100)} %). Ventetiden er gået fra ${mmss(fV)} til ${mmss(eV)} min., og svarprocenten fra ${pct(fB/fO)} til ${pct(eB/eO)}. `) +
+        `I Membercare er der ${fmt(MC.total_efter)} registreringer om afdelingens emner fra ${fmt(MC.unikke)} forskellige personer.`
+      : `<b>Hovedfund.</b> Valeur besvarer ${pct(vSvar)} af opkaldene og er blevet medlemmernes faste indgang. Sekretariatets køer får ${fmt((1-eO/fO)*100)} % færre kald end før, og ventetiden i køerne er faldet fra ${mmss(fV)} til ${mmss(eV)} min. Til gengæld besvares kun ${pct(eB/eO)} af de kald, Valeur stiller videre, mod ${pct(fB/fO)} før. Det er her, samarbejdet taber flest medlemmer i dag.`;
+  }
 
   // --- uger
   const U = V.uger.filter(u=>u.dage>=2);
+  MKEYS.cUger = U.map(u=>u.start.slice(0,7));
   mk("cUger",{data:{labels:U.map(u=>u.uge.replace("-U"," u")),datasets:[
     {type:"bar",label:"Besvaret",data:U.map(u=>u.b),backgroundColor:css("--valeur"),stack:"s",order:2},
     {type:"bar",label:"Ikke besvaret",data:U.map(u=>u.i-u.b),backgroundColor:alpha("--valeur",.28),stack:"s",order:2},
@@ -413,6 +597,7 @@ function render(){
   const under = U.filter(u=>u.b/u.i<.9).length;
   document.getElementById("ugerNote").textContent = `Valeur nåede målet på 90 % i ${U.length-under} af ${U.length} uger. Svarprocenten er regnet af alle kald i Valeur Insights. Valeurs egen SLA-opgørelse bruger kald i åbningstid og ligger højere (se Mål). Uger med under to åbningsdage er udeladt.`;
 
+  MKEYS.cMd = V.maaneder.map(m=>m.md);
   mk("cMd",{type:"bar",data:{labels:V.maaneder.map(m=>mdLabel(m.md)),datasets:[
     {label:"Opkald pr. åbningsdag",data:V.maaneder.map(m=>m.i/m.dage),backgroundColor:css("--valeur"),borderRadius:3}]},
     options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw,1)} opkald pr. dag · ${fmt(V.maaneder[c.dataIndex].i)} i alt`}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:"Opkald pr. åbningsdag"}}}}});
@@ -420,11 +605,12 @@ function render(){
   const step=(k,n,s)=>`<div class="step"><div class="k">${k}</div><div class="n num">${n}</div><div class="k">${s}</div></div>`;
   document.getElementById("flow").innerHTML =
     step("Ringer ind",fmt(vMd),"opkald pr. md.")+step("Valeur svarer",fmt(vBmd),pct(vBmd/vMd))+
-    step("Lander i en kø",fmt(eO),"kald pr. md.")+step("Sekretariatet svarer",fmt(eB),pct(eB/eO));
+    (ingenKoe ? step("Lander i en kø","–","ingen egen kø") : step("Lander i en kø",fmt(eO),"kald pr. md.")+step("Sekretariatet svarer",fmt(eB),pct(eB/eO)));
 
   // --- køer pr. måned (stak)
   const alleMd = [...new Set(koeOrder.flatMap(k=>Object.keys(D.koeer_md[k]||{})))].filter(m=>m>="2024-02").sort();
   const koeFarver = [css("--sek"), alpha("--sek",.75), alpha("--sek",.55), alpha("--sek",.4), alpha("--sek",.28), alpha("--sek",.18)];
+  MKEYS.cKoeer = alleMd;
   mk("cKoeer",{type:"bar",data:{labels:alleMd.map(mdLabel),datasets:koeOrder.map((k,i)=>({label:KN[k],data:alleMd.map(m=>(D.koeer_md[k]||{})[m]?.opkald||0),backgroundColor:koeFarver[i],stack:"k"}))},
     options:{interaction:{mode:"index",intersect:false},scales:{x:{stacked:true,grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:10}},y:{stacked:true,title:{display:true,text:"Kald i køerne pr. måned"}}}},
     plugins:[startLine(alleMd.indexOf("2025-05"))]});
@@ -434,17 +620,24 @@ function render(){
     <td>${pct(f.svarpct)}</td><td>${pct(e.svarpct)}</td><td>${mmss(f.vent)}</td><td>${mmss(e.vent)}</td><td>${mmss(f.tale)}</td><td>${mmss(e.tale)}</td></tr>`; };
   document.getElementById("tFE").innerHTML = `<thead><tr><th>Kø</th><th>Kald/md. før</th><th>efter</th><th>ændring</th><th>Svar før</th><th>efter</th><th>Vent før</th><th>efter</th><th>Samtale før</th><th>efter</th></tr></thead><tbody>`+
     koeOrder.map(k=>row(KN[k],KFE[k].foer,KFE[k].efter)).join("")+
-    row("<b>Alle seks køer</b>",{opkald_md:fO,svarpct:fB/fO,vent:fV,tale:null},{opkald_md:eO,svarpct:eB/eO,vent:eV,tale:null})+"</tbody>";
+    row(`<b>${erAfd ? "I alt" : "Alle seks køer"}</b>`,{opkald_md:fO,svarpct:fB/fO,vent:fV,tale:null},{opkald_md:eO,svarpct:eB/eO,vent:eV,tale:null})+"</tbody>";
 
   const ms = KFE["15123"], ans = KFE["1510"], sel = KFE["1515"];
   document.getElementById("aflInsight").innerHTML = `<b>Aflastningen er størst i medlemsservice.</b> Kø 15123 er gået fra ${fmt(ms.foer.opkald_md)} til ${fmt(ms.efter.opkald_md)} kald om måneden, og Valeur løser selv opgaven. Selvstændig er faldet ${fmt((1-sel.efter.opkald_md/sel.foer.opkald_md)*100)} %. Ansættelse og rådgivning falder mindst (${fmt((1-ans.efter.opkald_md/ans.foer.opkald_md)*100)} %), fordi Valeur er instrueret i at stille de fleste af de opkald videre. Samtalerne i rådgivningen er blevet længere (${mmss(ans.foer.tale)} → ${mmss(ans.efter.tale)}), så den samlede tid i telefonen er uændret, omkring ${fmt(ans.efter.tale_timer_md)} timer om måneden.`;
   document.getElementById("koeHul").innerHTML = `<b>Kø-hullet.</b> Før Valeur svarede sekretariatet på ${pct(fB/fO)} af kaldene i køerne. Efter er det ${pct(eB/eO)}. I rådgivningen er svarprocenten faldet fra ${pct(ans.foer.svarpct)} til ${pct(ans.efter.svarpct)} og hos selvstændige fra ${pct(sel.foer.svarpct)} til ${pct(sel.efter.svarpct)}. Ventetiden er kort, så medlemmerne lægger ikke på efter lang tid. Det tyder på, at der ofte ikke sidder nogen klar i køen, når Valeur stiller om. Omkring ${fmt(eO-eB)} kald om måneden ender uden svar efter at være blevet stillet videre.`;
 
+  if (erAfd && !ingenKoe) {
+    const kn = koeOrder.map(k=>KN[k]).join(" og ");
+    document.getElementById("aflInsight").innerHTML = `<b>${afdNavn}.</b> ${kn}: fra ${fmt(fO)} til ${fmt(eO)} kald om måneden (${eO>=fO?"+":""}${fmt((eO/fO-1)*100)} %). Ventetiden er gået fra ${mmss(fV)} til ${mmss(eV)} min.`;
+    document.getElementById("koeHul").innerHTML = `<b>Kald uden svar.</b> Før Valeur blev ${pct(fB/fO)} af kaldene i ${koeNavn} besvaret. Nu er det ${pct(eB/eO)}. Omkring ${fmt(eO-eB)} kald om måneden ender uden svar.`;
+  }
   const KM = D.koeer.pr_md, kmMd = Object.keys(KM["1510"]||{}).filter(m=>m>="2024-03"&&m<=PE.efter[1]).sort();
-  mk("cKoeSvar",{type:"line",data:{labels:kmMd.map(mdLabel),datasets:[
-    {label:KN["1510"],data:kmMd.map(m=>{const x=KM["1510"][m];return x?x.besv/x.kald*100:null}),borderColor:css("--sek"),backgroundColor:alpha("--sek",.12),fill:true,tension:.3,pointRadius:2},
-    {label:KN["1515"],data:kmMd.map(m=>{const x=(KM["1515"]||{})[m];return x&&x.kald>=20?x.besv/x.kald*100:null}),borderColor:css("--warn"),tension:.3,pointRadius:2,spanGaps:false}]},
-    options:{interaction:{mode:"index",intersect:false},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:10}},y:{min:40,max:100,ticks:{callback:v=>v+" %"}}},
+  const svarKoeer = erAfd ? koeOrder : ["1510","1515"], svarFarver = [css("--sek"), css("--warn")];
+  MKEYS.cKoeSvar = kmMd;
+  mk("cKoeSvar",{type:"line",data:{labels:kmMd.map(mdLabel),datasets:svarKoeer.map((k,i)=>({label:KN[k],
+    data:kmMd.map(m=>{const x=(KM[k]||{})[m];return x&&x.kald>=(i?20:1)?x.besv/x.kald*100:null}),borderColor:svarFarver[i%2],
+    backgroundColor:i?undefined:alpha("--sek",.12),fill:!i,tension:.3,pointRadius:2,spanGaps:false}))},
+    options:{interaction:{mode:"index",intersect:false},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:10}},y:{min:30,max:100,ticks:{callback:v=>v+" %"}}},
       plugins:{tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.raw,1)} %`}}}},plugins:[startLine(kmMd.indexOf("2025-05"))]});
 
   // --- hvornår
@@ -468,12 +661,13 @@ function render(){
 
   // --- hvad
   const G = Object.entries(MC.grupper);
-  bars(document.getElementById("bGrupper"), G.map(([k,v])=>[k,v,pct(v/MC.total_efter)]), G[0][1]);
+  bars(document.getElementById("bGrupper"), G.map(([k,v])=>[k,v,pct(v/MC.total_efter)]), (G[0]||[0,1])[1]);
   const T = MC.typer.slice(0,12);
   const kort = s => s.replace("Selvstændig psykolog spørgsmål om ","").replace("Selvstændig psykolog – spørgsmål om ","").replace(/\s*\(.*\)$/,"");
-  bars(document.getElementById("bTyper"), T.map(t=>[kort(t.t),t.n]), T[0].n, "var(--sek)");
+  bars(document.getElementById("bTyper"), T.map(t=>[kort(t.t),t.n]), (T[0]||{n:1}).n, "var(--sek)");
   const mcMd = Object.keys(MC.pr_md).sort(), gNavne = G.map(g=>g[0]);
   const gFarver = [css("--valeur"),css("--sek"),css("--warn"),alpha("--valeur",.45),alpha("--sek",.45),css("--foer")];
+  MKEYS.cMcMd = mcMd;
   mk("cMcMd",{type:"bar",data:{labels:mcMd.map(mdLabel),datasets:gNavne.map((g,i)=>({label:g,data:mcMd.map(m=>MC.pr_md[m][g]||0),backgroundColor:gFarver[i],stack:"g"}))},
     options:{interaction:{mode:"index",intersect:false},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,title:{display:true,text:"Registreringer"}}}}});
 
@@ -491,7 +685,7 @@ function render(){
   document.getElementById("regNote").textContent = `${MC.antal_valeur_agenter} Valeur-medarbejdere står for ${pct(vReg/aReg)} af registreringerne i servicefanen. Andelen er faldet til ${pct(s3)} de seneste tre måneder. Resten er registreret af sekretariatets egne medarbejdere.`;
 
   const S = Object.entries(MC.segmenter);
-  bars(document.getElementById("bSeg"), S.map(([k,v])=>[k,v,pct(v/MC.total_efter)]), S[0][1], "var(--sek)");
+  bars(document.getElementById("bSeg"), S.map(([k,v])=>[k,v,pct(v/MC.total_efter)]), (S[0]||[0,1])[1], "var(--sek)");
   const segs = Object.keys(MC.kryds), hg = gNavne.filter(g=>g!=="Studerende/dimittender/ledige");
   const kortG = {"Rådgivning/forhandling":"Rådgivning","Generelle fagforenings henvendelser":"Fagforening","Psykologfaglige henvendelser":"Psykologfagligt","Selvstændige":"Selvstændige","Autorisation og Tilsyn":"Autorisation"};
   let h = `<div style="display:grid;grid-template-columns:200px repeat(${hg.length},1fr);gap:2px"><div></div>`+hg.map(g=>`<div class="h">${kortG[g]||g}</div>`).join("");
@@ -508,6 +702,7 @@ function render(){
   document.getElementById("tBench").innerHTML = `<thead><tr><th>Periode</th><th>Svarrate<br>mål 90 %</th><th>Gns. ventetid<br>mål 1:30</th><th>Efterbehandling<br>mål 1:30</th><th>Maks. taletid<br>mål 12:00</th><th>Løst i første kald<br>mål 75 %</th></tr></thead><tbody>`+
     B.filter(p=>p.periode!=="Samlet").map(p=>`<tr><td>${p.periode}</td>${cell(p["SLA svarrate"],M["SLA svarrate"],"p")}${cell(p["Gns Ventetid"],M["Gns Ventetid"],"t",true)}${cell(p["Efterbehandling"],M["Efterbehandling"],"t",true)}${cell(p["Max taletid"],M["Max taletid"],"t",true)}${cell(p["FCR"]>1?p["FCR"]/100:p["FCR"],M["FCR"],"p")}</tr>`).join("")+"</tbody>";
   const EB = D.valeur_md.efterbehandling;
+  MKEYS.cEfter = EB.map(e=>e.md);
   mk("cEfter",{type:"line",data:{labels:EB.map(e=>mdLabel(e.md)),datasets:[
     {label:"Efterbehandling",data:EB.map(e=>e.s),borderColor:css("--valeur"),pointRadius:3,tension:.3},
     {label:"Mål 1:30",data:EB.map(()=>90),borderColor:css("--bad"),borderDash:[5,4],pointRadius:0,borderWidth:1}]},
@@ -517,22 +712,31 @@ function render(){
 
   // --- mails
   const ML = Object.entries(D.mails);
+  MKEYS.cMails = ML.map(([k])=>ugeTilMd(k));
   mk("cMails",{type:"bar",data:{labels:ML.map(([k])=>k.replace("-U"," u")),datasets:[{label:"Mails",data:ML.map(([,v])=>v),backgroundColor:ML.map(([k])=>k.startsWith(ML[ML.length-1][0].slice(0,4))?css("--valeur"):alpha("--valeur",.5)),borderRadius:2}]},
     options:{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:12}},y:{title:{display:true,text:"Mails pr. uge"}}}}});
 
   // --- dybere spadestik
   const DY = D.dybde;
-  const pctBars = (el, rows, color) => { el.innerHTML = rows.map(([k,a,n]) => `<div class="bar-row"><div class="lab"><span title="${k}">${k}</span><span class="num">${pct(a)} <span style="color:var(--muted)">af ${fmt(n)}</span></span></div>
+  const pctBars = (el, rows, color) => { if (!rows.length) { el.innerHTML = '<p class="src">For få registreringer til at vise.</p>'; return; } el.innerHTML = rows.map(([k,a,n]) => `<div class="bar-row"><div class="lab"><span title="${k}">${k}</span><span class="num">${pct(a)} <span style="color:var(--muted)">af ${fmt(n)}</span></span></div>
     <div class="bar-track"><div class="bar-fill" style="width:${(a*100).toFixed(1)}%;background:${color}"></div></div></div>`).join(""); };
 
   // 1 løser selv
   const L = DY.loeser;
+  document.getElementById("loeser").querySelectorAll(".kpis,.grid2,.split,.insight").forEach(e=>e.hidden=!L);
+  let loeserTom = document.getElementById("loeserTom");
+  if (!loeserTom) { loeserTom = document.createElement("p"); loeserTom.id = "loeserTom"; loeserTom.className = "src"; document.querySelector("#loeser .blok-head").after(loeserTom); }
+  loeserTom.textContent = L ? "" : "Ingen registreringer at vise for dette udvalg. Andelen måles fra juli 2025.";
+  if (L) {
   const lG = Object.fromEntries(L.pr_gruppe.map(g=>[g.g,g.a]));
   document.getElementById("loeserKpi").innerHTML = [
     kpi(pct(1-L.andel_besked), "Løst af Valeur", `uden besked eller viderestilling · ${fmt(L.n)} registreringer`),
     kpi(pct(L.andel_besked), "Sendt videre", "besked eller viderestilling til sekretariatet"),
-    kpi(pct(1-lG["Rådgivning/forhandling"]), "Løst i rådgivning", `${pct(lG["Rådgivning/forhandling"])} sendes videre`),
-    kpi(pct(1-lG["Autorisation og Tilsyn"]), "Løst i autorisation", `${pct(lG["Autorisation og Tilsyn"])} sendes videre`),
+    ...(() => { const kg = {"Rådgivning/forhandling":"rådgivning","Autorisation og Tilsyn":"autorisation","Generelle fagforenings henvendelser":"fagforeningssager","Psykologfaglige henvendelser":"psykologfaglige sager","Selvstændige":"selvstændige-sager","Studerende/dimittender/ledige":"studerende-sager"};
+      const gg = [...L.pr_gruppe].sort((a,b)=>b.a-a.a), ud = [];
+      if (gg.length) ud.push(kpi(pct(1-gg[0].a), "Løst i " + (kg[gg[0].g]||gg[0].g), `${pct(gg[0].a)} sendes videre`));
+      if (gg.length > 1) { const z = gg[gg.length-1]; ud.push(kpi(pct(1-z.a), "Løst i " + (kg[z.g]||z.g), `${pct(z.a)} sendes videre`)); }
+      return ud; })(),
   ].join("");
   mk("cLoeserMd",{type:"bar",data:{labels:L.pr_md.map(m=>mdLabel(m.md)),datasets:[
     {label:"Sendt videre",data:L.pr_md.map(m=>m.b/m.n*100),backgroundColor:css("--sek"),stack:"s",borderRadius:2},
@@ -544,9 +748,13 @@ function render(){
   pctBars(document.getElementById("bLoeserBund"), [...L.pr_type].reverse().slice(0,7).map(t=>[t.t,1-t.a,t.n]), "var(--valeur)");
   const lMed = L.pr_type.find(t=>t.t==="Medlemskab og kontingent");
   document.getElementById("loeserInsight").innerHTML = `<b>Valeur løser omkring ${pct(1-L.andel_besked)} af sagerne selv.</b> Rådgivningsemnerne sendes videre i ${pct(lG["Rådgivning/forhandling"])} af tilfældene, sådan som Valeur er instrueret. Medlemskab og kontingent sendes videre i ${pct(lMed?.a)} af tilfældene, selv om det handler om foreningens egne regler. Det og de øvrige emner i midten af listen er de oplagte at se på, hvis Valeur skal løse mere selv: med flere faste svar kunne en del af dem afsluttes i første opkald. <span class="src">Forbehold: Andelen er fundet ved at søge efter faste formuleringer i noterne, fx "Har ringet i dag" og kønumre. ${pct(L.andel_tom)} af noterne er tomme og tæller som løst. Valeurs eget mål for løst i første kald (30–40 % i benchmark-arket) er målt på en anden måde og kan ikke sammenlignes direkte.</span>`;
+  if (erAfd || MDV) { const top = L.pr_type[0], bund = L.pr_type[L.pr_type.length-1];
+    document.getElementById("loeserInsight").innerHTML = `<b>${erAfd ? afdNavn : "Hele foreningen"}${MDV ? " · " + mdLang(MDV) : ""}: Valeur løser omkring ${pct(1-L.andel_besked)} selv</b> (${fmt(L.n)} registreringer). ${top ? `Sendes oftest videre: ${top.t} (${pct(top.a)}). ` : ""}${bund && bund !== top ? `Løses oftest af Valeur: ${bund.t} (${pct(1-bund.a)} løst). ` : ""}<span class="src">Andelen er fundet ved at søge efter faste formuleringer i noterne og er et skøn.</span>`; }
 
+  }
   // 2 udsendelser
   const US = DY.udsendelser, UU = US.uger.filter(u=>u.n>=20);
+  MKEYS.cUdsend = UU.map(u=>u.start.slice(0,7));
   mk("cUdsend",{data:{labels:UU.map(u=>u.uge.replace("-U"," u")),datasets:[
     {type:"bar",label:"Medlemskab og kontingent",data:UU.map(u=>u.kont),backgroundColor:css("--valeur"),borderRadius:2,order:2},
     {type:"bar",label:"Kurser og arrangementer",data:UU.map(u=>u.kursus),backgroundColor:alpha("--sek",.6),borderRadius:2,order:2},
@@ -554,8 +762,9 @@ function render(){
     options:{interaction:{mode:"index",intersect:false},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:12}},y:{title:{display:true,text:"Registreringer pr. uge"}}},
       plugins:{tooltip:{callbacks:{footer:it=>`Ugen fra ${dato(UU[it[0].dataIndex].start)} · ${fmt(UU[it[0].dataIndex].n)} registreringer i alt`}}}}});
   const topU = [...US.uger].sort((a,b)=>b.kont-a.kont)[0];
+  document.getElementById("udsendInsight").hidden = !(topU && topU.kont >= 10 && (!erAfd || FILTER.afd === "medlemsservice"));
   const kontSnit = US.uger.reduce((a,u)=>a+u.kont,0)/US.uger.length;
-  document.getElementById("udsendInsight").innerHTML = `<b>Én rykkerudsendelse giver en hel uges ekstra opkald.</b> I ugen fra ${dato(topU.start)} var der ${fmt(topU.kont)} registreringer om medlemskab og kontingent, mod ${fmt(kontSnit)} i en gennemsnitlig uge, og ${fmt(topU.ryk)} af dem nævnte en rykker. I alt nævner ${fmt(US.ryk_i_alt)} registreringer en rykker, og ${pct(US.ryk_andel_kontingent)} af dem handler om kontingent. Hvis Valeur får besked om udsendelser på forhånd og har et fast svar klar, kan spidsen planlægges i stedet for at ramme som en overraskelse.`;
+  if (topU) document.getElementById("udsendInsight").innerHTML = `<b>Én rykkerudsendelse giver en hel uges ekstra opkald.</b> I ugen fra ${dato(topU.start)} var der ${fmt(topU.kont)} registreringer om medlemskab og kontingent, mod ${fmt(kontSnit)} i en gennemsnitlig uge, og ${fmt(topU.ryk)} af dem nævnte en rykker. I alt nævner ${fmt(US.ryk_i_alt)} registreringer en rykker, og ${pct(US.ryk_andel_kontingent)} af dem handler om kontingent. Hvis Valeur får besked om udsendelser på forhånd og har et fast svar klar, kan spidsen planlægges i stedet for at ramme som en overraskelse.`;
 
   // 3 årshjul
   const AH = DY.aarshjul, MDK = ["jan","feb","mar","apr","maj","jun","jul","aug","sep","okt","nov","dec"];
@@ -576,7 +785,7 @@ function render(){
 
   // 5 geografi
   const GE = DY.geografi, geTot = GE.reduce((a,x)=>a+x.n,0);
-  bars(document.getElementById("bKreds"), GE.map(k=>[k.k,k.n,pct(k.n/geTot)]), GE[0].n);
+  bars(document.getElementById("bKreds"), GE.map(k=>[k.k,k.n,pct(k.n/geTot)]), (GE[0]||{n:1}).n);
   mk("cKreds",{type:"bar",data:{labels:GE.map(k=>k.k),datasets:[
     {label:"Selvstændige",data:GE.map(k=>k.selv*100),backgroundColor:css("--warn"),borderRadius:2},
     {label:"Rådgivningssager",data:GE.map(k=>k.raad*100),backgroundColor:css("--sek"),borderRadius:2}]},
@@ -609,13 +818,14 @@ function render(){
       kpi(fmt(OK.timer), "Timer hos Valeur", `samtale ${mmss(OK.tale_pr_opkald)} + efterbehandling ${mmss(OK.efter_pr_opkald)} pr. opkald`),
       kpi(pct(OM.daekning.andel), "Medlemmer i kontakt", `${fmt(OM.daekning.i_kontakt)} af ${fmt(OM.daekning.medlemmer)} det seneste år`),
     ].join("");
-    const loestSelv = 1 - D.dybde.loeser.andel_besked;
+    const loestSelv = 1 - DATA.dybde.loeser.andel_besked;
+    const oS = f => KOE_ALLE.reduce((a,k)=>a+(DATA.koe_fe[k]?f(DATA.koe_fe[k]):0),0), oE = oS(x=>x.efter.opkald_md), oF = oS(x=>x.foer.opkald_md);
     const omStep = (k,n,s)=>`<div class="step"><div class="k">${k}</div><div class="n num">${n}</div><div class="k">${s}</div></div>`;
     document.getElementById("omFlow").innerHTML =
       omStep("Besvarede opkald", fmt(OK.besvarede), `${fmt(OK.kr_pr_opkald)} kr. stykket`) +
       omStep("Løst uden sekretariatet", "ca. " + fmt(OK.besvarede*loestSelv, 0), `ca. ${fmt(OK.kr/(OK.besvarede*loestSelv))} kr. stykket`) +
-      omStep("Registreringer i Membercare", fmt(D.mc.total_efter), `${pct(D.mc.andel_valeur)} lavet af Valeur`) +
-      omStep("Kald i køerne pr. md.", `${fmt(eO)}`, `før ${fmt(fO)}`);
+      omStep("Registreringer i Membercare", fmt(DATA.mc.total_efter), `${pct(DATA.mc.andel_valeur)} lavet af Valeur`) +
+      omStep("Kald i køerne pr. md.", `${fmt(oE)}`, `før ${fmt(oF)}`);
     document.getElementById("omFlowNote").textContent = `Prisen dækker samtale og efterbehandling for alle besvarede opkald fra pilotstarten til ${dato(V.sidste)}. Ud over at besvare opkald registrerer Valeur alle henvendelser, opdaterer stamdata og løser medlemsservice-opgaverne helt. Prisen pr. sag løst uden sekretariatet bygger på skønnet over, hvor mange sager Valeur løser selv.`;
 
     const B = OM.bestand;
@@ -651,8 +861,80 @@ function render(){
     pctBars(document.getElementById("bNye"), NY.pr_type.map(t=>[t.g,t.a,t.n]), "var(--valeur)");
   }
 
+  // --- måned for måned (lokalt filter: LOKAL_MD; afdeling følger filteret øverst)
+  {
+    const UD = (DATA.udsnit||{})[FILTER.afd] || {md:{}};
+    const alleMdr = V.maaneder.map(m=>m.md);
+    const sidsteHele = [...alleMdr].reverse().find(m=>!delvisMd(m)) || alleMdr[alleMdr.length-1];
+    if (!LOKAL_MD || !alleMdr.includes(LOKAL_MD)) LOKAL_MD = MDV || sidsteHele;
+    const mailsMd = {};
+    Object.entries(DATA.mails||{}).forEach(([k,v]) => { const m = ugeTilMd(k); mailsMd[m] = (mailsMd[m]||0) + v; });
+    const raekke = md => {
+      const vm = V.maaneder.find(x=>x.md===md), k = koeMd(md), u = UD.md[md] || {};
+      return {md, vI: vm?.i ?? null, vB: vm?.b ?? null, vS: vm && vm.i ? vm.b/vm.i : null, dage: vm?.dage ?? null,
+              kO: ingenKoe ? null : (k.o || null), kB: ingenKoe ? null : (k.o ? k.b : null), kS: ingenKoe || !k.o ? null : k.b/k.o, kV: ingenKoe ? null : k.v,
+              reg: u.mc ? u.mc.total_efter : (vm ? 0 : null), pers: u.mc ? u.mc.unikke : (vm ? 0 : null),
+              loest: u.loeser ? 1 - u.loeser.andel_besked : null, mails: erAfd ? null : (mailsMd[md] ?? null)};
+    };
+    MD_RAEKKER = alleMdr.map(raekke);
+    const r = raekke(LOKAL_MD), fm = forrigeMd(LOKAL_MD), am = sidsteAarMd(LOKAL_MD), rf = raekke(fm), ra = raekke(am);
+    const dd = (a,b,dir) => (a==null||b==null||!a) ? "" : `<span class="pill ${dir===0?"neutral":((b-a)/a*dir>0?"good":"bad")}">${b>=a?"▲":"▼"} ${fmt(Math.abs((b-a)/a)*100)} % mod ${mdLabel(fm)}</span>`;
+    const dp = (a,b,dir=1) => (a==null||b==null) ? "" : `<span class="pill ${(b-a)*dir>=0?"good":"bad"}">${b>=a?"▲":"▼"} ${fmt(Math.abs(b-a)*100)} point mod ${mdLabel(fm)}</span>`;
+    const sam = (fv, av, f) => [fv!=null ? `${mdLabel(fm)}: ${f(fv)}` : null, av!=null ? `${mdLabel(am)}: ${f(av)}` : null].filter(Boolean).join(" · ") || "ingen sammenligning";
+    const sel = document.getElementById("lokMd");
+    sel.innerHTML = [...alleMdr].reverse().map(m=>`<option value="${m}">${mdLang(m)}${delvisMd(m)?" (indtil videre)":""}</option>`).join("");
+    sel.value = LOKAL_MD;
+    document.getElementById("mdForrige").disabled = alleMdr.indexOf(LOKAL_MD) <= 0;
+    document.getElementById("mdNaeste").disabled = alleMdr.indexOf(LOKAL_MD) >= alleMdr.length-1;
+    document.getElementById("lokNote").textContent = (delvisMd(LOKAL_MD) ? `Måneden er ikke slut: data til og med ${dato(V.sidste)}. ` : "") + (erAfd ? `Afdeling: ${afdNavn}.` : "");
+    document.getElementById("mdKpi").innerHTML = [
+      kpi(fmt(r.vI), "Opkald til Valeur" + (erAfd ? " (hele nummeret)" : ""), sam(rf.vI, ra.vI, fmt), dd(rf.vI, r.vI, 0)),
+      kpi(pct(r.vS), "Valeurs svarprocent", sam(rf.vS, ra.vS, v=>pct(v)), dp(rf.vS, r.vS)),
+      ...(ingenKoe ? [] : [
+        kpi(fmt(r.kO), erAfd ? `Kald i ${koeNavn}` : "Kald i sekretariatets køer", sam(rf.kO, ra.kO, fmt), dd(rf.kO, r.kO, 0)),
+        kpi(pct(r.kS), "Svar i køerne", sam(rf.kS, ra.kS, v=>pct(v)), dp(rf.kS, r.kS)),
+        kpi(mmss(r.kV), "Ventetid i køerne", sam(rf.kV, ra.kV, mmss), dd(rf.kV, r.kV, -1))]),
+      kpi(fmt(r.reg), "Registreringer", `${fmt(r.pers)} personer · ` + sam(rf.reg, ra.reg, fmt), dd(rf.reg, r.reg, 0)),
+      kpi(pct(r.loest), "Løst af Valeur", r.loest==null ? "måles fra juli 2025" : sam(rf.loest, ra.loest, v=>pct(v)), dp(rf.loest, r.loest)),
+      ...(erAfd ? [] : [kpi(fmt(r.mails), "Mails", sam(rf.mails, ra.mails, fmt), dd(rf.mails, r.mails, 0))]),
+    ].join("");
+    const M = (UD.md[LOKAL_MD] || {}).mc, MF = (UD.md[fm] || {}).mc;
+    const fTyper = Object.fromEntries(((MF||{}).typer||[]).map(t=>[t.t, t.n]));
+    const typer = ((M||{}).typer || []).slice(0, 10);
+    const kortT = s => s.replace("Selvstændig psykolog spørgsmål om ","").replace("Selvstændig psykolog – spørgsmål om ","").replace(/\s*\(.*\)$/,"");
+    bars(document.getElementById("bMdEmner"), typer.map(t => [kortT(t.t), t.n, fTyper[t.t] != null ? `${t.n>=fTyper[t.t]?"+":""}${fmt(t.n-fTyper[t.t])} mod ${mdLabel(fm)}` : ""]), typer[0]?.n || 1, "var(--t-ovb)");
+    document.getElementById("mdEmneNote").textContent = "Emner med færre end 5 registreringer i måneden vises ikke.";
+    const gr = Object.entries((M||{}).grupper || {}).sort((a,b)=>b[1]-a[1]);
+    bars(document.getElementById("bMdGrupper"), gr.map(([g,n]) => [g, n, pct(n/((M||{}).total_efter||1))]), gr[0]?.[1] || 1, "var(--t-ovb)");
+    const th = ["Måned","Opkald til Valeur","Svar Valeur", ...(ingenKoe ? [] : ["Kald i køerne","Svar køer","Vent køer"]),"Registreringer","Personer","Løst af Valeur", ...(erAfd ? [] : ["Mails"])];
+    document.getElementById("tMd").innerHTML = `<thead><tr>${th.map(t=>`<th>${t}</th>`).join("")}</tr></thead><tbody>` +
+      [...MD_RAEKKER].reverse().map(x => `<tr data-md="${x.md}" class="${x.md===LOKAL_MD?"valgt":""}" tabindex="0"><td>${mdLang(x.md)}${delvisMd(x.md)?" *":""}</td><td>${fmt(x.vI)}</td><td>${pct(x.vS)}</td>` +
+        (ingenKoe ? "" : `<td>${fmt(x.kO)}</td><td>${pct(x.kS)}</td><td>${mmss(x.kV)}</td>`) +
+        `<td>${fmt(x.reg)}</td><td>${fmt(x.pers)}</td><td>${pct(x.loest)}</td>` + (erAfd ? "" : `<td>${fmt(x.mails)}</td>`) + `</tr>`).join("") + "</tbody>";
+    document.getElementById("tMdNote").textContent = `Klik på en måned for at se den ovenfor. * Måneden er ikke slut. Opkald til Valeur${erAfd ? "" : " og mails"} gælder hele hovednummeret${erAfd ? `; køer og registreringer gælder ${afdNavn}` : ""}. Løst af Valeur er et skøn ud fra noterne og måles fra juli 2025. Mails er talt pr. uge og lagt i den måned, ugen begynder i.`;
+  }
+
+  // --- mærker på sektioner, der ikke følger filtrene
+  {
+    const FM = {md: ["status","maaned","hvad","hvem","loeser","geografi"],
+                afd: ["status","maaned","aflastning","hvad","hvem","loeser","udsendelser","aarshjul","igen","geografi"]};
+    document.querySelectorAll("section.blok[id]").forEach(sec => {
+      sec.querySelectorAll(".filterbadge").forEach(b => b.remove());
+      const t = [];
+      if (MDV && !FM.md.includes(sec.id) && sec.id !== "maaned") t.push("Hele perioden");
+      if (erAfd && !FM.afd.includes(sec.id)) t.push("Hele foreningen");
+      const eb = sec.querySelector(".blok-head .eyebrow");
+      if (eb) t.forEach(x => { const s = document.createElement("span"); s.className = "filterbadge"; s.textContent = x; eb.appendChild(s); });
+    });
+    document.getElementById("aflastning").hidden = ingenKoe;
+    const info = [erAfd ? afdNavn : null, MDV ? mdLang(MDV) : null].filter(Boolean);
+    document.getElementById("filterInfo").textContent = info.length ? "Viser: " + info.join(" · ") : "";
+    document.getElementById("fNulstil").hidden = !info.length;
+  }
+
   document.getElementById("foot").textContent = `Bygget ${dato(D.genereret)} af scripts/briefing/build_data.py. Kun aggregerede tal: ingen navne, numre eller fritekst fra Membercare.`;
 }
+opsaetFiltre();
 render();
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", render);
 new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
@@ -666,7 +948,7 @@ new MutationObserver(render).observe(document.documentElement,{attributes:true,a
     synlige.forEach((t,id)=>{ if(t!==null && Math.abs(t) < top){ top=Math.abs(t); bedst=id; } });
     if(!bedst) return;
     links.forEach(a=>a.classList.toggle("aktiv", a===byId[bedst]));
-    const a = byId[bedst]; const nav = a.closest("nav");
+    const a = byId[bedst]; const nav = a.closest(".toc-chips") || a.closest("nav");
     if (nav.scrollWidth > nav.clientWidth) nav.scrollTo({left:a.offsetLeft-16, behavior:"smooth"});
   },{rootMargin:"-120px 0px -55% 0px"});
   document.querySelectorAll("section.blok[id]").forEach(sec=>io.observe(sec));

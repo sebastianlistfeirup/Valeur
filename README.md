@@ -103,6 +103,29 @@ Sektioner: status, opkald og svar, aflastning af sekretariatet (før og efter, k
 for kø), hvornår der ringes, hvad og hvem (Membercare), Valeur målt mod de
 aftalte mål, mails pr. uge og en liste over datahuller.
 
+### Filtre: afdeling og måned
+
+Øverst på siden kan man vælge **afdeling** og **måned**. Valget står i adressen, så
+en leder kan gemme et link til sin egen afdeling, fx
+`briefing.html?afdeling=raadgivning` eller `briefing.html?afdeling=selvstaendige&maaned=2026-10`.
+
+| Afdeling | Køer | Membercare |
+|---|---|---|
+| `raadgivning` | 1510 | Rådgivning/forhandling |
+| `selvstaendige` | 1515 | Selvstændige |
+| `medlemsservice` | 15123 | Generelle fagforenings henvendelser og studerende, undtagen kurser og betalinger |
+| `kursus` | 15122 | Kurser/arrangementer |
+| `oekonomi` | 1520, 1525 | Betalinger til og fra foreningen |
+| `faglig` | ingen | Psykologfaglige henvendelser, Autorisation og Tilsyn |
+
+Opdelingen står i `AFDELINGER` i `scripts/briefing/build_data.py`. Tallene pr. afdeling
+og pr. måned beregnes på forhånd (`data["udsnit"]`). Sektioner, der ikke kan deles op,
+fx Valeurs opkald, timefordelingen og benchmark, får mærket "Hele foreningen" eller
+"Hele perioden", når et filter er valgt.
+
+Sektionen **Måned for måned** har sin egen månedsvælger, der kun gælder sektionen,
+og en tabel over alle måneder, der kan hentes som CSV til Excel.
+
 ### Opdatér med nye data
 
 **Den nemme vej:** gå til [`opdater.html`](https://sebastianlistfeirup.github.io/Valeur/opdater.html)

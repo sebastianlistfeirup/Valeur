@@ -186,18 +186,41 @@ def koe_foer_efter(md, efter):
 
 
 # ---------------------------------------------------------------- 4. Membercare / servicefanen
-def membercare(sti):
+AFDELINGER = [
+    # id, navn, køer, Membercare-hovedkategorier, emner (begyndelsen af servicetypen), emner der trækkes fra
+    {"id": "raadgivning", "navn": "Rådgivning", "koeer": ["1510"], "grupper": ["Rådgivning/forhandling"]},
+    {"id": "selvstaendige", "navn": "Selvstændige", "koeer": ["1515"], "grupper": ["Selvstændige"]},
+    {"id": "medlemsservice", "navn": "Medlemsservice", "koeer": ["15123"],
+     "grupper": ["Generelle fagforenings henvendelser", "Studerende/dimittender/ledige"],
+     "undtagen": ["Kurser/arrangementer", "Betalinger til og fra foreningen"]},
+    {"id": "kursus", "navn": "Kursus og arrangementer", "koeer": ["15122"], "typer": ["Kurser/arrangementer"]},
+    {"id": "oekonomi", "navn": "Økonomi", "koeer": ["1520", "1525"], "typer": ["Betalinger til og fra foreningen"]},
+    {"id": "faglig", "navn": "Psykologfaglig og autorisation", "koeer": [],
+     "grupper": ["Psykologfaglige henvendelser", "Autorisation og Tilsyn"]},
+]
+
+
+def afd_maske(df, a):
+    g = df["Servicegruppe"].fillna("").str.strip()
+    t = df["Servicetype"].fillna("").str.strip()
+    m = g.isin(a.get("grupper", []))
+    if a.get("typer"):
+        m |= t.str.startswith(tuple(a["typer"]))
+    if a.get("undtagen"):
+        m &= ~t.str.startswith(tuple(a["undtagen"]))
+    return m
+
+
+def _mc_df(sti):
     df = pd.read_excel(sti, dtype=str)
     df["dato"] = pd.to_datetime(df["Service dato"], errors="coerce")
-    df = df[df["dato"].notna()]
+    df = df[df["dato"].notna()].copy()
     bem = df["Bemærkning"].fillna("")
     hits = df.assign(v=bem.str.contains("Valeur", case=False)).groupby("Oprettet af")["v"].agg(["sum", "size"])
     agenter = set(hits[hits["sum"] >= 3].index)
     df["af_valeur"] = df["Oprettet af"].isin(agenter)
-
-    efter = df[df["dato"] >= START].copy()
-    efter["gruppe"] = efter["Servicegruppe"].fillna("Ikke angivet").str.strip()
-    efter["type"] = efter["Servicetype"].fillna("Ikke angivet").str.strip()
+    df["gruppe"] = df["Servicegruppe"].fillna("Ikke angivet").str.strip()
+    df["type"] = df["Servicetype"].fillna("Ikke angivet").str.strip()
     TOM = "Medlemskab ikke angivet"
 
     def seg(s):
@@ -205,43 +228,81 @@ def membercare(sti):
             return TOM
         s = s.strip().split(",")[0].split("-")[0].strip()
         return re.sub(r"\s+", " ", s).rstrip(".") or TOM
-    efter["seg"] = efter["Medlemskab"].map(seg)
+    df["seg"] = df["Medlemskab"].map(seg)
+    df["md"] = df["dato"].dt.to_period("M").astype(str)
+    navne = set()
+    for kol in ("Medlem", "Oprettet af", "Ændret af"):
+        if kol in df:
+            navne |= {n.strip() for n in df[kol].dropna() if len(n.strip()) > 5 and len(n.strip().split()) > 1}
+    df = df.drop(columns=["Bemærkning", "Overskrift", "Medlem", "Oprettet af", "Ændret af"], errors="ignore")
+    return df, agenter, navne
 
+
+def mc_aggr(df, antal_agenter, udsnit=False):
+    """Aggregater for et udsnit af servicefanen. udsnit=True: slankere version til én måned."""
+    efter = df[df["dato"] >= START]
+    if not len(efter):
+        return None
+    TOM = "Medlemskab ikke angivet"
     tom = efter[efter["seg"] == TOM]
-    grp = efter["gruppe"].value_counts()
     typer = efter.groupby(["gruppe", "type"]).size().reset_index(name="n").sort_values("n", ascending=False)
     typer = typer[typer["n"] >= MIN_CELLE]
     segs = efter["seg"].value_counts()
     segs_ud = {k: int(v) for k, v in segs.items() if v >= MIN_CELLE}
     segs_ud["Øvrige grupper"] = int(segs[segs < MIN_CELLE].sum())
-    kryds = efter[efter["seg"].isin(list(segs.index[:6]))].groupby(["seg", "gruppe"]).size().unstack(fill_value=0)
-    efter["md"] = efter["dato"].dt.to_period("M").astype(str)
-    md = efter.groupby(["md", "gruppe"]).size().unstack(fill_value=0)
+    top_seg = [s for s in segs.index[:6] if segs[s] >= (25 if udsnit else 1)]
+    kryds = efter[efter["seg"].isin(top_seg)].groupby(["seg", "gruppe"]).size().unstack(fill_value=0)
     pr_pers = efter.groupby("Stamkort").size()
-    pr_md_valeur = efter.groupby("md")["af_valeur"].agg(["sum", "size"]).reset_index()
-
-    navne = set()
-    for kol in ("Medlem", "Oprettet af", "Ændret af"):
-        if kol in df:
-            navne |= {n.strip() for n in df[kol].dropna() if len(n.strip()) > 5 and len(n.strip().split()) > 1}
-    return {
+    ud = {
         "periode": [efter["dato"].min().strftime("%Y-%m-%d"), efter["dato"].max().strftime("%Y-%m-%d")],
-        "total_alle": int(len(df)), "total_efter": int(len(efter)),
-        "foer_valeur": {"foerste": df["dato"].min().strftime("%Y-%m-%d"), "antal": int((df["dato"] < START).sum())},
-        "unikke": int(efter["Stamkort"].nunique()),
+        "total_efter": int(len(efter)), "unikke": int(efter["Stamkort"].nunique()),
         "tomt_felt": {"registreringer": int(len(tom)), "personer": int(tom["Stamkort"].nunique()),
-                      "andel_kontingent": round((tom["type"] == "Medlemskab og kontingent").mean(), 3),
+                      "andel_kontingent": round((tom["type"] == "Medlemskab og kontingent").mean(), 3) if len(tom) else None,
                       "andel_kontingent_alle": round((efter["type"] == "Medlemskab og kontingent").mean(), 3)},
         "gentag": {str(k): int(v) for k, v in pr_pers.clip(upper=6).value_counts().sort_index().items()},
-        "andel_valeur": round(efter["af_valeur"].mean(), 3),
-        "antal_valeur_agenter": len(agenter),
-        "grupper": {k: int(v) for k, v in grp.items()},
-        "typer": [{"g": r.gruppe, "t": r.type, "n": int(r.n)} for r in typer.itertuples()],
+        "andel_valeur": round(efter["af_valeur"].mean(), 3), "antal_valeur_agenter": antal_agenter,
+        "grupper": {k: int(v) for k, v in efter["gruppe"].value_counts().items()},
+        "typer": [{"g": r.gruppe, "t": r.type, "n": int(r.n)} for r in typer.head(25 if udsnit else 10**6).itertuples()],
         "segmenter": segs_ud,
         "kryds": {s: {g: int(n) for g, n in kryds.loc[s].items()} for s in kryds.index},
-        "pr_md": {m: {g: int(n) for g, n in md.loc[m].items()} for m in md.index},
-        "valeur_pr_md": [{"md": r.md, "valeur": int(r.sum), "alle": int(r.size)} for r in pr_md_valeur.itertuples()],
-    }, navne
+    }
+    if not udsnit:
+        md = efter.groupby(["md", "gruppe"]).size().unstack(fill_value=0)
+        pv = efter.groupby("md")["af_valeur"].agg(["sum", "size"]).reset_index()
+        ud.update({"total_alle": int(len(df)),
+                   "foer_valeur": {"foerste": df["dato"].min().strftime("%Y-%m-%d"), "antal": int((df["dato"] < START).sum())},
+                   "pr_md": {m: {g: int(n) for g, n in md.loc[m].items()} for m in md.index},
+                   "valeur_pr_md": [{"md": r.md, "valeur": int(r.sum), "alle": int(r.size)} for r in pv.itertuples()]})
+    return ud
+
+
+def membercare(sti):
+    df, agenter, navne = _mc_df(sti)
+    return mc_aggr(df, len(agenter)), navne
+
+
+def udsnit(df, dfd, antal_agenter, log=print):
+    """Tal pr. afdeling og pr. måned til filtrene øverst på siden."""
+    import dybde
+    ud = {}
+    maaneder = sorted(df.loc[df["dato"] >= START, "md"].unique())
+    for a in [{"id": "alle"}] + AFDELINGER:
+        log(f"Beregner udsnit: {a.get('navn', 'hele foreningen')} …")
+        sub = df if a["id"] == "alle" else df[afd_maske(df, a)]
+        subd = dfd if a["id"] == "alle" else dfd[afd_maske(dfd, a)]
+        u = {"md": {}}
+        if a["id"] != "alle":
+            u["mc"] = mc_aggr(sub, antal_agenter)
+            u["dybde"] = dybde.mc_dele(subd)
+        for m in maaneder:
+            sm, sdm = sub[sub["md"] == m], subd[subd["md"] == m]
+            if not len(sm):
+                continue
+            u["md"][m] = {"mc": mc_aggr(sm, antal_agenter, udsnit=True),
+                          "loeser": dybde.loeser_selv(sdm, 20) if len(sdm) else None,
+                          "geografi": dybde.geografi(sdm, 10) if len(sdm) else []}
+        ud[a["id"]] = u
+    return ud
 
 
 # ---------------------------------------------------------------- 5. Valeurs egne ark
@@ -283,14 +344,24 @@ def benchmark(sti):
 
 
 def valeur_maaned(sti):
+    """Valeurs månedsopgørelse. Kolonnerne findes ud fra overskriften (Besvaret andel kan være tom)."""
     ws = openpyxl.load_workbook(sti, data_only=True)["Opkald - månedsopdelt"]
+    rows = list(ws.iter_rows(values_only=True))
+    hi = next(i for i, r in enumerate(rows) if r and r[0] == "Måned")
+    h = [str(c).strip() if c else "" for c in rows[hi]]
+    kol = lambda navn: next((i for i, x in enumerate(h) if x.startswith(navn)), None)
+    k = {"tilbudt": kol("Tilbudte kald"), "besvaret": kol("Besvarede kald"), "vent": kol("Gns ventetid"),
+         "tale": kol("Gns opkaldstid"), "efter": kol("Gns efterbehandlingstid"),
+         "tale_tot": kol("Samlet samtaletid"), "efter_tot": kol("Samlet efterbehandlingstid")}
+    g = lambda r, n: r[k[n]] if k[n] is not None and k[n] < len(r) else None
     ud = []
-    for r in list(ws.iter_rows(values_only=True))[1:]:
-        if not isinstance(r[0], dt.datetime):
+    for r in rows[hi + 1:]:
+        if not r or not isinstance(r[0], dt.datetime):
             continue
-        ud.append({"md": r[0].strftime("%Y-%m"), "tilbudt": r[1], "besvaret": r[2],
-                   "vent": sek(r[3]), "tale": sek(r[4]), "efter": sek(r[5]),
-                   "tale_timer": round((sek(r[6]) or 0) / 3600), "efter_timer": round((sek(r[7]) or 0) / 3600)})
+        ud.append({"md": r[0].strftime("%Y-%m"), "tilbudt": g(r, "tilbudt"), "besvaret": g(r, "besvaret"),
+                   "vent": sek(g(r, "vent")), "tale": sek(g(r, "tale")), "efter": sek(g(r, "efter")),
+                   "tale_timer": round((sek(g(r, "tale_tot")) or 0) / 3600),
+                   "efter_timer": round((sek(g(r, "efter_tot")) or 0) / 3600)})
     return ud
 
 
@@ -407,9 +478,11 @@ def byg(rod, tidligere=None, mtimes=None, log=print):
         data["koeer"] = genbrug("koe_kald", "koeer")
 
     # Membercare
+    mc_df = None
     if valgt.get("membercare"):
         log("Læser Membercare …")
-        data["mc"], navne = membercare(valgt["membercare"])
+        mc_df, agenter, navne = _mc_df(valgt["membercare"])
+        data["mc"] = mc_aggr(mc_df, len(agenter))
         ny("membercare", *data["mc"]["periode"], note=f"{data['mc']['total_efter']:,} registreringer".replace(",", "."))
     else:
         data["mc"] = genbrug("membercare", "mc")
@@ -443,12 +516,18 @@ def byg(rod, tidligere=None, mtimes=None, log=print):
 
     # Dybere spadestik og medlemmer
     import dybde, medlemmer
+    dfd = dybde._membercare(valgt["membercare"]) if valgt.get("membercare") else None
     if valgt.get("membercare") and valgt.get("koe_kald") and valgt.get("valeur_dag"):
         log("Beregner de dybere spadestik …")
         data["dybde"] = dybde.build(valgt["membercare"], list(valgt["koe_kald"].values()),
-                                    data["valeur"]["dage"], data["valeur"]["sidste"])
+                                    data["valeur"]["dage"], data["valeur"]["sidste"], df=dfd)
     else:
         data["dybde"] = tidligere.get("dybde")
+    data["afd_def"] = [{"id": a["id"], "navn": a["navn"], "koeer": a["koeer"]} for a in AFDELINGER]
+    if mc_df is not None:
+        data["udsnit"] = udsnit(mc_df, dfd, data["mc"]["antal_valeur_agenter"], log=log)
+    else:
+        data["udsnit"] = tidligere.get("udsnit")
     om = tidligere.get("om") or {}
     if valgt.get("valeur_pris"):
         om = {**om, "oekonomi": medlemmer.oekonomi(valgt["valeur_pris"])}
@@ -469,13 +548,26 @@ def byg(rod, tidligere=None, mtimes=None, log=print):
         if r.get("status") == "ny":
             r["opdateret"] = data["genereret"]
 
+    data = _rens(data)
     log("Tjekker for persondata …")
-    txt = json.dumps(data, ensure_ascii=False, default=str)
+    txt = json.dumps(data, ensure_ascii=False, default=str, allow_nan=False)
     fund = tjek_privatliv(txt, navne)
     if fund:
         raise ValueError("Outputtet indeholder persondata (" + ", ".join(fund) + "). Intet er gemt.")
     log("Færdig.")
     return data, oversigt
+
+
+def _rens(o):
+    """NaN og uendelig -> None, så outputtet er gyldig JSON."""
+    import math
+    if isinstance(o, dict):
+        return {k: _rens(v) for k, v in o.items()}
+    if isinstance(o, list):
+        return [_rens(v) for v in o]
+    if isinstance(o, float) and (math.isnan(o) or math.isinf(o)):
+        return None
+    return o
 
 
 def _hent(d, nøgler):

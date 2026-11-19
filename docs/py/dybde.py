@@ -44,17 +44,19 @@ def _membercare(mc_sti):
 
 
 # 1 ------------------------------------------------------------------ løser Valeur selv?
-def loeser_selv(df):
+def loeser_selv(df, min_n=MIN_N):
     d = df[df["dato"] >= SKABELON_START]
+    if not len(d):
+        return None
     pr_md = d.groupby("md").agg(n=("besked", "size"), besked=("besked", "sum")).reset_index()
     pr_gruppe = d.groupby("gruppe").agg(n=("besked", "size"), andel=("besked", "mean")).reset_index()
     pr_type = (d.groupby("type").agg(n=("besked", "size"), andel=("besked", "mean")).reset_index()
-               .query("n >= @MIN_N").sort_values("andel", ascending=False))
+               .query("n >= @min_n").sort_values("andel", ascending=False))
     return {
         "fra": SKABELON_START.strftime("%Y-%m-%d"), "n": int(len(d)),
         "andel_besked": round(d["besked"].mean(), 3), "andel_tom": round(d["tom_note"].mean(), 3),
         "pr_md": [{"md": r.md, "n": int(r.n), "b": int(r.besked)} for r in pr_md.itertuples()],
-        "pr_gruppe": [{"g": r.gruppe, "n": int(r.n), "a": round(r.andel, 3)} for r in pr_gruppe.itertuples() if r.n >= MIN_N],
+        "pr_gruppe": [{"g": r.gruppe, "n": int(r.n), "a": round(r.andel, 3)} for r in pr_gruppe.itertuples() if r.n >= min_n],
         "pr_type": [{"t": r.type, "n": int(r.n), "a": round(r.andel, 3)} for r in pr_type.itertuples()],
     }
 
@@ -95,14 +97,14 @@ def aarshjul(df):
 
 
 # 4 ------------------------------------------------------------------ sager der kommer igen
-def gentagne(df):
+def gentagne(df, min_n=MIN_N):
     d = df.sort_values(["Stamkort", "dato"]).copy()
     d["naeste"] = d.groupby("Stamkort")["dato"].shift(-1)
     d["dage"] = (d["naeste"] - d["dato"]).dt.days
     d["igen14"] = d["dage"].le(14)
     d = d[d["dato"] <= d["dato"].max() - pd.Timedelta(days=14)]   # sidste 14 dage kan ikke nå at gentage sig
     pr_type = (d.groupby("type").agg(n=("igen14", "size"), a=("igen14", "mean")).reset_index()
-               .query("n >= @MIN_N").sort_values("a", ascending=False))
+               .query("n >= @min_n").sort_values("a", ascending=False))
     samme = d[d["igen14"]].copy()
     naeste_type = d.groupby("Stamkort")["type"].shift(-1)
     d["samme_emne"] = d["igen14"] & (naeste_type == d["type"])
@@ -115,7 +117,7 @@ def gentagne(df):
 
 
 # 5 ------------------------------------------------------------------ geografi
-def geografi(df):
+def geografi(df, min_n=25):
     felt = df["Medlemskab"].fillna("").str.split(",").str[0]
     kreds = felt.str.split("-", n=1).str[1].fillna("").str.strip()
     kreds = kreds.replace(KREDS_NAVN).replace("", pd.NA)
@@ -124,7 +126,7 @@ def geografi(df):
     agg = d.groupby("kreds").agg(n=("selv", "size"), selv=("selv", "mean")).reset_index().sort_values("n", ascending=False)
     radg = d.assign(r=d["gruppe"].eq("Rådgivning/forhandling")).groupby("kreds")["r"].mean()
     return [{"k": r.kreds, "n": int(r.n), "selv": round(r.selv, 3), "raad": round(float(radg[r.kreds]), 3)}
-            for r in agg.itertuples() if r.n >= 25]
+            for r in agg.itertuples() if r.n >= min_n]
 
 
 # 6 ------------------------------------------------------------------ køen og prognosen
@@ -181,8 +183,16 @@ def prognose(valeur_dage, i_dag):
             "profil": {int(m): {UGEDAGE[int(w)]: round(float(v)) for w, v in r.items() if pd.notna(v)} for m, r in mat.iterrows()}}
 
 
-def build(mc_sti, kald_stier, valeur_dage, i_dag):
-    df = _membercare(mc_sti)
+def mc_dele(df, min_n=MIN_N):
+    """De dele, der kan beregnes på et udsnit af Membercare (en afdeling)."""
+    if not len(df):
+        return None
+    return {"loeser": loeser_selv(df, min_n), "udsendelser": udsendelser(df), "aarshjul": aarshjul(df),
+            "gentagne": gentagne(df, min_n), "geografi": geografi(df, max(10, min_n // 4))}
+
+
+def build(mc_sti, kald_stier, valeur_dage, i_dag, df=None):
+    df = _membercare(mc_sti) if df is None else df
     return {"loeser": loeser_selv(df), "udsendelser": udsendelser(df), "aarshjul": aarshjul(df),
             "gentagne": gentagne(df), "geografi": geografi(df), "koe": koe_opgivelse(kald_stier),
             "prognose": prognose(valeur_dage, i_dag)}
