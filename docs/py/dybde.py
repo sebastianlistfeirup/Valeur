@@ -51,7 +51,7 @@ def loeser_selv(df, min_n=MIN_N):
     pr_md = d.groupby("md").agg(n=("besked", "size"), besked=("besked", "sum")).reset_index()
     pr_gruppe = d.groupby("gruppe").agg(n=("besked", "size"), andel=("besked", "mean")).reset_index()
     pr_type = (d.groupby("type").agg(n=("besked", "size"), andel=("besked", "mean")).reset_index()
-               .query("n >= @min_n").sort_values("andel", ascending=False))
+               .query("n >= @min_n").sort_values(["andel", "type"], ascending=[False, True], kind="mergesort"))
     return {
         "fra": SKABELON_START.strftime("%Y-%m-%d"), "n": int(len(d)),
         "andel_besked": round(d["besked"].mean(), 3), "andel_tom": round(d["tom_note"].mean(), 3),
@@ -104,7 +104,7 @@ def gentagne(df, min_n=MIN_N):
     d["igen14"] = d["dage"].le(14)
     d = d[d["dato"] <= d["dato"].max() - pd.Timedelta(days=14)]   # sidste 14 dage kan ikke nå at gentage sig
     pr_type = (d.groupby("type").agg(n=("igen14", "size"), a=("igen14", "mean")).reset_index()
-               .query("n >= @min_n").sort_values("a", ascending=False))
+               .query("n >= @min_n").sort_values(["a", "type"], ascending=[False, True], kind="mergesort"))
     samme = d[d["igen14"]].copy()
     naeste_type = d.groupby("Stamkort")["type"].shift(-1)
     d["samme_emne"] = d["igen14"] & (naeste_type == d["type"])
@@ -123,7 +123,8 @@ def geografi(df, min_n=25):
     kreds = kreds.replace(KREDS_NAVN).replace("", pd.NA)
     seg = felt.str.split("-").str[0].str.strip()
     d = pd.DataFrame({"kreds": kreds, "selv": seg.eq("Selvstændig"), "gruppe": df["gruppe"]}).dropna(subset=["kreds"])
-    agg = d.groupby("kreds").agg(n=("selv", "size"), selv=("selv", "mean")).reset_index().sort_values("n", ascending=False)
+    agg = (d.groupby("kreds").agg(n=("selv", "size"), selv=("selv", "mean")).reset_index()
+           .sort_values(["n", "kreds"], ascending=[False, True], kind="mergesort"))
     radg = d.assign(r=d["gruppe"].eq("Rådgivning/forhandling")).groupby("kreds")["r"].mean()
     return [{"k": r.kreds, "n": int(r.n), "selv": round(r.selv, 3), "raad": round(float(radg[r.kreds]), 3)}
             for r in agg.itertuples() if r.n >= min_n]

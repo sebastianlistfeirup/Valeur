@@ -245,7 +245,8 @@ def mc_aggr(df, antal_agenter, udsnit=False):
         return None
     TOM = "Medlemskab ikke angivet"
     tom = efter[efter["seg"] == TOM]
-    typer = efter.groupby(["gruppe", "type"]).size().reset_index(name="n").sort_values("n", ascending=False)
+    typer = (efter.groupby(["gruppe", "type"]).size().reset_index(name="n")
+             .sort_values(["n", "gruppe", "type"], ascending=[False, True, True], kind="mergesort"))
     typer = typer[typer["n"] >= MIN_CELLE]
     segs = efter["seg"].value_counts()
     segs_ud = {k: int(v) for k, v in segs.items() if v >= MIN_CELLE}
