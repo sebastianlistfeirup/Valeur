@@ -132,6 +132,8 @@ footer{color:var(--muted);font-size:12px}
 .fchip.paa{background:color-mix(in srgb,var(--t-ovb) 13%,var(--panel));border:1px solid color-mix(in srgb,var(--t-ovb) 55%,var(--line));color:var(--ink)}
 .fchip.af{border:1px dashed var(--line);color:var(--muted);background:var(--panel)}
 .fchip .fchip-af{color:var(--muted);font-weight:400}
+.fchip.kan{border:1px solid var(--line);color:var(--muted);background:transparent}
+.fchip.kanikke{border:1px dashed var(--line);color:var(--muted);background:transparent;opacity:.8}
 .kpis + .fchip,.fchip + .kpis{margin-top:0}
 .filterforklaring{font-size:13px;line-height:1.55;border:1px dashed var(--t-ovb);border-radius:8px;padding:10px 14px;background:var(--panel);color:var(--ink)}
 .mdtabel th.grp{text-align:center;color:var(--ink);border-bottom:2px solid var(--t-ovb)}
@@ -1123,29 +1125,38 @@ function render(){
       cUdmNaiv: [""], cUdmFast: [""], nyeFlow: [""], bNye: [""], cMails: [""],
     };
     document.querySelectorAll(".fchip").forEach(e => e.remove());
-    if (erAfd || PER) {
+    {
       const lokKort = LOKAL ? periodeKort(LOKAL.fra, LOKAL.til) : "";
+      const aktiv = erAfd || PER;
       for (const [id, [dims, note]] of Object.entries(SPEC)) {
         const el = document.getElementById(id);
         if (!el) continue;
         const d = dims.split(" ").filter(Boolean);
-        const paa = [], af = [];
-        if (erAfd) (d.includes("afd") ? paa.push("kun " + afdNavn) : af.push("hele foreningen"));
-        if (d.includes("lok")) paa.push(lokKort);
-        else if (PER) {
-          if (d.includes("per")) paa.push(PER.kort);
-          else if (d.includes("mark")) paa.push(`hele forløbet, ${PER.kort} markeret`);
-          else af.push("hele perioden");
-        }
         const chip = document.createElement("div");
-        chip.className = "fchip " + (paa.length ? "paa" : "af");
-        chip.innerHTML = paa.length
-          ? `<b>Filter:</b> ${paa.join(" · ")}${af.length ? ` <span class="fchip-af">(ikke filtreret: ${af.join(", ")})</span>` : ""}${note && erAfd ? ` <span class="fchip-af">· ${note}</span>` : ""}`
-          : `<b>Ikke filtreret:</b> ${af.join(", ")}`;
+        if (!aktiv) {
+          // intet filter valgt: vis, hvad kortet kan filtreres på
+          const kan = [d.includes("afd") ? "afdeling" : null,
+                       d.includes("per") ? "periode" : d.includes("mark") ? "periode (markeres i grafen)" : d.includes("lok") ? "sektionens egen periode" : null].filter(Boolean);
+          chip.className = "fchip " + (kan.length ? "kan" : "kanikke");
+          chip.textContent = kan.length ? "Kan filtreres på " + kan.join(" og ") : "Kan ikke filtreres";
+        } else {
+          const paa = [], af = [];
+          if (erAfd) (d.includes("afd") ? paa.push("kun " + afdNavn) : af.push("hele foreningen"));
+          if (d.includes("lok")) paa.push(lokKort);
+          else if (PER) {
+            if (d.includes("per")) paa.push(PER.kort);
+            else if (d.includes("mark")) paa.push(`hele forløbet, ${PER.kort} markeret`);
+            else af.push("hele perioden");
+          }
+          chip.className = "fchip " + (paa.length ? "paa" : "af");
+          chip.innerHTML = paa.length
+            ? `<b>Filter:</b> ${paa.join(" · ")}${af.length ? ` <span class="fchip-af">(ikke filtreret: ${af.join(", ")})</span>` : ""}${note && erAfd ? ` <span class="fchip-af">· ${note}</span>` : ""}`
+            : `<b>Ikke filtreret:</b> ${af.join(", ")}`;
+        }
         const kort = el.closest(".card");
         if (kort) {
-          const h = kort.querySelector(":scope > h3, :scope > .mdvaelger > h3");
-          if (h && h.parentElement === kort) h.after(chip); else kort.prepend(chip);
+          const h = kort.querySelector(":scope > h3");
+          if (h) h.after(chip); else kort.prepend(chip);
         } else el.before(chip);
       }
     }
