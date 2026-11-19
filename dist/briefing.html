@@ -578,7 +578,9 @@ function themeChart(){
   Chart.defaults.plugins.tooltip.titleColor = css("--bg");
   Chart.defaults.plugins.tooltip.bodyColor = css("--bg");
   Chart.defaults.maintainAspectRatio = false;
-  Chart.defaults.animation = matchMedia("(prefers-reduced-motion: reduce)").matches ? false : {duration:500};
+  // ingen animation: graferne tegnes straks og afhænger ikke af browserens animationsløkke
+  // (den står stille i skjulte faner og paneler, og så forblev graferne tomme efter et filterskift)
+  Chart.defaults.animation = false;
 }
 const startLine = idx => ({id:"start", afterDatasetsDraw(c){ if(idx<0) return; const x=c.scales.x.getPixelForValue(idx); const {top,bottom}=c.chartArea; const g=c.ctx;
   g.save(); g.strokeStyle=css("--ink"); g.setLineDash([4,4]); g.lineWidth=1; g.beginPath(); g.moveTo(x,top); g.lineTo(x,bottom); g.stroke();
