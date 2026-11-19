@@ -121,6 +121,11 @@ footer{color:var(--muted);font-size:12px}
 .mdtabel tbody tr.valgt td{background:color-mix(in srgb,var(--t-ovb) 16%,var(--panel));font-weight:600}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 #mdKpi{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.filterforklaring{font-size:13px;line-height:1.55;border:1px dashed var(--t-ovb);border-radius:8px;padding:10px 14px;background:var(--panel);color:var(--ink)}
+.mdtabel th.grp{text-align:center;color:var(--ink);border-bottom:2px solid var(--t-ovb)}
+.mdtabel th.grp.hel{color:var(--muted);border-bottom-color:var(--line)}
+.mdtabel thead tr+tr th:first-child{text-align:right}
+.mdtabel th.hel,.mdtabel td.hel{color:var(--muted);background:color-mix(in srgb,var(--line) 30%,transparent)}
 .mdlabel{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 .forvalg{display:flex;flex-wrap:wrap;gap:6px}
 .forvalg button{font:500 12px var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 10px;cursor:pointer}
@@ -195,6 +200,7 @@ footer{color:var(--muted);font-size:12px}
 <section class="blok" id="status" data-tema="ovb">
   <div class="kpis" id="kpis"></div>
   <div class="insight" id="hovedfund"></div>
+  <div class="filterforklaring" id="filterForklaring" hidden></div>
 </section>
 
 <section class="blok" id="maaned" data-tema="ovb">
@@ -224,13 +230,13 @@ footer{color:var(--muted);font-size:12px}
 
 <section class="blok" id="svar" data-tema="tlf">
   <div class="blok-head"><div class="eyebrow">Telefonen</div><h2>Så mange ringer, og så mange får svar</h2>
-  <p>Alle opkald, der når Valeur, uge for uge. Søjlen viser opkald i alt, den mørke del dem, Valeur besvarede. Linjen er svarprocenten, holdt op mod målet på 90 %.</p></div>
+  <p id="svarTekst">Alle opkald, der når Valeur, uge for uge. Søjlen viser opkald i alt, den mørke del dem, Valeur besvarede. Linjen er svarprocenten, holdt op mod målet på 90 %.</p></div>
   <div class="card"><div class="chart tall"><canvas id="cUger"></canvas></div>
   <div class="sub" id="ugerNote"></div></div>
   <div class="grid2">
-    <div class="card"><h3>Pr. måned</h3><div class="chart"><canvas id="cMd"></canvas></div><div class="src">Kilde: Valeur Insights, opkald pr. dag</div></div>
+    <div class="card"><h3 id="svarMdTitel">Pr. måned</h3><div class="chart"><canvas id="cMd"></canvas></div><div class="src" id="svarMdKilde">Kilde: Valeur Insights, opkald pr. dag</div></div>
     <div class="card"><h3>Opkaldets vej</h3><div class="flow" id="flow"></div>
-    <p class="sub">Valeur tager telefonen, registrerer medlemmet og årsagen i Membercare og løser selv sagen eller stiller videre til en kø i sekretariatet. Tallene er pr. måned i snit over de seneste 12 hele måneder.</p></div>
+    <p class="sub" id="flowNote">Valeur tager telefonen, registrerer medlemmet og årsagen i Membercare og løser selv sagen eller stiller videre til en kø i sekretariatet. Tallene er pr. måned i snit over de seneste 12 hele måneder.</p></div>
   </div>
 </section>
 
@@ -556,9 +562,9 @@ function hentCsv(){
   const tal = v => v==null ? "" : String(v).replace(".", ",");
   const kol = [["Måned","md"],["Opkald til Valeur","vI"],["Besvaret af Valeur","vB"],["Valeurs svarprocent","vS"],["Åbningsdage","dage"],
                ["Kald i køerne","kO"],["Besvaret i køerne","kB"],["Svarprocent i køerne","kS"],["Gns. ventetid i køerne (sek.)","kV"],
-               ["Registreringer i Membercare","reg"],["Forskellige personer","pers"],["Løst af Valeur (andel)","loest"],["Mails","mails"]];
+               ["Registreringer i Membercare","reg"],["Andel af alle registreringer","andel"],["Forskellige personer","pers"],["Løst af Valeur (andel)","loest"],["Mails","mails"]];
   const linjer = [kol.map(k=>k[0]).join(";")].concat(MD_RAEKKER.map(r => kol.map(([,k]) => {
-    const v = r[k]; if (k==="md") return r.md; if (v==null) return ""; return ["vS","kS","loest"].includes(k) ? tal(Math.round(v*1000)/1000) : tal(Math.round(v));
+    const v = r[k]; if (k==="md") return r.md; if (v==null) return ""; return ["vS","kS","loest","andel"].includes(k) ? tal(Math.round(v*1000)/1000) : tal(Math.round(v));
   }).join(";")));
   const navn = FILTER.afd === "alle" ? "hele_foreningen" : FILTER.afd;
   const blob = new Blob(["﻿" + linjer.join("\r\n")], {type:"text/csv;charset=utf-8"});
@@ -671,29 +677,65 @@ function render(){
       : `<b>Hovedfund.</b> Valeur besvarer ${pct(vSvar)} af opkaldene og er blevet medlemmernes faste indgang. Sekretariatets køer får ${fmt((1-eO/fO)*100)} % færre kald end før, og ventetiden i køerne er faldet fra ${mmss(fV)} til ${mmss(eV)} min. Til gengæld besvares kun ${pct(eB/eO)} af de kald, Valeur stiller videre, mod ${pct(fB/fO)} før. Det er her, samarbejdet taber flest medlemmer i dag.`;
   }
 
-  // --- uger
-  const U = V.uger.filter(u=>u.dage>=2);
-  MKEYS.cUger = U.map(u=>u.start.slice(0,7));
-  mk("cUger",{data:{labels:U.map(u=>u.uge.replace("-U"," u")),datasets:[
-    {type:"bar",label:"Besvaret",data:U.map(u=>u.b),backgroundColor:css("--valeur"),stack:"s",order:2},
-    {type:"bar",label:"Ikke besvaret",data:U.map(u=>u.i-u.b),backgroundColor:alpha("--valeur",.28),stack:"s",order:2},
-    {type:"line",label:"Svarprocent",data:U.map(u=>u.b/u.i*100),yAxisID:"y2",borderColor:css("--ink"),pointRadius:0,borderWidth:1.5,tension:.3,order:1},
-    {type:"line",label:"Mål 90 %",data:U.map(()=>90),yAxisID:"y2",borderColor:css("--bad"),borderDash:[5,4],pointRadius:0,borderWidth:1,order:0}]},
-    options:{interaction:{mode:"index",intersect:false},scales:{x:{stacked:true,grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:14}},y:{stacked:true,title:{display:true,text:"Opkald pr. uge"}},
-      y2:{position:"right",min:50,max:100,grid:{display:false},ticks:{callback:v=>v+" %"}}},
-      plugins:{tooltip:{callbacks:{label:c=>c.dataset.yAxisID==="y2"?`${c.dataset.label}: ${fmt(c.raw,1)} %`:`${c.dataset.label}: ${fmt(c.raw)}`}}}}});
-  const under = U.filter(u=>u.b/u.i<.9).length;
-  document.getElementById("ugerNote").textContent = `Valeur nåede målet på 90 % i ${U.length-under} af ${U.length} uger. Svarprocenten er regnet af alle kald i Valeur Insights. Valeurs egen SLA-opgørelse bruger kald i åbningstid og ligger højere (se Mål). Uger med under to åbningsdage er udeladt.`;
-
-  MKEYS.cMd = V.maaneder.map(m=>m.md);
-  mk("cMd",{type:"bar",data:{labels:V.maaneder.map(m=>mdLabel(m.md)),datasets:[
-    {label:"Opkald pr. åbningsdag",data:V.maaneder.map(m=>m.i/m.dage),backgroundColor:css("--valeur"),borderRadius:3}]},
-    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw,1)} opkald pr. dag · ${fmt(V.maaneder[c.dataIndex].i)} i alt`}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:"Opkald pr. åbningsdag"}}}}});
-
+  // --- uger (for en afdeling: henvendelser om afdelingens emner og afdelingens kø)
+  ["svarTekst","svarMdTitel","svarMdKilde","flowNote"].forEach(id => { const el = document.getElementById(id); if (!el.dataset.std) el.dataset.std = el.innerHTML; el.innerHTML = el.dataset.std; });
   const step=(k,n,s)=>`<div class="step"><div class="k">${k}</div><div class="n num">${n}</div><div class="k">${s}</div></div>`;
-  document.getElementById("flow").innerHTML =
-    step("Ringer ind",fmt(vMd),"opkald pr. md.")+step("Valeur svarer",fmt(vBmd),pct(vBmd/vMd))+
-    (ingenKoe ? step("Lander i en kø","–","ingen egen kø") : step("Lander i en kø",fmt(eO),"kald pr. md.")+step("Sekretariatet svarer",fmt(eB),pct(eB/eO)));
+  if (erAfd) {
+    const UA = (DATA.udsnit||{})[FILTER.afd] || {md:{}};
+    const W = ((D.dybde||{}).udsendelser || {uger:[]}).uger.filter(u => u.n > 0);
+    document.getElementById("svarTekst").textContent = `Henvendelser om emner, der hører under ${afdNavn}, uge for uge. Valeurs egne opkaldstal kan ikke deles op på afdelinger. Her bruges derfor registreringerne i Membercare: Valeur registrerer hver samtale med et emne.`;
+    MKEYS.cUger = W.map(u => u.start.slice(0,7));
+    mk("cUger",{type:"bar",data:{labels:W.map(u=>u.uge.replace("-U"," u")),datasets:[{label:"Henvendelser hos Valeur",data:W.map(u=>u.n),backgroundColor:css("--valeur"),borderRadius:2}]},
+      options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw)} henvendelser`,footer:it=>`Ugen fra ${dato(W[it[0].dataIndex].start)}`}}},
+        scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:14}},y:{title:{display:true,text:"Henvendelser pr. uge"}}}}});
+    const snitU = W.length ? W.reduce((a,u)=>a+u.n,0)/W.length : 0;
+    document.getElementById("ugerNote").textContent = `${afdNavn}: i snit ${fmt(snitU)} henvendelser om ugen hos Valeur.` + (PER ? " Grafen viser hele forløbet; den valgte periode er markeret." : "");
+    const regMd = ALLE_MDR.map(m => ((UA.md[m]||{}).t||{}).n || 0), koeA = ALLE_MDR.map(m => koeMd(m));
+    document.getElementById("svarMdTitel").textContent = ingenKoe ? "Henvendelser pr. måned" : "Henvendelser og kald i køen pr. måned";
+    document.getElementById("svarMdKilde").textContent = ingenKoe ? "Kilde: Membercare" : "Kilde: Membercare (henvendelser) og IP Nordic (afdelingens kø)";
+    MKEYS.cMd = ALLE_MDR;
+    mk("cMd",{data:{labels:ALLE_MDR.map(mdLabel),datasets:[
+      {type:"bar",label:"Henvendelser hos Valeur",data:regMd,backgroundColor:css("--valeur"),borderRadius:3,order:2},
+      ...(ingenKoe ? [] : [
+        {type:"bar",label:`Kald i ${koeNavn}`,data:koeA.map(k=>k.o),backgroundColor:css("--sek"),borderRadius:3,order:2},
+        {type:"line",label:"Svar i køen",data:koeA.map(k=>k.o?k.b/k.o*100:null),yAxisID:"y2",borderColor:css("--ink"),backgroundColor:css("--ink"),pointRadius:2,borderWidth:1.5,tension:.3,order:1}])]},
+      options:{interaction:{mode:"index",intersect:false},
+        scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:8}},y:{title:{display:true,text:"Antal pr. måned"}},
+          ...(ingenKoe ? {} : {y2:{position:"right",min:0,max:100,grid:{display:false},ticks:{callback:v=>v+" %"}}})},
+        plugins:{tooltip:{callbacks:{label:c=>c.dataset.yAxisID==="y2"?`${c.dataset.label}: ${fmt(c.raw,1)} %`:`${c.dataset.label}: ${fmt(c.raw)}`}}}}});
+    const s12 = mdrMellem(PE.efter[0], PE.efter[1]);
+    const regSnit = s12.length ? s12.reduce((a,m)=>a+(((UA.md[m]||{}).t||{}).n||0),0)/s12.length : 0;
+    const LL = (UA.dybde||{}).loeser;
+    document.getElementById("flow").innerHTML =
+      step("Henvendelser hos Valeur", fmt(regSnit), "pr. md.") +
+      step("Valeur løser selv", LL ? pct(1-LL.andel_besked) : "–", "skøn ud fra noterne") +
+      (ingenKoe ? step("Sendes videre", LL ? pct(LL.andel_besked) : "–", "som besked")
+                : step(`Kald i ${koeNavn}`, fmt(eO), "pr. md.") + step("Besvares", pct(eB/eO), `før Valeur ${pct(fB/fO)}`));
+    document.getElementById("flowNote").textContent = `Snit over de seneste 12 hele måneder (${periodeKort(PE.efter[0], PE.efter[1])}). Henvendelser er Valeurs registreringer om afdelingens emner.` +
+      (ingenKoe ? "" : " Kald i køen er kald, som Valeur har stillet videre, og kald, der er kommet direkte i køen.");
+  } else {
+    const U = V.uger.filter(u=>u.dage>=2);
+    MKEYS.cUger = U.map(u=>u.start.slice(0,7));
+    mk("cUger",{data:{labels:U.map(u=>u.uge.replace("-U"," u")),datasets:[
+      {type:"bar",label:"Besvaret",data:U.map(u=>u.b),backgroundColor:css("--valeur"),stack:"s",order:2},
+      {type:"bar",label:"Ikke besvaret",data:U.map(u=>u.i-u.b),backgroundColor:alpha("--valeur",.28),stack:"s",order:2},
+      {type:"line",label:"Svarprocent",data:U.map(u=>u.b/u.i*100),yAxisID:"y2",borderColor:css("--ink"),pointRadius:0,borderWidth:1.5,tension:.3,order:1},
+      {type:"line",label:"Mål 90 %",data:U.map(()=>90),yAxisID:"y2",borderColor:css("--bad"),borderDash:[5,4],pointRadius:0,borderWidth:1,order:0}]},
+      options:{interaction:{mode:"index",intersect:false},scales:{x:{stacked:true,grid:{display:false},ticks:{maxRotation:0,autoSkipPadding:14}},y:{stacked:true,title:{display:true,text:"Opkald pr. uge"}},
+        y2:{position:"right",min:50,max:100,grid:{display:false},ticks:{callback:v=>v+" %"}}},
+        plugins:{tooltip:{callbacks:{label:c=>c.dataset.yAxisID==="y2"?`${c.dataset.label}: ${fmt(c.raw,1)} %`:`${c.dataset.label}: ${fmt(c.raw)}`}}}}});
+    const under = U.filter(u=>u.b/u.i<.9).length;
+    document.getElementById("ugerNote").textContent = `Valeur nåede målet på 90 % i ${U.length-under} af ${U.length} uger. Svarprocenten er regnet af alle kald i Valeur Insights. Valeurs egen SLA-opgørelse bruger kald i åbningstid og ligger højere (se Mål). Uger med under to åbningsdage er udeladt.`;
+
+    MKEYS.cMd = V.maaneder.map(m=>m.md);
+    mk("cMd",{type:"bar",data:{labels:V.maaneder.map(m=>mdLabel(m.md)),datasets:[
+      {label:"Opkald pr. åbningsdag",data:V.maaneder.map(m=>m.i/m.dage),backgroundColor:css("--valeur"),borderRadius:3}]},
+      options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${fmt(c.raw,1)} opkald pr. dag · ${fmt(V.maaneder[c.dataIndex].i)} i alt`}}},scales:{x:{grid:{display:false}},y:{title:{display:true,text:"Opkald pr. åbningsdag"}}}}});
+
+    document.getElementById("flow").innerHTML =
+      step("Ringer ind",fmt(vMd),"opkald pr. md.")+step("Valeur svarer",fmt(vBmd),pct(vBmd/vMd))+
+      (ingenKoe ? step("Lander i en kø","–","ingen egen kø") : step("Lander i en kø",fmt(eO),"kald pr. md.")+step("Sekretariatet svarer",fmt(eB),pct(eB/eO)));
+  }
 
   // --- køer pr. måned (stak)
   const alleMd = [...new Set(koeOrder.flatMap(k=>Object.keys(D.koeer_md[k]||{})))].filter(m=>m>="2024-02").sort();
@@ -964,7 +1006,7 @@ function render(){
       const mailsOk = !erAfd && mdr.every(m=>harMails.has(m));
       return {vI: v.i, vB: v.b, vS: v.i ? v.b/v.i : null, dage: v.d,
               kO: ingenKoe ? null : k.o, kB: ingenKoe ? null : k.b, kS: ingenKoe || !k.o ? null : k.b/k.o, kV: ingenKoe ? null : k.v,
-              reg: T.reduce((a,t)=>a+t.n,0), pers: mdr.length === 1 && T[0] ? T[0].u : null,
+              reg: T.reduce((a,t)=>a+t.n,0), andel: erAfd ? (() => { const al = mdr.reduce((a,m)=>a+(((((DATA.udsnit||{}).alle||{md:{}}).md[m]||{}).t||{}).n||0),0); return al ? T.reduce((a,t)=>a+t.n,0)/al : null; })() : null, pers: mdr.length === 1 && T[0] ? T[0].u : null,
               loest: ln ? 1 - lb/ln : null, mails: mailsOk ? mdr.reduce((a,m)=>a+mailsMd[m],0) : null, n: mdr.length};
     };
     MD_RAEKKER = ALLE_MDR.map(m => ({md: m, ...opg([m])}));
@@ -994,6 +1036,7 @@ function render(){
         kpi(pct(r.kS), "Svar i køerne", sam("kS", v=>pct(v)), dp(g("kS"), r.kS)),
         kpi(mmss(r.kV), "Ventetid i køerne", sam("kV", mmss), dd(g("kV"), r.kV, -1, false))]),
       kpi(fmt(r.reg), "Registreringer", (r.pers != null ? `${fmt(r.pers)} personer · ` : L > 1 ? `${fmt(r.reg/L)} pr. md. · ` : "") + sam("reg", fmt), dd(g("reg"), r.reg, 0, true)),
+      ...(erAfd ? [kpi(pct(r.andel), "Andel af alle henvendelser", sam("andel", v=>pct(v)), "")] : []),
       kpi(pct(r.loest), "Løst af Valeur", r.loest==null ? "måles fra juli 2025" : sam("loest", v=>pct(v)), dp(g("loest"), r.loest)),
       ...(erAfd ? [] : [kpi(fmt(r.mails), "Mails", r.mails==null ? "ikke talt for hele perioden" : sam("mails", fmt), dd(g("mails"), r.mails, 0, true))]),
     ].join("");
@@ -1006,18 +1049,23 @@ function render(){
     const gr = Object.entries(((A||{}).mc||{grupper:{}}).grupper).sort((a,b)=>b[1]-a[1]);
     bars(document.getElementById("bMdGrupper"), gr.map(([gg,n]) => [gg, n, pct(n/(A.mc.total_efter||1))]), gr[0]?.[1] || 1, "var(--t-ovb)");
     document.getElementById("mdEmneTitel").textContent = `Emner, ${periodeNavn(LOKAL.fra, LOKAL.til)}`;
-    const th = ["Måned","Opkald til Valeur","Svar Valeur", ...(ingenKoe ? [] : ["Kald i køerne","Svar køer","Vent køer"]),"Registreringer","Personer","Løst af Valeur", ...(erAfd ? [] : ["Mails"])];
-    document.getElementById("tMd").innerHTML = `<thead><tr>${th.map(t=>`<th>${t}</th>`).join("")}</tr></thead><tbody>` +
-      [...MD_RAEKKER].reverse().map(x => `<tr data-md="${x.md}" class="${x.md>=LOKAL.fra && x.md<=LOKAL.til?"valgt":""}" tabindex="0"><td>${mdLang(x.md)}${delvisMd(x.md)?" *":""}</td><td>${fmt(x.vI)}</td><td>${pct(x.vS)}</td>` +
+    const kolHel = ["Opkald til Valeur","Svar Valeur"];
+    const kolAfd = [...(ingenKoe ? [] : ["Kald i køerne","Svar køer","Vent køer"]),"Registreringer", ...(erAfd ? ["Andel af alle"] : []),"Personer","Løst af Valeur", ...(erAfd ? [] : ["Mails"])];
+    const hoved = erAfd
+      ? `<tr><th rowspan="2">Måned</th><th colspan="2" class="grp hel">Hele hovednummeret</th><th colspan="${kolAfd.length}" class="grp">${afdNavn}</th></tr><tr>${kolHel.map(t=>`<th class="hel">${t}</th>`).join("")}${kolAfd.map(t=>`<th>${t}</th>`).join("")}</tr>`
+      : `<tr><th>Måned</th>${[...kolHel, ...kolAfd].map(t=>`<th>${t}</th>`).join("")}</tr>`;
+    const h = erAfd ? ' class="hel"' : "";
+    document.getElementById("tMd").innerHTML = `<thead>${hoved}</thead><tbody>` +
+      [...MD_RAEKKER].reverse().map(x => `<tr data-md="${x.md}" class="${x.md>=LOKAL.fra && x.md<=LOKAL.til?"valgt":""}" tabindex="0"><td>${mdLang(x.md)}${delvisMd(x.md)?" *":""}</td><td${h}>${fmt(x.vI)}</td><td${h}>${pct(x.vS)}</td>` +
         (ingenKoe ? "" : `<td>${fmt(x.kO)}</td><td>${pct(x.kS)}</td><td>${mmss(x.kV)}</td>`) +
-        `<td>${fmt(x.reg)}</td><td>${fmt(x.pers)}</td><td>${pct(x.loest)}</td>` + (erAfd ? "" : `<td>${fmt(x.mails)}</td>`) + `</tr>`).join("") + "</tbody>";
-    document.getElementById("tMdNote").textContent = `Den valgte periode er markeret. Klik på en måned for at se den alene. * Måneden er ikke slut. Opkald til Valeur${erAfd ? "" : " og mails"} gælder hele hovednummeret${erAfd ? `; køer og registreringer gælder ${afdNavn}` : ""}. Forskellige personer kan kun tælles for én måned ad gangen. Løst af Valeur er et skøn ud fra noterne og måles fra juli 2025. Mails er talt pr. uge og lagt i den måned, ugen begynder i.`;
+        `<td>${fmt(x.reg)}</td>` + (erAfd ? `<td>${pct(x.andel)}</td>` : "") + `<td>${fmt(x.pers)}</td><td>${pct(x.loest)}</td>` + (erAfd ? "" : `<td>${fmt(x.mails)}</td>`) + `</tr>`).join("") + "</tbody>";
+    document.getElementById("tMdNote").textContent = `Den valgte periode er markeret. Klik på en måned for at se den alene. * Måneden er ikke slut. ${erAfd ? `Valeurs egne opkaldstal kan ikke deles op på afdelinger og gælder hele hovednummeret. Køer og registreringer gælder ${afdNavn}; Andel af alle er afdelingens andel af alle registreringer i Membercare.` : "Opkald til Valeur og mails gælder hele hovednummeret."} Forskellige personer kan kun tælles for én måned ad gangen. Løst af Valeur er et skøn ud fra noterne og måles fra juli 2025. Mails er talt pr. uge og lagt i den måned, ugen begynder i.`;
   }
 
   // --- mærker på sektioner, der ikke følger filtrene
   {
     const FM = {md: ["status","maaned","hvad","hvem","loeser","geografi"],
-                afd: ["status","maaned","aflastning","hvad","hvem","loeser","udsendelser","aarshjul","igen","geografi"]};
+                afd: ["status","maaned","svar","aflastning","hvad","hvem","loeser","udsendelser","aarshjul","igen","geografi"]};
     document.querySelectorAll("section.blok[id]").forEach(sec => {
       sec.querySelectorAll(".filterbadge").forEach(b => b.remove());
       const t = [];
@@ -1030,6 +1078,20 @@ function render(){
     document.getElementById("fAfd").value = FILTER.afd;
     document.getElementById("fFra").value = FILTER.fra || ALLE_MDR[0];
     document.getElementById("fTil").value = FILTER.til || ALLE_MDR[ALLE_MDR.length-1];
+    const fk = document.getElementById("filterForklaring");
+    fk.hidden = !(erAfd || PER);
+    if (erAfd || PER) {
+      const ja = [], nej = [];
+      if (erAfd) {
+        ja.push(ingenKoe ? `Membercare-tallene for ${afdNavn} (afdelingen har ingen egen kø)` : `køtallene for ${koeNavn} (${koeOrder.join(" og ")}) og Membercare-tallene for ${afdNavn}`);
+        nej.push("Valeurs egne opkaldstal og svarprocent, som ikke kan deles op på afdelinger", "timefordeling, kø og prognose, mål, økonomi og mails");
+      }
+      if (PER) {
+        ja.push(`nøgletal, emner, medlemstyper, "Løser Valeur selv?" og geografi for ${PER.navn}`);
+        nej.push("tidsgraferne, som viser hele forløbet med perioden markeret", "årshjul, sager igen og før/efter-tabellen for køerne");
+      }
+      fk.innerHTML = `<b>Filteret ændrer:</b> ${ja.join("; ")}.<br><b>Filteret ændrer ikke:</b> ${nej.join("; ")}. Sektioner, der ikke følger filteret, er mærket "Hele foreningen" eller "Hele perioden".`;
+    }
     const info = [erAfd ? afdNavn : null, PER ? PER.navn : null].filter(Boolean);
     document.getElementById("filterInfo").textContent = info.length ? "Viser: " + info.join(" · ") : "";
     document.getElementById("fNulstil").hidden = !info.length;
